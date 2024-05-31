@@ -1028,7 +1028,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Perez</td>
-<td class="center">Expires 1 December 2024</td>
+<td class="center">Expires 2 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1041,12 +1041,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-lopez-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-30" class="published">30 May 2024</time>
+<time datetime="2024-05-31" class="published">31 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-01">1 December 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-02">2 December 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1096,7 +1096,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1176,6 +1176,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
                     <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-message-3" class="internal xref">Message 3</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.4">
+                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="auto internal xref">6.1.4</a>.  <a href="#name-message-4" class="internal xref">Message 4</a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
@@ -1189,6 +1192,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.3">
                     <p id="section-toc.1-1.6.2.2.2.3.1"><a href="#section-6.2.3" class="auto internal xref">6.2.3</a>.  <a href="#name-message-3-2" class="internal xref">Message 3</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.4">
+                    <p id="section-toc.1-1.6.2.2.2.4.1"><a href="#section-6.2.4" class="auto internal xref">6.2.4</a>.  <a href="#name-message-4-2" class="internal xref">Message 4</a></p>
 </li>
                 </ul>
 </li>
@@ -1338,10 +1344,9 @@ It is <span class="bcp14">RECOMMENDED</span> that it uniquely identifies the PSK
                 <text x="368" y="116">EAD_2</text>
                 <text x="400" y="116">)</text>
                 <text x="280" y="148">message_2</text>
-                <text x="224" y="180">AEAD(</text>
-                <text x="276" y="180">MAC_3,</text>
-                <text x="328" y="180">EAD_3</text>
-                <text x="360" y="180">)</text>
+                <text x="248" y="180">AEAD(</text>
+                <text x="296" y="180">EAD_3</text>
+                <text x="328" y="180">)</text>
                 <text x="280" y="212">message_3</text>
                 <text x="248" y="244">AEAD(</text>
                 <text x="296" y="244">EAD_4</text>
@@ -1406,9 +1411,10 @@ In this case, the Responder will authenticate the Initiator first, contrary to v
 <figure id="figure-2">
           <div id="section-4.1-2.1">
             <div class="alignCenter art-svg artwork" id="section-4.1-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="568" viewBox="0 0 568 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
-                <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
+                <path d="M 552,48 L 552,160" fill="none" stroke="black"></path>
+                <path d="M 552,192 L 552,272" fill="none" stroke="black"></path>
                 <path d="M 8,64 L 544,64" fill="none" stroke="black"></path>
                 <path d="M 16,128 L 552,128" fill="none" stroke="black"></path>
                 <path d="M 8,192 L 544,192" fill="none" stroke="black"></path>
@@ -1432,10 +1438,11 @@ In this case, the Responder will authenticate the Initiator first, contrary to v
                   <text x="280" y="148">message_2</text>
                   <text x="180" y="180">Enc(</text>
                   <text x="248" y="180">ID_CRED_PSK</text>
-                  <text x="304" y="180">)</text>
-                  <text x="336" y="180">AEAD(</text>
-                  <text x="384" y="180">EAD_3</text>
-                  <text x="416" y="180">)</text>
+                  <text x="308" y="180">),</text>
+                  <text x="344" y="180">AEAD(</text>
+                  <text x="392" y="180">EAD_3</text>
+                  <text x="424" y="180">)</text>
+                  <text x="560" y="180">|</text>
                   <text x="280" y="212">message_3</text>
                   <text x="248" y="244">AEAD(</text>
                   <text x="296" y="244">EAD_4</text>
@@ -1492,17 +1499,49 @@ In this case, the Responder will authenticate the Initiator first, contrary to v
       <h2 id="name-key-derivation">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-key-derivation" class="section-name selfRef">Key derivation</a>
       </h2>
+<p id="section-5-1">The pseudorandom keys (PRKs) used for PSK authentication method in EDHOC are derived using EDHOC_Extract, as done in {RFC9528}.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5-2">
+<pre>
+PRK  = EDHOC_Extract( salt, IKM )
+</pre><a href="#section-5-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5-3">where the salt and input keying material (IKM) are defined for each key.
+The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in the cipher suite.
+The index of a PRK indicates its use or in what message protection operation it is used.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <div id="variant-1">
 <section id="section-5.1">
         <h3 id="name-variant-1">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
         </h3>
-<div class="alignLeft art-text artwork" id="section-5.1-1">
+<p id="section-5.1-1">Figure { fig-variant1key } lists the key derivations that differ from those specified in Section 4.1.2 of {RFC9528}.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<span id="name-key-derivation-of-variant-1"></span><div id="fig-variant1key">
+<figure id="figure-3">
+          <div class="alignCenter art-text artwork" id="section-5.1-2.1">
 <pre>
-PRK_2e        = EDHOC_Extract( TH_2, PSK)
-</pre><a href="#section-5.1-1" class="pilcrow">¶</a>
+PRK_3e2m      = EDHOC_Extract( salt3e_2m, PSK)
+PRK_4e3m      = PRK_3e2m
+MAC_2         = EDHOC_KDF( PRK_3e2m, 2, context_2, mac_length_2 )
+MAC_3         = EDHOC_KDF( PRK_4e3m, 6, context_3, mac_length_3 )
+</pre>
 </div>
-<p id="section-5.1-2">The rest is the same?<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-key-derivation-of-variant-1" class="selfRef">Key derivation of variant 1 of EDHOC PSK authentication method.</a>
+          </figcaption></figure>
+</div>
+<p id="section-5.1-3">where:<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1-4.1">
+            <p id="section-5.1-4.1.1">The IKM is the ephemeral-ephemeral shared secret G_XY, obtained using either G_X and Y or G_Y and X, as defined in section 6.3.1 of {RFC9053}. It provides forward secrecy, as compromise of the private authentication keys does not compromise past session keys.<a href="#section-5.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-4.2">
+            <p id="section-5.1-4.2.1">context_2 = &lt;&lt;C_R, ID_CRED_PSK, TH_2, ? EAD_2&gt;&gt;<a href="#section-5.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-4.3">
+            <p id="section-5.1-4.3.1">context_2 = &lt;&lt;ID_CRED_PSK, TH_3, ? EAD_3&gt;&gt;<a href="#section-5.1-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-5.1-5">I have a question regarding the PRK... They are all equal... Shouldn't they be different, to include some randomness?
+I also understand that K_3,IV_3, KEYSTREAM_2 etc are the same since we are using the MAC_2 and MAC_3 to authenticate, and hence, the tag of the AEAD does not need to include information regarding the PSK. This is a difference with respect to variant 2<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="variant-2-1">
@@ -1510,32 +1549,38 @@ PRK_2e        = EDHOC_Extract( TH_2, PSK)
         <h3 id="name-variant-2-2">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-variant-2-2" class="section-name selfRef">Variant 2</a>
         </h3>
-<div class="alignLeft art-text artwork" id="section-5.2-1">
+<p id="section-5.2-1">Figure { fig-variant2key } lists the key derivations that differ from those specified in Section 4.1.2 of {RFC9528}.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<span id="name-key-derivation-of-variant-2"></span><div id="fig-variant2key">
+<figure id="figure-4">
+          <div class="alignCenter art-text artwork" id="section-5.2-2.1">
 <pre>
-PRK_2e        = EDHOC_Extract( salt_2e )
-PRK_4e3m      = EDHOC_Extract( SALT_4e3m, ID_CRED_PSK)
-
+PRK_2e        = EDHOC_Extract( salt_2e, G_XY )
+PRK_4e3m      = EDHOC_Extract( SALT_4e3m, PSK)
 KEYSTREAM_3   = EDHOC_KDF( PRK_2e,      TBD,  TH_3,       key_length )
 K_3           = EDHOC_KDF( PRK_3e2m,    TBD,  context_3,  key_length )
 IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
-</pre><a href="#section-5.2-1" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-5.2-2">where:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-key-derivation-of-variant-2" class="selfRef">Key derivation of variant 2 of EDHOC PSK authentication method.</a>
+          </figcaption></figure>
+</div>
+<p id="section-5.2-3">where:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2-3.1">
-            <p id="section-5.2-3.1.1">salt_2e = &lt;&lt;TH_2, ID_CRED_PSK&gt;&gt;<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.2-4.1">
+            <p id="section-5.2-4.1.1">salt_2e = &lt;&lt;TH_2, PSK&gt;&gt;<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-3.2">
-            <p id="section-5.2-3.2.1">KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-4.2">
+            <p id="section-5.2-4.2.1">KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.<a href="#section-5.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-3.3">
-            <p id="section-5.2-3.3.1">context_3 &lt;&lt;ID_CRED_PSK, TH_3&gt;&gt;<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-4.3">
+            <p id="section-5.2-4.3.1">context_3 &lt;&lt;ID_CRED_PSK, TH_3, ? EAD_3&gt;&gt;<a href="#section-5.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-3.4">
-            <p id="section-5.2-3.4.1">TH_3 = H( TH_2, PLAINTEXT_2)<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-4.4">
+            <p id="section-5.2-4.4.1">TH_3 = H( TH_2, PLAINTEXT_2)<a href="#section-5.2-4.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-3.5">
-            <p id="section-5.2-3.5.1">TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3 )<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-4.5">
+            <p id="section-5.2-4.5.1">TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3 )<a href="#section-5.2-4.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1559,7 +1604,7 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
 <a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-message-1" class="section-name selfRef">Message 1</a>
           </h4>
 <p id="section-6.1.1-1">message_1 contains the ID_CRED_PSK.
-Thus, the composition of message_1 <span class="bcp14">SHALL</span> be a CBOR sequence, as defined below:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+The composition of message_1 <span class="bcp14">SHALL</span> be a CBOR sequence, as defined below:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1.1-2">
 <pre>
 message_1 = (
@@ -1601,25 +1646,33 @@ EAD_1 = 1* ead
           <h4 id="name-message-2">
 <a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-message-2" class="section-name selfRef">Message 2</a>
           </h4>
+<p id="section-6.1.2-1">message_2 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1.2-2">
+<pre>
+message_2 = (
+  G_Y_CIPHERTEXT_2 : bstr,
+)
+</pre><a href="#section-6.1.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.2-3">where:<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.2-1.1">
-              <p id="section-6.1.2-1.1.1">The Responder uses MAC instead of Signature. Hence, COSE_Sign1 is not used.<a href="#section-6.1.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.2-4.1">
+              <p id="section-6.1.2-4.1.1">G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral public key of the Responder) and CIPHERTEXT_2.<a href="#section-6.1.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.2-1.2">
-              <p id="section-6.1.2-1.2.1">The Responder computes MAC_2 as described in Section 4.1.2 of {RFC9528}, with context_2 &lt;&lt;C_R,ID_CRED_PSK, TH_2, ? EAD_2&gt;&gt;<a href="#section-6.1.2-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-6.1.2-1.3">
-              <p id="section-6.1.2-1.3.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-6.1.2-1.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-6.1.2-4.2">
+              <p id="section-6.1.2-4.2.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-6.1.2-4.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.2-1.3.2.1">
-                  <p id="section-6.1.2-1.3.2.1.1">PLAINTEXT_2 = (C_R, ID_CRED_PSK /bstr / -24..23, MAC_2, ? EAD_2)<a href="#section-6.1.2-1.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.2-4.2.2.1">
+                  <p id="section-6.1.2-4.2.2.1.1">PLAINTEXT_2 = (C_R, ID_CRED_PSK / bstr / -24..23, MAC_2, ? EAD_2)<a href="#section-6.1.2-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-6.1.2-1.3.2.2">
-                  <p id="section-6.1.2-1.3.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-6.1.2-1.3.2.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.1.2-4.2.2.2">
+                  <p id="section-6.1.2-4.2.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-6.1.2-4.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
           </ul>
+<p id="section-6.1.2-5">The Responder uses MAC instead of Signature. Hence, COSE_Sign1 is not used.
+The Responder computes MAC_2 as described in Section 4.1.2 of {RFC9528}, with context_2 &lt;&lt;C_R,ID_CRED_PSK, TH_2, ? EAD_2&gt;&gt;<a href="#section-6.1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-3">
@@ -1627,17 +1680,43 @@ EAD_1 = 1* ead
           <h4 id="name-message-3">
 <a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-message-3" class="section-name selfRef">Message 3</a>
           </h4>
+<p id="section-6.1.3-1">message_3 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1.3-2">
+<pre>
+message_3 = (
+  CIPHERTEXT_3 : bstr,
+)
+</pre><a href="#section-6.1.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.3-3">The Initiator uses MAC instead of Signature. Hence, COSE_Sign1 is not used.
+Why do we need MAC_3 if we are using AEAD? The MAC_3 is computed following Section 4.1.2 of {RFC9528}, with context_3 = &lt;&lt;ID_CRED_PSK, TH_3, ? EAD_3&gt;&gt;.
+Since we are including MAC_3, should we change K_3 and IV_3 to have ID_CRED_PSK or not?
+The Initiator computes a COSE_Encrypt0 object as defined in Section 5.2 and 5.3 of {RFC9052} with the EDHOC AEAD algorithm of the selected cipher suite and the following parameters:<a href="#section-6.1.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.3-1.1">
-              <p id="section-6.1.3-1.1.1">The Initiator uses MAC instead of Signature. Hence, COSE_Sign1 is not used.<a href="#section-6.1.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.3-4.1">
+              <p id="section-6.1.3-4.1.1">K_3 and IV_3 as defined in Section 4.1.2 of {RFC9528}<a href="#section-6.1.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.3-1.2">
-              <p id="section-6.1.3-1.2.1">Why do we need MAC_3 if we are using AEAD? If we do need MAC_3, then MAC_3 is computed following Section 4.1.2 of {RFC9528}, with context_3 = &lt;&lt;ID_CRED_PSK, TH_3, ? EAD_3&gt;&gt;.<a href="#section-6.1.3-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-6.1.3-1.3">
-              <p id="section-6.1.3-1.3.1">Since we are including MAC_3, should we change K_3 and IV_3 to have ID_CRED_PSK or not?<a href="#section-6.1.3-1.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-6.1.3-4.2">
+              <p id="section-6.1.3-4.2.1">PLAINTEXT_3 = (ID_CRED_PSK / bstr / -24..2, ? EAD_3)
+The Initiator computes TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_PSK)<a href="#section-6.1.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+</section>
+</div>
+<div id="message-4">
+<section id="section-6.1.4">
+          <h4 id="name-message-4">
+<a href="#section-6.1.4" class="section-number selfRef">6.1.4. </a><a href="#name-message-4" class="section-name selfRef">Message 4</a>
+          </h4>
+<p id="section-6.1.4-1">message_4 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-6.1.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1.4-2">
+<pre>
+message_4 = (
+  CIPHERTEXT_4 : bstr,
+)
+</pre><a href="#section-6.1.4-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.4-3">message_4 is optional.<a href="#section-6.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1652,7 +1731,7 @@ EAD_1 = 1* ead
           <h4 id="name-message-1-2">
 <a href="#section-6.2.1" class="section-number selfRef">6.2.1. </a><a href="#name-message-1-2" class="section-name selfRef">Message 1</a>
           </h4>
-<p id="section-6.2.1-1">Same<a href="#section-6.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-1">Same as message_1 of EDHOC, described in Section 5.2.1 of {RFC9528}.<a href="#section-6.2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-2-1">
@@ -1660,11 +1739,32 @@ EAD_1 = 1* ead
           <h4 id="name-message-2-2">
 <a href="#section-6.2.2" class="section-number selfRef">6.2.2. </a><a href="#name-message-2-2" class="section-name selfRef">Message 2</a>
           </h4>
+<p id="section-6.2.2-1">message_2 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-6.2.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.2.2-2">
+<pre>
+message_2 = (
+  G_Y_CIPHERTEXT_2 : bstr,
+)
+</pre><a href="#section-6.2.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.2.2-3">where:<a href="#section-6.2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.2.2-1.1">
-              <p id="section-6.2.2-1.1.1">Signature_or_MAC is not used, since Enc is replaced with AEAD, so the authentication can be done using the AEAD tag.<a href="#section-6.2.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.2.2-4.1">
+              <p id="section-6.2.2-4.1.1">G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral public key of the Responder) and CIPHERTEXT_2.<a href="#section-6.2.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.2.2-4.2">
+              <p id="section-6.2.2-4.2.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-6.2.2-4.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2.2-4.2.2.1">
+                  <p id="section-6.2.2-4.2.2.1.1">PLAINTEXT_2 = (C_R, ID_CRED_PSK / bstr / -24..23, MAC_2, ? EAD_2)<a href="#section-6.2.2-4.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.2.2-4.2.2.2">
+                  <p id="section-6.2.2-4.2.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-6.2.2-4.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
 </li>
           </ul>
+<p id="section-6.2.2-5">The Responder computes MAC_2 as described in Section 4.1.2 of {RFC9528}, with context_2 &lt;&lt;C_R,ID_CRED_PSK, TH_2, ? EAD_2&gt;&gt;<a href="#section-6.2.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-3-1">
@@ -1694,16 +1794,35 @@ message_3 = (
                   </ul>
 </li>
                 <li class="normal" id="section-6.2.3-4.1.2.2">
-                  <p id="section-6.2.3-4.1.2.2.1">CIPHERTEXT_3_2 is a COSE_Encrypt0 object as defined in Sections 5.2 and 5.3 of {RFC9528}, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in Section 5.2 of {RFC9528} and the plaintext PLAINTEXT_3_2 described as follows:<a href="#section-6.2.3-4.1.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-6.2.3-4.1.2.2.1">CIPHERTEXT_3_2 is a COSE_Encrypt0 object as defined in Sections 5.2 and 5.3 of {RFC9052}, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in Section 5.2 of {RFC9528} and the plaintext PLAINTEXT_3_2 described as follows:<a href="#section-6.2.3-4.1.2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2.3-4.1.2.2.2.1">
-                      <p id="section-6.2.3-4.1.2.2.2.1.1">PLAINTEXT_3_2 = ( ID_CRED_I / bstr / -24..23, Signature_or_MAC_3, ? EAD_3 )<a href="#section-6.2.3-4.1.2.2.2.1.1" class="pilcrow">¶</a></p>
+                      <p id="section-6.2.3-4.1.2.2.2.1.1">PLAINTEXT_3_2 = ( ID_CRED_I / bstr / -24..23, ? EAD_3 )<a href="#section-6.2.3-4.1.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
                   </ul>
 </li>
               </ul>
 </li>
           </ul>
+<p id="section-6.2.3-5">The Initiator uses MAC instead of Signature. Hence, COSE_Sign1 is not used.
+The MAC_3 is computed following Section 4.1.2 of {RFC9528}, with context_3 = &lt;&lt;ID_CRED_PSK, TH_3, ? EAD_3&gt;&gt;.
+The Initiator computes TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_PSK)<a href="#section-6.2.3-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="message-4-1">
+<section id="section-6.2.4">
+          <h4 id="name-message-4-2">
+<a href="#section-6.2.4" class="section-number selfRef">6.2.4. </a><a href="#name-message-4-2" class="section-name selfRef">Message 4</a>
+          </h4>
+<p id="section-6.2.4-1">message_4 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-6.2.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.2.4-2">
+<pre>
+message_4 = (
+  CIPHERTEXT_4 : bstr,
+)
+</pre><a href="#section-6.2.4-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.2.4-3">message_4 is required for authentication.<a href="#section-6.2.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
