@@ -71,7 +71,7 @@ Table of Contents
      1.2.  Assumptions
    2.  Conventions and Definitions
    3.  Protocol
-   4.  Varaint 1
+   4.  Variant 1
      4.1.  Variant 2
    5.  Key derivation
      5.1.  Variant 1
@@ -171,7 +171,7 @@ Table of Contents
    It is RECOMMENDED that it uniquely identifies the PSK as the
    recipient might otherwise have to try several keys.
 
-4.  Varaint 1
+4.  Variant 1
 
    In the first variant of the method the ID_CRED_PSK is sent in the
    clear in the first message.
@@ -211,24 +211,24 @@ Table of Contents
    from the ephemeral shared secret, G_XY.  In this case, the Responder
    will authenticate the Initiator first, contrary to variant 1.
 
-  Initiator                                                   Responder
-  |                  METHOD, SUITES_I, G_X, C_I, EAD_1                |
-  +------------------------------------------------------------------>|
-  |                             message_1                             |
-  |                                                                   |
-  |                      G_Y, Enc( C_R, EAD_2 )                       |
-  |<------------------------------------------------------------------+
-  |                             message_2                             |
-  |                                                                   |
-  |                   Enc( ID_CRED_PSK ), AEAD( EAD_3 )                |
-  +------------------------------------------------------------------>|
-  |                             message_3                             |
-  |                                                                   |
-  |                           AEAD( EAD_4 )                           |
-  |<- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
-  |                             message_4                             |
+   Initiator                                                   Responder
+   |                  METHOD, SUITES_I, G_X, C_I, EAD_1                |
+   +------------------------------------------------------------------>|
+   |                             message_1                             |
+   |                                                                   |
+   |                      G_Y, Enc( C_R, EAD_2 )                       |
+   |<------------------------------------------------------------------+
+   |                             message_2                             |
+   |                                                                   |
+   |                   Enc( ID_CRED_PSK ), AEAD( EAD_3 )               |
+   +------------------------------------------------------------------>|
+   |                             message_3                             |
+   |                                                                   |
+   |                           AEAD( EAD_4 )                           |
+   |<------------------------------------------------------------------+
+   |                             message_4                             |
 
-             Figure 2: Overview of message flow of Variant 2.
+              Figure 2: Overview of message flow of Variant 2.
 
    Contrary to the variant 1, this approach provides protection against
    passive attackers for both Initiator and Responder.

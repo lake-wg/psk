@@ -1143,7 +1143,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-protocol" class="internal xref">Protocol</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-varaint-1" class="internal xref">Varaint 1</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-variant-1" class="internal xref">Variant 1</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-variant-2" class="internal xref">Variant 2</a></p>
@@ -1154,7 +1154,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-key-derivation" class="internal xref">Key derivation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-variant-1" class="internal xref">Variant 1</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-variant-1-2" class="internal xref">Variant 1</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
                 <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-variant-2-2" class="internal xref">Variant 2</a></p>
@@ -1165,7 +1165,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-message-formatting-and-proc" class="internal xref">Message formatting and processing. Differences with respect to {RFC9528}</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-variant-1-2" class="internal xref">Variant 1</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-variant-1-3" class="internal xref">Variant 1</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
                     <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-message-1" class="internal xref">Message 1</a></p>
@@ -1308,10 +1308,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 It is <span class="bcp14">RECOMMENDED</span> that it uniquely identifies the PSK as the recipient might otherwise have to try several keys.<a href="#section-3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="varaint-1">
+<div id="variant-1">
 <section id="section-4">
-      <h2 id="name-varaint-1">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-varaint-1" class="section-name selfRef">Varaint 1</a>
+      <h2 id="name-variant-1">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
       </h2>
 <p id="section-4-1">In the first variant of the method the ID_CRED_PSK is sent in the clear in the first message.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <span id="name-overview-of-message-flow-of"></span><div id="fig-variant1">
@@ -1411,15 +1411,16 @@ In this case, the Responder will authenticate the Initiator first, contrary to v
 <figure id="figure-2">
           <div id="section-4.1-2.1">
             <div class="alignCenter art-svg artwork" id="section-4.1-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="568" viewBox="0 0 568 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
-                <path d="M 552,48 L 552,160" fill="none" stroke="black"></path>
-                <path d="M 552,192 L 552,272" fill="none" stroke="black"></path>
+                <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
                 <path d="M 8,64 L 544,64" fill="none" stroke="black"></path>
                 <path d="M 16,128 L 552,128" fill="none" stroke="black"></path>
                 <path d="M 8,192 L 544,192" fill="none" stroke="black"></path>
+                <path d="M 16,256 L 552,256" fill="none" stroke="black"></path>
                 <polygon class="arrowhead" points="552,192 540,186.4 540,197.6" fill="black" transform="rotate(0,544,192)"></polygon>
                 <polygon class="arrowhead" points="552,64 540,58.4 540,69.6" fill="black" transform="rotate(0,544,64)"></polygon>
+                <polygon class="arrowhead" points="24,256 12,250.4 12,261.6" fill="black" transform="rotate(180,16,256)"></polygon>
                 <polygon class="arrowhead" points="24,128 12,122.4 12,133.6" fill="black" transform="rotate(180,16,128)"></polygon>
                 <g class="text">
                   <text x="40" y="36">Initiator</text>
@@ -1442,44 +1443,10 @@ In this case, the Responder will authenticate the Initiator first, contrary to v
                   <text x="344" y="180">AEAD(</text>
                   <text x="392" y="180">EAD_3</text>
                   <text x="424" y="180">)</text>
-                  <text x="560" y="180">|</text>
                   <text x="280" y="212">message_3</text>
                   <text x="248" y="244">AEAD(</text>
                   <text x="296" y="244">EAD_4</text>
                   <text x="328" y="244">)</text>
-                  <text x="20" y="260">&lt;-</text>
-                  <text x="40" y="260">-</text>
-                  <text x="56" y="260">-</text>
-                  <text x="72" y="260">-</text>
-                  <text x="88" y="260">-</text>
-                  <text x="104" y="260">-</text>
-                  <text x="120" y="260">-</text>
-                  <text x="136" y="260">-</text>
-                  <text x="152" y="260">-</text>
-                  <text x="168" y="260">-</text>
-                  <text x="184" y="260">-</text>
-                  <text x="200" y="260">-</text>
-                  <text x="216" y="260">-</text>
-                  <text x="232" y="260">-</text>
-                  <text x="248" y="260">-</text>
-                  <text x="264" y="260">-</text>
-                  <text x="280" y="260">-</text>
-                  <text x="296" y="260">-</text>
-                  <text x="312" y="260">-</text>
-                  <text x="328" y="260">-</text>
-                  <text x="344" y="260">-</text>
-                  <text x="360" y="260">-</text>
-                  <text x="376" y="260">-</text>
-                  <text x="392" y="260">-</text>
-                  <text x="408" y="260">-</text>
-                  <text x="424" y="260">-</text>
-                  <text x="440" y="260">-</text>
-                  <text x="456" y="260">-</text>
-                  <text x="472" y="260">-</text>
-                  <text x="488" y="260">-</text>
-                  <text x="504" y="260">-</text>
-                  <text x="520" y="260">-</text>
-                  <text x="536" y="260">-</text>
                   <text x="280" y="276">message_4</text>
                 </g>
               </svg><a href="#section-4.1-2.1.1" class="pilcrow">¶</a>
@@ -1508,10 +1475,10 @@ PRK  = EDHOC_Extract( salt, IKM )
 <p id="section-5-3">where the salt and input keying material (IKM) are defined for each key.
 The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in the cipher suite.
 The index of a PRK indicates its use or in what message protection operation it is used.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<div id="variant-1">
+<div id="variant-1-1">
 <section id="section-5.1">
-        <h3 id="name-variant-1">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
+        <h3 id="name-variant-1-2">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-variant-1-2" class="section-name selfRef">Variant 1</a>
         </h3>
 <p id="section-5.1-1">Figure { fig-variant1key } lists the key derivations that differ from those specified in Section 4.1.2 of {RFC9528}.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <span id="name-key-derivation-of-variant-1"></span><div id="fig-variant1key">
@@ -1593,10 +1560,10 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-message-formatting-and-proc" class="section-name selfRef">Message formatting and processing. Differences with respect to {RFC9528}</a>
       </h2>
 <p id="section-6-1">This section specifies the differences on the message formatting compared to {RFC9528}.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<div id="variant-1-1">
+<div id="variant-1-2">
 <section id="section-6.1">
-        <h3 id="name-variant-1-2">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-variant-1-2" class="section-name selfRef">Variant 1</a>
+        <h3 id="name-variant-1-3">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-variant-1-3" class="section-name selfRef">Variant 1</a>
         </h3>
 <div id="message-1">
 <section id="section-6.1.1">
