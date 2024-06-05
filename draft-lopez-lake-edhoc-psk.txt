@@ -4,8 +4,8 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                               31 May 2024
-Expires: 2 December 2024
+Intended status: Informational                               5 June 2024
+Expires: 7 December 2024
 
 
                         EDHOC PSK authentication
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 December 2024.
+   This Internet-Draft will expire on 7 December 2024.
 
 Copyright Notice
 
@@ -231,7 +231,8 @@ Table of Contents
               Figure 2: Overview of message flow of Variant 2.
 
    Contrary to the variant 1, this approach provides protection against
-   passive attackers for both Initiator and Responder.
+   passive attackers for both Initiator and Responder. message_4 is
+   mandatory in this case, since it is required for authentication.
 
 5.  Key derivation
 
