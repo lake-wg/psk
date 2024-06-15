@@ -4,8 +4,8 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                              12 June 2024
-Expires: 14 December 2024
+Intended status: Informational                              15 June 2024
+Expires: 17 December 2024
 
 
                         EDHOC PSK authentication
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 December 2024.
+   This Internet-Draft will expire on 17 December 2024.
 
 Copyright Notice
 
@@ -104,22 +104,22 @@ Table of Contents
 
 1.1.  Motivation
 
-   Pre-shared key (PSK) authentiction method provides a balance between
+   Pre-shared key (PSK) authentication method provides a balance between
    security and computational efficiency.  This authentication method
-   was propsed in the first drafts of Epehermal Diffie-Hellman Over COSE
+   was proposed in the first drafts of Ephermal Diffie-Hellman Over COSE
    (EDHOC), and was ruled out to speed out the development process.
    However, there is now a renewed effort to reintroduce PSK
    authentication, making this draft an update to the {RFC9528}.
 
-   One prominent use case of PSK auithentication in the (EDHOC) protocol
+   One prominent use case of PSK authentication in the (EDHOC) protocol
    is the update of session keys.  This method aims to reduce the
    computational cost that comes with re-running the protocol with
    public authentication keys.  This efficiency is beneficial in
-   scnearios where frequent key updates are needed, such in resource-
-   constrained environements or applictions requiring high-frequency
+   scenarios where frequent key updates are needed, such in resource-
+   constrained environments or applications requiring high-frequency
    secure communications.  The use of PSK authentication in EDHOC
    ensures that session key can be refreshed without heavy computational
-   overhead, typically asscociated with public key operations, thus
+   overhead, typically associated with public key operations, thus
    optimizing both performance and security.
 
    Moreover, the resumption capability in Extensible Authentication
@@ -130,7 +130,7 @@ Table of Contents
    EDHOC resumption can achieve secure session resumption, enhancing
    overall efficiency and user experience.
 
-   Lastly, EDCHO with PSK authentication can be useful in existing
+   Lastly, EDHOC with PSK authentication can be useful in existing
    systems where two nodes are given PSK from other parties and would
    like to perform ephemeral Diffie-Hellman to get Perfect Forward
    Secrecy (PFS) and hinder the other parties to eavesdrop unless they
@@ -158,18 +158,18 @@ Table of Contents
    In both cases, Initiator and Responder are assumed to have a PSK with
    good amount of randomness and the requirements that:
 
-   *  Only the initiator and the Responder have access to the PSK.
+   *  Only the initiator and the Responder have access to CRED_PSK.
 
-   *  The Responder is able to retrieve the PSK using ID_CRED_PSK.
+   *  The Responder is able to retrieve CRED_PSK using ID_CRED_PSK.
 
    where:
 
    *  ID_CRED_PSK is a COSE header map containing header parameters that
-      can identify a pre-shared key.
+      can identify a pre-shared key.  For example:
 
-   ID_CRED_PSK = {4 : kid }
+   ID_CRED_PSK = {4 : h'lf' }
 
-   *  PSK is an RPK encoded as a CCS:
+   *  CRED_PSK is an RPK encoded as a CCS.  For example:
 
    {                                               /CCS/
      2 : "mydotbot",                               /sub/
@@ -183,8 +183,13 @@ Table of Contents
    }
 
    The purpose of ID_CRED_PSK is to facilitate the retrieval of the PSK.
-   It is RECOMMENDED that it uniquely identifies the PSK as the
-   recipient might otherwise have to try several keys.
+   It is RECOMMENDED that it uniquely identifies the CRED_PSK as the
+   recipient might otherwise have to try several keys.  If ID_CRED_PSK
+   contains a single 'kid' parameter, then the compact encoding is
+   applied; see Section 3.5.3.2 of {RFC9528}. The authentication
+   credential CRED_PSK substitutes CRED_I and CRED_R specified in
+   {RFC9529}, and, when applicable, MUST follow the same guidelines
+   described in Sections 3.5.2 and 3.5.3 of {RFC9528}.
 
 4.  Variant 1
 
@@ -218,7 +223,7 @@ Table of Contents
 
    This variant incurs minimal modifications with respect to the current
    methods described in {RFC9528} and the fourth message remains
-   optional.
+   optional.  MAC_3 is not needed, since encryption is done using AEAD.
 
 4.1.  Variant 2
 
@@ -240,14 +245,13 @@ Table of Contents
    |                             message_3                             |
    |                                                                   |
    |                           AEAD( EAD_4 )                           |
-   |<------------------------------------------------------------------+
+   |<- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
    |                             message_4                             |
 
               Figure 2: Overview of message flow of Variant 2.
 
    Contrary to the variant 1, this approach provides protection against
-   passive attackers for both Initiator and Responder. message_4 is
-   mandatory in this case, since it is required for authentication.
+   passive attackers for both Initiator and Responder.
 
 5.  Key derivation
 
@@ -263,10 +267,10 @@ Table of Contents
 
 5.1.  Variant 1
 
-   Figure { fig-variant1key } lists the key derivations that differ from
-   those specified in Section 4.1.2 of {RFC9528}.
+   Figure 3 (Figure 3) lists the key derivations that differ from those
+   specified in Section 4.1.2 of {RFC9528}.
 
-     PRK_3e2m      = EDHOC_Extract( salt3e_2m, PSK)
+     PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK)
      PRK_4e3m      = PRK_3e2m
      MAC_2         = EDHOC_KDF( PRK_3e2m, 2, context_2, mac_length_2 )
      MAC_3         = EDHOC_KDF( PRK_4e3m, 6, context_3, mac_length_3 )
@@ -281,26 +285,18 @@ Table of Contents
       of {RFC9053}. It provides forward secrecy, as compromise of the
       private authentication keys does not compromise past session keys.
 
-   *  context_2 = <<C_R, ID_CRED_PSK, TH_2, ? EAD_2>>
+   *  context_2 = <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ? EAD_2>>
 
-   *  context_2 = <<ID_CRED_PSK, TH_3, ? EAD_3>>
-
-   I have a question regarding the PRK... They are all equal...
-   Shouldn't they be different, to include some randomness?  I also
-   understand that K_3,IV_3, KEYSTREAM_2 etc are the same since we are
-   using the MAC_2 and MAC_3 to authenticate, and hence, the tag of the
-   AEAD does not need to include information regarding the PSK.  This is
-   a difference with respect to variant 2
+   *  context_3 = <<ID_CRED_PSK, TH_3, CRED_PSK, ? EAD_3>>
 
 5.2.  Variant 2
 
-   Figure { fig-variant2key } lists the key derivations that differ from
-   those specified in Section 4.1.2 of {RFC9528}.
+   Figure 4 (Figure 4) lists the key derivations that differ from those
+   specified in Section 4.1.2 of {RFC9528}.
 
-  PRK_2e        = EDHOC_Extract( salt_2e, G_XY )
-  PRK_4e3m      = EDHOC_Extract( SALT_4e3m, PSK)
-  KEYSTREAM_3   = EDHOC_KDF( PRK_2e,      TBD,  TH_3,       key_length )
-  K_3           = EDHOC_KDF( PRK_3e2m,    TBD,  context_3,  key_length )
+  PRK_4e3m      = EDHOC_Extract( SALT_4e3m, CRED_PSK )
+  KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD,  TH_3,       key_length )
+  K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  key_length )
   IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
 
     Figure 4: Key derivation of variant 2 of EDHOC PSK authentication
@@ -308,15 +304,13 @@ Table of Contents
 
    where:
 
-   *  salt_2e = <<TH_2, PSK>>
-
    *  KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.
 
-   *  context_3 <<ID_CRED_PSK, TH_3, ? EAD_3>>
+   *  context_3 <<ID_CRED_PSK, TH_3, CRED_PSK, ? EAD_3>>
 
    *  TH_3 = H( TH_2, PLAINTEXT_2)
 
-   *  TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3 )
+   *  TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
 
 6.  Message formatting and processing.  Differences with respect to
     {RFC9528}
@@ -356,7 +350,7 @@ Table of Contents
 
    *  Decode message_1.
 
-   *  Retrieve the PSK using ID_CRED_PSK.
+   *  Retrieve CRED_PSK using ID_CRED_PSK.
 
    *  Process message_1 as specified in Section 5.2.3. of {RFC9528}.
 
@@ -376,14 +370,14 @@ Table of Contents
    *  CIPHERTEXT_2 is calculated with a binary additive stream cipher,
       using KEYSTREAM_2 and the following plaintext:
 
-      -  PLAINTEXT_2 = (C_R, ID_CRED_PSK / bstr / -24..23, MAC_2, ?
-         EAD_2)
+      -  PLAINTEXT_2 = (C_R, / bstr / -24..23, MAC_2, ? EAD_2)
 
       -  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
 
    The Responder uses MAC instead of Signature.  Hence, COSE_Sign1 is
    not used.  The Responder computes MAC_2 as described in Section 4.1.2
-   of {RFC9528}, with context_2 <<C_R,ID_CRED_PSK, TH_2, ? EAD_2>>
+   of {RFC9528}, with context_2 <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ?
+   EAD_2>>
 
 6.1.3.  Message 3
 
@@ -396,16 +390,16 @@ Table of Contents
    The Initiator uses MAC instead of Signature.  Hence, COSE_Sign1 is
    not used.  Why do we need MAC_3 if we are using AEAD?  The MAC_3 is
    computed following Section 4.1.2 of {RFC9528}, with context_3 =
-   <<ID_CRED_PSK, TH_3, ? EAD_3>>.  Since we are including MAC_3, should
-   we change K_3 and IV_3 to have ID_CRED_PSK or not?  The Initiator
-   computes a COSE_Encrypt0 object as defined in Section 5.2 and 5.3 of
-   {RFC9052} with the EDHOC AEAD algorithm of the selected cipher suite
-   and the following parameters:
+   <<ID_CRED_PSK, TH_3, CRED_PSK, ? EAD_3>>.  Since we are including
+   MAC_3, should we change K_3 and IV_3 to have ID_CRED_PSK or not?  The
+   Initiator computes a COSE_Encrypt0 object as defined in Section 5.2
+   and 5.3 of {RFC9052} with the EDHOC AEAD algorithm of the selected
+   cipher suite and the following parameters:
 
    *  K_3 and IV_3 as defined in Section 4.1.2 of {RFC9528}
 
    *  PLAINTEXT_3 = (ID_CRED_PSK / bstr / -24..2, ? EAD_3) The Initiator
-      computes TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_PSK)
+      computes TH_4 = H(TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK)
 
 6.1.4.  Message 4
 
@@ -439,13 +433,11 @@ Table of Contents
    *  CIPHERTEXT_2 is calculated with a binary additive stream cipher,
       using KEYSTREAM_2 and the following plaintext:
 
-      -  PLAINTEXT_2 = (C_R, ID_CRED_PSK / bstr / -24..23, MAC_2, ?
-         EAD_2)
+      -  PLAINTEXT_2 = (C_R, / bstr / -24..23, ? EAD_2)
 
       -  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
 
-   The Responder computes MAC_2 as described in Section 4.1.2 of
-   {RFC9528}, with context_2 <<C_R,ID_CRED_PSK, TH_2, ? EAD_2>>
+   Contrary to {RFC9528}, MAC_2 is not needed.
 
 6.2.3.  Message 3
 
@@ -459,25 +451,23 @@ Table of Contents
 
    *  CIPHERTEXT_3 is a concatenation of two different ciphertexts:
 
-      -  CIPHERTEXT_3_1 is calculated with a binary additive stream
+      -  CIPHERTEXT_3A is calculated with a binary additive stream
          cipher, using a KESYSTREAM_3 generated with EDHOC_Expand and
          the following plaintext:
 
-         o  PLAINTEXT_3_1 = (ID_CRED_PSK)
+         o  PLAINTEXT_3A = ( ID_CRED_PSK )
 
-      -  CIPHERTEXT_3_2 is a COSE_Encrypt0 object as defined in Sections
+      -  CIPHERTEXT_3B is a COSE_Encrypt0 object as defined in Sections
          5.2 and 5.3 of {RFC9052}, with the EDHOC AEAD algorithm of the
          selected cipher suite, using the encryption key K_3, the
          initialization vector IV_3 (if used by the AEAD algorithm), the
          parameters described in Section 5.2 of {RFC9528} and the
-         plaintext PLAINTEXT_3_2 described as follows:
+         plaintext PLAINTEXT_3B described as follows:
 
-         o  PLAINTEXT_3_2 = ( ID_CRED_I / bstr / -24..23, ? EAD_3 )
+         o  PLAINTEXT_3B = ( ? EAD_3 )
 
-   The Initiator uses MAC instead of Signature.  Hence, COSE_Sign1 is
-   not used.  The MAC_3 is computed following Section 4.1.2 of
-   {RFC9528}, with context_3 = <<ID_CRED_PSK, TH_3, ? EAD_3>>.  The
-   Initiator computes TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_PSK)
+   Since encryption is done using AEAD, MAC_3 is not needed.  The
+   Initiator computes TH_4 = H(TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK)
 
 6.2.4.  Message 4
 
@@ -487,7 +477,11 @@ Table of Contents
      CIPHERTEXT_4 : bstr,
    )
 
-   message_4 is required for authentication.
+   message_4 remains optional.  However, the Initiator MUST NOT
+   persistently store PRK_out or application keys until the Initiator
+   has verified message_4 or a message protected with a derived
+   application key, such as an OSCORE message, from the Responder and
+   the application has authenticated the Responder.
 
 7.  Security Considerations
 
@@ -504,8 +498,8 @@ Table of Contents
    It's important to differentiate between the initial handshake and
    session resumption when considering the usage of PSK in EDHOC.
 
-   1.  *Initial Handshake*: a fres PSK is used to establish a secure
-       connection.
+   1.  *Initial Handshake*: a fresh CRED_PSK is used to establish a
+       secure connection.
 
    2.  *Session Resumption*: the same PSK identifier (ID_CRED_PSK) is
        reused each time EDHOC is executed.  While this reuses enhances
@@ -513,7 +507,7 @@ Table of Contents
        privacy risks if not managed properly.  Over multiple resumption
        sessions, initiating a full EDHOC session changes the resumption
        PSK, resulting in a new ID_CRED_PSK.  The periodic renewal of the
-       PSK and ID_CRED_PSK helps mitigate long-term privacy risks
+       CRED_PSK and ID_CRED_PSK helps mitigate long-term privacy risks
        associated with static key identifiers.
 
 8.2.  Identity protection
@@ -538,16 +532,16 @@ Table of Contents
    1.  *Variant 1*: message_4 is kept optional since both identities are
        authenticated after message_3.
 
-   2.  *Variant 2*: message_4 is compulsory since it is required to
-       authenticate the Initiator.  However, message_4 can be replaced
-       with OSCORE.
+   2.  *Variant 2*: message_4 remains optional, but mutual
+       authentication is not guaranteed without it, or an OSCORE
+       message.
 
 8.4.  External Authorization Data
 
    In both variants, the Initiator and Responder can send information in
    EAD_3 and EAD_4 or in OSCORE messages in parallel with message_3 and
    message_4.  This is possible because the Initiator knows that only
-   the entity with access to the PSK can decrypt the information.
+   the entity with access to the CRED_PSK can decrypt the information.
 
 9.  Unified Approach and Recommendations
 
