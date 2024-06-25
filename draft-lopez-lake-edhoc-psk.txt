@@ -4,8 +4,8 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                              15 June 2024
-Expires: 17 December 2024
+Intended status: Informational                              25 June 2024
+Expires: 27 December 2024
 
 
                         EDHOC PSK authentication
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 December 2024.
+   This Internet-Draft will expire on 27 December 2024.
 
 Copyright Notice
 
@@ -77,7 +77,7 @@ Table of Contents
      5.1.  Variant 1
      5.2.  Variant 2
    6.  Message formatting and processing.  Differences with respect to
-           {RFC9528}
+           RFC9528
      6.1.  Variant 1
        6.1.1.  Message 1
        6.1.2.  Message 2
@@ -89,11 +89,14 @@ Table of Contents
        6.2.3.  Message 3
        6.2.4.  Message 4
    7.  Security Considerations
+     7.1.  Identity protection
+     7.2.  Number of messages
+     7.3.  External Authorization Data
+     7.4.  Optimization
+     7.5.  Mutual Authentication
+     7.6.  Attacks
+     7.7.  Comparison
    8.  Privacy Considerations
-     8.1.  Initial Handshake vs. Session Resumption
-     8.2.  Identity protection
-     8.3.  Number of messages
-     8.4.  External Authorization Data
    9.  Unified Approach and Recommendations
    10. IANA Considerations
    11. Normative References
@@ -106,13 +109,13 @@ Table of Contents
 
    Pre-shared key (PSK) authentication method provides a balance between
    security and computational efficiency.  This authentication method
-   was proposed in the first drafts of Ephermal Diffie-Hellman Over COSE
-   (EDHOC), and was ruled out to speed out the development process.
+   was proposed in the first drafts of Ephemeral Diffie-Hellman Over
+   COSE (EDHOC), and was ruled out to speed out the development process.
    However, there is now a renewed effort to reintroduce PSK
-   authentication, making this draft an update to the {RFC9528}.
+   authentication, making this draft an update to the [RFC9528].
 
-   One prominent use case of PSK authentication in the (EDHOC) protocol
-   is the update of session keys.  This method aims to reduce the
+   One prominent use case of PSK authentication in the EDHOC protocol is
+   the update of session keys.  This method aims to reduce the
    computational cost that comes with re-running the protocol with
    public authentication keys.  This efficiency is beneficial in
    scenarios where frequent key updates are needed, such in resource-
@@ -122,22 +125,25 @@ Table of Contents
    overhead, typically associated with public key operations, thus
    optimizing both performance and security.
 
-   Moreover, the resumption capability in Extensible Authentication
-   Protocol (EAP) leveraging EDHOC can benefit from this method.  EAP-
-   EDHOC resumption aims to provide a streamlined process for re-
-   establishing secure sessions, reducing latency and resource
-   consumption.  By employing PSK authentication for key updates, EAP-
-   EDHOC resumption can achieve secure session resumption, enhancing
-   overall efficiency and user experience.
+   The resumption capability in Extensible Authentication Protocol (EAP)
+   leveraging EDHOC can benefit from this method.  EAP-EDHOC resumption
+   aims to provide a streamlined process for re-establishing secure
+   sessions, reducing latency and resource consumption.  By employing
+   PSK authentication for key updates, EAP-EDHOC resumption can achieve
+   secure session resumption, enhancing overall efficiency and user
+   experience.
 
-   Lastly, EDHOC with PSK authentication can be useful in existing
-   systems where two nodes are given PSK from other parties and would
-   like to perform ephemeral Diffie-Hellman to get Perfect Forward
-   Secrecy (PFS) and hinder the other parties to eavesdrop unless they
-   are active on-path attackers during the whole communication.
-   Examples could be Generic Bootstrapping Architecture (GBA) and
-   Authenticated Key Management Architecture (AKMA) in mobile systems,
-   or Peer and Authenticator in EAP.
+   EDHOC with PSK authentication is also beneficial for existing systems
+   where two nodes have been provided with a PSK from other parties.
+   This allows the nodes to perform ephemeral Diffie-Hellman to achieve
+   Perfect Forward Secrecy (PFS), ensuring that past communications
+   remain secure even if the PSK is compromised.  The authentication
+   provided by EDHOC prevents eavesdropping by on-path attackers, as
+   they would need to be active participants in the communication to
+   intercept and potentially tamper with the session.  Examples could be
+   Generic Bootstrapping Architecture (GBA) and Authenticated Key
+   Management Architecture (AKMA) in mobile systems, or Peer and
+   Authenticator in EAP.
 
 1.2.  Assumptions
 
@@ -153,14 +159,15 @@ Table of Contents
 
    There are currently two proposed versions of the authentication
    method, depending on where the pre-shared key identifier
-   (ID_CRED_PSK) sent.
+   (ID_CRED_PSK) is sent.  ID_CRED_PSK allows retrieval of CRED_PSK, a
+   COSE object that contains the PSK.
 
    In both cases, Initiator and Responder are assumed to have a PSK with
    good amount of randomness and the requirements that:
 
-   *  Only the initiator and the Responder have access to CRED_PSK.
+   *  Only the Initiator and the Responder have access to the PSK.
 
-   *  The Responder is able to retrieve CRED_PSK using ID_CRED_PSK.
+   *  The Responder is able to retrieve the PSK using ID_CRED_PSK.
 
    where:
 
@@ -169,7 +176,8 @@ Table of Contents
 
    ID_CRED_PSK = {4 : h'lf' }
 
-   *  CRED_PSK is an RPK encoded as a CCS.  For example:
+   *  CRED_PSK is a COSE_Key compatible credential, encoded as a CCS or
+      CWT.  For example:
 
    {                                               /CCS/
      2 : "mydotbot",                               /sub/
@@ -186,15 +194,16 @@ Table of Contents
    It is RECOMMENDED that it uniquely identifies the CRED_PSK as the
    recipient might otherwise have to try several keys.  If ID_CRED_PSK
    contains a single 'kid' parameter, then the compact encoding is
-   applied; see Section 3.5.3.2 of {RFC9528}. The authentication
+   applied; see Section 3.5.3.2 of [RFC9528].  The authentication
    credential CRED_PSK substitutes CRED_I and CRED_R specified in
-   {RFC9529}, and, when applicable, MUST follow the same guidelines
-   described in Sections 3.5.2 and 3.5.3 of {RFC9528}.
+   [RFC9529], and, when applicable, MUST follow the same guidelines
+   described in Sections 3.5.2 and 3.5.3 of [RFC9528].
 
 4.  Variant 1
 
    In the first variant of the method the ID_CRED_PSK is sent in the
-   clear in the first message.
+   clear in the first message.  Figure 1 shows the message flow of
+   Variant 1.
 
    Initiator                                                   Responder
    |          METHOD, SUITES_I, G_X, C_I, ID_CRED_PSK, EAD_1           |
@@ -216,20 +225,46 @@ Table of Contents
               Figure 1: Overview of message flow of Variant 1.
 
    This approach is similar to TLS 1.3, and, consequently, has similar
-   privacy issues:
+   privacy issues.  For example:
 
    *  *Identity Leakage*: neither the identity of the Initiator nor the
-      Responder are protected against active or passive attackers.
+      Responder are protected against active or passive attackers.  By
+      sending the ID_CRED_PSK in the clear, the initiator reveals its
+      identity to any eavesdropper on the network.  This allows passive
+      observers to learn which client is attempting to connect to the
+      server.
+
+   *  *Tracking and correlation*: An attacker can use the plaintext
+      ID_CRED_PSK to track the client across multiple connections, even
+      if those connections are made from different networks or at
+      different times.  This enables long-term tracking of clients.
+
+   *  *Information leakage about relationships*: ID_CRED_PSK also
+      reveals information about the relationship between the client and
+      the server.  An observer can infer that the two parties have a
+      pre-existing relationship and have previously agreed on a shared
+      secret.
+
+   *  *Replay and preplay attacks*: ID_CRED_PSK can facilitate replay
+      attacks.  An attacker might use the observed ID_CRED_PSK to
+      initiate their own connection attempts, potentially leading to
+      denial-of-service or other attacks.
+
+   *  *Downgrade attacks*: If multiple PSKs are available (e.g., of
+      varying strengths or for different purposes), an attacker might
+      attempt to force the use of a weaker or less privacy-preserving
+      PSK by manipulating the ID_CRED_PSK field.
 
    This variant incurs minimal modifications with respect to the current
-   methods described in {RFC9528} and the fourth message remains
-   optional.  MAC_3 is not needed, since encryption is done using AEAD.
+   methods described in [RFC9528] and the fourth message remains
+   optional.  MAC_3 is removed in message_3 and replaced by AEAD.
 
 4.1.  Variant 2
 
    The ID_CRED_PSK is sent in message_3, encrypted using a key derived
    from the ephemeral shared secret, G_XY.  In this case, the Responder
-   will authenticate the Initiator first, contrary to variant 1.
+   will authenticate the Initiator first, contrary to Variant 1.
+   Figure 2 shows the message flow of Variant 2.
 
    Initiator                                                   Responder
    |                  METHOD, SUITES_I, G_X, C_I, EAD_1                |
@@ -245,45 +280,42 @@ Table of Contents
    |                             message_3                             |
    |                                                                   |
    |                           AEAD( EAD_4 )                           |
-   |<- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+   |<------------------------------------------------------------------+
    |                             message_4                             |
 
               Figure 2: Overview of message flow of Variant 2.
 
-   Contrary to the variant 1, this approach provides protection against
-   passive attackers for both Initiator and Responder.
+   Contrary to Variant 1, this approach provides protection against
+   passive attackers for both Initiator and Responder. message_4 remains
+   optional, but is needed to achieve mutual authentication if not
+   relaying on external applications, such as OSCORE.
 
 5.  Key derivation
 
    The pseudorandom keys (PRKs) used for PSK authentication method in
-   EDHOC are derived using EDHOC_Extract, as done in {RFC9528}.
+   EDHOC are derived using EDHOC_Extract, as done in [RFC9528].
 
    PRK  = EDHOC_Extract( salt, IKM )
 
    where the salt and input keying material (IKM) are defined for each
    key.  The definition of EDHOC_Extract depends on the EDHOC hash
-   algorithm selected in the cipher suite.  The index of a PRK indicates
-   its use or in what message protection operation it is used.
+   algorithm selected in the cipher suite.
 
 5.1.  Variant 1
 
-   Figure 3 (Figure 3) lists the key derivations that differ from those
-   specified in Section 4.1.2 of {RFC9528}.
+   Figure 3 lists the key derivations that differ from those specified
+   in Section 4.1.2 of [RFC9528].
 
-     PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK)
-     PRK_4e3m      = PRK_3e2m
-     MAC_2         = EDHOC_KDF( PRK_3e2m, 2, context_2, mac_length_2 )
-     MAC_3         = EDHOC_KDF( PRK_4e3m, 6, context_3, mac_length_3 )
+  PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK )
+  PRK_4e3m      = PRK_3e2m
+  MAC_2         = EDHOC_KDF( PRK_3e2m, 2, context_2, mac_length_2 )
+  K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  key_length )
+  IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
 
-     Figure 3: Key derivation of variant 1 of EDHOC PSK authentication
-                                  method.
+    Figure 3: Key derivation of variant 1 of EDHOC PSK authentication
+                                 method.
 
    where:
-
-   *  The IKM is the ephemeral-ephemeral shared secret G_XY, obtained
-      using either G_X and Y or G_Y and X, as defined in section 6.3.1
-      of {RFC9053}. It provides forward secrecy, as compromise of the
-      private authentication keys does not compromise past session keys.
 
    *  context_2 = <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ? EAD_2>>
 
@@ -291,8 +323,8 @@ Table of Contents
 
 5.2.  Variant 2
 
-   Figure 4 (Figure 4) lists the key derivations that differ from those
-   specified in Section 4.1.2 of {RFC9528}.
+   Figure 4 lists the key derivations that differ from those specified
+   in Section 4.1.2 of [RFC9528].
 
   PRK_4e3m      = EDHOC_Extract( SALT_4e3m, CRED_PSK )
   KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD,  TH_3,       key_length )
@@ -313,10 +345,10 @@ Table of Contents
    *  TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
 
 6.  Message formatting and processing.  Differences with respect to
-    {RFC9528}
+    [RFC9528]
 
    This section specifies the differences on the message formatting
-   compared to {RFC9528}.
+   compared to [RFC9528].
 
 6.1.  Variant 1
 
@@ -344,7 +376,7 @@ Table of Contents
 
    The Initiator includes ID_CRED_PSK in message_1 and encodes the full
    message as a sequence of CBOR-encoded data items as specified in
-   Section 5.2.1. of {RFC9528}
+   Section 5.2.1. of [RFC9528]
 
    The Responder SHALL process message_1 as follows:
 
@@ -352,7 +384,7 @@ Table of Contents
 
    *  Retrieve CRED_PSK using ID_CRED_PSK.
 
-   *  Process message_1 as specified in Section 5.2.3. of {RFC9528}.
+   *  Process message_1 as specified in Section 5.2.3. of [RFC9528].
 
 6.1.2.  Message 2
 
@@ -376,7 +408,7 @@ Table of Contents
 
    The Responder uses MAC instead of Signature.  Hence, COSE_Sign1 is
    not used.  The Responder computes MAC_2 as described in Section 4.1.2
-   of {RFC9528}, with context_2 <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ?
+   of [RFC9528], with context_2 <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ?
    EAD_2>>
 
 6.1.3.  Message 3
@@ -387,19 +419,16 @@ Table of Contents
      CIPHERTEXT_3 : bstr,
    )
 
-   The Initiator uses MAC instead of Signature.  Hence, COSE_Sign1 is
-   not used.  Why do we need MAC_3 if we are using AEAD?  The MAC_3 is
-   computed following Section 4.1.2 of {RFC9528}, with context_3 =
-   <<ID_CRED_PSK, TH_3, CRED_PSK, ? EAD_3>>.  Since we are including
-   MAC_3, should we change K_3 and IV_3 to have ID_CRED_PSK or not?  The
-   Initiator computes a COSE_Encrypt0 object as defined in Section 5.2
-   and 5.3 of {RFC9052} with the EDHOC AEAD algorithm of the selected
-   cipher suite and the following parameters:
+   The Initiator computes a COSE_Encrypt0 object as defined in
+   Section 5.2 and 5.3 of [RFC9052] with the EDHOC AEAD algorithm of the
+   selected cipher suite and the following parameters:
 
-   *  K_3 and IV_3 as defined in Section 4.1.2 of {RFC9528}
+   *  K_3 and IV_3 as defined in Section 4.1.2 of [RFC9528]
 
-   *  PLAINTEXT_3 = (ID_CRED_PSK / bstr / -24..2, ? EAD_3) The Initiator
-      computes TH_4 = H(TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK)
+   *  PLAINTEXT_3 = ( ID_CRED_PSK / bstr / -24..2, ? EAD_3 )
+
+   The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3,
+   CRED_PSK )
 
 6.1.4.  Message 4
 
@@ -415,7 +444,7 @@ Table of Contents
 
 6.2.1.  Message 1
 
-   Same as message_1 of EDHOC, described in Section 5.2.1 of {RFC9528}.
+   Same as message_1 of EDHOC, described in Section 5.2.1 of [RFC9528].
 
 6.2.2.  Message 2
 
@@ -433,11 +462,11 @@ Table of Contents
    *  CIPHERTEXT_2 is calculated with a binary additive stream cipher,
       using KEYSTREAM_2 and the following plaintext:
 
-      -  PLAINTEXT_2 = (C_R, / bstr / -24..23, ? EAD_2)
+      -  PLAINTEXT_2 = ( C_R, / bstr / -24..23, ? EAD_2 )
 
       -  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
 
-   Contrary to {RFC9528}, MAC_2 is not needed.
+   Contrary to [RFC9528] and Variant 1, MAC_2 is not needed.
 
 6.2.3.  Message 3
 
@@ -458,16 +487,22 @@ Table of Contents
          o  PLAINTEXT_3A = ( ID_CRED_PSK )
 
       -  CIPHERTEXT_3B is a COSE_Encrypt0 object as defined in Sections
-         5.2 and 5.3 of {RFC9052}, with the EDHOC AEAD algorithm of the
+         5.2 and 5.3 of [RFC9052], with the EDHOC AEAD algorithm of the
          selected cipher suite, using the encryption key K_3, the
          initialization vector IV_3 (if used by the AEAD algorithm), the
-         parameters described in Section 5.2 of {RFC9528} and the
-         plaintext PLAINTEXT_3B described as follows:
+         parameters described in Section 5.2 of [RFC9528], plaintext
+         PLAINTEXT_3B and the following parameters as input:
+
+         o  protected = h''
+
+         o  external_aad = context_3, defined in Section 5.2
+
+         o  K_3 and IV_3 are defined in Section 5.2
 
          o  PLAINTEXT_3B = ( ? EAD_3 )
 
-   Since encryption is done using AEAD, MAC_3 is not needed.  The
-   Initiator computes TH_4 = H(TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK)
+   The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3,
+   CRED_PSK ), defined in Section 5.2.
 
 6.2.4.  Message 4
 
@@ -477,26 +512,17 @@ Table of Contents
      CIPHERTEXT_4 : bstr,
    )
 
-   message_4 remains optional.  However, the Initiator MUST NOT
-   persistently store PRK_out or application keys until the Initiator
-   has verified message_4 or a message protected with a derived
-   application key, such as an OSCORE message, from the Responder and
-   the application has authenticated the Responder.
+   A fourth message is mandatory.  The Initiator MUST NOT persistently
+   store PRK_out or application keys until the Initiator has verified
+   message_4 or a message protected with a derived application key, such
+   as an OSCORE message, from the Responder and the application has
+   authenticated the Responder.
 
 7.  Security Considerations
 
-   TODO Security
-
-8.  Privacy Considerations
-
-   When evaluating the privacy considerations, it is important to
+   When evaluating the security considerations, it is important to
    differentiate between the initial handshake and session resumption
    phases.
-
-8.1.  Initial Handshake vs. Session Resumption
-
-   It's important to differentiate between the initial handshake and
-   session resumption when considering the usage of PSK in EDHOC.
 
    1.  *Initial Handshake*: a fresh CRED_PSK is used to establish a
        secure connection.
@@ -510,7 +536,7 @@ Table of Contents
        CRED_PSK and ID_CRED_PSK helps mitigate long-term privacy risks
        associated with static key identifiers.
 
-8.2.  Identity protection
+7.1.  Identity protection
 
    The current EDHOC methods protect the Initiator’s identity against
    active attackers and the Responder’s identity against passive
@@ -523,31 +549,119 @@ Table of Contents
    2.  *Variant 2*: bot the Initiator's and Responder's identities are
        protected against passive attackers.
 
-8.3.  Number of messages
+7.2.  Number of messages
 
    The current EDHOC protocol consists of three mandatory messages and
    an optional fourth message.  The PSK authentication method might
    require a compulsory message depending on which variant is employed:
 
-   1.  *Variant 1*: message_4 is kept optional since both identities are
+   1.  *Variant 1*: message_4 is optional since both identities are
        authenticated after message_3.
 
    2.  *Variant 2*: message_4 remains optional, but mutual
        authentication is not guaranteed without it, or an OSCORE
        message.
 
-8.4.  External Authorization Data
+7.3.  External Authorization Data
 
    In both variants, the Initiator and Responder can send information in
    EAD_3 and EAD_4 or in OSCORE messages in parallel with message_3 and
    message_4.  This is possible because the Initiator knows that only
    the entity with access to the CRED_PSK can decrypt the information.
 
+7.4.  Optimization
+
+   1.  *Variant 1*: ID_CRED_PSK is sent without encryption, saving
+       computational resources at the cost of privacy.  In addition, the
+       exposure of ID_CRED_PSK in message_1 allows for earlier key
+       derivation on the responder's side, potentially speeding up the
+       process.
+
+   2.  *Variant 2*: Requires encryption of ID_CRED_PSK in message_3,
+       which implies higher computational cost.
+
+7.5.  Mutual Authentication
+
+   Mutual authentication is achieved at earlier stages in Variant 1,
+   which might be important in certain applications, as well as
+   increasing security against attacks such as DoS or oracle attacks.
+
+7.6.  Attacks
+
+   1.  *Variant 1*: It is more vulnerable to passive monitoring and
+       traffic analysis due to the exposed ID_CRED_PSK.
+
+   2.  *Variant 2*:
+
+7.7.  Comparison
+
+     +====================+====================+=====================+
+     | Aspect             | Variant 1 (Clear   | Variant 2           |
+     |                    | ID_CRED_PSK)       | (Encrypted          |
+     |                    |                    | ID_CRED_PSK)        |
+     +====================+====================+=====================+
+     | Privacy            | Lower: ID_CRED_PSK | Higher: ID_CRED_PSK |
+     |                    | sent in clear in   | encrypted in        |
+     |                    | message_1          | message_3           |
+     +--------------------+--------------------+---------------------+
+     | Initiator Identity | Exposed from       | Protected until     |
+     | Protection         | message_1          | message_3           |
+     +--------------------+--------------------+---------------------+
+     | Authentication     | Earlier, possible  | Delayed until       |
+     | Timing             | from message_1     | message_3           |
+     +--------------------+--------------------+---------------------+
+     | Computational      | Slightly higher    | Slightly lower      |
+     | Efficiency         | (no encryption of  | (encryption of      |
+     |                    | ID_CRED_PSK)       | ID_CRED_PSK)        |
+     +--------------------+--------------------+---------------------+
+     | Resistance to      | Lower due to       | Higher due to       |
+     | Passive Attacks    | exposed identity   | identity protection |
+     +--------------------+--------------------+---------------------+
+     | Early Access       | Possible from      | Limited, delayed    |
+     | Control            | message_1          | until message_3     |
+     +--------------------+--------------------+---------------------+
+     | DoS Attack         | Lower due to early | Potentially higher  |
+     | Vulnerability      | authentication     | due to delayed      |
+     |                    |                    | authentication      |
+     +--------------------+--------------------+---------------------+
+     | Resource           | Fewer resources    | More resources      |
+     | Allocation         | allocated before   | allocated before    |
+     |                    | authentication     | authentication      |
+     +--------------------+--------------------+---------------------+
+     | Compatibility with | Higher             | Lower               |
+     | Systems Expecting  |                    |                     |
+     | Early ID           |                    |                     |
+     +--------------------+--------------------+---------------------+
+     | Flexibility for    | Lower              | Higher              |
+     | Identity           |                    |                     |
+     | Protection         |                    |                     |
+     +--------------------+--------------------+---------------------+
+     | Key Derivation     | Potentially        | Potentially delayed |
+     | Timing             | earlier            |                     |
+     +--------------------+--------------------+---------------------+
+     | Message Structure  | ID_CRED_PSK in     | ID_CRED_PSK in      |
+     |                    | message_1, MAC_2   | message_3           |
+     |                    | in encrypted part  |                     |
+     |                    | of message_2       |                     |
+     +--------------------+--------------------+---------------------+
+     | Completeness       | Complete with      | Complete with       |
+     |                    | optional message_4 | optional message_4  |
+     +--------------------+--------------------+---------------------+
+     | Suitability for    | Higher             | Lower               |
+     | Quick              |                    |                     |
+     | Identification     |                    |                     |
+     | Scenarios          |                    |                     |
+     +--------------------+--------------------+---------------------+
+
+                                  Table 1
+
+8.  Privacy Considerations
+
 9.  Unified Approach and Recommendations
 
    To improve privacy during both initial handshake and session
    resumption, a single unified method for handling PSKs could be
-   beneficial.  Approach 2 is particularly suitable for this purpose as
+   beneficial.  Variant 2 is particularly suitable for this purpose as
    it streamlines key management and usage across different phases.
 
    For use cases involving the transmission of application data,
@@ -582,6 +696,21 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9052]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Structures and Process", STD 96, RFC 9052,
+              DOI 10.17487/RFC9052, August 2022,
+              <https://www.rfc-editor.org/rfc/rfc9052>.
+
+   [RFC9528]  Selander, G., Preuß Mattsson, J., and F. Palombini,
+              "Ephemeral Diffie-Hellman Over COSE (EDHOC)", RFC 9528,
+              DOI 10.17487/RFC9528, March 2024,
+              <https://www.rfc-editor.org/rfc/rfc9528>.
+
+   [RFC9529]  Selander, G., Preuß Mattsson, J., Serafin, M., Tiloca, M.,
+              and M. Vučinić, "Traces of Ephemeral Diffie-Hellman Over
+              COSE (EDHOC)", RFC 9529, DOI 10.17487/RFC9529, March 2024,
+              <https://www.rfc-editor.org/rfc/rfc9529>.
 
 Acknowledgments
 
