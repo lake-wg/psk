@@ -1954,88 +1954,93 @@ This is possible because the Initiator knows that only the entity with access to
         <h3 id="name-comparison">
 <a href="#section-7.7" class="section-number selfRef">7.7. </a><a href="#name-comparison" class="section-name selfRef">Comparison</a>
         </h3>
+<span id="name-comparison-between-variant-"></span><div id="comparison-table">
 <table class="center" id="table-1">
-          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-comparison-between-variant-" class="selfRef">Comparison between Variant 1 and Variant 2.</a>
+          </caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Aspect</th>
+              <th class="text-right" rowspan="1" colspan="1">Aspect</th>
               <th class="text-left" rowspan="1" colspan="1">Variant 1 (Clear ID_CRED_PSK)</th>
               <th class="text-left" rowspan="1" colspan="1">Variant 2 (Encrypted ID_CRED_PSK)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Privacy</td>
+              <td class="text-right" rowspan="1" colspan="1">Privacy</td>
               <td class="text-left" rowspan="1" colspan="1">Lower: ID_CRED_PSK sent in clear in message_1</td>
               <td class="text-left" rowspan="1" colspan="1">Higher: ID_CRED_PSK encrypted in message_3</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Initiator Identity Protection</td>
+              <td class="text-right" rowspan="1" colspan="1">Initiator Identity Protection</td>
               <td class="text-left" rowspan="1" colspan="1">Exposed from message_1</td>
               <td class="text-left" rowspan="1" colspan="1">Protected until message_3</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Authentication Timing</td>
+              <td class="text-right" rowspan="1" colspan="1">Authentication Timing</td>
               <td class="text-left" rowspan="1" colspan="1">Earlier, possible from message_1</td>
               <td class="text-left" rowspan="1" colspan="1">Delayed until message_3</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Computational Efficiency</td>
+              <td class="text-right" rowspan="1" colspan="1">Computational Efficiency</td>
               <td class="text-left" rowspan="1" colspan="1">Slightly higher (no encryption of ID_CRED_PSK)</td>
               <td class="text-left" rowspan="1" colspan="1">Slightly lower (encryption of ID_CRED_PSK)</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Resistance to Passive Attacks</td>
+              <td class="text-right" rowspan="1" colspan="1">Resistance to Passive Attacks</td>
               <td class="text-left" rowspan="1" colspan="1">Lower due to exposed identity</td>
               <td class="text-left" rowspan="1" colspan="1">Higher due to identity protection</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Early Access Control</td>
+              <td class="text-right" rowspan="1" colspan="1">Early Access Control</td>
               <td class="text-left" rowspan="1" colspan="1">Possible from message_1</td>
               <td class="text-left" rowspan="1" colspan="1">Limited, delayed until message_3</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">DoS Attack Vulnerability</td>
+              <td class="text-right" rowspan="1" colspan="1">DoS Attack Vulnerability</td>
               <td class="text-left" rowspan="1" colspan="1">Lower due to early authentication</td>
               <td class="text-left" rowspan="1" colspan="1">Potentially higher due to delayed authentication</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Resource Allocation</td>
+              <td class="text-right" rowspan="1" colspan="1">Resource Allocation</td>
               <td class="text-left" rowspan="1" colspan="1">Fewer resources allocated before authentication</td>
               <td class="text-left" rowspan="1" colspan="1">More resources allocated before authentication</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Compatibility with Systems Expecting Early ID</td>
+              <td class="text-right" rowspan="1" colspan="1">Compatibility with Systems Expecting Early ID</td>
               <td class="text-left" rowspan="1" colspan="1">Higher</td>
               <td class="text-left" rowspan="1" colspan="1">Lower</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Flexibility for Identity Protection</td>
+              <td class="text-right" rowspan="1" colspan="1">Flexibility for Identity Protection</td>
               <td class="text-left" rowspan="1" colspan="1">Lower</td>
               <td class="text-left" rowspan="1" colspan="1">Higher</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Key Derivation Timing</td>
+              <td class="text-right" rowspan="1" colspan="1">Key Derivation Timing</td>
               <td class="text-left" rowspan="1" colspan="1">Potentially earlier</td>
               <td class="text-left" rowspan="1" colspan="1">Potentially delayed</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Message Structure</td>
+              <td class="text-right" rowspan="1" colspan="1">Message Structure</td>
               <td class="text-left" rowspan="1" colspan="1">ID_CRED_PSK in message_1, MAC_2 in encrypted part of message_2</td>
               <td class="text-left" rowspan="1" colspan="1">ID_CRED_PSK in message_3</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Completeness</td>
+              <td class="text-right" rowspan="1" colspan="1">Completeness</td>
               <td class="text-left" rowspan="1" colspan="1">Complete with optional message_4</td>
               <td class="text-left" rowspan="1" colspan="1">Complete with optional message_4</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Suitability for Quick Identification Scenarios</td>
+              <td class="text-right" rowspan="1" colspan="1">Suitability for Quick Identification Scenarios</td>
               <td class="text-left" rowspan="1" colspan="1">Higher</td>
               <td class="text-left" rowspan="1" colspan="1">Lower</td>
             </tr>
           </tbody>
         </table>
+</div>
 </section>
 </div>
 </section>
