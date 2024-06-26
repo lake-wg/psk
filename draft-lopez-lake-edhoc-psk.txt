@@ -4,8 +4,8 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                              25 June 2024
-Expires: 27 December 2024
+Intended status: Informational                              26 June 2024
+Expires: 28 December 2024
 
 
                         EDHOC PSK authentication
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 December 2024.
+   This Internet-Draft will expire on 28 December 2024.
 
 Copyright Notice
 
@@ -224,7 +224,10 @@ Table of Contents
 
               Figure 1: Overview of message flow of Variant 1.
 
-   This approach is similar to TLS 1.3, and, consequently, has similar
+   This variant incurs minimal modifications with respect to the current
+   methods described in [RFC9528] and the fourth message remains
+   optional.  MAC_3 is removed in message_3 and replaced by AEAD.  This
+   approach is similar to TLS 1.3, and, consequently, has similar
    privacy issues.  For example:
 
    *  *Identity Leakage*: neither the identity of the Initiator nor the
@@ -254,10 +257,6 @@ Table of Contents
       varying strengths or for different purposes), an attacker might
       attempt to force the use of a weaker or less privacy-preserving
       PSK by manipulating the ID_CRED_PSK field.
-
-   This variant incurs minimal modifications with respect to the current
-   methods described in [RFC9528] and the fourth message remains
-   optional.  MAC_3 is removed in message_3 and replaced by AEAD.
 
 4.1.  Variant 2
 
@@ -306,14 +305,14 @@ Table of Contents
    Figure 3 lists the key derivations that differ from those specified
    in Section 4.1.2 of [RFC9528].
 
-  PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK )
-  PRK_4e3m      = PRK_3e2m
-  MAC_2         = EDHOC_KDF( PRK_3e2m, 2, context_2, mac_length_2 )
-  K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  key_length )
-  IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length  )
+PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK )
+PRK_4e3m      = PRK_3e2m
+MAC_2         = EDHOC_KDF( PRK_3e2m,      2,  context_2,  mac_length_2 )
+K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  key_length   )
+IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length    )
 
-    Figure 3: Key derivation of variant 1 of EDHOC PSK authentication
-                                 method.
+  Figure 3: Key derivation of variant 1 of EDHOC PSK authentication
+                               method.
 
    where:
 
@@ -497,7 +496,7 @@ Table of Contents
 
          o  external_aad = context_3, defined in Section 5.2
 
-         o  K_3 and IV_3 are defined in Section 5.2
+         o  K_3 and IV_3 as defined in Section 5.2
 
          o  PLAINTEXT_3B = ( ? EAD_3 )
 
@@ -528,7 +527,7 @@ Table of Contents
        secure connection.
 
    2.  *Session Resumption*: the same PSK identifier (ID_CRED_PSK) is
-       reused each time EDHOC is executed.  While this reuses enhances
+       reused each time EDHOC is executed.  While this enhances
        efficiency and reduces the overhead of key exchanges, it presents
        privacy risks if not managed properly.  Over multiple resumption
        sessions, initiating a full EDHOC session changes the resumption
@@ -546,7 +545,7 @@ Table of Contents
    1.  *Variant 1*: neither the Initiator's identity nor the Responder's
        identity are protected against active or passive attackers.
 
-   2.  *Variant 2*: bot the Initiator's and Responder's identities are
+   2.  *Variant 2*: both the Initiator's and Responder's identities are
        protected against passive attackers.
 
 7.2.  Number of messages
@@ -572,26 +571,30 @@ Table of Contents
 7.4.  Optimization
 
    1.  *Variant 1*: ID_CRED_PSK is sent without encryption, saving
-       computational resources at the cost of privacy.  In addition, the
-       exposure of ID_CRED_PSK in message_1 allows for earlier key
-       derivation on the responder's side, potentially speeding up the
-       process.
+       computational resources at the cost of privacy.  The exposure of
+       ID_CRED_PSK in message_1 allows for earlier key derivation on the
+       responder's side, potentially speeding up the process.
 
-   2.  *Variant 2*: Requires encryption of ID_CRED_PSK in message_3,
+   2.  *Variant 2*: It requires encryption of ID_CRED_PSK in message_3,
        which implies higher computational cost.
 
 7.5.  Mutual Authentication
 
    Mutual authentication is achieved at earlier stages in Variant 1,
    which might be important in certain applications, as well as
-   increasing security against attacks such as DoS or oracle attacks.
+   increasing security against Denial of Service attacks or oracle
+   attacks.
 
 7.6.  Attacks
 
-   1.  *Variant 1*: It is more vulnerable to passive monitoring and
-       traffic analysis due to the exposed ID_CRED_PSK.
+   1.  *Variant 1*: it allows for earlier authentication, potentially
+       improving resistance to some active attacks, but at the cost of
+       reduced privacy and increased vulnerability to passive attacks
+       and traffic analysis.-
 
-   2.  *Variant 2*:
+   2.  *Variant 2*: it offers better privacy and resistance to passive
+       attacks but might be more vulnerable to certain active attacks
+       due to delayed authentication.
 
 7.7.  Comparison
 
@@ -672,8 +675,9 @@ Table of Contents
    message_4, with a required change in the protocol's language to: The
    Initiator SHALL NOT persistently store PRK_out or application keys
    until the Initiator has verified message_4 or a message protected
-   with a derived application key, such as an OSCORE message.  This
-   change ensures that key materials are only stored once their
+   with a derived application key, such as an OSCORE message.
+
+   This change ensures that key materials are only stored once their
    integrity and authenticity are confirmed, thereby enhancing privacy
    by preventing early storage of potentially compromised keys.
 
