@@ -598,65 +598,57 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  context_3,  iv_length    )
 
 7.7.  Comparison
 
-     +====================+====================+=====================+
-     |             Aspect | Variant 1 (Clear   | Variant 2           |
-     |                    | ID_CRED_PSK)       | (Encrypted          |
-     |                    |                    | ID_CRED_PSK)        |
-     +====================+====================+=====================+
-     |            Privacy | Lower: ID_CRED_PSK | Higher: ID_CRED_PSK |
-     |                    | sent in clear in   | encrypted in        |
-     |                    | message_1          | message_3           |
-     +--------------------+--------------------+---------------------+
-     | Initiator Identity | Exposed from       | Protected until     |
-     |         Protection | message_1          | message_3           |
-     +--------------------+--------------------+---------------------+
-     |     Authentication | Earlier, possible  | Delayed until       |
-     |             Timing | from message_1     | message_3           |
-     +--------------------+--------------------+---------------------+
-     |      Computational | Slightly higher    | Slightly lower      |
-     |         Efficiency | (no encryption of  | (encryption of      |
-     |                    | ID_CRED_PSK)       | ID_CRED_PSK)        |
-     +--------------------+--------------------+---------------------+
-     |      Resistance to | Lower due to       | Higher due to       |
-     |    Passive Attacks | exposed identity   | identity protection |
-     +--------------------+--------------------+---------------------+
-     |       Early Access | Possible from      | Limited, delayed    |
-     |            Control | message_1          | until message_3     |
-     +--------------------+--------------------+---------------------+
-     |         DoS Attack | Lower due to early | Potentially higher  |
-     |      Vulnerability | authentication     | due to delayed      |
-     |                    |                    | authentication      |
-     +--------------------+--------------------+---------------------+
-     |           Resource | Fewer resources    | More resources      |
-     |         Allocation | allocated before   | allocated before    |
-     |                    | authentication     | authentication      |
-     +--------------------+--------------------+---------------------+
-     | Compatibility with | Higher             | Lower               |
-     |  Systems Expecting |                    |                     |
-     |           Early ID |                    |                     |
-     +--------------------+--------------------+---------------------+
-     |    Flexibility for | Lower              | Higher              |
-     |           Identity |                    |                     |
-     |         Protection |                    |                     |
-     +--------------------+--------------------+---------------------+
-     |     Key Derivation | Potentially        | Potentially delayed |
-     |             Timing | earlier            |                     |
-     +--------------------+--------------------+---------------------+
-     |  Message Structure | ID_CRED_PSK in     | ID_CRED_PSK in      |
-     |                    | message_1, MAC_2   | message_3           |
-     |                    | in encrypted part  |                     |
-     |                    | of message_2       |                     |
-     +--------------------+--------------------+---------------------+
-     |       Completeness | Complete with      | Complete with       |
-     |                    | optional message_4 | optional message_4  |
-     +--------------------+--------------------+---------------------+
-     |    Suitability for | Higher             | Lower               |
-     |              Quick |                    |                     |
-     |     Identification |                    |                     |
-     |          Scenarios |                    |                     |
-     +--------------------+--------------------+---------------------+
+   +======================+====================+======================+
+   |               Aspect | Variant 1 (Clear   | Variant 2 (Encrypted |
+   |                      | ID_CRED_PSK)       | ID_CRED_PSK)         |
+   +======================+====================+======================+
+   |              Privacy | Lower: ID_CRED_PSK | Higher: ID_CRED_PSK  |
+   |                      | sent in clear in   | encrypted in         |
+   |                      | message_1          | message_3            |
+   +----------------------+--------------------+----------------------+
+   |   Initiator Identity | Exposed from       | Protected until      |
+   |           Protection | message_1          | message_3            |
+   +----------------------+--------------------+----------------------+
+   |       Authentication | Earlier, possible  | Delayed until        |
+   |               Timing | from message_1     | message_3            |
+   +----------------------+--------------------+----------------------+
+   |        Computational | Slightly higher    | Slightly lower       |
+   |           Efficiency | (no encryption of  | (encryption of       |
+   |                      | ID_CRED_PSK)       | ID_CRED_PSK)         |
+   +----------------------+--------------------+----------------------+
+   |        Resistance to | Lower due to       | Higher due to        |
+   |      Passive Attacks | exposed identity   | identity protection  |
+   +----------------------+--------------------+----------------------+
+   | Early Access Control | Possible from      | Limited, delayed     |
+   |                      | message_1          | until message_3      |
+   +----------------------+--------------------+----------------------+
+   |           DoS Attack | Lower due to early | Potentially higher   |
+   |        Vulnerability | authentication     | due to delayed       |
+   |                      |                    | authentication       |
+   +----------------------+--------------------+----------------------+
+   |  Resource Allocation | Fewer resources    | More resources       |
+   |                      | allocated before   | allocated before     |
+   |                      | authentication     | authentication       |
+   +----------------------+--------------------+----------------------+
+   |   Compatibility with | Higher             | Lower                |
+   |    Systems Expecting |                    |                      |
+   |             Early ID |                    |                      |
+   +----------------------+--------------------+----------------------+
+   |      Flexibility for | Lower              | Higher               |
+   |  Identity Protection |                    |                      |
+   +----------------------+--------------------+----------------------+
+   |       Key Derivation | Potentially        | Potentially delayed  |
+   |               Timing | earlier            |                      |
+   +----------------------+--------------------+----------------------+
+   |         Completeness | Complete with      | Complete with        |
+   |                      | optional message_4 | optional message_4   |
+   +----------------------+--------------------+----------------------+
+   |      Suitability for | Higher             | Lower                |
+   | Quick Identification |                    |                      |
+   |            Scenarios |                    |                      |
+   +----------------------+--------------------+----------------------+
 
-            Table 1: Comparison between Variant 1 and Variant 2.
+           Table 1: Comparison between Variant 1 and Variant 2.
 
 8.  Privacy Considerations
 
