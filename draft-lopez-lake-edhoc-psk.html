@@ -1143,10 +1143,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-protocol" class="internal xref">Protocol</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-variant-1" class="internal xref">Variant 1</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-credentials" class="internal xref">Credentials</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-variant-2" class="internal xref">Variant 2</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-variant-1" class="internal xref">Variant 1</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-variant-2" class="internal xref">Variant 2</a></p>
 </li>
             </ul>
 </li>
@@ -1301,32 +1304,37 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       </h2>
 <p id="section-3-1">There are currently two proposed versions of the authentication method, depending on where the pre-shared key identifier (ID_CRED_PSK) is sent.
 ID_CRED_PSK allows retrieval of CRED_PSK, a COSE object that contains the PSK.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">In both cases, Initiator and Responder are assumed to have a PSK with good amount of randomness and the requirements that:<a href="#section-3-2" class="pilcrow">¶</a></p>
+<div id="credentials">
+<section id="section-3.1">
+        <h3 id="name-credentials">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-credentials" class="section-name selfRef">Credentials</a>
+        </h3>
+<p id="section-3.1-1">In both varaints, Initiator and Responder are assumed to have a PSK with good amount of randomness and the requirements that:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-3.1">
-          <p id="section-3-3.1.1">Only the Initiator and the Responder have access to the PSK.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1-2.1">
+            <p id="section-3.1-2.1.1">Only the Initiator and the Responder have access to the PSK.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-3.2">
-          <p id="section-3-3.2.1">The Responder is able to retrieve the PSK using ID_CRED_PSK.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1">The Responder is able to retrieve the PSK using ID_CRED_PSK.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-3-4">where:<a href="#section-3-4" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-3.1-3">where:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-5.1">
-          <p id="section-3-5.1.1">ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. For example:<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1-4.1">
+            <p id="section-3.1-4.1.1">ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. For example:<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<div class="alignLeft art-text artwork" id="section-3-6">
+        </ul>
+<div class="alignLeft art-text artwork" id="section-3.1-5">
 <pre>
 ID_CRED_PSK = {4 : h'lf' }
-</pre><a href="#section-3-6" class="pilcrow">¶</a>
+</pre><a href="#section-3.1-5" class="pilcrow">¶</a>
 </div>
 <ul class="normal">
-<li class="normal" id="section-3-7.1">
-          <p id="section-3-7.1.1">CRED_PSK is a COSE_Key compatible credential, encoded as a CCS or CWT. For example:<a href="#section-3-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1-6.1">
+            <p id="section-3.1-6.1.1">CRED_PSK is a COSE_Key compatible credential, encoded as a CCS or CWT. For example:<a href="#section-3.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<div class="alignLeft art-text artwork" id="section-3-8">
+        </ul>
+<div class="alignLeft art-text artwork" id="section-3.1-7">
 <pre>
 {                                               /CCS/
   2 : "mydotbot",                               /sub/
@@ -1338,23 +1346,25 @@ ID_CRED_PSK = {4 : h'lf' }
     }
   }
 }
-</pre><a href="#section-3-8" class="pilcrow">¶</a>
+</pre><a href="#section-3.1-7" class="pilcrow">¶</a>
 </div>
-<p id="section-3-9">The purpose of ID_CRED_PSK is to facilitate the retrieval of the PSK.
+<p id="section-3.1-8">The purpose of ID_CRED_PSK is to facilitate the retrieval of the PSK.
 It is <span class="bcp14">RECOMMENDED</span> that it uniquely identifies the CRED_PSK as the recipient might otherwise have to try several keys.
 If ID_CRED_PSK contains a single 'kid' parameter, then the compact encoding is applied; see Section 3.5.3.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified in <span>[<a href="#RFC9529" class="cite xref">RFC9529</a>]</span>, and, when applicable, <span class="bcp14">MUST</span> follow the same guidelines described in Sections 3.5.2 and 3.5.3 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3-9" class="pilcrow">¶</a></p>
+The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified in <span>[<a href="#RFC9529" class="cite xref">RFC9529</a>]</span>, and, when applicable, <span class="bcp14">MUST</span> follow the same guidelines described in Sections 3.5.2 and 3.5.3 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
 <div id="variant-1">
-<section id="section-3.1">
+<section id="section-3.2">
         <h3 id="name-variant-1">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
         </h3>
-<p id="section-3.1-1">In the first variant of the method the ID_CRED_PSK is sent in the clear in the first message.
-<a href="#fig-variant1" class="auto internal xref">Figure 1</a> shows the message flow of Variant 1.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">In the first variant of the method the ID_CRED_PSK is sent in the clear in the first message.
+<a href="#fig-variant1" class="auto internal xref">Figure 1</a> shows the message flow of Variant 1.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <span id="name-overview-of-message-flow-of"></span><div id="fig-variant1">
 <figure id="figure-1">
-          <div id="section-3.1-2.1">
-            <div class="alignCenter art-svg artwork" id="section-3.1-2.1.1">
+          <div id="section-3.2-2.1">
+            <div class="alignCenter art-svg artwork" id="section-3.2-2.1.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
                 <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
@@ -1423,53 +1433,53 @@ The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified i
                   <text x="536" y="260">-</text>
                   <text x="280" y="276">message_4</text>
                 </g>
-              </svg><a href="#section-3.1-2.1.1" class="pilcrow">¶</a>
+              </svg><a href="#section-3.2-2.1.1" class="pilcrow">¶</a>
 </div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-overview-of-message-flow-of" class="selfRef">Overview of message flow of Variant 1.</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-3">This variant incurs minimal modifications with respect to the current methods described in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> and the fourth message remains optional.
-MAC_3 is removed in message_3 and replaced by AEAD.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">Not sure this should go here. Probably not.
-This approach is similar to TLS 1.3, and, consequently, has similar privacy issues. For example:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This variant incurs minimal modifications with respect to the current methods described in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> and the fourth message remains optional.
+MAC_3 is removed in message_3 and replaced by AEAD.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">Not sure this should go here. Probably not.
+This approach is similar to TLS 1.3, and, consequently, has similar privacy issues. For example:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.1-5.1">
-            <p id="section-3.1-5.1.1"><strong>Identity Leakage</strong>: neither the identity of the Initiator nor the Responder are protected against active or passive attackers.
+<li class="normal" id="section-3.2-5.1">
+            <p id="section-3.2-5.1.1"><strong>Identity Leakage</strong>: neither the identity of the Initiator nor the Responder are protected against active or passive attackers.
 By sending the ID_CRED_PSK in the clear, the initiator reveals its identity to any eavesdropper on the network.
-This allows passive observers to learn which entity is attempting to connect to the server.<a href="#section-3.1-5.1.1" class="pilcrow">¶</a></p>
+This allows passive observers to learn which entity is attempting to connect to the server.<a href="#section-3.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-5.2">
-            <p id="section-3.1-5.2.1"><strong>Tracking and correlation</strong>: An attacker can use the plaintext ID_CRED_PSK to track the entity across multiple connections, even if those connections are made from different networks or at different times.
-This enables long-term tracking of entities.<a href="#section-3.1-5.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-5.2">
+            <p id="section-3.2-5.2.1"><strong>Tracking and correlation</strong>: An attacker can use the plaintext ID_CRED_PSK to track the entity across multiple connections, even if those connections are made from different networks or at different times.
+This enables long-term tracking of entities.<a href="#section-3.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-5.3">
-            <p id="section-3.1-5.3.1"><strong>Information leakage about relationships</strong>: ID_CRED_PSK also reveals information about the relationship between the Initiator and the Responder.
-An observer can infer that the two parties have a pre-existing relationship and have previously agreed on a shared secret.<a href="#section-3.1-5.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-5.3">
+            <p id="section-3.2-5.3.1"><strong>Information leakage about relationships</strong>: ID_CRED_PSK also reveals information about the relationship between the Initiator and the Responder.
+An observer can infer that the two parties have a pre-existing relationship and have previously agreed on a shared secret.<a href="#section-3.2-5.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-5.4">
-            <p id="section-3.1-5.4.1"><strong>Replay and preplay attacks</strong>: ID_CRED_PSK can facilitate replay attacks.
-An attacker might use the observed ID_CRED_PSK to initiate their own connection attempts, potentially leading to denial-of-service or other attacks.<a href="#section-3.1-5.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-5.4">
+            <p id="section-3.2-5.4.1"><strong>Replay and preplay attacks</strong>: ID_CRED_PSK can facilitate replay attacks.
+An attacker might use the observed ID_CRED_PSK to initiate their own connection attempts, potentially leading to denial-of-service or other attacks.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-5.5">
-            <p id="section-3.1-5.5.1"><strong>Downgrade attacks</strong>: If multiple PSKs are available (e.g., of varying strengths or for different purposes), an attacker might attempt to force the use of a weaker or less privacy-preserving PSK by manipulating the ID_CRED_PSK field.<a href="#section-3.1-5.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-5.5">
+            <p id="section-3.2-5.5.1"><strong>Downgrade attacks</strong>: If multiple PSKs are available (e.g., of varying strengths or for different purposes), an attacker might attempt to force the use of a weaker or less privacy-preserving PSK by manipulating the ID_CRED_PSK field.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="variant-2">
-<section id="section-3.2">
+<section id="section-3.3">
         <h3 id="name-variant-2">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-variant-2" class="section-name selfRef">Variant 2</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-variant-2" class="section-name selfRef">Variant 2</a>
         </h3>
-<p id="section-3.2-1">The ID_CRED_PSK is sent in message_3, encrypted using a key derived from the ephemeral shared secret, G_XY.
+<p id="section-3.3-1">The ID_CRED_PSK is sent in message_3, encrypted using a key derived from the ephemeral shared secret, G_XY.
 In this case, the Responder will authenticate the Initiator first, contrary to Variant 1.
-<a href="#fig-variant2" class="auto internal xref">Figure 2</a> shows the message flow of Variant 2.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<a href="#fig-variant2" class="auto internal xref">Figure 2</a> shows the message flow of Variant 2.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <span id="name-overview-of-message-flow-of-"></span><div id="fig-variant2">
 <figure id="figure-2">
-          <div id="section-3.2-2.1">
-            <div class="alignCenter art-svg artwork" id="section-3.2-2.1.1">
+          <div id="section-3.3-2.1">
+            <div class="alignCenter art-svg artwork" id="section-3.3-2.1.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
                 <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
@@ -1508,15 +1518,15 @@ In this case, the Responder will authenticate the Initiator first, contrary to V
                   <text x="328" y="244">)</text>
                   <text x="280" y="276">message_4</text>
                 </g>
-              </svg><a href="#section-3.2-2.1.1" class="pilcrow">¶</a>
+              </svg><a href="#section-3.3-2.1.1" class="pilcrow">¶</a>
 </div>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-overview-of-message-flow-of-" class="selfRef">Overview of message flow of Variant 2.</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-3">Contrary to Variant 1, this approach provides protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to to authenticate the Responder and achieve mutual authentication in EDHOC if not relaying on external applications, such as OSCORE.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.3-3">Contrary to Variant 1, this approach provides protection against passive attackers for both Initiator and Responder.
+message_4 remains optional, but is needed to to authenticate the Responder and achieve mutual authentication in EDHOC if not relaying on external applications, such as OSCORE.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

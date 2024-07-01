@@ -71,8 +71,9 @@ Table of Contents
      1.2.  Assumptions
    2.  Conventions and Definitions
    3.  Protocol
-     3.1.  Variant 1
-     3.2.  Variant 2
+     3.1.  Credentials
+     3.2.  Variant 1
+     3.3.  Variant 2
    4.  Key derivation
      4.1.  Variant 1
      4.2.  Variant 2
@@ -162,8 +163,10 @@ Table of Contents
    (ID_CRED_PSK) is sent.  ID_CRED_PSK allows retrieval of CRED_PSK, a
    COSE object that contains the PSK.
 
-   In both cases, Initiator and Responder are assumed to have a PSK with
-   good amount of randomness and the requirements that:
+3.1.  Credentials
+
+   In both varaints, Initiator and Responder are assumed to have a PSK
+   with good amount of randomness and the requirements that:
 
    *  Only the Initiator and the Responder have access to the PSK.
 
@@ -199,7 +202,7 @@ Table of Contents
    [RFC9529], and, when applicable, MUST follow the same guidelines
    described in Sections 3.5.2 and 3.5.3 of [RFC9528].
 
-3.1.  Variant 1
+3.2.  Variant 1
 
    In the first variant of the method the ID_CRED_PSK is sent in the
    clear in the first message.  Figure 1 shows the message flow of
@@ -260,7 +263,7 @@ Table of Contents
       attempt to force the use of a weaker or less privacy-preserving
       PSK by manipulating the ID_CRED_PSK field.
 
-3.2.  Variant 2
+3.3.  Variant 2
 
    The ID_CRED_PSK is sent in message_3, encrypted using a key derived
    from the ephemeral shared secret, G_XY.  In this case, the Responder
