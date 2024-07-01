@@ -4,8 +4,8 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                              28 June 2024
-Expires: 30 December 2024
+Intended status: Informational                               1 July 2024
+Expires: 2 January 2025
 
 
                         EDHOC PSK authentication
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 December 2024.
+   This Internet-Draft will expire on 2 January 2025.
 
 Copyright Notice
 
@@ -236,19 +236,19 @@ Table of Contents
       Responder are protected against active or passive attackers.  By
       sending the ID_CRED_PSK in the clear, the initiator reveals its
       identity to any eavesdropper on the network.  This allows passive
-      observers to learn which client is attempting to connect to the
+      observers to learn which entity is attempting to connect to the
       server.
 
    *  *Tracking and correlation*: An attacker can use the plaintext
-      ID_CRED_PSK to track the client across multiple connections, even
+      ID_CRED_PSK to track the entity across multiple connections, even
       if those connections are made from different networks or at
-      different times.  This enables long-term tracking of clients.
+      different times.  This enables long-term tracking of entities.
 
    *  *Information leakage about relationships*: ID_CRED_PSK also
-      reveals information about the relationship between the client and
-      the server.  An observer can infer that the two parties have a
-      pre-existing relationship and have previously agreed on a shared
-      secret.
+      reveals information about the relationship between the Initiator
+      and the Responder.  An observer can infer that the two parties
+      have a pre-existing relationship and have previously agreed on a
+      shared secret.
 
    *  *Replay and preplay attacks*: ID_CRED_PSK can facilitate replay
       attacks.  An attacker might use the observed ID_CRED_PSK to
@@ -320,6 +320,8 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,       iv_length    )
    where:
 
    *  context_2 = <<C_R, ID_CRED_PSK, TH_2, CRED_PSK, ? EAD_2>>
+
+   *  TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )
 
 4.2.  Variant 2
 
@@ -422,12 +424,15 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,       iv_length    )
    Section 5.2 and 5.3 of [RFC9052] with the EDHOC AEAD algorithm of the
    selected cipher suite and the following parameters:
 
-   *  K_3 and IV_3 as defined in Section 4.1.2 of [RFC9528]
+   *  protected = h''
 
-   *  PLAINTEXT_3 = ( ID_CRED_PSK / bstr / -24..2, ? EAD_3 )
+   *  external_aad = TH_3, as defined in Section 5.2
 
-   The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3,
-   CRED_PSK )
+   *  K_3 and IV_3 as defined in Section 5.2
+
+   *  PLAINTEXT_3 = ( ? EAD_3 )
+
+   The Initiator computes TH_4 = H( TH_3, PLAINTEXT_3, CRED_PSK )
 
 5.1.4.  Message 4
 
@@ -634,7 +639,7 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,       iv_length    )
    +----------------------+--------------------+----------------------+
    |   Compatibility with | Higher             | Lower                |
    |    Systems Expecting |                    |                      |
-   |             Early ID |                    |                      |
+   | Early Identification |                    |                      |
    +----------------------+--------------------+----------------------+
    |      Flexibility for | Lower              | Higher               |
    |  Identity Protection |                    |                      |
