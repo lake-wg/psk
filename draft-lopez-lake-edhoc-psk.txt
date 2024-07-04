@@ -2,12 +2,12 @@
 
 
 
-LAKE Working Group                                           E. L. Perez
+LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
 Expires: 5 January 2025                                   J. P. Mattsson
                                                                 Ericsson
-                                                             R. L. Marin
+                                                          R. Marin-Lopez
                                                     University of Murcia
                                                              4 July 2024
 
@@ -735,7 +735,7 @@ Acknowledgments
 
 Authors' Addresses
 
-   Elsa Lopez Perez
+   Elsa Lopez-Perez
    Inria
    Email: elsa.lopez-perez@inria.fr
 
@@ -750,6 +750,6 @@ Authors' Addresses
    Email: john.mattsson@ericsson.com
 
 
-   Rafael Lopez Marin
+   Rafael Marin-Lopez
    University of Murcia
    Email: rafa@um.es
