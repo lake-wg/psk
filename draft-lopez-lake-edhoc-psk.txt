@@ -4,8 +4,12 @@
 
 LAKE Working Group                                           E. L. Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                               1 July 2024
-Expires: 2 January 2025
+Intended status: Informational                               G. Selander
+Expires: 5 January 2025                                   J. P. Mattsson
+                                                                Ericsson
+                                                             R. L. Marin
+                                                    University of Murcia
+                                                             4 July 2024
 
 
                         EDHOC PSK authentication
@@ -13,7 +17,14 @@ Expires: 2 January 2025
 
 Abstract
 
-   TODO Abstract
+   This document specifies two variants of pre-shared key (PSK)
+   authentication for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key
+   exchange protocol.  Both variants use a pre-shared key for
+   authentication, but differ in when the PSK credential identifier
+   (ID_CRED_PSK) is transmitted.  In the first variant, ID_CRED_PSK is
+   sent in message 1, while in the second variant, it is sent in message
+   3.  This document describes the authentication processes, message
+   flows, and security considerations for each variant.
 
 About This Document
 
@@ -48,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 January 2025.
+   This Internet-Draft will expire on 5 January 2025.
 
 Copyright Notice
 
@@ -102,7 +113,7 @@ Table of Contents
    9.  IANA Considerations
    10. Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -722,8 +733,23 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    Elsa Lopez Perez
    Inria
    Email: elsa.lopez-perez@inria.fr
+
+
+   Göran Selander
+   Ericsson
+   Email: goran.selander@ericsson.com
+
+
+   John Preuß Mattsson
+   Ericsson
+   Email: john.mattsson@ericsson.com
+
+
+   Rafael Lopez Marin
+   University of Murcia
+   Email: rafa@um.es
