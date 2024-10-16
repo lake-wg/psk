@@ -10,23 +10,23 @@
 <meta content="John Preuß Mattsson" name="author">
 <meta content="Rafael Marin-Lopez" name="author">
 <meta content="
-       This document specifies two variants of pre-shared key (PSK) authentication for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. Both variants use a pre-shared key for authentication, but differ in when the PSK credential identifier (ID_CRED_PSK) is transmitted. In the first variant, ID_CRED_PSK is sent in message 1, while in the second variant, it is sent in message 3. This document describes the authentication processes, message flows, and security considerations for each variant. 
+       This document specifies the Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. Initially there were two proposed versions and after an in depth study of both (PSK1 and PSK2), the working group decided to move on forward with PSK2, which we will refer to as EDHOC-PSK. This document describes the authentication processes, message flows, and security considerations of this authentication method. 
     " name="description">
-<meta content="xml2rfc 3.22.0" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="draft-lopez-lake-edhoc-psk-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.22.0
-    Python 3.12.3
+  xml2rfc 3.23.2
+    Python 3.12.7
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.32.3
-    setuptools 69.5.1
+    setuptools 70.3.0
     wcwidth 0.2.13
 -->
 <link href="draft-lopez-lake-edhoc-psk.xml" rel="alternate" type="application/rfc+xml">
@@ -1026,11 +1026,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">TODO - Abbreviation</td>
-<td class="right">July 2024</td>
+<td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 5 January 2025</td>
+<td class="center">Expires 19 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1043,12 +1043,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-lopez-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-07-04" class="published">4 July 2024</time>
+<time datetime="2024-10-16" class="published">16 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-01-05">5 January 2025</time></dd>
+<dd class="expires"><time datetime="2025-04-19">19 April 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1073,7 +1073,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">EDHOC PSK authentication</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document specifies two variants of pre-shared key (PSK) authentication for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. Both variants use a pre-shared key for authentication, but differ in when the PSK credential identifier (ID_CRED_PSK) is transmitted. In the first variant, ID_CRED_PSK is sent in message 1, while in the second variant, it is sent in message 3. This document describes the authentication processes, message flows, and security considerations for each variant.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document specifies the Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. Initially there were two proposed versions and after an in depth study of both (PSK1 and PSK2), the working group decided to move on forward with PSK2, which we will refer to as EDHOC-PSK. This document describes the authentication processes, message flows, and security considerations of this authentication method.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1110,7 +1110,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1160,60 +1160,27 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-credentials" class="internal xref">Credentials</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-variant-1" class="internal xref">Variant 1</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-variant-2" class="internal xref">Variant 2</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-message-flow-of-psk" class="internal xref">Message flow of PSK</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-key-derivation" class="internal xref">Key derivation</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-variant-1-2" class="internal xref">Variant 1</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-variant-2-2" class="internal xref">Variant 2</a></p>
-</li>
-            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-message-formatting-and-proc" class="internal xref">Message formatting and processing. Differences with respect to RFC9528</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-variant-1-3" class="internal xref">Variant 1</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
-                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-message-1" class="internal xref">Message 1</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
-                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-message-2" class="internal xref">Message 2</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
-                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-message-3" class="internal xref">Message 3</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.4">
-                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-message-4" class="internal xref">Message 4</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-message-1" class="internal xref">Message 1</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-variant-2-3" class="internal xref">Variant 2</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.1">
-                    <p id="section-toc.1-1.5.2.2.2.1.1"><a href="#section-5.2.1" class="auto internal xref">5.2.1</a>.  <a href="#name-message-1-2" class="internal xref">Message 1</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-message-2" class="internal xref">Message 2</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.2">
-                    <p id="section-toc.1-1.5.2.2.2.2.1"><a href="#section-5.2.2" class="auto internal xref">5.2.2</a>.  <a href="#name-message-2-2" class="internal xref">Message 2</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-message-3" class="internal xref">Message 3</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.3">
-                    <p id="section-toc.1-1.5.2.2.2.3.1"><a href="#section-5.2.3" class="auto internal xref">5.2.3</a>.  <a href="#name-message-3-2" class="internal xref">Message 3</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.4">
-                    <p id="section-toc.1-1.5.2.2.2.4.1"><a href="#section-5.2.4" class="auto internal xref">5.2.4</a>.  <a href="#name-message-4-2" class="internal xref">Message 4</a></p>
-</li>
-                </ul>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-message-4" class="internal xref">Message 4</a></p>
 </li>
             </ul>
 </li>
@@ -1230,16 +1197,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-external-authorization-data" class="internal xref">External Authorization Data</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
-                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-optimization" class="internal xref">Optimization</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
-                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="auto internal xref">6.5</a>.  <a href="#name-mutual-authentication" class="internal xref">Mutual Authentication</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6">
-                <p id="section-toc.1-1.6.2.6.1"><a href="#section-6.6" class="auto internal xref">6.6</a>.  <a href="#name-attacks" class="internal xref">Attacks</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.7">
-                <p id="section-toc.1-1.6.2.7.1"><a href="#section-6.7" class="auto internal xref">6.7</a>.  <a href="#name-comparison" class="internal xref">Comparison</a></p>
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-attacks" class="internal xref">Attacks</a></p>
 </li>
             </ul>
 </li>
@@ -1316,14 +1274,13 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-protocol">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
       </h2>
-<p id="section-3-1">There are currently two proposed versions of the authentication method, depending on where the pre-shared key identifier (ID_CRED_PSK) is sent.
-ID_CRED_PSK allows retrieval of CRED_PSK, a COSE object that contains the PSK.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">After studying a comparison of both proposals, PSK2 authentication method was selected. In this method, the pre-shared key identifier (ID_CRED_PSK) is sent in message_3. The ID_CRED_PSK allows retrieval of CRED_PSK, a COSE object that contains the PSK. This revision maintains the key information about ID_CRED_PSK and CRED_PSK while updating the status to reflect that a single version has been chosen after evaluation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="credentials">
 <section id="section-3.1">
         <h3 id="name-credentials">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-credentials" class="section-name selfRef">Credentials</a>
         </h3>
-<p id="section-3.1-1">In both varaints, Initiator and Responder are assumed to have a PSK with good amount of randomness and the requirements that:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Initiator and Responder are assumed to have a PSK with good amount of randomness and the requirements that:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-2.1">
             <p id="section-3.1-2.1.1">Only the Initiator and the Responder have access to the PSK.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
@@ -1368,132 +1325,17 @@ If ID_CRED_PSK contains a single 'kid' parameter, then the compact encoding is a
 The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified in <span>[<a href="#RFC9529" class="cite xref">RFC9529</a>]</span>, and, when applicable, <span class="bcp14">MUST</span> follow the same guidelines described in Sections 3.5.2 and 3.5.3 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="variant-1">
+<div id="message-flow-of-psk">
 <section id="section-3.2">
-        <h3 id="name-variant-1">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-variant-1" class="section-name selfRef">Variant 1</a>
+        <h3 id="name-message-flow-of-psk">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-message-flow-of-psk" class="section-name selfRef">Message flow of PSK</a>
         </h3>
-<p id="section-3.2-1">In the first variant of the method the ID_CRED_PSK is sent in the clear in the first message.
-<a href="#fig-variant1" class="auto internal xref">Figure 1</a> shows the message flow of Variant 1.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<span id="name-overview-of-message-flow-of"></span><div id="fig-variant1">
+<p id="section-3.2-1">The ID_CRED_PSK is sent in message_3, encrypted using a key derived from the ephemeral shared secret, G_XY. The Responder authenticates the Initiator first.
+<a href="#fig-variant2" class="auto internal xref">Figure 1</a> shows the message flow of PSK authentication method.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<span id="name-overview-of-message-flow-of"></span><div id="fig-variant2">
 <figure id="figure-1">
           <div id="section-3.2-2.1">
             <div class="alignCenter art-svg artwork" id="section-3.2-2.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-                <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
-                <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
-                <path d="M 8,64 L 544,64" fill="none" stroke="black"></path>
-                <path d="M 16,128 L 552,128" fill="none" stroke="black"></path>
-                <path d="M 8,192 L 544,192" fill="none" stroke="black"></path>
-                <polygon class="arrowhead" points="552,192 540,186.4 540,197.6" fill="black" transform="rotate(0,544,192)"></polygon>
-                <polygon class="arrowhead" points="552,64 540,58.4 540,69.6" fill="black" transform="rotate(0,544,64)"></polygon>
-                <polygon class="arrowhead" points="24,128 12,122.4 12,133.6" fill="black" transform="rotate(180,16,128)"></polygon>
-                <g class="text">
-                  <text x="40" y="36">Initiator</text>
-                  <text x="520" y="36">Responder</text>
-                  <text x="120" y="52">METHOD,</text>
-                  <text x="192" y="52">SUITES_I,</text>
-                  <text x="252" y="52">G_X,</text>
-                  <text x="292" y="52">C_I,</text>
-                  <text x="364" y="52">ID_CRED_PSK,</text>
-                  <text x="440" y="52">EAD_1</text>
-                  <text x="280" y="84">message_1</text>
-                  <text x="188" y="116">G_Y,</text>
-                  <text x="228" y="116">Enc(</text>
-                  <text x="268" y="116">C_R,</text>
-                  <text x="316" y="116">MAC_2,</text>
-                  <text x="368" y="116">EAD_2</text>
-                  <text x="400" y="116">)</text>
-                  <text x="280" y="148">message_2</text>
-                  <text x="248" y="180">AEAD(</text>
-                  <text x="296" y="180">EAD_3</text>
-                  <text x="328" y="180">)</text>
-                  <text x="280" y="212">message_3</text>
-                  <text x="248" y="244">AEAD(</text>
-                  <text x="296" y="244">EAD_4</text>
-                  <text x="328" y="244">)</text>
-                  <text x="20" y="260">&lt;-</text>
-                  <text x="40" y="260">-</text>
-                  <text x="56" y="260">-</text>
-                  <text x="72" y="260">-</text>
-                  <text x="88" y="260">-</text>
-                  <text x="104" y="260">-</text>
-                  <text x="120" y="260">-</text>
-                  <text x="136" y="260">-</text>
-                  <text x="152" y="260">-</text>
-                  <text x="168" y="260">-</text>
-                  <text x="184" y="260">-</text>
-                  <text x="200" y="260">-</text>
-                  <text x="216" y="260">-</text>
-                  <text x="232" y="260">-</text>
-                  <text x="248" y="260">-</text>
-                  <text x="264" y="260">-</text>
-                  <text x="280" y="260">-</text>
-                  <text x="296" y="260">-</text>
-                  <text x="312" y="260">-</text>
-                  <text x="328" y="260">-</text>
-                  <text x="344" y="260">-</text>
-                  <text x="360" y="260">-</text>
-                  <text x="376" y="260">-</text>
-                  <text x="392" y="260">-</text>
-                  <text x="408" y="260">-</text>
-                  <text x="424" y="260">-</text>
-                  <text x="440" y="260">-</text>
-                  <text x="456" y="260">-</text>
-                  <text x="472" y="260">-</text>
-                  <text x="488" y="260">-</text>
-                  <text x="504" y="260">-</text>
-                  <text x="520" y="260">-</text>
-                  <text x="536" y="260">-</text>
-                  <text x="280" y="276">message_4</text>
-                </g>
-              </svg><a href="#section-3.2-2.1.1" class="pilcrow">¶</a>
-</div>
-</div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-overview-of-message-flow-of" class="selfRef">Overview of message flow of Variant 1.</a>
-          </figcaption></figure>
-</div>
-<p id="section-3.2-3">This variant incurs minimal modifications with respect to the current methods described in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> and the fourth message remains optional.
-MAC_3 is removed in message_3 and replaced by AEAD.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4">Not sure this should go here. Probably not.
-This approach is similar to TLS 1.3, and, consequently, has similar privacy issues. For example:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2-5.1">
-            <p id="section-3.2-5.1.1"><strong>Identity Leakage</strong>: neither the identity of the Initiator nor the Responder are protected against active or passive attackers.
-By sending the ID_CRED_PSK in the clear, the initiator reveals its identity to any eavesdropper on the network.
-This allows passive observers to learn which entity is attempting to connect to the server.<a href="#section-3.2-5.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.2-5.2">
-            <p id="section-3.2-5.2.1"><strong>Tracking and correlation</strong>: An attacker can use the plaintext ID_CRED_PSK to track the entity across multiple connections, even if those connections are made from different networks or at different times.
-This enables long-term tracking of entities.<a href="#section-3.2-5.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.2-5.3">
-            <p id="section-3.2-5.3.1"><strong>Information leakage about relationships</strong>: ID_CRED_PSK also reveals information about the relationship between the Initiator and the Responder.
-An observer can infer that the two parties have a pre-existing relationship and have previously agreed on a shared secret.<a href="#section-3.2-5.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.2-5.4">
-            <p id="section-3.2-5.4.1"><strong>Replay and preplay attacks</strong>: ID_CRED_PSK can facilitate replay attacks.
-An attacker might use the observed ID_CRED_PSK to initiate their own connection attempts, potentially leading to denial-of-service or other attacks.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.2-5.5">
-            <p id="section-3.2-5.5.1"><strong>Downgrade attacks</strong>: If multiple PSKs are available (e.g., of varying strengths or for different purposes), an attacker might attempt to force the use of a weaker or less privacy-preserving PSK by manipulating the ID_CRED_PSK field.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
-<div id="variant-2">
-<section id="section-3.3">
-        <h3 id="name-variant-2">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-variant-2" class="section-name selfRef">Variant 2</a>
-        </h3>
-<p id="section-3.3-1">The ID_CRED_PSK is sent in message_3, encrypted using a key derived from the ephemeral shared secret, G_XY.
-In this case, the Responder will authenticate the Initiator first, contrary to Variant 1.
-<a href="#fig-variant2" class="auto internal xref">Figure 2</a> shows the message flow of Variant 2.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<span id="name-overview-of-message-flow-of-"></span><div id="fig-variant2">
-<figure id="figure-2">
-          <div id="section-3.3-2.1">
-            <div class="alignCenter art-svg artwork" id="section-3.3-2.1.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,272" fill="none" stroke="black"></path>
                 <path d="M 552,48 L 552,272" fill="none" stroke="black"></path>
@@ -1532,15 +1374,15 @@ In this case, the Responder will authenticate the Initiator first, contrary to V
                   <text x="328" y="244">)</text>
                   <text x="280" y="276">message_4</text>
                 </g>
-              </svg><a href="#section-3.3-2.1.1" class="pilcrow">¶</a>
+              </svg><a href="#section-3.2-2.1.1" class="pilcrow">¶</a>
 </div>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-overview-of-message-flow-of-" class="selfRef">Overview of message flow of Variant 2.</a>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-overview-of-message-flow-of" class="selfRef">Overview of message flow of PSK.</a>
           </figcaption></figure>
 </div>
-<p id="section-3.3-3">Contrary to Variant 1, this approach provides protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to to authenticate the Responder and achieve mutual authentication in EDHOC if not relaying on external applications, such as OSCORE.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This approach provides protection against passive attackers for both Initiator and Responder.
+message_4 remains optional, but is needed to to authenticate the Responder and achieve mutual authentication in EDHOC if not relaying on external applications, such as OSCORE. With this fourth message, the protocol achieves both explicit key confirmation and mutual authentication.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1558,47 +1400,10 @@ PRK  = EDHOC_Extract( salt, IKM )
 </div>
 <p id="section-4-3">where the salt and input keying material (IKM) are defined for each key.
 The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in the cipher suite.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<div id="variant-1-1">
-<section id="section-4.1">
-        <h3 id="name-variant-1-2">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-variant-1-2" class="section-name selfRef">Variant 1</a>
-        </h3>
-<p id="section-4.1-1"><a href="#fig-variant1key" class="auto internal xref">Figure 3</a> lists the key derivations that differ from those specified in Section 4.1.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<span id="name-key-derivation-of-variant-1"></span><div id="fig-variant1key">
-<figure id="figure-3">
-          <div class="alignCenter art-text artwork" id="section-4.1-2.1">
-<pre>
-PRK_3e2m      = EDHOC_Extract( salt3e_2m, CRED_PSK )
-PRK_4e3m      = PRK_3e2m
-MAC_2         = EDHOC_KDF( PRK_3e2m,      2,  context_2,  mac_length_2 )
-K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,       key_length   )
-IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,       iv_length    )
-</pre>
-</div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-key-derivation-of-variant-1" class="selfRef">Key derivation of variant 1 of EDHOC PSK authentication method.</a>
-          </figcaption></figure>
-</div>
-<p id="section-4.1-3">where:<a href="#section-4.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-4.1-4.1">
-            <p id="section-4.1-4.1.1">context_2 = &lt;&lt;C_R, ID_CRED_PSK, TH_2, CRED_PSK, ? EAD_2&gt;&gt;<a href="#section-4.1-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-4.1-4.2">
-            <p id="section-4.1-4.2.1">TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )<a href="#section-4.1-4.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
-<div id="variant-2-1">
-<section id="section-4.2">
-        <h3 id="name-variant-2-2">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-variant-2-2" class="section-name selfRef">Variant 2</a>
-        </h3>
-<p id="section-4.2-1"><a href="#fig-variant2key" class="auto internal xref">Figure 4</a> lists the key derivations that differ from those specified in Section 4.1.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<span id="name-key-derivation-of-variant-2"></span><div id="fig-variant2key">
-<figure id="figure-4">
-          <div class="alignCenter art-text artwork" id="section-4.2-2.1">
+<p id="section-4-4"><a href="#fig-variant2key" class="auto internal xref">Figure 2</a> lists the key derivations that differ from those specified in Section 4.1.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<span id="name-key-derivation-of-edhoc-psk"></span><div id="fig-variant2key">
+<figure id="figure-2">
+        <div class="alignCenter art-text artwork" id="section-4-5.1">
 <pre>
 PRK_3e2m      = PRK_2e
 PRK_4e3m      = EDHOC_Extract( SALT_4e3m, CRED_PSK )
@@ -1607,24 +1412,22 @@ K_3           = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,  key_length )
 IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,  iv_length  )
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-key-derivation-of-variant-2" class="selfRef">Key derivation of variant 2 of EDHOC PSK authentication method.</a>
-          </figcaption></figure>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-key-derivation-of-edhoc-psk" class="selfRef">Key derivation of EDHOC PSK authentication method.</a>
+        </figcaption></figure>
 </div>
-<p id="section-4.2-3">where:<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4-6">where:<a href="#section-4-6" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-4.1">
-            <p id="section-4.2-4.1.1">KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.<a href="#section-4.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4-7.1">
+          <p id="section-4-7.1.1">KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.<a href="#section-4-7.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-4.2">
-            <p id="section-4.2-4.2.1">TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )<a href="#section-4.2-4.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-4-7.2">
+          <p id="section-4-7.2.1">TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )<a href="#section-4-7.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-4.3">
-            <p id="section-4.2-4.3.1">TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )<a href="#section-4.2-4.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-4-7.3">
+          <p id="section-4-7.3.1">TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )<a href="#section-4-7.3.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
-</section>
-</div>
+      </ul>
 </section>
 </div>
 <div id="message-formatting-and-processing-differences-with-respect-to-rfc9528">
@@ -1633,249 +1436,111 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD,  TH_3,  iv_length  )
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-message-formatting-and-proc" class="section-name selfRef">Message formatting and processing. Differences with respect to <span class="cite xref">[RFC9528]</span></a>
       </h2>
 <p id="section-5-1">This section specifies the differences on the message formatting compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<div id="variant-1-2">
-<section id="section-5.1">
-        <h3 id="name-variant-1-3">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-variant-1-3" class="section-name selfRef">Variant 1</a>
-        </h3>
 <div id="message-1">
-<section id="section-5.1.1">
-          <h4 id="name-message-1">
-<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-message-1" class="section-name selfRef">Message 1</a>
-          </h4>
-<p id="section-5.1.1-1">message_1 contains the ID_CRED_PSK.
-The composition of message_1 <span class="bcp14">SHALL</span> be a CBOR sequence, as defined below:<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.1-2">
-<pre>
-message_1 = (
-  METHOD : int,
-  SUITES_I : suites,
-  G_X : bstr,
-  C_I : bstr / -24..23,
-  ID_CRED_PSK : header map // kid_value : bstr,
-  ? EAD_1,
-)
-
-suites =  [ 2* int ] / int
-EAD_1 = 1* ead
-</pre><a href="#section-5.1.1-2" class="pilcrow">¶</a>
-</div>
-<p id="section-5.1.1-3">where:<a href="#section-5.1.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.1.1-4.1">
-              <p id="section-5.1.1-4.1.1">ID_CRED_PSK is an identifier used to facilitate retrieval of the PSK.<a href="#section-5.1.1-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-<p id="section-5.1.1-5">The Initiator includes ID_CRED_PSK in message_1 and encodes the full message as a sequence of CBOR-encoded data items as specified in Section 5.2.1. of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#section-5.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.1.1-6">The Responder <span class="bcp14">SHALL</span> process message_1 as follows:<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.1.1-7.1">
-              <p id="section-5.1.1-7.1.1">Decode message_1.<a href="#section-5.1.1-7.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.1-7.2">
-              <p id="section-5.1.1-7.2.1">Retrieve CRED_PSK using ID_CRED_PSK.<a href="#section-5.1.1-7.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.1-7.3">
-              <p id="section-5.1.1-7.3.1">Process message_1 as specified in Section 5.2.3. of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.1.1-7.3.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+<section id="section-5.1">
+        <h3 id="name-message-1">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-message-1" class="section-name selfRef">Message 1</a>
+        </h3>
+<p id="section-5.1-1">Same as message_1 of EDHOC, described in Section 5.2.1 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-2">
-<section id="section-5.1.2">
-          <h4 id="name-message-2">
-<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-message-2" class="section-name selfRef">Message 2</a>
-          </h4>
-<p id="section-5.1.2-1">message_2 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.2-2">
+<section id="section-5.2">
+        <h3 id="name-message-2">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-message-2" class="section-name selfRef">Message 2</a>
+        </h3>
+<p id="section-5.2-1">message_2 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-2">
 <pre>
 message_2 = (
   G_Y_CIPHERTEXT_2 : bstr,
 )
-</pre><a href="#section-5.1.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5.1.2-3">where:<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">where:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1.2-4.1">
-              <p id="section-5.1.2-4.1.1">G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral public key of the Responder) and CIPHERTEXT_2.<a href="#section-5.1.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.2-4.1">
+            <p id="section-5.2-4.1.1">G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral public key of the Responder) and CIPHERTEXT_2.<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.2-4.2">
-              <p id="section-5.1.2-4.2.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-5.1.2-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-4.2">
+            <p id="section-5.2-4.2.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-5.2-4.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1.2-4.2.2.1">
-                  <p id="section-5.1.2-4.2.2.1.1">PLAINTEXT_2 = (C_R, / bstr / -24..23, MAC_2, ? EAD_2)<a href="#section-5.1.2-4.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.2-4.2.2.1">
+                <p id="section-5.2-4.2.2.1.1">PLAINTEXT_2 = ( C_R, / bstr / -24..23, ? EAD_2 )<a href="#section-5.2-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-5.1.2-4.2.2.2">
-                  <p id="section-5.1.2-4.2.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-5.1.2-4.2.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-4.2.2.2">
+                <p id="section-5.2-4.2.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-5.2-4.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              </ul>
+            </ul>
 </li>
-          </ul>
-<p id="section-5.1.2-5">The Responder uses MAC instead of Signature. Hence, COSE_Sign1 is not used.
-The Responder computes MAC_2 as described in Section 4.1.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, with context_2 &lt;&lt;C_R, ID_CRED_PSK, TH_2, CRED_PSK, ? EAD_2&gt;&gt;<a href="#section-5.1.2-5" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-5.2-5">Contrary to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, MAC_2 is not used.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-3">
-<section id="section-5.1.3">
-          <h4 id="name-message-3">
-<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-message-3" class="section-name selfRef">Message 3</a>
-          </h4>
-<p id="section-5.1.3-1">message_3 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.3-2">
-<pre>
-message_3 = (
-  CIPHERTEXT_3 : bstr,
-)
-</pre><a href="#section-5.1.3-2" class="pilcrow">¶</a>
-</div>
-<p id="section-5.1.3-3">The Initiator computes a COSE_Encrypt0 object as defined in Section 5.2 and 5.3 of <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> with the EDHOC AEAD algorithm of the selected cipher suite and the following parameters:<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.1.3-4.1">
-              <p id="section-5.1.3-4.1.1">protected = h''<a href="#section-5.1.3-4.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.3-4.2">
-              <p id="section-5.1.3-4.2.1">external_aad = TH_3, as defined in Section 5.2<a href="#section-5.1.3-4.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.3-4.3">
-              <p id="section-5.1.3-4.3.1">K_3 and IV_3 as defined in Section 5.2<a href="#section-5.1.3-4.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.3-4.4">
-              <p id="section-5.1.3-4.4.1">PLAINTEXT_3 = ( ? EAD_3 )<a href="#section-5.1.3-4.4.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-<p id="section-5.1.3-5">The Initiator computes TH_4 = H( TH_3, PLAINTEXT_3, CRED_PSK )<a href="#section-5.1.3-5" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="message-4">
-<section id="section-5.1.4">
-          <h4 id="name-message-4">
-<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-message-4" class="section-name selfRef">Message 4</a>
-          </h4>
-<p id="section-5.1.4-1">message_4 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.4-2">
-<pre>
-message_4 = (
-  CIPHERTEXT_4 : bstr,
-)
-</pre><a href="#section-5.1.4-2" class="pilcrow">¶</a>
-</div>
-<p id="section-5.1.4-3">message_4 is optional.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-</section>
-</div>
-<div id="variant-2-2">
-<section id="section-5.2">
-        <h3 id="name-variant-2-3">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-variant-2-3" class="section-name selfRef">Variant 2</a>
+<section id="section-5.3">
+        <h3 id="name-message-3">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-message-3" class="section-name selfRef">Message 3</a>
         </h3>
-<div id="message-1-1">
-<section id="section-5.2.1">
-          <h4 id="name-message-1-2">
-<a href="#section-5.2.1" class="section-number selfRef">5.2.1. </a><a href="#name-message-1-2" class="section-name selfRef">Message 1</a>
-          </h4>
-<p id="section-5.2.1-1">Same as message_1 of EDHOC, described in Section 5.2.1 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.2.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="message-2-1">
-<section id="section-5.2.2">
-          <h4 id="name-message-2-2">
-<a href="#section-5.2.2" class="section-number selfRef">5.2.2. </a><a href="#name-message-2-2" class="section-name selfRef">Message 2</a>
-          </h4>
-<p id="section-5.2.2-1">message_2 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.2.2-2">
-<pre>
-message_2 = (
-  G_Y_CIPHERTEXT_2 : bstr,
-)
-</pre><a href="#section-5.2.2-2" class="pilcrow">¶</a>
-</div>
-<p id="section-5.2.2-3">where:<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.2.2-4.1">
-              <p id="section-5.2.2-4.1.1">G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral public key of the Responder) and CIPHERTEXT_2.<a href="#section-5.2.2-4.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.2.2-4.2">
-              <p id="section-5.2.2-4.2.1">CIPHERTEXT_2 is calculated with a binary additive stream cipher, using KEYSTREAM_2 and the following plaintext:<a href="#section-5.2.2-4.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.2.2-4.2.2.1">
-                  <p id="section-5.2.2-4.2.2.1.1">PLAINTEXT_2 = ( C_R, / bstr / -24..23, ? EAD_2 )<a href="#section-5.2.2-4.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-5.2.2-4.2.2.2">
-                  <p id="section-5.2.2-4.2.2.2.1">CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2<a href="#section-5.2.2-4.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-</li>
-          </ul>
-<p id="section-5.2.2-5">Contrary to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> and Variant 1, MAC_2 is not needed.<a href="#section-5.2.2-5" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="message-3-1">
-<section id="section-5.2.3">
-          <h4 id="name-message-3-2">
-<a href="#section-5.2.3" class="section-number selfRef">5.2.3. </a><a href="#name-message-3-2" class="section-name selfRef">Message 3</a>
-          </h4>
-<p id="section-5.2.3-1">message_3 <span class="bcp14">SHALL</span> be a CBOR Sequence, as defined below:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.2.3-2">
+<p id="section-5.3-1">message_3 <span class="bcp14">SHALL</span> be a CBOR Sequence, as defined below:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.3-2">
 <pre>
 message_3 = (
   CIPHERTEXT_3
 )
-</pre><a href="#section-5.2.3-2" class="pilcrow">¶</a>
+</pre><a href="#section-5.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5.2.3-3">where:<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.3-3">where:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.3-4.1">
-              <p id="section-5.2.3-4.1.1">CIPHERTEXT_3 is a concatenation of two different ciphertexts:<a href="#section-5.2.3-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.3-4.1">
+            <p id="section-5.3-4.1.1">CIPHERTEXT_3 is a concatenation of two different ciphertexts:<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.3-4.1.2.1">
-                  <p id="section-5.2.3-4.1.2.1.1">CIPHERTEXT_3A is calculated with a binary additive stream cipher, using a KESYSTREAM_3 generated with EDHOC_Expand and the following plaintext:<a href="#section-5.2.3-4.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.3-4.1.2.1">
+                <p id="section-5.3-4.1.2.1.1">CIPHERTEXT_3A is calculated with a binary additive stream cipher, using a KESYSTREAM_3 generated with EDHOC_Expand and the following plaintext:<a href="#section-5.3-4.1.2.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.3-4.1.2.1.2.1">
-                      <p id="section-5.2.3-4.1.2.1.2.1.1">PLAINTEXT_3A = ( ID_CRED_PSK )<a href="#section-5.2.3-4.1.2.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.3-4.1.2.1.2.1">
+                    <p id="section-5.3-4.1.2.1.2.1.1">PLAINTEXT_3A = ( ID_CRED_PSK )<a href="#section-5.3-4.1.2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  </ul>
+                </ul>
 </li>
-                <li class="normal" id="section-5.2.3-4.1.2.2">
-                  <p id="section-5.2.3-4.1.2.2.1">CIPHERTEXT_3B is a COSE_Encrypt0 object as defined in Sections 5.2 and 5.3 of <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in Section 5.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.2.3-4.1.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.3-4.1.2.2">
+                <p id="section-5.3-4.1.2.2.1">CIPHERTEXT_3B is a COSE_Encrypt0 object as defined in Sections 5.2 and 5.3 of <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in Section 5.2 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.3-4.1.2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.3-4.1.2.2.2.1">
-                      <p id="section-5.2.3-4.1.2.2.2.1.1">protected = h''<a href="#section-5.2.3-4.1.2.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.3-4.1.2.2.2.1">
+                    <p id="section-5.3-4.1.2.2.2.1.1">protected = h''<a href="#section-5.3-4.1.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                    <li class="normal" id="section-5.2.3-4.1.2.2.2.2">
-                      <p id="section-5.2.3-4.1.2.2.2.2.1">external_aad = &lt;&lt; Enc(ID_CRED_PSK), TH_3 &gt;&gt;<a href="#section-5.2.3-4.1.2.2.2.2.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-5.3-4.1.2.2.2.2">
+                    <p id="section-5.3-4.1.2.2.2.2.1">external_aad = &lt;&lt; Enc(ID_CRED_PSK), TH_3 &gt;&gt;<a href="#section-5.3-4.1.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                    <li class="normal" id="section-5.2.3-4.1.2.2.2.3">
-                      <p id="section-5.2.3-4.1.2.2.2.3.1">K_3 and IV_3 as defined in Section 5.2<a href="#section-5.2.3-4.1.2.2.2.3.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-5.3-4.1.2.2.2.3">
+                    <p id="section-5.3-4.1.2.2.2.3.1">K_3 and IV_3 as defined in Section 5.2<a href="#section-5.3-4.1.2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-                    <li class="normal" id="section-5.2.3-4.1.2.2.2.4">
-                      <p id="section-5.2.3-4.1.2.2.2.4.1">PLAINTEXT_3B = ( ? EAD_3 )<a href="#section-5.2.3-4.1.2.2.2.4.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-5.3-4.1.2.2.2.4">
+                    <p id="section-5.3-4.1.2.2.2.4.1">PLAINTEXT_3B = ( ? EAD_3 )<a href="#section-5.3-4.1.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
-                  </ul>
+                </ul>
 </li>
-              </ul>
+            </ul>
 </li>
-          </ul>
-<p id="section-5.2.3-5">The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK ), defined in Section 5.2.<a href="#section-5.2.3-5" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-5.3-5">The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3, CRED_PSK ), defined in Section 5.2.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="message-4-1">
-<section id="section-5.2.4">
-          <h4 id="name-message-4-2">
-<a href="#section-5.2.4" class="section-number selfRef">5.2.4. </a><a href="#name-message-4-2" class="section-name selfRef">Message 4</a>
-          </h4>
-<p id="section-5.2.4-1">message_4 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.2.4-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.2.4-2">
+<div id="message-4">
+<section id="section-5.4">
+        <h3 id="name-message-4">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-message-4" class="section-name selfRef">Message 4</a>
+        </h3>
+<p id="section-5.4-1">message_4 <span class="bcp14">SHALL</span> be a CBOR sequence, defined as:<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4-2">
 <pre>
 message_4 = (
   CIPHERTEXT_4 : bstr,
 )
-</pre><a href="#section-5.2.4-2" class="pilcrow">¶</a>
+</pre><a href="#section-5.4-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5.2.4-3">A fourth message is mandatory for Responder's authentication.
-The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.<a href="#section-5.2.4-3" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-5.4-3">A fourth message is mandatory for Responder's authentication.
+The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1903,15 +1568,7 @@ The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or 
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity protection</a>
         </h3>
 <p id="section-6.1-1">The current EDHOC methods protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See Section 9.1 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>).
-However, there are differences between the two variants described in this draft:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-6.1-2">
-<li id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1"><strong>Variant 1</strong>: neither the Initiator's identity nor the Responder's identity are protected against active or passive attackers.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="section-6.1-2.2">
-            <p id="section-6.1-2.2.1"><strong>Variant 2</strong>: both the Initiator's and Responder's identities are protected against passive attackers.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ol>
+With EDHOC-PSK authentication method, both the Initiator's and Responder's identities are protected against passive attackers, but not against active attackers.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="number-of-messages">
@@ -1920,15 +1577,7 @@ However, there are differences between the two variants described in this draft:
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-number-of-messages" class="section-name selfRef">Number of messages</a>
         </h3>
 <p id="section-6.2-1">The current EDHOC protocol consists of three mandatory messages and an optional fourth message.
-The PSK authentication method might require a compulsory message depending on which variant is employed:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-6.2-2">
-<li id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1"><strong>Variant 1</strong>: message_4 is optional since both identities are authenticated after message_3.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="section-6.2-2.2">
-            <p id="section-6.2-2.2.1"><strong>Variant 2</strong>: message_4 remains optional, but mutual authentication is not guaranteed without it, or an OSCORE message or any application data that confirms that the Responder owns the PSK.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ol>
+In the case of EDHOC-PSK authentication method, message_4 remains optional, but mutual authentication is not guaranteed without it, or an OSCORE message or any application data that confirms that the Responder owns the PSK. Additionally, with this fourth message the protocol achieves explicit key confirmation in addition to mutual authentication.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="external-authorization-data">
@@ -1936,136 +1585,16 @@ The PSK authentication method might require a compulsory message depending on wh
         <h3 id="name-external-authorization-data">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-external-authorization-data" class="section-name selfRef">External Authorization Data</a>
         </h3>
-<p id="section-6.3-1">In both variants, the Initiator and Responder can send information in EAD_3 and EAD_4 or in OSCORE messages in parallel with message_3 and message_4.
+<p id="section-6.3-1">The Initiator and Responder can send information in EAD_3 and EAD_4 or in OSCORE messages in parallel with message_3 and message_4.
 This is possible because the Initiator knows that only the Responder with access to the CRED_PSK can decrypt the information.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="optimization">
-<section id="section-6.4">
-        <h3 id="name-optimization">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-optimization" class="section-name selfRef">Optimization</a>
-        </h3>
-<ol start="1" type="1" class="normal type-1" id="section-6.4-1">
-<li id="section-6.4-1.1">
-            <p id="section-6.4-1.1.1"><strong>Variant 1</strong>: ID_CRED_PSK is sent without encryption, saving computational resources at the cost of privacy.
-The exposure of ID_CRED_PSK in message_1 allows for earlier key derivation on the responder's side, potentially speeding up the process.<a href="#section-6.4-1.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="section-6.4-1.2">
-            <p id="section-6.4-1.2.1"><strong>Variant 2</strong>: It requires encryption of ID_CRED_PSK in message_3, which implies higher computational cost.<a href="#section-6.4-1.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ol>
-</section>
-</div>
-<div id="mutual-authentication">
-<section id="section-6.5">
-        <h3 id="name-mutual-authentication">
-<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
-        </h3>
-<p id="section-6.5-1">Mutual authentication is achieved at earlier stages in Variant 1, which might be important in certain applications, as well as increasing security against Denial of Service attacks or oracle attacks.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="attacks">
-<section id="section-6.6">
+<section id="section-6.4">
         <h3 id="name-attacks">
-<a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-attacks" class="section-name selfRef">Attacks</a>
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-attacks" class="section-name selfRef">Attacks</a>
         </h3>
-<ol start="1" type="1" class="normal type-1" id="section-6.6-1">
-<li id="section-6.6-1.1">
-            <p id="section-6.6-1.1.1"><strong>Variant 1</strong>: it allows for earlier authentication, potentially improving resistance to some active attacks, but at the cost of reduced privacy and increased vulnerability to passive attacks and traffic analysis.-<a href="#section-6.6-1.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="section-6.6-1.2">
-            <p id="section-6.6-1.2.1"><strong>Variant 2</strong>: it  offers better privacy and resistance to passive attacks but might be more vulnerable to certain active attacks due to delayed authentication.<a href="#section-6.6-1.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ol>
-</section>
-</div>
-<div id="comparison">
-<section id="section-6.7">
-        <h3 id="name-comparison">
-<a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-comparison" class="section-name selfRef">Comparison</a>
-        </h3>
-<span id="name-comparison-between-variant-"></span><div id="comparison-table">
-<table class="center" id="table-1">
-          <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
-<a href="#name-comparison-between-variant-" class="selfRef">Comparison between Variant 1 and Variant 2.</a>
-          </caption>
-<thead>
-            <tr>
-              <th class="text-right" rowspan="1" colspan="1">Aspect</th>
-              <th class="text-left" rowspan="1" colspan="1">Variant 1 (Clear ID_CRED_PSK)</th>
-              <th class="text-left" rowspan="1" colspan="1">Variant 2 (Encrypted ID_CRED_PSK)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Privacy</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower: ID_CRED_PSK sent in clear in message_1</td>
-              <td class="text-left" rowspan="1" colspan="1">Higher: ID_CRED_PSK encrypted in message_3</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Initiator Identity Protection</td>
-              <td class="text-left" rowspan="1" colspan="1">Exposed from message_1</td>
-              <td class="text-left" rowspan="1" colspan="1">Protected until message_3</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Authentication Timing</td>
-              <td class="text-left" rowspan="1" colspan="1">Earlier, possible from message_1</td>
-              <td class="text-left" rowspan="1" colspan="1">Delayed until message_3</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Computational Efficiency</td>
-              <td class="text-left" rowspan="1" colspan="1">Slightly higher (no encryption of ID_CRED_PSK)</td>
-              <td class="text-left" rowspan="1" colspan="1">Slightly lower (encryption of ID_CRED_PSK)</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Resistance to Passive Attacks</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower due to exposed identity</td>
-              <td class="text-left" rowspan="1" colspan="1">Higher due to identity protection</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Early Access Control</td>
-              <td class="text-left" rowspan="1" colspan="1">Possible from message_1</td>
-              <td class="text-left" rowspan="1" colspan="1">Limited, delayed until message_3</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">DoS Attack Vulnerability</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower due to early authentication</td>
-              <td class="text-left" rowspan="1" colspan="1">Potentially higher due to delayed authentication</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Resource Allocation</td>
-              <td class="text-left" rowspan="1" colspan="1">Fewer resources allocated before authentication</td>
-              <td class="text-left" rowspan="1" colspan="1">More resources allocated before authentication</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Compatibility with Systems Expecting Early Identification</td>
-              <td class="text-left" rowspan="1" colspan="1">Higher</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Flexibility for Identity Protection</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower</td>
-              <td class="text-left" rowspan="1" colspan="1">Higher</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Key Derivation Timing</td>
-              <td class="text-left" rowspan="1" colspan="1">Potentially earlier</td>
-              <td class="text-left" rowspan="1" colspan="1">Potentially delayed</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Completeness</td>
-              <td class="text-left" rowspan="1" colspan="1">Complete with optional message_4</td>
-              <td class="text-left" rowspan="1" colspan="1">Complete with optional message_4</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Suitability for Quick Identification Scenarios</td>
-              <td class="text-left" rowspan="1" colspan="1">Higher</td>
-              <td class="text-left" rowspan="1" colspan="1">Lower</td>
-            </tr>
-          </tbody>
-        </table>
-</div>
+<p id="section-6.4-1">EDHOC-PSK authentication method offers privacy and resistance to passive attacks but might be vulnerable to certain active attacks due to delayed authentication.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2082,15 +1611,13 @@ The exposure of ID_CRED_PSK in message_1 allows for earlier key derivation on th
       <h2 id="name-unified-approach-and-recomm">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-unified-approach-and-recomm" class="section-name selfRef">Unified Approach and Recommendations</a>
       </h2>
-<p id="section-8-1">To improve privacy during both initial handshake and session resumption, a single unified method for handling PSKs could be beneficial.
-Variant 2 is particularly suitable for this purpose as it streamlines key management and usage across different phases.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">For use cases involving the transmission of application data, application data can be sent concurrently with message_3, maintaining the protocol's efficiency.
-In applications such as EAP-EDHOC, where application data is not sent, message_4 is mandatory.
+<p id="section-8-1">For use cases involving the transmission of application data, application data can be sent concurrently with message_3, maintaining the protocol's efficiency.
+In applications such as EAP-EDHOC, where application data is not sent, message_4 is mandatory. Thus, EDHOC-PSK authentication method doe snot include any extra messages.
 Other implementations may continue using OSCORE in place of EDHOC message_4, with a required change in the protocol's language to:
-      The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">This change ensures that key materials are only stored once their integrity and authenticity are confirmed, thereby enhancing privacy by preventing early storage of potentially compromised keys.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">Lastly, whether the Initiator or Responder authenticates first is not relevant when using symmetric keys.
-This consideration was important for the privacy properties when using asymmetric authentication but is not significant in the context of symmetric key usage.<a href="#section-8-4" class="pilcrow">¶</a></p>
+      The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">This change ensures that key materials are only stored once their integrity and authenticity are confirmed, thereby enhancing privacy by preventing early storage of potentially compromised keys.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">Lastly, whether the Initiator or Responder authenticates first is not relevant when using symmetric keys.
+This consideration was important for the privacy properties when using asymmetric authentication but is not significant in the context of symmetric key usage.<a href="#section-8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
