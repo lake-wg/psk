@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
-Expires: 20 April 2025                                    J. P. Mattsson
+Expires: 25 July 2025                                     J. P. Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                         17 October 2024
+                                                         21 January 2025
 
 
                         EDHOC PSK authentication
@@ -56,11 +56,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2025.
+   This Internet-Draft will expire on 25 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -288,7 +288,7 @@ Table of Contents
 
 5.3.  Message 3
 
-   message_3 SHALL be a CBOR Sequence, as defined below:
+   message_3 SHALL be a bit string, as defined below:
 
    message_3 = (
      CIPHERTEXT_3: bstr,
@@ -296,11 +296,12 @@ Table of Contents
 
    where:
 
-   *  CIPHERTEXT_3 is a concatenation of two different ciphertexts:
+   *  CIPHERTEXT_3 is a concatenation of two different ciphertexts, each
+      of it a CBOR Sequence:
 
-      -  CIPHERTEXT_3A is bit string calculated with a binary additive
-         stream cipher, using a KESYSTREAM_3 generated with EDHOC_Expand
-         and the following plaintext:
+      -  CIPHERTEXT_3A is CBOR Sequence calculated with a binary
+         additive stream cipher, using a KESYSTREAM_3 generated with
+         EDHOC_Expand and the following plaintext:
 
          o  PLAINTEXT_3A = ( ID_CRED_PSK )
 
