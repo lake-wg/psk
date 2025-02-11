@@ -4,15 +4,15 @@
 
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
-Intended status: Informational                               G. Selander
-Expires: 26 July 2025                                     J. P. Mattsson
+Intended status: Standards Track                             G. Selander
+Expires: 15 August 2025                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                         22 January 2025
+                                                        11 February 2025
 
 
-                        EDHOC PSK authentication
+                        EDHOC PSK Authentication
                     draft-ietf-lake-edhoc-psk-latest
 
 Abstract
@@ -27,19 +27,18 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at
-   https://elsalopez133.github.io/draft-lopez-lake-edhoc-psk/#go.draft-
-   lopez-lake-edhoc-psk.html.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-ietf-lake-edhoc-
-   psk/.
+   The latest revision of this draft can be found at https://lake-
+   wg.github.io/psk/#go.draft-ietf-lake-edhoc-psk.html.  Status
+   information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-lake-edhoc-psk/.
 
    Discussion of this document takes place on the LAKE Working Group
    mailing list (mailto:lake@ietf.org), which is archived at
-   https://example.com/WG.  Subscribe at
+   https://mailarchive.ietf.org/arch/browse/lake/.  Subscribe at
    https://www.ietf.org/mailman/listinfo/lake/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/ElsaLopez133/draft-lopez-lake-psk.
+   https://github.com/lake-wg/psk.
 
 Status of This Memo
 
@@ -56,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 July 2025.
+   This Internet-Draft will expire on 15 August 2025.
 
 Copyright Notice
 
@@ -79,22 +78,33 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Protocol
      3.1.  Credentials
-     3.2.  Message flow of PSK
-   4.  Key derivation
-   5.  Message formatting and processing
+     3.2.  Message Flow of PSK
+   4.  Key Derivation
+   5.  Message Formatting and Processing
      5.1.  Message 1
      5.2.  Message 2
+       5.2.1.  Formatting of Message 2
+       5.2.2.  Responder Composition of Message 2
+       5.2.3.  Initiator Processing of Message 2
      5.3.  Message 3
+       5.3.1.  Formatting of Message 3
+       5.3.2.  Initiator Composition of Message 3
+       5.3.3.  Responder Processing of Message 3
      5.4.  Message 4
    6.  Security Considerations
-     6.1.  Identity protection
-     6.2.  Number of messages
+     6.1.  Identity Protection
+     6.2.  Number of Messages
      6.3.  External Authorization Data
      6.4.  Attacks
    7.  Privacy Considerations
    8.  Unified Approach and Recommendations
    9.  IANA Considerations
+     9.1.  EDHOC Method Type Registry
+     9.2.  EDHOC Exporter Label Registry
+     9.3.  EDHOC Info Label Registry
    10. Normative References
+   Appendix A.  CDDL Definitions
+   Appendix B.  Change Log
    Acknowledgments
    Authors' Addresses
 
@@ -191,15 +201,12 @@ Table of Contents
    It is RECOMMENDED that it uniquely identifies the CRED_PSK as the
    recipient might otherwise have to try several keys.  If ID_CRED_PSK
    contains a single 'kid' parameter, then the compact encoding is
-   applied; see Section 3.5.3.2 of RFC9528 (https://www.rfc-
-   editor.org/rfc/rfc9528.html#section-3.5.3.2).  The authentication
+   applied; see Section 3.5.3.2 of [RFC9528].  The authentication
    credential CRED_PSK substitutes CRED_I and CRED_R specified in
    [RFC9528], and, when applicable, MUST follow the same guidelines
-   described in Section 3.5.2 (https://www.rfc-editor.org/rfc/
-   rfc9528.html#section-3.5.2) and Section 3.5.3 of RFC9528
-   (https://www.rfc-editor.org/rfc/rfc9528.html#section-3.5.3).
+   described in Section 3.5.2 and Section 3.5.3 of [RFC9528].
 
-3.2.  Message flow of PSK
+3.2.  Message Flow of PSK
 
    The ID_CRED_PSK is sent in message_3, encrypted using a key derived
    from the ephemeral shared secret, G_XY.  The Responder authenticates
@@ -215,7 +222,7 @@ Table of Contents
    |<------------------------------------------------------------------+
    |                             message_2                             |
    |                                                                   |
-   |                   Enc( ID_CRED_PSK ), AEAD( EAD_3 )               |
+   |                   Enc( ID_CRED_PSK, AEAD( EAD_3 ) )               |
    +------------------------------------------------------------------>|
    |                             message_3                             |
    |                                                                   |
@@ -223,7 +230,7 @@ Table of Contents
    |<------------------------------------------------------------------+
    |                             message_4                             |
 
-                 Figure 1: Overview of message flow of PSK.
+                 Figure 1: Overview of Message Flow of PSK.
 
    This approach provides protection against passive attackers for both
    Initiator and Responder. message_4 remains optional, but is needed to
@@ -232,7 +239,7 @@ Table of Contents
    fourth message, the protocol achieves both explicit key confirmation
    and mutual authentication.
 
-4.  Key derivation
+4.  Key Derivation
 
    The pseudorandom keys (PRKs) used for PSK authentication method in
    EDHOC are derived using EDHOC_Extract, as done in [RFC9528].
@@ -244,16 +251,15 @@ Table of Contents
    algorithm selected in the cipher suite.
 
    Figure 2 lists the key derivations that differ from those specified
-   in Section 4.1.2 of RFC9528 (https://www.rfc-editor.org/rfc/
-   rfc9528.html#section-4.1.2).
+   in Section 4.1.2 of [RFC9528].
 
-PRK_3e2m      = PRK_2e
-PRK_4e3m      = EDHOC_Extract( SALT_4e3m, CRED_PSK )
-KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD, TH_3,  ID_CRED_PSK length )
-K_3           = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  key_length )
-IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
+    PRK_3e2m    = PRK_2e
+    PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )
+    KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, TBD1, TH_3, plaintext_length_3 )
+    K_3         = EDHOC_KDF( PRK_4e3m, TBD2, TH_3, key_length )
+    IV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )
 
-     Figure 2: Key derivation of EDHOC PSK authentication method.
+        Figure 2: Key Derivation of EDHOC PSK Authentication Method.
 
    where:
 
@@ -266,101 +272,104 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
 
    *  TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
 
-5.  Message formatting and processing
+5.  Message Formatting and Processing
 
-   This section specifies the differences on the message formatting
-   compared to [RFC9528].
+   This section specifies the differences in message formatting and
+   processing compared to Section 5 of [RFC9528].
 
 5.1.  Message 1
 
-   Same as message_1 of EDHOC, described in Section 5.2.1 of RFC9528
-   (https://www.rfc-editor.org/rfc/rfc9528.html#section-5.2.1).
+   Message 1 is formatted and processed as specified in Section 5.2 of
+   [RFC9528].
 
 5.2.  Message 2
 
-   message_2 SHALL be a CBOR sequence, defined as:
+5.2.1.  Formatting of Message 2
 
-   message_2 = (
-     G_Y_CIPHERTEXT_2 : bstr,
-   )
+   Message 2 is formatted as specified in Section 5.3.1 of [RFC9528].
 
-   where:
+5.2.2.  Responder Composition of Message 2
 
-   *  G_Y_CIPHERTEXT_2 is the concatenation of G_Y (i.e., the ephemeral
-      public key of the Responder) and CIPHERTEXT_2.
+   CIPHERTEXT_2 is calculated with a binary additive stream cipher,
+   using a keystream generated with EDHOC_Expand, and the following
+   plaintext:
 
-   *  CIPHERTEXT_2 is calculated with a binary additive stream cipher,
-      using KEYSTREAM_2 and the following plaintext:
+   *  PLAINTEXT_2B = ( C_R, ? EAD_2 )
 
-      -  PLAINTEXT_2 = ( C_R, / bstr / -24..23, ? EAD_2 )
+   *  CIPHERTEXT_2 = PLAINTEXT_2B XOR KEYSTREAM_2
 
-      -  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
+   Contrary to [RFC9528], ID_CRED_R, MAC_2, and Signature_or_MAC_2 are
+   not used.  C_R, EAD_2, and KEYSTREAM_2 are defined in Section 5.3.2
+   of [RFC9528].
 
-   Contrary to [RFC9528], MAC_2 is not used.
+5.2.3.  Initiator Processing of Message 2
+
+   Compared to Section 5.3.3 of [RFC9528], ID_CRED_R is not made
+   available to the application in step 4, and steps 5 and 6 are skipped
 
 5.3.  Message 3
 
-   message_3 SHALL be a CBOR sequence, as defined below:
+5.3.1.  Formatting of Message 3
 
-   message_3 = (
-     CIPHERTEXT_3: << CIPHERTEXT_SEQUENCE >>
-   )
+   Message 3 is formatted as specified in Section 5.4.1 of [RFC9528].
 
-   ; This defines an array, the elements of
-   ; which are to be used in a CBOR Sequence:
+5.3.2.  Initiator Composition of Message 3
 
-   CIPHERTEXT_SEQUENCE = [CIPHERTEXT_3A, CIPHERTEXT_3B]
+   *  CIPHERTEXT_3 is calculated with a binary additive stream cipher,
+      using a keystream generated with EDHOC_Expand, and the following
+      plaintext:
 
-   CIPHERTEXT_3A = bstr
-   CIPHERTEXT_3B = bstr
+      -  PLAINTEXT_3A = ( ID_CRED_PSK / bstr / -24..23, CIPHERTEXT_3B )
 
-   where:
+         o  If ID_CRED_PSK contains a single 'kid' parameter, i.e.,
+            ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is
+            applied, see Section 3.5.3.2 of [RFC9528].
 
-   *  CIPHERTEXT_3 is CBOR byte string, with value the binary
-      representation of a CBOR Sequence composed of the following two
-      elements:
+      -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length is
+         the length of PLAINTEXT_3A.  For the case of plaintext_length
+         exceeding the EDHOC_KDF output size, see Appendix G of
+         [RFC9528].
 
-      -  CIPHERTEXT_3A is CBOR byte string, with value calculated by
-         means of a binary additive stream cipher, XORing a KESYSTREAM_3
-         generated with EDHOC_Expand and the following plaintext:
+      -  CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3
 
-         o  PLAINTEXT_3A = ( ID_CRED_PSK )
+   *  CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as
+      defined in Section 5.2 and Section 5.3 of [RFC9528], with the
+      EDHOC AEAD algorithm of the selected cipher suite, using the
+      encryption key K_3, the initialization vector IV_3 (if used by the
+      AEAD algorithm), the parameters described in Section 5.2 of
+      [RFC9528], plaintext PLAINTEXT_3B and the following parameters as
+      input:
 
-      -  CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as
-         defined in Section 5.2 (https://www.rfc-editor.org/rfc/
-         rfc9528.html#section-5.2) and Section 5.3 of RFC9528
-         (https://www.rfc-editor.org/rfc/rfc9528.html#section-5.3), with
-         the EDHOC AEAD algorithm of the selected cipher suite, using
-         the encryption key K_3, the initialization vector IV_3 (if used
-         by the AEAD algorithm), the parameters described in Section 5.2
-         (https://www.rfc-editor.org/rfc/rfc9528.html#section-5.2),
-         plaintext PLAINTEXT_3B and the following parameters as input:
+      -  protected = h''
 
-         o  protected = h''
+      -  external_aad = << ID_CRED_PSK, TH_3 >>
 
-         o  external_aad = << Enc(ID_CRED_PSK), TH_3 >>
+      -  K_3 and IV_3 as defined in Section 4
 
-         o  K_3 and IV_3 as defined in Section 5.2 (Section 5.2)
-
-         o  PLAINTEXT_3B = ( ? EAD_3 )
+      -  PLAINTEXT_3B = ( ? EAD_3 )
 
    The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B,
-   CRED_PSK ), defined in Section 5.2 (Section 5.2).
+   CRED_PSK ), defined in Section 4.
+
+5.3.3.  Responder Processing of Message 3
 
 5.4.  Message 4
 
-   message_4 is optional and is a CBOR sequence, defined as:
+   Message 4 is formatted and processed as specified in Section 5.5 of
+   [RFC9528].
 
-   message_4 = (
-     CIPHERTEXT_4 : bstr,
-   )
+   Compared to [RFC9528], a fourth message does not only provide key
+   confirmation but also Responder authentication.  To authenticate the
+   Responder and achieve mutual authentication, a fourth message is
+   mandatory.
 
-   To authenticate the Responder and achieve mutual authentication, a
-   fourth message is mandatory.  The Initiator MUST NOT persistently
-   store PRK_out or application keys until the Initiator has verified
-   message_4 or a message protected with a derived application key, such
-   as an OSCORE message, from the Responder and the application has
-   authenticated the Responder.
+   After verifying message_4, the Initiator is assured that the
+   Responder has calculated the key PRK_out (key confirmation) and that
+   no other party can derive the key.  The Initiator MUST NOT
+   persistently store PRK_out or application keys until the Initiator
+   has verified message_4 or a message protected with a derived
+   application key, such as an OSCORE message, from the Responder and
+   the application has authenticated the Responder.
 
 6.  Security Considerations
 
@@ -380,7 +389,7 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
        CRED_PSK and ID_CRED_PSK helps mitigate long-term privacy risks
        associated with static key identifiers.
 
-6.1.  Identity protection
+6.1.  Identity Protection
 
    The current EDHOC methods protect the Initiator’s identity against
    active attackers and the Responder’s identity against passive
@@ -390,7 +399,7 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
    identities are protected against passive attackers, but not against
    active attackers.
 
-6.2.  Number of messages
+6.2.  Number of Messages
 
    The current EDHOC protocol consists of three mandatory messages and
    an optional fourth message.  In the case of EDHOC-PSK authentication
@@ -439,7 +448,13 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
 
 9.  IANA Considerations
 
-   This document has no IANA actions.
+   This document has IANA actions.
+
+9.1.  EDHOC Method Type Registry
+
+9.2.  EDHOC Exporter Label Registry
+
+9.3.  EDHOC Info Label Registry
 
 10.  Normative References
 
@@ -485,9 +500,93 @@ IV_3          = EDHOC_KDF( PRK_4e3m,    TBD, TH_3,  iv_length  )
               DOI 10.17487/RFC9528, March 2024,
               <https://www.rfc-editor.org/rfc/rfc9528>.
 
+Appendix A.  CDDL Definitions
+
+   This section compiles the CDDL definitions for easy reference,
+   incorporating errata filed against [RFC9528].
+
+   suites = [ 2* int ] / int
+
+   ead = (
+     ead_label : int,
+     ? ead_value : bstr,
+   )
+
+   EAD_1 = (1* ead)
+   EAD_2 = (1* ead)
+   EAD_3 = (1* ead)
+   EAD_4 = (1* ead)
+
+   message_1 = (
+     METHOD : int,
+     SUITES_I : suites,
+     G_X : bstr,
+     C_I : bstr / -24..23,
+     ? EAD_1,
+   )
+
+   message_2 = (
+     G_Y_CIPHERTEXT_2 : bstr,
+   )
+
+   PLAINTEXT_2B = (
+     C_R : bstr / -24..23,
+     ? EAD_2,
+   )
+
+   message_3 = (
+     CIPHERTEXT_3 : bstr,
+   )
+
+   PLAINTEXT_3A = (
+     ID_CRED_PSK : header_map / bstr / -24..23,
+     CIPHERTEXT_3B : bstr,
+   )
+
+   PLAINTEXT_3B = (
+     ? EAD_3
+   )
+
+   message_4 = (
+     CIPHERTEXT_4 : bstr,
+   )
+
+   PLAINTEXT_4 = (
+     ? EAD_4,
+   )
+
+   error = (
+     ERR_CODE : int,
+     ERR_INFO : any,
+   )
+
+   info = (
+     info_label : int,
+     context : bstr,
+     length : uint,
+   )
+
+Appendix B.  Change Log
+
+   RFC Editor: Please remove this appendix.
+
+   *  From -02 to -03
+
+      -  TODO
+
+   *  From -01 to -02
+
+      -  TODO
+
+   *  From -00 to -01
+
+      -  TODO
+
 Acknowledgments
 
-   TODO acknowledge.
+   The authors want to thank Christian Amsüss, Scott Fluhrer, and Marco
+   Tiloca for reviewing and commenting on intermediate versions of the
+   draft.
 
 Authors' Addresses
 
