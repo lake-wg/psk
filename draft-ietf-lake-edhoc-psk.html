@@ -1557,7 +1557,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )
               <p id="section-5.3.2-1.1.1">CIPHERTEXT_3 is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:<a href="#section-5.3.2-1.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.1.2.1">
-                  <p id="section-5.3.2-1.1.2.1.1">PLAINTEXT_3A = ( ID_CRED_PSK / bstr / -24..23, CIPHERTEXT_3B )<a href="#section-5.3.2-1.1.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.1.2.1.1">PLAINTEXT_3B = ( ID_CRED_R / bstr / -24..23, INNER_CIPHERTEXT_3, ? EAD_3 )<a href="#section-5.3.2-1.1.2.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.1.2.1.2.1">
                       <p id="section-5.3.2-1.1.2.1.2.1.1">If ID_CRED_PSK contains a single 'kid' parameter, i.e., ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is applied, see <span><a href="https://rfc-editor.org/rfc/rfc9528#section-3.5.3.2" class="relref">Section 3.5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.1.2.1.1" class="pilcrow">¶</a></p>
@@ -1565,24 +1565,24 @@ IV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )
                   </ul>
 </li>
                 <li class="normal" id="section-5.3.2-1.1.2.2">
-                  <p id="section-5.3.2-1.1.2.2.1">Compute KEYSTREAM_3 as in <a href="#key-der" class="auto internal xref">Section 4</a>, where plaintext_length is the length of PLAINTEXT_3A. For the case of plaintext_length exceeding the EDHOC_KDF output size, see <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.1.2.2.1">Compute KEYSTREAM_3 as in <a href="#key-der" class="auto internal xref">Section 4</a>, where plaintext_length is the length of PLAINTEXT_3. For the case of plaintext_length exceeding the EDHOC_KDF output size, see <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-5.3.2-1.1.2.3">
-                  <p id="section-5.3.2-1.1.2.3.1">CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3<a href="#section-5.3.2-1.1.2.3.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.1.2.3.1">CIPHERTEXT_3 = PLAINTEXT_3B XOR KEYSTREAM_3<a href="#section-5.3.2-1.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
             <li class="normal" id="section-5.3.2-1.2">
-              <p id="section-5.3.2-1.2.1">CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as defined in Section <a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">5.2</a> and Section <a href="https://rfc-editor.org/rfc/rfc9528#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.3.2-1.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.2-1.2.1">INNER_CIPHERTEXT_3 is the 'ciphertext' of COSE_Encrypt0 object as defined in Section <a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">5.2</a> and Section <a href="https://rfc-editor.org/rfc/rfc9528#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.3.2-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.2.2.1">
                   <p id="section-5.3.2-1.2.2.1.1">protected = h''<a href="#section-5.3.2-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-5.3.2-1.2.2.2">
-                  <p id="section-5.3.2-1.2.2.2.1">external_aad = &lt;&lt; ID_CRED_PSK, TH_3 &gt;&gt;<a href="#section-5.3.2-1.2.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.2.2.2.1">external_aad = &lt;&lt; Enc(ID_CRED_PSK), TH_3 &gt;&gt;<a href="#section-5.3.2-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-5.3.2-1.2.2.3">
-                  <p id="section-5.3.2-1.2.2.3.1">K_3 and IV_3 as defined in <a href="#key-der" class="auto internal xref">Section 4</a><a href="#section-5.3.2-1.2.2.3.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.2.2.3.1">K_3 and IV_3 as defined in <span><a href="#message-2" class="internal xref">Section 5.2</a> (<a href="#message-2" class="auto internal xref">Section 5.2</a>)</span><a href="#section-5.3.2-1.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-5.3.2-1.2.2.4">
                   <p id="section-5.3.2-1.2.2.4.1">PLAINTEXT_3B = ( ? EAD_3 )<a href="#section-5.3.2-1.2.2.4.1" class="pilcrow">¶</a></p>
@@ -1590,7 +1590,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )
               </ul>
 </li>
           </ul>
-<p id="section-5.3.2-2">The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK ), defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.3.2-2">The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK ), defined in <span><a href="#message-2" class="internal xref">Section 5.2</a> (<a href="#message-2" class="auto internal xref">Section 5.2</a>)</span>.<a href="#section-5.3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="responder-processing-of-message-3">
@@ -1804,13 +1804,10 @@ message_3 = (
   CIPHERTEXT_3 : bstr,
 )
 
-PLAINTEXT_3A = (
-  ID_CRED_PSK : header_map / bstr / -24..23,
-  CIPHERTEXT_3B : bstr,
-)
-
 PLAINTEXT_3B = (
-  ? EAD_3
+  ID_CRED_PSK : header_map / bstr / -24..23,
+  INNER_CIPHERTEXT_3 : bstr,
+  ? EAD_3,
 )
 
 message_4 = (

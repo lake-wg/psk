@@ -319,20 +319,21 @@ Table of Contents
       using a keystream generated with EDHOC_Expand, and the following
       plaintext:
 
-      -  PLAINTEXT_3A = ( ID_CRED_PSK / bstr / -24..23, CIPHERTEXT_3B )
+      -  PLAINTEXT_3B = ( ID_CRED_R / bstr / -24..23,
+         INNER_CIPHERTEXT_3, ? EAD_3 )
 
          o  If ID_CRED_PSK contains a single 'kid' parameter, i.e.,
             ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is
             applied, see Section 3.5.3.2 of [RFC9528].
 
       -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length is
-         the length of PLAINTEXT_3A.  For the case of plaintext_length
+         the length of PLAINTEXT_3.  For the case of plaintext_length
          exceeding the EDHOC_KDF output size, see Appendix G of
          [RFC9528].
 
-      -  CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3
+      -  CIPHERTEXT_3 = PLAINTEXT_3B XOR KEYSTREAM_3
 
-   *  CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as
+   *  INNER_CIPHERTEXT_3 is the 'ciphertext' of COSE_Encrypt0 object as
       defined in Section 5.2 and Section 5.3 of [RFC9528], with the
       EDHOC AEAD algorithm of the selected cipher suite, using the
       encryption key K_3, the initialization vector IV_3 (if used by the
@@ -342,14 +343,14 @@ Table of Contents
 
       -  protected = h''
 
-      -  external_aad = << ID_CRED_PSK, TH_3 >>
+      -  external_aad = << Enc(ID_CRED_PSK), TH_3 >>
 
-      -  K_3 and IV_3 as defined in Section 4
+      -  K_3 and IV_3 as defined in Section 5.2 (Section 5.2)
 
       -  PLAINTEXT_3B = ( ? EAD_3 )
 
    The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B,
-   CRED_PSK ), defined in Section 4.
+   CRED_PSK ), defined in Section 5.2 (Section 5.2).
 
 5.3.3.  Responder Processing of Message 3
 
@@ -538,13 +539,10 @@ Appendix A.  CDDL Definitions
      CIPHERTEXT_3 : bstr,
    )
 
-   PLAINTEXT_3A = (
-     ID_CRED_PSK : header_map / bstr / -24..23,
-     CIPHERTEXT_3B : bstr,
-   )
-
    PLAINTEXT_3B = (
-     ? EAD_3
+     ID_CRED_PSK : header_map / bstr / -24..23,
+     INNER_CIPHERTEXT_3 : bstr,
+     ? EAD_3,
    )
 
    message_4 = (
