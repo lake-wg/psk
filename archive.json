@@ -1,7 +1,7 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-21T01:01:59.788675+00:00",
-  "repo": "ElsaLopez133/draft-lopez-lake-edhoc-psk",
+  "timestamp": "2025-02-13T00:57:17.395523+00:00",
+  "repo": "lake-wg/psk",
   "labels": [
     {
       "name": "bug",
@@ -49,49 +49,285 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
-  "pulls": [
+  "issues": [
     {
       "number": 1,
-      "id": "PR_kwDOMCso9M5xBsUU",
-      "title": "make fix-lint",
-      "url": "https://github.com/ElsaLopez133/draft-lopez-lake-edhoc-psk/pull/1",
-      "state": "MERGED",
-      "author": "malishav",
+      "id": "I_kwDONwrUhc6pXtPd",
+      "title": "Not compiling",
+      "url": "https://github.com/lake-wg/psk/issues/1",
+      "state": "CLOSED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "ElsaLopez133"
+      ],
+      "labels": [],
+      "body": "The draft is not automatically compiling on GitHub as it should. Seems like it has never compiled after moving to lake-wg\n\nThe draft (venue:) and readme markdown refered to the old repository. I fixed this, but some of the links in Readme.md does not work as it has never compiled on the new lake-wg repo.\n\n(I fixed a few other things in the header like silencing a SVG warning and fixing my name.)\n\n",
+      "createdAt": "2025-02-10T07:26:21Z",
+      "updatedAt": "2025-02-11T17:33:41Z",
+      "closedAt": "2025-02-11T17:33:40Z",
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Easist might be to set up a new repo using the template\nhttps://github.com/martinthomson/internet-draft-template\n\nThere are no issues to keep track of.",
+          "createdAt": "2025-02-10T16:21:30Z",
+          "updatedAt": "2025-02-10T16:21:30Z"
+        },
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Everything works now",
+          "createdAt": "2025-02-11T17:33:40Z",
+          "updatedAt": "2025-02-11T17:33:40Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "I_kwDONwrUhc6pdKiM",
+      "title": "Acknowledgments",
+      "url": "https://github.com/lake-wg/psk/issues/2",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "ElsaLopez133"
+      ],
+      "labels": [],
+      "body": "Just add\n\nThe authors want to thank ....\n\nAnd list everyone that has provided relevant comments of any kind.\n",
+      "createdAt": "2025-02-10T16:34:31Z",
+      "updatedAt": "2025-02-11T17:37:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I made a first version with a few version, but many people are likely missing.\n\n```\nAcknowledgments\n\n  The authors want to thank Christian Ams\u00fcss, Scott Fluhrer, and Marco\n   Tiloca for reviewing and commenting on intermediate versions of the\n   draft.\n```",
+          "createdAt": "2025-02-10T16:36:11Z",
+          "updatedAt": "2025-02-11T17:37:01Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDONwrUhc6pdNF7",
+      "title": "IANA Considerations",
+      "url": "https://github.com/lake-wg/psk/issues/3",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Needs to add the PSK method to the \"EDHOC Method Type Registry\"\n\nNeeds to add a label to to the \"EDHOC Exporter Label Registry\" to be used for resumption",
+      "createdAt": "2025-02-10T16:38:35Z",
+      "updatedAt": "2025-02-11T09:20:28Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Create new registry for info_labels. This was missed in RFC9528",
+          "createdAt": "2025-02-11T09:20:27Z",
+          "updatedAt": "2025-02-11T09:20:27Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "I_kwDONwrUhc6pdUhW",
+      "title": "message_3 reveals the length of the PSK identifier and does not allow padding",
+      "url": "https://github.com/lake-wg/psk/issues/4",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "emanjon"
+      ],
+      "labels": [],
+      "body": "```\nEnc( ID_CRED_PSK ), AEAD( EAD_3 )\n\nmessage_3 = (\n  CIPHERTEXT_3A: bstr,\n  CIPHERTEXT_3B: bstr,\n)\n\n```\n\nmessage_3 reveals the length of the PSK identifier and does not allow padding. Padding is only supported in EAD_3",
+      "createdAt": "2025-02-10T16:49:35Z",
+      "updatedAt": "2025-02-11T08:54:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDONwrUhc6pe7gh",
+      "title": "Appendix with Change log",
+      "url": "https://github.com/lake-wg/psk/issues/5",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "ElsaLopez133"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-10T19:46:03Z",
+      "updatedAt": "2025-02-11T08:54:23Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDONwrUhc6pe7qF",
+      "title": "Apendix with CDDL definitions",
+      "url": "https://github.com/lake-wg/psk/issues/6",
+      "state": "CLOSED",
+      "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
-      "createdAt": "2024-05-30T15:23:29Z",
-      "updatedAt": "2024-05-30T15:36:39Z",
-      "baseRepository": "ElsaLopez133/draft-lopez-lake-edhoc-psk",
-      "baseRefName": "main",
-      "baseRefOid": "9bc1871822db5ca4b58817627b49075c466dc620",
-      "headRepository": "malishav/draft-lopez-lake-edhoc-psk",
-      "headRefName": "main",
-      "headRefOid": "28fbe49697a71002c3000798483f0b056ad09443",
-      "closedAt": "2024-05-30T15:36:39Z",
-      "mergedAt": "2024-05-30T15:36:38Z",
-      "mergedBy": "ElsaLopez133",
-      "mergeCommit": {
-        "oid": "7c9fdc92be64e0b356bb9d27e8e32f65d7c38a48"
-      },
-      "comments": [],
-      "reviews": [
+      "createdAt": "2025-02-10T19:46:23Z",
+      "updatedAt": "2025-02-11T08:53:36Z",
+      "closedAt": "2025-02-11T08:53:34Z",
+      "comments": [
         {
-          "id": "PRR_kwDOMCso9M58fmNL",
-          "commit": {
-            "abbreviatedOid": "28fbe49"
-          },
-          "author": "ElsaLopez133",
-          "authorAssociation": "OWNER",
-          "state": "APPROVED",
-          "body": "",
-          "createdAt": "2024-05-30T15:36:22Z",
-          "updatedAt": "2024-05-30T15:36:22Z",
-          "comments": []
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Fixed in main",
+          "createdAt": "2025-02-11T08:53:34Z",
+          "updatedAt": "2025-02-11T08:53:34Z"
         }
       ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDONwrUhc6pfEzW",
+      "title": "Resumption",
+      "url": "https://github.com/lake-wg/psk/issues/7",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Specify how this is used for resumption",
+      "createdAt": "2025-02-10T20:01:29Z",
+      "updatedAt": "2025-02-10T20:01:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDONwrUhc6pfJkS",
+      "title": "Exact values of info_labels",
+      "url": "https://github.com/lake-wg/psk/issues/8",
+      "state": "CLOSED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\nKEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, TBD1, TH_3, ID_CRED_PSK length )\nK_3         = EDHOC_KDF( PRK_4e3m, TBD2, TH_3, key_length )\nIV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )\n```\n\nTBD1 is a new value.\n\nIs the info_labels for K_3 and IV_3 the same as in RFC 9528?\n\n@gselander why do we not have a IANA registry for info_labels?",
+      "createdAt": "2025-02-10T20:11:23Z",
+      "updatedAt": "2025-02-11T17:35:10Z",
+      "closedAt": "2025-02-11T17:35:09Z",
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "TBD1, TBD2, and TBD3 are all new values. Need to define a new registry for this.",
+          "createdAt": "2025-02-11T09:56:45Z",
+          "updatedAt": "2025-02-11T09:56:45Z"
+        },
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The values should have TBD1, TBD2, and TBD3. Need a IANA registry. This is handled in #3 ",
+          "createdAt": "2025-02-11T17:35:09Z",
+          "updatedAt": "2025-02-11T17:35:09Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDONwrUhc6pkKyb",
+      "title": "New names for PLAINTEXT_2 and PLAINTEXT_3 to avoid colliding CDDL",
+      "url": "https://github.com/lake-wg/psk/issues/9",
+      "state": "CLOSED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-11T09:35:20Z",
+      "updatedAt": "2025-02-11T09:55:54Z",
+      "closedAt": "2025-02-11T09:55:53Z",
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Changed to PLAINTEXT_2B and PLAINTEXT_3B in main.\n\n(Not sure these are the optimal names, but that can be changed later)",
+          "createdAt": "2025-02-11T09:55:53Z",
+          "updatedAt": "2025-02-11T09:55:53Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDONwrUhc6pk5iz",
+      "title": "Diff vs self-contained document",
+      "url": "https://github.com/lake-wg/psk/issues/10",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current specification is written as a diff against RFC 9528. This is good from an economy of specification and may be good for a person who is familiar with RFC 9528, which anyway is assumed. \n\nHowever, it is difficult to read when you need to have RFC 9528 open on the side, and it isn't clear which parts of RFC 9528 that are not used. Moreover, since some terms are given a different definition and/or a different interpretation, there is risk for both confusion and potential errors.\n\nFor readability, some parts may not be repeated. This has the drawback when there is a need for update.\n\nWe should not have contradicting CDDL definitions between this spec and RFC 9528.\n\nAlso, the labeling of the parameters becomes confusing when the original meaning is lost, e.g. the \"2m\" part of PRK_3e2m does mean anything when there is no MAC in message 2. \n\nI'm in favor of defining new terms that makes sense for the new protocol, but also indicate what parts carry over directly from RFC 9528. Some overall refactoring is needed to carry out this. \n\n",
+      "createdAt": "2025-02-11T10:53:32Z",
+      "updatedAt": "2025-02-11T10:53:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDONwrUhc6plSHE",
+      "title": "Update title, abstract and intro",
+      "url": "https://github.com/lake-wg/psk/issues/11",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some proposed updates:\n\n* Title \n\nOLD\nEDHOC PSK Authentication\nNEW\nEDHOC authenticated with Pre-Shared Keys\n\nabbrev: \"EDHOC PSK\"\n\n* Abstract\n\nOLD\nThis document specifies the Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. It describes the authentication processes, message flows, and security considerations of this authentication method.\n\nNEW\nThis document specifies an authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol based on Pre-Shared Keys (PSK). This method may be used for initial authentication and for resumption based on secret keys derived from a previously established EDHOC session.\n\nAlso, mention identity protection.\n\n* Intro\n\nRemove GBA, AKMA is sufficient to mention. Replace text with EAP with text about \n\nEAP-EDHOC plan to use this for resumption, include a \n reference.",
+      "createdAt": "2025-02-11T11:34:56Z",
+      "updatedAt": "2025-02-11T11:34:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDONwrUhc6plTUS",
+      "title": "Privacy considerations",
+      "url": "https://github.com/lake-wg/psk/issues/12",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This section is empty. Should at least talk about identity protection. ",
+      "createdAt": "2025-02-11T11:37:11Z",
+      "updatedAt": "2025-02-11T11:37:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDONwrUhc6plUGC",
+      "title": "Section 8 is a security consideration",
+      "url": "https://github.com/lake-wg/psk/issues/13",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Make this section a subsection of Security considerations",
+      "createdAt": "2025-02-11T11:38:36Z",
+      "updatedAt": "2025-02-11T11:38:36Z",
+      "closedAt": null,
+      "comments": []
     }
-  ]
+  ],
+  "pulls": []
 }
