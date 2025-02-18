@@ -1231,10 +1231,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-external-authorization-data" class="internal xref">External Authorization Data</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
-                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-attacks" class="internal xref">Attacks</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
-                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="auto internal xref">6.5</a>.  <a href="#name-independence-of-session-key" class="internal xref">Independence of Session Keys</a></p>
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-independence-of-session-key" class="internal xref">Independence of Session Keys</a></p>
 </li>
             </ul>
 </li>
@@ -1642,21 +1639,13 @@ In the case of EDHOC-PSK authentication method, message_4 remains optional, but 
 This is possible because the Initiator knows that only the Responder with access to the CRED_PSK can decrypt the information.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="attacks">
-<section id="section-6.4">
-        <h3 id="name-attacks">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-attacks" class="section-name selfRef">Attacks</a>
-        </h3>
-<p id="section-6.4-1">EDHOC-PSK authentication method offers privacy and resistance to passive attacks but might be vulnerable to certain active attacks due to delayed authentication.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="independence-of-session-keys">
-<section id="section-6.5">
+<section id="section-6.4">
         <h3 id="name-independence-of-session-key">
-<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-independence-of-session-key" class="section-name selfRef">Independence of Session Keys</a>
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-independence-of-session-key" class="section-name selfRef">Independence of Session Keys</a>
         </h3>
-<p id="section-6.5-1">NIST mandates that that an ephemeral private key shall be used in exactly one key-establishment transaction (see Section 5.6.3.3 of <span>[<a href="#SP-800-56A" class="cite xref">SP-800-56A</a>]</span>). This requirement is essential for preserving session key independence and ensuring forward secrecy. The EDHOC protocol complies with this NIST requirement.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
-<p id="section-6.5-2">In other protocols, the reuse of ephemeral keys, particularly when combined with implementation flaws such as the absence of public key validation, has resulted in critical security vulnerabilities. Such weaknesses have allowed attackers to recover the so called “ephemeral” private key from a compromised session, thereby enabling them to compromise the security of both past and future sessions between legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental zero-trust principles.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-1">NIST mandates that that an ephemeral private key shall be used in exactly one key-establishment transaction (see Section 5.6.3.3 of <span>[<a href="#SP-800-56A" class="cite xref">SP-800-56A</a>]</span>). This requirement is essential for preserving session key independence and ensuring forward secrecy. The EDHOC protocol complies with this NIST requirement.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">In other protocols, the reuse of ephemeral keys, particularly when combined with implementation flaws such as the absence of public key validation, has resulted in critical security vulnerabilities. Such weaknesses have allowed attackers to recover the so called “ephemeral” private key from a compromised session, thereby enabling them to compromise the security of both past and future sessions between legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental zero-trust principles.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
