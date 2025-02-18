@@ -624,9 +624,9 @@ Appendix C.  Change Log
 
 Acknowledgments
 
-   The authors want to thank Christian Amsüss, Scott Fluhrer, and Marco
-   Tiloca for reviewing and commenting on intermediate versions of the
-   draft.
+   The authors want to thank Christian Amsüss, Scott Fluhrer, Charlie
+   Jacomme, and Marco Tiloca for reviewing and commenting on
+   intermediate versions of the draft.
 
 Authors' Addresses
 
