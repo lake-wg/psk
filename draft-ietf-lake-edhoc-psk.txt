@@ -264,11 +264,11 @@ Table of Contents
    Figure 2 lists the key derivations that differ from those specified
    in Section 4.1.2 of [RFC9528].
 
-    PRK_3e2m    = PRK_2e
-    PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )
-    KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, TBD1, TH_3, plaintext_length_3 )
-    K_3         = EDHOC_KDF( PRK_4e3m, TBD2, TH_3, key_length )
-    IV_3        = EDHOC_KDF( PRK_4e3m, TBD3, TH_3, iv_length )
+     PRK_3e2m    = PRK_2e
+     PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )
+     KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )
+     K_3         = EDHOC_KDF( PRK_4e3m, 12, TH_3, key_length )
+     IV_3        = EDHOC_KDF( PRK_4e3m, 13, TH_3, iv_length )
 
         Figure 2: Key Derivation of EDHOC PSK Authentication Method.
 
