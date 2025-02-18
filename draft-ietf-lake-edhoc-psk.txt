@@ -99,13 +99,13 @@ Table of Contents
      6.2.  Number of Messages
      6.3.  External Authorization Data
      6.4.  Independence of Session Keys
+     6.5.  Unified Approach and Recommendations
    7.  Privacy Considerations
-   8.  Unified Approach and Recommendations
-   9.  IANA Considerations
-     9.1.  EDHOC Method Type Registry
-     9.2.  EDHOC Exporter Label Registry
-     9.3.  EDHOC Info Label Registry
-   10. Normative References
+   8.  IANA Considerations
+     8.1.  EDHOC Method Type Registry
+     8.2.  EDHOC Exporter Label Registry
+     8.3.  EDHOC Info Label Registry
+   9.  Normative References
    Appendix A.  CDDL Definitions
    Appendix B.  Test Vectors
    Appendix C.  Change Log
@@ -444,9 +444,7 @@ Table of Contents
    between legitimate parties.  Assuming breach and minimizing the
    impact of compromise are fundamental zero-trust principles.
 
-7.  Privacy Considerations
-
-8.  Unified Approach and Recommendations
+6.5.  Unified Approach and Recommendations
 
    For use cases involving the transmission of application data,
    application data can be sent concurrently with message_3, maintaining
@@ -468,17 +466,19 @@ Table of Contents
    for the privacy properties when using asymmetric authentication but
    is not significant in the context of symmetric key usage.
 
-9.  IANA Considerations
+7.  Privacy Considerations
+
+8.  IANA Considerations
 
    This document has IANA actions.
 
-9.1.  EDHOC Method Type Registry
+8.1.  EDHOC Method Type Registry
 
-9.2.  EDHOC Exporter Label Registry
+8.2.  EDHOC Exporter Label Registry
 
-9.3.  EDHOC Info Label Registry
+8.3.  EDHOC Info Label Registry
 
-10.  Normative References
+9.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
