@@ -107,7 +107,8 @@ Table of Contents
      9.3.  EDHOC Info Label Registry
    10. Normative References
    Appendix A.  CDDL Definitions
-   Appendix B.  Change Log
+   Appendix B.  Test Vectors
+   Appendix C.  Change Log
    Acknowledgments
    Authors' Addresses
 
@@ -594,7 +595,9 @@ Appendix A.  CDDL Definitions
      length : uint,
    )
 
-Appendix B.  Change Log
+Appendix B.  Test Vectors
+
+Appendix C.  Change Log
 
    RFC Editor: Please remove this appendix.
 
