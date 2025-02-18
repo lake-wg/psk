@@ -161,10 +161,11 @@ Table of Contents
    capitals, as shown here.
 
    Readers are expected to be familiar with the terms and concepts
-   described in CBOR [RFC8949], CBOR Sequences [RFC8742], COSE
-   Structures and Processing [RFC9052], COSE Algorithms [RFC9053], CWT
-   and CCS [RFC8392], and the Concise Data Definition Language (CDDL)
-   [RFC8610], which is used to express CBOR data structures.
+   described in EDHOC [RFC9528], CBOR [RFC8949], CBOR Sequences
+   [RFC8742], COSE Structures and Processing [RFC9052], COSE Algorithms
+   [RFC9053], CWT and CCS [RFC8392], and the Concise Data Definition
+   Language (CDDL) [RFC8610], which is used to express CBOR data
+   structures.
 
 3.  Protocol
 
