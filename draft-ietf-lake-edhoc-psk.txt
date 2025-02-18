@@ -543,9 +543,49 @@ Table of Contents
 
 7.1.  EDHOC Method Type Registry
 
+   IANA is requested to register the following entry in the "EDHOC
+   Method Type" registry under the group name "Ephemeral Diffie-Hellman
+   Over OCSE (EDHOC)".
+
++------------+------------------------------+---------------------------------+-------------------+
+| Value      | Initiator Authentication Key | Responder Authentication Key    | Reference         |
++============+==============================+=================================+===================+
+|  4         |                 PSK          |                 PSK             |                   |
++------------+------------------------------+---------------------------------+-------------------+
+
+        Figure 3: Addition to the EDHOC Method Type Registry.
+
 7.2.  EDHOC Exporter Label Registry
 
+   IANA is requested to register the following entry in the "EDHOC
+   Exporter Label" registry under the group name "Ephemeral Diffie-
+   Hellman Over OCSE (EDHOC)".
+
+   +------------+------------------------------+-------------------+
+   | Label      | Descritpion                  |  Reference        |
+   +============+==============================+===================+
+   |            |                              |                   |
+   +------------+------------------------------+-------------------+
+
+          Figure 4: Addition to the EDHOC Exporter Label Registry.
+
 7.3.  EDHOC Info Label Registry
+
+   IANA is requested to register the following registry "EDHOC Info
+   Label" under the group name "Ephemeral Diffie-Hellman Over OCSE
+   (EDHOC)".
+
+   +------------+-----------------------+-------------------+
+   | Label      |          Key          |  Reference        |
+   +============+=======================+===================+
+   |  10        |       KEYSTREAM_3     |   {{key-der}}     |
+   +------------+-----------------------+-------------------+
+   |  11        |           K_3         |   {{key-der}}     |
+   +------------+-----------------------+-------------------+
+   |  12        |          IV_3         |   {{key-der}}     |
+   +------------+-----------------------+-------------------+
+
+                    Figure 5: EDHOC Info Label Registry.
 
 8.  Normative References
 
