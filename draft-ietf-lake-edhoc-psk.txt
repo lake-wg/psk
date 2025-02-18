@@ -121,7 +121,7 @@ Table of Contents
    approaches, PSK authentication offers greater computational
    efficiency compared to the methods outlined in [RFC9528].  The PSK
    method retains mutual authentication, asymmetric ephemeral key
-   exchange, and identity protections established by [RFC9528].  By
+   exchange, and identity protection established by [RFC9528].  By
    utilizing the PSK for both authentication and key derivation, this
    method provides quantum resistance.
 
