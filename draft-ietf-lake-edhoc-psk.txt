@@ -19,13 +19,13 @@ Abstract
 
    This document specifies a Pre-Shared Key (PSK) authentication method
    for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange
-   protocol.  The PSK method improves computational efficiency while
-   ensuring mutual authentication, ephemeral key exchange, and identity
-   protection, while also offering quantum resistance.  It is
-   particularly suited for systems where nodes share a PSK out-of-band
-   and enables efficient session resumption with less computational
-   overhead.  This document details the PSK method flow, key derivation
-   changes, message formatting, processing, and security considerations.
+   protocol.  The PSK method enhances computational efficiency while
+   providing mutual authentication, ephemeral key exchange, identity
+   protection, and quantum resistance.  It is particularly suited for
+   systems where nodes share a PSK out-of-band and enables efficient
+   session resumption with less computational overhead.  This document
+   details the PSK method flow, key derivation changes, message
+   formatting, processing, and security considerations.
 
 About This Document
 
