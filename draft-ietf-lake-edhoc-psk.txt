@@ -445,9 +445,9 @@ Table of Contents
    validation, has resulted in critical security vulnerabilities.  Such
    weaknesses have allowed attackers to recover the so called
    “ephemeral” private key from a compromised session, thereby enabling
-   them to breach the security of subsequent sessions between legitimate
-   parties.  Assuming breach and minimizing the impact of compromise are
-   fundamental zero-trust principles.
+   them to compromise the security of both past and future sessions
+   between legitimate parties.  Assuming breach and minimizing the
+   impact of compromise are fundamental zero-trust principles.
 
 7.  Privacy Considerations
 
