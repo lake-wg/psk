@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 22 August 2025                                J. Preuß Mattsson
+Expires: 24 August 2025                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                        18 February 2025
+                                                        20 February 2025
 
 
              EDHOC with Pre-Shared Key (PSK) Authentication
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 August 2025.
+   This Internet-Draft will expire on 24 August 2025.
 
 Copyright Notice
 
@@ -736,6 +736,9 @@ Acknowledgments
    The authors want to thank Christian Amsüss, Scott Fluhrer, Charlie
    Jacomme, and Marco Tiloca for reviewing and commenting on
    intermediate versions of the draft.
+
+   This work was supported partially by Vinnova - the Swedish Agency for
+   Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.
 
 Authors' Addresses
 
