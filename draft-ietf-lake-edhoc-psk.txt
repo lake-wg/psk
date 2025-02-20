@@ -12,19 +12,19 @@ Expires: 24 August 2025                                J. Preuß Mattsson
                                                         20 February 2025
 
 
-             EDHOC with Pre-Shared Key (PSK) Authentication
+                    EDHOC with Pre-Shared Keys (PSK)
                     draft-ietf-lake-edhoc-psk-latest
 
 Abstract
 
-   This document specifies a Pre-Shared Key (PSK) authentication method
-   for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange
-   protocol.  The PSK method enhances computational efficiency while
-   providing mutual authentication, ephemeral key exchange, identity
-   protection, and quantum resistance.  It is particularly suited for
-   systems where nodes share a PSK out-of-band and enables efficient
-   session resumption with less computational overhead.  This document
-   details the PSK method flow, key derivation changes, message
+   This document specifies a Pre-Shared Key (PSK) based authentication
+   method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key
+   exchange protocol.  The PSK method enhances computational efficiency
+   while providing mutual authentication, ephemeral key exchange,
+   identity protection, and quantum resistance.  It is particularly
+   suited for systems where nodes share a PSK out-of-band and enables
+   efficient session resumption with less computational overhead.  This
+   document details the PSK method flow, key derivation changes, message
    formatting, processing, and security considerations.
 
 About This Document
