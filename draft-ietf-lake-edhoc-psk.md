@@ -1,8 +1,8 @@
 ---
-title: "EDHOC with Pre-Shared Key (PSK) Authentication"
+title: "EDHOC with Pre-Shared Keys (PSK)"
 docname: draft-ietf-lake-edhoc-psk-latest
 category: std
-
+abbrev: EDHOC-PSK
 v3xml2rfc:
   silence:
   - Found SVG with width or height specified
@@ -69,7 +69,7 @@ informative:
 
 --- abstract
 
-This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK out-of-band and enables efficient session resumption with less computational overhead. This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
+This document specifies a Pre-Shared Key (PSK) based authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK out-of-band and enables efficient session resumption with less computational overhead. This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
 
 --- middle
 
