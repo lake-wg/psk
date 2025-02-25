@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-23T01:01:45.337252+00:00",
+  "timestamp": "2025-02-25T00:58:45.211873+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -262,7 +262,7 @@
       "labels": [],
       "body": "Specify how this is used for resumption",
       "createdAt": "2025-02-10T20:01:29Z",
-      "updatedAt": "2025-02-18T13:11:41Z",
+      "updatedAt": "2025-02-24T17:19:34Z",
       "closedAt": null,
       "comments": [
         {
@@ -299,6 +299,55 @@
           "body": "Missing:\n* Exporter label to derive PSK\n* Exporter label to derive key identifier\n* Distinction between I and R (see #14)\n* Being able to switch roles (or why not)",
           "createdAt": "2025-02-18T13:09:57Z",
           "updatedAt": "2025-02-18T13:11:01Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "NONE",
+          "body": "Regarding this part, at the beginning of security section we have a distinction between *Initial Handshake* and *Session Resumption*. In the session resumption part, I do not think we need to reuse the same ID_CRED_PSK and CRED_PSK for resumption PSK. Each time EDHOC-PSK is run a new PRK_Exporter will be generated, which means a new  (resumption) ID_CRED_PSK and CRED_PSK will be generated.",
+          "createdAt": "2025-02-24T13:47:34Z",
+          "updatedAt": "2025-02-24T13:47:34Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "And how would you derive the ID_CRED_PSK and the CRED_PSK from a PRK_exporter?\n",
+          "createdAt": "2025-02-24T14:08:33Z",
+          "updatedAt": "2025-02-24T14:08:33Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Could it be by using EDHOC_Expand? So say CRED_PSK = EDHOC_Expand(PRK_Exporter, label, context, length)?\nAnd as for ID_CRED_PSK it could be derived from CRED_PSK?",
+          "createdAt": "2025-02-24T14:12:36Z",
+          "updatedAt": "2025-02-24T14:12:36Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "NONE",
+          "body": "Yes, that is why G\u00f6ran annotated that we need an:\n\n\"Exporter label to derive PSK\nExporter label to derive key identifier\"",
+          "createdAt": "2025-02-24T14:15:08Z",
+          "updatedAt": "2025-02-24T14:15:08Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "And what would the context of the Expand function be in this case? \nAnd for the labels right now EDHOC only has 0, 1, so could it be 2 and 3 for CRED_PSK and ID_CRED_PSK?\n",
+          "createdAt": "2025-02-24T14:18:51Z",
+          "updatedAt": "2025-02-24T14:31:25Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "NONE",
+          "body": "According to 10.1.  EDHOC Exporter Label Registry (in RFC 9528) 2 an 3 would do (0 and 1 are assigned to OSCORE Master Secret and OSCORE Master Salt, respectively). About the context , we can the same as for deriving OSCORE Master Secret and Master Salt\n\nrPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )\nrID_CRED_PSK   = EDHOC_Exporter( 3, h'', id_cred_psk_length )\n\nI guess with \"enough\" id_cred_psk_length we can avoid any collision. I added \"r\" to distinguish from the PSK and ID_CRED_PSK but I do not know if this will be necessary",
+          "createdAt": "2025-02-24T14:35:14Z",
+          "updatedAt": "2025-02-24T14:35:14Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "NONE",
+          "body": "I was wondering whether having a rID_CRED_PSK derived in this way might a be a problem. Since the responder does not choose the value, might be collision. To avoid that, as I mentioned, the rID_CRED_PSK should have \"enough\" length to reduce the probability of a collision but the drawback is that we may want to have a really short rID_CRED_PSK",
+          "createdAt": "2025-02-24T17:19:31Z",
+          "updatedAt": "2025-02-24T17:19:31Z"
         }
       ]
     },
@@ -405,7 +454,7 @@
       "id": "I_kwDONwrUhc6plTUS",
       "title": "Privacy considerations",
       "url": "https://github.com/lake-wg/psk/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gselander",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -414,8 +463,8 @@
       "labels": [],
       "body": "This section is empty. Should at least talk about identity protection. ",
       "createdAt": "2025-02-11T11:37:11Z",
-      "updatedAt": "2025-02-18T13:35:54Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-24T15:14:46Z",
+      "closedAt": "2025-02-24T15:14:46Z",
       "comments": []
     },
     {
@@ -524,9 +573,17 @@
       "labels": [],
       "body": "Hi all, \nI have identified a potential issue in the calculation of Transcript Hash 3 (TH_3) in the draft specification. TH_3 is defined as follows:\n\n **TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )**\n\nTH_3 is then used to generate KEYSTREAM_3:\n\n **KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD, TH_3,  ID_CRED_PSK length )**\n\nKEYSTREAM_3 is used by the Initiator to encrypt ID_CRED_PSK before sending it in message_3. Consequently, the Responder needs to derive the same KEYSTREAM_3 to decrypt ID_CRED_PSK when processing message_3.\n\nThe issue is that TH_3 already includes CRED_PSK. However, the Responder requires KEYSTREAM_3 to decrypt ID_CRED_PSK and determine which PSK should be used. This creates a circular dependency:\n \n 1. To derive KEYSTREAM_3, the Responder must first compute TH_3.\n 2. Computing TH_3 requires CRED_PSK, which depends on knowing the correct PSK.\n 3. However, the Responder can only determine the correct PSK after decrypting ID_CRED_PSK using KEYSTREAM_3.",
       "createdAt": "2025-02-18T13:57:23Z",
-      "updatedAt": "2025-02-19T08:29:02Z",
+      "updatedAt": "2025-02-24T12:45:57Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "rml1977",
+          "authorAssociation": "NONE",
+          "body": "How about this?\n\nTH_3 = H(TH_2, PLAINTEXT_2)\nexternal_aad = << Enc(ID_CRED_PSK), TH_3, CRED_PSK >>",
+          "createdAt": "2025-02-24T12:45:54Z",
+          "updatedAt": "2025-02-24T12:45:54Z"
+        }
+      ]
     }
   ],
   "pulls": []
