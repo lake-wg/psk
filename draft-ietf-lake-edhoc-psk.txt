@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 29 August 2025                                J. Preuß Mattsson
+Expires: 30 August 2025                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                        25 February 2025
+                                                        26 February 2025
 
 
              EDHOC Authenticated with Pre-Shred Keys (PSK)
@@ -22,10 +22,12 @@ Abstract
    protocol.  The PSK method enhances computational efficiency while
    providing mutual authentication, ephemeral key exchange, identity
    protection, and quantum resistance.  It is particularly suited for
-   systems where nodes share a PSK out-of-band and enables efficient
-   session resumption with less computational overhead.  This document
-   details the PSK method flow, key derivation changes, message
-   formatting, processing, and security considerations.
+   systems where nodes share a PSK provided out-of-band (external PSK)
+   and enables efficient session resumption with less computational
+   overhead when the PSK is provided from a previous EDHOC session
+   (resumption PSK).  This document details the PSK method flow, key
+   derivation changes, message formatting, processing, and security
+   considerations.
 
 About This Document
 
@@ -59,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2025.
+   This Internet-Draft will expire on 30 August 2025.
 
 Copyright Notice
 
@@ -129,17 +131,17 @@ Table of Contents
    exchange, and identity protection established by [RFC9528].
 
    EDHOC with PSK authentication benefits systems where two nodes nodes
-   share a Pre-Shared Key (PSK) provided out-of-band.  This applies to
-   scenarios like the Authenticated Key Management Architecture (AKMA)
-   in mobile systems or the Peer and Authenticator in Extensible
-   Authentication Protocol (EAP) systems.  The PSK method enables the
-   nodes to perform ephemeral key exchange, achieving Perfect Forward
-   Secrecy (PFS).  This ensures that even if the PSK is compromised,
-   past communications remain secure against active attackers, while
-   future communications are protected from passive attackers.
-   Additionally, by leveraging the PSK for both authentication and key
-   derivation, the method offers quantum resistance key exchange and
-   authentication.
+   share a Pre-Shared Key (PSK) provided out-of-band (external PSK).
+   This applies to scenarios like the Authenticated Key Management
+   Architecture (AKMA) in mobile systems or the Peer and Authenticator
+   in Extensible Authentication Protocol (EAP) systems.  The PSK method
+   enables the nodes to perform ephemeral key exchange, achieving
+   Perfect Forward Secrecy (PFS).  This ensures that even if the PSK is
+   compromised, past communications remain secure against active
+   attackers, while future communications are protected from passive
+   attackers.  Additionally, by leveraging the PSK for both
+   authentication and key derivation, the method offers quantum
+   resistance key exchange and authentication.
 
    Another key use case of PSK authentication in the EDHOC protocol is
    session resumption.  This enables previously connected parties to
@@ -147,7 +149,12 @@ Table of Contents
    prior session, reducing the overhead associated with key exchange and
    asymmetric authentication.  By using PSK authentication, EDHOC allows
    session keys to be refreshed with significantly lower computational
-   overhead compared to public-key authentication.
+   overhead compared to public-key authentication.  In this case, the
+   PSK is provisioned after the establishment of a previous EDHOC
+   session by using EDHOC_Exporter (resumption PSK).
+
+   Therefore, the external PSK is supposed to be a long-term credential
+   while the resumption PSK is a session key.
 
    Section 3 provides an overview of the PSK method flow and
    credentials.  Section 4 outlines the changes to key derivation
@@ -180,8 +187,9 @@ Table of Contents
 
 3.1.  Credentials
 
-   Initiator and Responder are assumed to have a PSK with good amount of
-   randomness and the requirements that:
+   Initiator and Responder are assumed to have a PSK (external PSK or
+   resumption PSK) with good amount of randomness and the requirements
+   that:
 
    *  Only the Initiator and the Responder have access to the PSK.
 
@@ -278,7 +286,7 @@ Table of Contents
 
    *  KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.
 
-   *  TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )
+   *  TH_3 = H( TH_2, PLAINTEXT_2 )
 
    Additionally, the definition of the transcript hash TH_4 is modified
    as:
@@ -355,7 +363,7 @@ Table of Contents
 
       -  protected = h''
 
-      -  external_aad = << ID_CRED_PSK, TH_3 >>
+      -  external_aad = << ID_CRED_PSK, TH_3, CRED_PSK >>
 
       -  K_3 and IV_3 as defined in Section 4
 
