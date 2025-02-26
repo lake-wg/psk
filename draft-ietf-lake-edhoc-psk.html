@@ -1561,6 +1561,9 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 13, TH_3, iv_length )
 <li class="normal" id="section-5.3.2-1.1.2.1.2.1">
                       <p id="section-5.3.2-1.1.2.1.2.1.1">If ID_CRED_PSK contains a single 'kid' parameter, i.e., ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is applied, see <span><a href="https://rfc-editor.org/rfc/rfc9528#section-3.5.3.2" class="relref">Section 3.5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
+                    <li class="normal" id="section-5.3.2-1.1.2.1.2.2">
+                      <p id="section-5.3.2-1.1.2.1.2.2.1">If the length of PLAINTEXT_3A exceeds the output of EDHOC_KDF, then <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> applies.<a href="#section-5.3.2-1.1.2.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
                   </ul>
 </li>
                 <li class="normal" id="section-5.3.2-1.1.2.2">
@@ -1624,7 +1627,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 13, TH_3, iv_length )
         <h3 id="name-identity-protection">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity protection</a>
         </h3>
-<p id="section-6.1-1">EDHOC-PSK encrypts ID_CRED_PSK in message 3, XOR encrypted with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See <a href="https://www.rfc-editor.org/rfc/rfc9528.html#section-9.1">Section 9.1 of RFC9528</a>), EDHOC-PSK provides identity protection for both the Initator and the Responder against passive attackers.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">EDHOC-PSK encrypts ID_CRED_PSK in message 3, XOR encrypted with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>), EDHOC-PSK provides identity protection for both the Initator and the Responder against passive attackers.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mutual-authentication">
@@ -1678,14 +1681,14 @@ This consideration was important for the privacy properties when using asymmetri
 </div>
 </section>
 </div>
-<div id="psk-usage-for-session-resumtpion">
+<div id="psk-resumption">
 <section id="section-7">
       <h2 id="name-psk-usage-for-session-resum">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumtpion</a>
       </h2>
 <p id="section-7-1">This section defines how PSKs are used for session resumption in EDHOC.
 Each time EDHOC-PSK is run a new PRK_out and PRK_exporter will be generated.
-Following <a href="https://www.rfc-editor.org/rfc/rfc9528.html#section-4.2">Section 4.2 of RFC9528</a>, EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:<a href="#section-7-1" class="pilcrow">¶</a></p>
+Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:<a href="#section-7-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7-2">
 <pre>
 CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -1722,7 +1725,7 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
             <p id="section-7.2-2.1.1">The same ID_CRED_PSK is reused each time EDHOC is executed with a specific resumption PSK.<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.2-2.2">
-            <p id="section-7.2-2.2.1">To prevent long-term tracking, implementations <span class="bcp14">SHOULD</span> periodically initiate a full EDHOC exchange to generate a new resumption PSK and corresponding ID_CRED_PSK. Alternatively, as stated in <a href="https://www.rfc-editor.org/rfc/rfc9528.html#appendix-h">Appendix H of RFC9528</a>, EDHOC_KeyUpdate can be used to derive a new PRK_out, and consequently a new CRED_PSK and ID_CRED_PSK for session resumption.<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-7.2-2.2.1">To prevent long-term tracking, implementations <span class="bcp14">SHOULD</span> periodically initiate a full EDHOC exchange to generate a new resumption PSK and corresponding ID_CRED_PSK. Alternatively, as stated in <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-H" class="relref">Appendix H</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_KeyUpdate can be used to derive a new PRK_out, and consequently a new CRED_PSK and ID_CRED_PSK for session resumption.<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-7.2-3">While PSK reuse enhances efficiency by reducing the overhead of key exchanges, it presents privacy risks if not managed properly through periodic renewal.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
@@ -1827,10 +1830,14 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
                   <text x="164" y="84">Resumption</text>
                   <text x="244" y="84">CRED_PSK</text>
                   <text x="436" y="84">IETF</text>
+                  <text x="560" y="84">Section</text>
+                  <text x="600" y="84">7</text>
                   <text x="32" y="116">3</text>
                   <text x="164" y="116">Resumption</text>
                   <text x="256" y="116">ID_CRED_PSK</text>
                   <text x="436" y="116">IETF</text>
+                  <text x="560" y="116">Section</text>
+                  <text x="600" y="116">7</text>
                 </g>
               </svg><a href="#section-8.2-2.1.1" class="pilcrow">¶</a>
 </div>
@@ -1868,13 +1875,16 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
                   <text x="360" y="52">Reference</text>
                   <text x="36" y="84">12</text>
                   <text x="216" y="84">KEYSTREAM_3</text>
-                  <text x="376" y="84">{{key-der}}</text>
+                  <text x="360" y="84">Section</text>
+                  <text x="400" y="84">4</text>
                   <text x="36" y="116">13</text>
                   <text x="216" y="116">K_3</text>
-                  <text x="376" y="116">{{key-der}}</text>
+                  <text x="360" y="116">Section</text>
+                  <text x="400" y="116">4</text>
                   <text x="36" y="148">14</text>
                   <text x="212" y="148">IV_3</text>
-                  <text x="376" y="148">{{key-der}}</text>
+                  <text x="360" y="148">Section</text>
+                  <text x="400" y="148">4</text>
                 </g>
               </svg><a href="#section-8.3-2.1.1" class="pilcrow">¶</a>
 </div>

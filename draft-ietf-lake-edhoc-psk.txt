@@ -346,6 +346,9 @@ Table of Contents
             ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is
             applied, see Section 3.5.3.2 of [RFC9528].
 
+         o  If the length of PLAINTEXT_3A exceeds the output of
+            EDHOC_KDF, then Appendix G of [RFC9528] applies.
+
       -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length is
          the length of PLAINTEXT_3A.  For the case of plaintext_length
          exceeding the EDHOC_KDF output size, see Appendix G of
@@ -404,10 +407,9 @@ Table of Contents
    keystream derived from the ephemeral shared secret G_XY.  As a
    consequence, contrary to the current EDHOC methods that protect the
    Initiator’s identity against active attackers and the Responder’s
-   identity against passive attackers (See Section 9.1 of RFC9528
-   (https://www.rfc-editor.org/rfc/rfc9528.html#section-9.1)), EDHOC-PSK
-   provides identity protection for both the Initator and the Responder
-   against passive attackers.
+   identity against passive attackers (See Section 9.1 of [RFC9528]),
+   EDHOC-PSK provides identity protection for both the Initator and the
+   Responder against passive attackers.
 
 6.2.  Mutual Authentication
 
@@ -495,8 +497,7 @@ Table of Contents
 
    This section defines how PSKs are used for session resumption in
    EDHOC.  Each time EDHOC-PSK is run a new PRK_out and PRK_exporter
-   will be generated.  Following Section 4.2 of RFC9528
-   (https://www.rfc-editor.org/rfc/rfc9528.html#section-4.2),
+   will be generated.  Following Section 4.2 of [RFC9528],
    EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:
 
    CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -527,8 +528,7 @@ Table of Contents
    *  To prevent long-term tracking, implementations SHOULD periodically
       initiate a full EDHOC exchange to generate a new resumption PSK
       and corresponding ID_CRED_PSK.  Alternatively, as stated in
-      Appendix H of RFC9528 (https://www.rfc-editor.org/rfc/
-      rfc9528.html#appendix-h), EDHOC_KeyUpdate can be used to derive a
+      Appendix H of [RFC9528], EDHOC_KeyUpdate can be used to derive a
       new PRK_out, and consequently a new CRED_PSK and ID_CRED_PSK for
       session resumption.
 
@@ -574,9 +574,9 @@ Table of Contents
 +------------+------------------------------+-------------------+-------------------+
 | Label      | Descritpion                  | Change Controller | Reference         |
 +============+==============================+===================+===================+
-|  2         | Resumption CRED_PSK          |       IETF        |                   |
+|  2         | Resumption CRED_PSK          |       IETF        | Section 7         |
 +------------+------------------------------+-------------------+-------------------+
-|  3         | Resumption ID_CRED_PSK       |       IETF        |                   |
+|  3         | Resumption ID_CRED_PSK       |       IETF        | Section 7         |
 +------------+------------------------------+-------------------+-------------------+
 
        Figure 4: Addition to the EDHOC Exporter Label Registry.
@@ -590,11 +590,11 @@ Table of Contents
    +------------+-----------------------+-------------------+
    | Label      |          Key          |  Reference        |
    +============+=======================+===================+
-   |  12        |       KEYSTREAM_3     |   {{key-der}}     |
+   |  12        |       KEYSTREAM_3     |   Section 4       |
    +------------+-----------------------+-------------------+
-   |  13        |           K_3         |   {{key-der}}     |
+   |  13        |           K_3         |   Section 4       |
    +------------+-----------------------+-------------------+
-   |  14        |          IV_3         |   {{key-der}}     |
+   |  14        |          IV_3         |   Section 4       |
    +------------+-----------------------+-------------------+
 
                     Figure 5: EDHOC Info Label Registry.
