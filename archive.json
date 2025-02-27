@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-25T00:58:45.211873+00:00",
+  "timestamp": "2025-02-27T00:58:33.110267+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -103,7 +103,7 @@
       "labels": [],
       "body": "Just add\n\nThe authors want to thank ....\n\nAnd list everyone that has provided relevant comments of any kind.\n",
       "createdAt": "2025-02-10T16:34:31Z",
-      "updatedAt": "2025-02-18T13:56:27Z",
+      "updatedAt": "2025-02-26T07:15:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -129,7 +129,7 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "In my case, this work is partly supported by ONOFRE4  PID2023-148104OB-C43 funded by MICIU/AEI/10.13039/501100011033  and FEDER/UE EU HE CASTOR under Grant Agreement No 101167904, EU CERTIFY under Grant Agreement No 101069471",
           "createdAt": "2025-02-18T11:57:29Z",
           "updatedAt": "2025-02-18T11:57:29Z"
@@ -140,6 +140,13 @@
           "body": "All: Please add your acknowledgements directly to the section. ",
           "createdAt": "2025-02-18T13:56:25Z",
           "updatedAt": "2025-02-18T13:56:25Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Added",
+          "createdAt": "2025-02-26T07:14:59Z",
+          "updatedAt": "2025-02-26T07:14:59Z"
         }
       ]
     },
@@ -148,7 +155,7 @@
       "id": "I_kwDONwrUhc6pdNF7",
       "title": "IANA Considerations",
       "url": "https://github.com/lake-wg/psk/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -157,8 +164,8 @@
       "labels": [],
       "body": "Needs to add the PSK method to the \"EDHOC Method Type Registry\"\n\nNeeds to add a label to to the \"EDHOC Exporter Label Registry\" to be used for resumption",
       "createdAt": "2025-02-10T16:38:35Z",
-      "updatedAt": "2025-02-18T12:50:12Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-26T17:24:14Z",
+      "closedAt": "2025-02-26T17:24:14Z",
       "comments": [
         {
           "author": "emanjon",
@@ -185,7 +192,7 @@
       ],
       "body": "```\nEnc( ID_CRED_PSK ), AEAD( EAD_3 )\n\nmessage_3 = (\n  CIPHERTEXT_3A: bstr,\n  CIPHERTEXT_3B: bstr,\n)\n\n```\n\nmessage_3 reveals the length of the PSK identifier and does not allow padding. Padding is only supported in EAD_3",
       "createdAt": "2025-02-10T16:49:35Z",
-      "updatedAt": "2025-02-18T13:16:14Z",
+      "updatedAt": "2025-02-25T15:54:56Z",
       "closedAt": null,
       "comments": [
         {
@@ -194,6 +201,13 @@
           "body": "Fixed in main",
           "createdAt": "2025-02-17T18:16:25Z",
           "updatedAt": "2025-02-17T18:16:25Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Just a comment: my understanding is that now Appendix G.  Long PLAINTEXT_2 is applicable to Message_3 in EDHOC-PSK when enabling the encryption of ID_CRED_PSK and AEAD (EAD_3) with KEYSTREAM_3.",
+          "createdAt": "2025-02-25T15:54:54Z",
+          "updatedAt": "2025-02-25T15:54:54Z"
         }
       ]
     },
@@ -262,7 +276,7 @@
       "labels": [],
       "body": "Specify how this is used for resumption",
       "createdAt": "2025-02-10T20:01:29Z",
-      "updatedAt": "2025-02-24T17:19:34Z",
+      "updatedAt": "2025-02-26T07:18:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -281,7 +295,7 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "In the same way that TLS 1.3 does, we should explicitly distinguish between \"external PSK\" (the out-of-band PSK) and \"resumption PSK\"\n\nThen adding the derivation of ID_CRED_PSK and rPSK . I think they should be derived from PRK_out.",
           "createdAt": "2025-02-18T11:55:28Z",
           "updatedAt": "2025-02-18T11:55:28Z"
@@ -302,7 +316,7 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Regarding this part, at the beginning of security section we have a distinction between *Initial Handshake* and *Session Resumption*. In the session resumption part, I do not think we need to reuse the same ID_CRED_PSK and CRED_PSK for resumption PSK. Each time EDHOC-PSK is run a new PRK_Exporter will be generated, which means a new  (resumption) ID_CRED_PSK and CRED_PSK will be generated.",
           "createdAt": "2025-02-24T13:47:34Z",
           "updatedAt": "2025-02-24T13:47:34Z"
@@ -323,7 +337,7 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yes, that is why G\u00f6ran annotated that we need an:\n\n\"Exporter label to derive PSK\nExporter label to derive key identifier\"",
           "createdAt": "2025-02-24T14:15:08Z",
           "updatedAt": "2025-02-24T14:15:08Z"
@@ -337,17 +351,31 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "According to 10.1.  EDHOC Exporter Label Registry (in RFC 9528) 2 an 3 would do (0 and 1 are assigned to OSCORE Master Secret and OSCORE Master Salt, respectively). About the context , we can the same as for deriving OSCORE Master Secret and Master Salt\n\nrPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )\nrID_CRED_PSK   = EDHOC_Exporter( 3, h'', id_cred_psk_length )\n\nI guess with \"enough\" id_cred_psk_length we can avoid any collision. I added \"r\" to distinguish from the PSK and ID_CRED_PSK but I do not know if this will be necessary",
           "createdAt": "2025-02-24T14:35:14Z",
           "updatedAt": "2025-02-24T14:35:14Z"
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I was wondering whether having a rID_CRED_PSK derived in this way might a be a problem. Since the responder does not choose the value, might be collision. To avoid that, as I mentioned, the rID_CRED_PSK should have \"enough\" length to reduce the probability of a collision but the drawback is that we may want to have a really short rID_CRED_PSK",
           "createdAt": "2025-02-24T17:19:31Z",
           "updatedAt": "2025-02-24T17:19:31Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Another option for this  would be that the Responder chooses the new ID_CRED_PSK and include this in message_4. If the new ID_CRED_PSK is sent in message_4 , this also can signal that resumption PSK must be generated. ",
+          "createdAt": "2025-02-26T07:17:54Z",
+          "updatedAt": "2025-02-26T07:17:54Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have added text for external PSK and resumption PSK",
+          "createdAt": "2025-02-26T07:18:13Z",
+          "updatedAt": "2025-02-26T07:18:13Z"
         }
       ]
     },
@@ -436,7 +464,7 @@
       "id": "I_kwDONwrUhc6plSHE",
       "title": "Update title, abstract and intro",
       "url": "https://github.com/lake-wg/psk/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gselander",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -445,8 +473,8 @@
       "labels": [],
       "body": "Some proposed updates:\n\n* Title \n\nOLD\nEDHOC PSK Authentication\nNEW\nEDHOC authenticated with Pre-Shared Keys\n\nabbrev: \"EDHOC PSK\"\n\n* Abstract\n\nOLD\nThis document specifies the Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. It describes the authentication processes, message flows, and security considerations of this authentication method.\n\nNEW\nThis document specifies an authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol based on Pre-Shared Keys (PSK). This method may be used for initial authentication and for resumption based on secret keys derived from a previously established EDHOC session.\n\nAlso, mention identity protection.\n\n* Intro\n\nRemove GBA, AKMA is sufficient to mention. Replace text with EAP with text about \n\nEAP-EDHOC plan to use this for resumption, include a \n reference.",
       "createdAt": "2025-02-11T11:34:56Z",
-      "updatedAt": "2025-02-18T13:36:20Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-26T17:23:09Z",
+      "closedAt": "2025-02-26T17:23:09Z",
       "comments": []
     },
     {
@@ -518,7 +546,7 @@
         },
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yes, I agree. I think having a list of active G_X is not worthy. Having two identifies should be fine. Or deriving two CRED_PSKs from the CRED_PSK: CRED_PSK_IR and CRED_PSK_RI",
           "createdAt": "2025-02-18T11:31:41Z",
           "updatedAt": "2025-02-18T11:31:41Z"
@@ -573,15 +601,29 @@
       "labels": [],
       "body": "Hi all, \nI have identified a potential issue in the calculation of Transcript Hash 3 (TH_3) in the draft specification. TH_3 is defined as follows:\n\n **TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )**\n\nTH_3 is then used to generate KEYSTREAM_3:\n\n **KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD, TH_3,  ID_CRED_PSK length )**\n\nKEYSTREAM_3 is used by the Initiator to encrypt ID_CRED_PSK before sending it in message_3. Consequently, the Responder needs to derive the same KEYSTREAM_3 to decrypt ID_CRED_PSK when processing message_3.\n\nThe issue is that TH_3 already includes CRED_PSK. However, the Responder requires KEYSTREAM_3 to decrypt ID_CRED_PSK and determine which PSK should be used. This creates a circular dependency:\n \n 1. To derive KEYSTREAM_3, the Responder must first compute TH_3.\n 2. Computing TH_3 requires CRED_PSK, which depends on knowing the correct PSK.\n 3. However, the Responder can only determine the correct PSK after decrypting ID_CRED_PSK using KEYSTREAM_3.",
       "createdAt": "2025-02-18T13:57:23Z",
-      "updatedAt": "2025-02-24T12:45:57Z",
+      "updatedAt": "2025-02-26T07:14:40Z",
       "closedAt": null,
       "comments": [
         {
           "author": "rml1977",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "How about this?\n\nTH_3 = H(TH_2, PLAINTEXT_2)\nexternal_aad = << Enc(ID_CRED_PSK), TH_3, CRED_PSK >>",
           "createdAt": "2025-02-24T12:45:54Z",
           "updatedAt": "2025-02-24T12:45:54Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "With the new format of message_3 would be:\n\n\nTH_3 = H(TH_2, PLAINTEXT_2)\nexternal_aad = << ID_CRED_PSK, TH_3, CRED_PSK >>",
+          "createdAt": "2025-02-25T15:48:44Z",
+          "updatedAt": "2025-02-25T15:48:44Z"
+        },
+        {
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have fixed this in the text",
+          "createdAt": "2025-02-26T07:14:39Z",
+          "updatedAt": "2025-02-26T07:14:39Z"
         }
       ]
     }
