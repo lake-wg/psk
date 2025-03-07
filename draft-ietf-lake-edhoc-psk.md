@@ -312,7 +312,7 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
 
 When using a resumption PSK derived from a previous EDHOC exchange:
 
-  1. The resumption PSK MUST only be used with the same ciphersuite that was used in the original EDHOC exchange, or with a ciphersuite that provides equal or higher security guarantees.
+  1. The resumption PSK MUST only be used with the same ciphersuite that was used in the original EDHOC exchange.
   2. Implmentations SHOULD manitain a mapping between the resumption PSK and its originating ciphersuite to enforce this requirement.
   3. If a resumption PSK is offered with a weaker ciphersuite than its original exchange, the recipient MUST reject the connection attempt.
 
