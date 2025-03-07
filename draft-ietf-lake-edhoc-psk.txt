@@ -510,11 +510,11 @@ Table of Contents
    1.  The resumption PSK MUST only be used with the same ciphersuite
        that was used in the original EDHOC exchange.
 
-   2.  Implmentations SHOULD manitain a mapping between the resumption
-       PSK and its originating ciphersuite to enforce this requirement.
+   2.  Implmentations MUST maintain a mapping between the resumption PSK
+       and its originating ciphersuite to enforce this requirement.
 
-   3.  If a resumption PSK is offered with a weaker ciphersuite than its
-       original exchange, the recipient MUST reject the connection
+   3.  If a resumption PSK is offered with a different ciphersuite than
+       its original exchange, the recipient MUST reject the connection
        attempt.
 
 7.2.  Privacy Considerations for Resumption

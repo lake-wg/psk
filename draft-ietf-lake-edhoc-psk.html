@@ -1706,10 +1706,10 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
             <p id="section-7.1-2.1.1">The resumption PSK <span class="bcp14">MUST</span> only be used with the same ciphersuite that was used in the original EDHOC exchange.<a href="#section-7.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.1-2.2">
-            <p id="section-7.1-2.2.1">Implmentations <span class="bcp14">SHOULD</span> manitain a mapping between the resumption PSK and its originating ciphersuite to enforce this requirement.<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-7.1-2.2.1">Implmentations <span class="bcp14">MUST</span> maintain a mapping between the resumption PSK and its originating ciphersuite to enforce this requirement.<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.1-2.3">
-            <p id="section-7.1-2.3.1">If a resumption PSK is offered with a weaker ciphersuite than its original exchange, the recipient <span class="bcp14">MUST</span> reject the connection attempt.<a href="#section-7.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-7.1-2.3.1">If a resumption PSK is offered with a different ciphersuite than its original exchange, the recipient <span class="bcp14">MUST</span> reject the connection attempt.<a href="#section-7.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
