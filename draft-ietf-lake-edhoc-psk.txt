@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 30 August 2025                                J. Preuß Mattsson
+Expires: 8 September 2025                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                        26 February 2025
+                                                            7 March 2025
 
 
              EDHOC Authenticated with Pre-Shred Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 August 2025.
+   This Internet-Draft will expire on 8 September 2025.
 
 Copyright Notice
 
@@ -508,8 +508,7 @@ Table of Contents
    When using a resumption PSK derived from a previous EDHOC exchange:
 
    1.  The resumption PSK MUST only be used with the same ciphersuite
-       that was used in the original EDHOC exchange, or with a
-       ciphersuite that provides equal or higher security guarantees.
+       that was used in the original EDHOC exchange.
 
    2.  Implmentations SHOULD manitain a mapping between the resumption
        PSK and its originating ciphersuite to enforce this requirement.
