@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 8 September 2025                              J. Preuß Mattsson
+Expires: 17 September 2025                             J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                            7 March 2025
+                                                           16 March 2025
 
 
              EDHOC Authenticated with Pre-Shred Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 September 2025.
+   This Internet-Draft will expire on 17 September 2025.
 
 Copyright Notice
 
@@ -130,7 +130,7 @@ Table of Contents
    method retains mutual authentication, asymmetric ephemeral key
    exchange, and identity protection established by [RFC9528].
 
-   EDHOC with PSK authentication benefits systems where two nodes nodes
+   EDHOC with PSK authentication benefits use cases where two nodes
    share a Pre-Shared Key (PSK) provided out-of-band (external PSK).
    This applies to scenarios like the Authenticated Key Management
    Architecture (AKMA) in mobile systems or the Peer and Authenticator
@@ -150,8 +150,8 @@ Table of Contents
    asymmetric authentication.  By using PSK authentication, EDHOC allows
    session keys to be refreshed with significantly lower computational
    overhead compared to public-key authentication.  In this case, the
-   PSK is provisioned after the establishment of a previous EDHOC
-   session by using EDHOC_Exporter (resumption PSK).
+   PSK (resumption PSK) is provisioned after the establishment of a
+   previous EDHOC session by using EDHOC_Exporter (resumption PSK).
 
    Therefore, the external PSK is supposed to be a long-term credential
    while the resumption PSK is a session key.
@@ -181,9 +181,9 @@ Table of Contents
 
    In this method, the Pre-Shared Key identifier (ID_CRED_PSK) is sent
    in message_3.  The ID_CRED_PSK allows retrieval of CRED_PSK, a
-   COSE_Key compatible authentication credential that contains the PSK.
-   Through this document we will refer to the Pre-Shared Key
-   authentication method as EDHOC-PSK.
+   COSE_Key compatible authentication credential that contains the
+   external or resumption PSK.  Through this document we will refer to
+   the Pre-Shared Key authentication method as EDHOC-PSK.
 
 3.1.  Credentials
 
@@ -277,8 +277,8 @@ Table of Contents
      PRK_3e2m    = PRK_2e
      PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )
      KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )
-     K_3         = EDHOC_KDF( PRK_4e3m, 12, TH_3, key_length )
-     IV_3        = EDHOC_KDF( PRK_4e3m, 13, TH_3, iv_length )
+     K_3         = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
+     IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 
         Figure 2: Key Derivation of EDHOC PSK Authentication Method.
 
@@ -350,9 +350,7 @@ Table of Contents
             EDHOC_KDF, then Appendix G of [RFC9528] applies.
 
       -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length is
-         the length of PLAINTEXT_3A.  For the case of plaintext_length
-         exceeding the EDHOC_KDF output size, see Appendix G of
-         [RFC9528].
+         the length of PLAINTEXT_3A.
 
       -  CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3
 
@@ -415,7 +413,7 @@ Table of Contents
 
    Authentication in EDHOC-PSK depends on the security of the session
    key and the protocol's confidentiality.  Both security properties
-   hold as long as the PSK remains secret.  Even though the foruth
+   hold as long as the PSK remains secret.  Even though the fourth
    message (message_4) remains optional, mutual authentication is not
    guaranteed without it, or without an OSCORE message or any
    application data that confirms that the Responder owns the PSK.  When
@@ -456,11 +454,11 @@ Table of Contents
 
 6.5.  Independence of Session Keys
 
-   NIST mandates that that an ephemeral private key shall be used in
-   exactly one key-establishment transaction (see Section 5.6.3.3 of
+   NIST mandates that an ephemeral private key shall be used in exactly
+   one key-establishment transaction (see Section 5.6.3.3 of
    [SP-800-56A]).  This requirement is essential for preserving session
-   key independence and ensuring forward secrecy.  The EDHOC protocol
-   complies with this NIST requirement.
+   key independence and ensuring forward secrecy.  The EDHOC-PSK
+   protocol complies with this NIST requirement.
 
    In other protocols, the reuse of ephemeral keys, particularly when
    combined with implementation flaws such as the absence of public key
@@ -496,26 +494,51 @@ Table of Contents
 7.  PSK usage for Session Resumtpion
 
    This section defines how PSKs are used for session resumption in
-   EDHOC.  Each time EDHOC-PSK is run a new PRK_out and PRK_exporter
-   will be generated.  Following Section 4.2 of [RFC9528],
-   EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:
+   EDHOC.  Following Section 4.2 of [RFC9528], EDHOC_Exporter can be
+   used to derive both CRED_PSK and ID_CRED_PSK:
 
    CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
    ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+
+   where:
+
+   *  resumption_pks_length is by default, at least, the key_length
+      (length of the encryption key of the EDHOC AEAD algorithm of the
+      selected cipher suite) of the session in which the EDHOC_Exporter
+      is called.
+
+   *  id_cred_psk_length is by default 2.
+
+   A peer that has successfully completed an EDHOC session, regardless
+   of the used authentication method, MUST generate a resumption key to
+   use for the next resumption in the present "session series", as long
+   as it supports PSK resumption.  To guarantee that both peers share
+   the same resumption key, when a session is run using rPSK_i as a
+   resumption key - The Initiator can delete rPSK_i after having
+   successfully verified EDHOC message_4.  In this case, the Responder
+   will have derived the next rPSK_(i+1), which the Initiator can know
+   for sure, upon receiving EDHOC message_4.  - The Responder can delete
+   rPSK_(i-1), if any, after having successfully sent EDHOC message_4.
+   That is, upon receiving EDHOC message_3, the Responder knows for sure
+   that the other peer did derive rPSK_i at the end of the previous
+   session in the "session series", thus making it safe to delete the
+   previous resumption key rPSK_(i-1).
 
 7.1.  Ciphersuite Requirements for Resumption
 
    When using a resumption PSK derived from a previous EDHOC exchange:
 
    1.  The resumption PSK MUST only be used with the same ciphersuite
-       that was used in the original EDHOC exchange.
+       that was used in the original EDHOC exchange, or with a
+       ciphersuite that provides equal or higher security guarantees.
 
-   2.  Implmentations MUST maintain a mapping between the resumption PSK
-       and its originating ciphersuite to enforce this requirement.
+   2.  Implementations SHOULD manitain a mapping between the resumption
+       PSK and its originating ciphersuite to enforce this requirement.
 
-   3.  If a resumption PSK is offered with a different ciphersuite than
-       its original exchange, the recipient MUST reject the connection
-       attempt.
+   3.  If a resumption PSK is offered with a ciphersuite different from
+       the one used in the original EDHOC session, the recipient can
+       fail the present EDHOC session according to application-specific
+       policies.
 
 7.2.  Privacy Considerations for Resumption
 
@@ -530,10 +553,6 @@ Table of Contents
       Appendix H of [RFC9528], EDHOC_KeyUpdate can be used to derive a
       new PRK_out, and consequently a new CRED_PSK and ID_CRED_PSK for
       session resumption.
-
-   While PSK reuse enhances efficiency by reducing the overhead of key
-   exchanges, it presents privacy risks if not managed properly through
-   periodic renewal.
 
 7.3.  Security Considerations for Resumption
 
@@ -589,11 +608,7 @@ Table of Contents
    +------------+-----------------------+-------------------+
    | Label      |          Key          |  Reference        |
    +============+=======================+===================+
-   |  12        |       KEYSTREAM_3     |   Section 4       |
-   +------------+-----------------------+-------------------+
-   |  13        |           K_3         |   Section 4       |
-   +------------+-----------------------+-------------------+
-   |  14        |          IV_3         |   Section 4       |
+   |  11        |       KEYSTREAM_3     |   Section 4       |
    +------------+-----------------------+-------------------+
 
                     Figure 5: EDHOC Info Label Registry.
@@ -752,9 +767,6 @@ Acknowledgments
    MICIU/AEI/10.13039/501100011033 (ONOFRE4), FEDER/UE EU HE CASTOR
    under Grant Agreement No 101167904 and EU CERTIFY under Grant
    Agreement No 101069471.
-
-   This work was supported partially by Vinnova - the Swedish Agency for
-   Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.
 
 Authors' Addresses
 
