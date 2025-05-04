@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-01T01:10:06.374949+00:00",
+  "timestamp": "2025-05-04T01:10:48.706674+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -181,7 +181,7 @@
       "id": "I_kwDONwrUhc6pdUhW",
       "title": "message_3 reveals the length of the PSK identifier and does not allow padding",
       "url": "https://github.com/lake-wg/psk/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -192,8 +192,8 @@
       ],
       "body": "```\nEnc( ID_CRED_PSK ), AEAD( EAD_3 )\n\nmessage_3 = (\n  CIPHERTEXT_3A: bstr,\n  CIPHERTEXT_3B: bstr,\n)\n\n```\n\nmessage_3 reveals the length of the PSK identifier and does not allow padding. Padding is only supported in EAD_3",
       "createdAt": "2025-02-10T16:49:35Z",
-      "updatedAt": "2025-02-25T15:54:56Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-01T19:39:16Z",
+      "closedAt": "2025-05-01T19:39:16Z",
       "comments": [
         {
           "author": "emanjon",
@@ -266,7 +266,7 @@
       "id": "I_kwDONwrUhc6pfEzW",
       "title": "Resumption",
       "url": "https://github.com/lake-wg/psk/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -276,8 +276,8 @@
       "labels": [],
       "body": "Specify how this is used for resumption",
       "createdAt": "2025-02-10T20:01:29Z",
-      "updatedAt": "2025-02-26T07:18:14Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-01T19:39:03Z",
+      "closedAt": "2025-05-01T19:39:03Z",
       "comments": [
         {
           "author": "emanjon",
@@ -594,15 +594,15 @@
       "id": "I_kwDONwrUhc6qgFur",
       "title": "Issue in TH_3 Calculation",
       "url": "https://github.com/lake-wg/psk/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "francislopezg",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Hi all, \nI have identified a potential issue in the calculation of Transcript Hash 3 (TH_3) in the draft specification. TH_3 is defined as follows:\n\n **TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )**\n\nTH_3 is then used to generate KEYSTREAM_3:\n\n **KEYSTREAM_3   = EDHOC_KDF( PRK_3e2m,    TBD, TH_3,  ID_CRED_PSK length )**\n\nKEYSTREAM_3 is used by the Initiator to encrypt ID_CRED_PSK before sending it in message_3. Consequently, the Responder needs to derive the same KEYSTREAM_3 to decrypt ID_CRED_PSK when processing message_3.\n\nThe issue is that TH_3 already includes CRED_PSK. However, the Responder requires KEYSTREAM_3 to decrypt ID_CRED_PSK and determine which PSK should be used. This creates a circular dependency:\n \n 1. To derive KEYSTREAM_3, the Responder must first compute TH_3.\n 2. Computing TH_3 requires CRED_PSK, which depends on knowing the correct PSK.\n 3. However, the Responder can only determine the correct PSK after decrypting ID_CRED_PSK using KEYSTREAM_3.",
       "createdAt": "2025-02-18T13:57:23Z",
-      "updatedAt": "2025-02-26T07:14:40Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-01T19:39:55Z",
+      "closedAt": "2025-05-01T19:39:55Z",
       "comments": [
         {
           "author": "rml1977",
