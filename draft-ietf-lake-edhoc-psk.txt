@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 17 September 2025                             J. Preuß Mattsson
+Expires: 22 November 2025                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                           16 March 2025
+                                                             21 May 2025
 
 
              EDHOC Authenticated with Pre-Shred Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 September 2025.
+   This Internet-Draft will expire on 22 November 2025.
 
 Copyright Notice
 
@@ -114,6 +114,10 @@ Table of Contents
    9.  Normative References
    Appendix A.  CDDL Definitions
    Appendix B.  Test Vectors
+     B.1.  message_1
+     B.2.  message_2
+     B.3.  message_3
+     B.4.  message_ 4
    Appendix C.  Change Log
    Acknowledgments
    Authors' Addresses
@@ -731,6 +735,228 @@ Appendix A.  CDDL Definitions
    )
 
 Appendix B.  Test Vectors
+
+B.1.  message_1
+
+   Both endpoints are authenticated with Pre-Shred Keys (METHOD = 4)
+
+   METHOD (CBOR Data Item) (1 byte)
+   04
+
+   The initiator selects cipher suite 0.  A single cipher suite is
+   encoded as an int:
+
+   SUITES_I (CBOR Data Item) (1 byte)
+   00
+
+   The Initiator creates an ephemeral key pair for use with the EDHOC
+   key exchange algorithm:
+
+   Initiator's ephemeral private key
+   X (Raw Value) (32 bytes)
+   09 97 2D FE F1 EA AB 92 6E C9 6E 80 05 FE D2 9F 70 FF BF 4E
+   36 1C 3A 06 1A 7A CD B5 17 0C 10 E5
+
+   Initiator's ephemeral public key
+   G_X (Raw Value) (32 bytes)
+   7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99 2D 95 72 49
+   EB 7F 18 88 40 6D 17 8A 04 C9 12 DB
+
+   The Initiator selects its connection identifier C_I to be the byte
+   string 0xA, which is encoded as 0xA since it is represented by the
+   1-byte CBOR int 10:
+
+   Connection identifier chosen by the Initiator
+   C_I (CBOR Data Item) (1 byte)
+   0A
+
+   No external authorization data
+
+   EAD_1 (CBOR Sequence) (0 bytes)
+
+   The Initiator constructs message_1:
+
+   message_1 (CBOR Sequence) (37 bytes)
+   05 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
+   2D 95 72 49 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB 0A
+
+B.2.  message_2
+
+   The Responder supports the most preferred and selected cipher suite
+   0, so SUITES_I is acceptable.
+
+   The Responder creates an ephemeral key pair for use with the EDHOC
+   key exchange algorithm:
+
+   Responder's ephemeral private key
+   Y (Raw Value) (32 bytes)
+   1E 1C 8F 2D F1 AA 71 10 B3 9F 33 BA 5E A8 DC CF 31 41 1E B3
+   3D 4F 9A 09 4C F6 51 92 D3 35 A7 A3
+
+   Responder's ephemeral public key
+   G_Y (Raw Value) (32 bytes)
+   ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4 E1 C4
+   32 F7 6A 6E DE 8F 79 24 7B B9 7D 83
+
+   The Responder selects its connection identifier C_R to be the byte
+   string 0x5, which is encoded as 0x5 since it is represented by the
+   1-byte CBOR int -10:
+
+   Connection identifier chosen by the Responder
+   C_I (CBOR Data Item) (1 byte)
+   05
+
+   The transcript hash TH_2 is calculated using the EDHOC hash
+   algorithm: TH_2 = H( G_Y, H(message_1) ), where H(message_1) is:
+
+   H(message_1) (CBOR Data Item) (32 bytes)
+   22 4F 07 DF 2E 79 D7 38 00 50 E7 41 12 99 89 42 C0 D4 33 06
+   49 6C 39 0E 57 73 4A E8 42 0D 0A 2B
+
+   TH_2 (CBOR Data Item) (32 bytes)
+   27 6D 5C 44 F8 0E BD A7 CF 00 E0 47 3F E5 9D 10 E6 1C 2A 74
+   14 4B 87 AA D8 D4 F6 6C 39 7A 05 35
+
+   PRK_2e is specified in Section 4.1.2 of [RFC9528].  To compute it,
+   the Elliptic Curve Diffie-Hellman (ECDH) shared secret G_XY is
+   needed.  It is computed from G_X and Y or G_Y and X:
+
+   G_XY (Raw Value) (ECDH shared secret) (32 bytes)
+   2F 4A 79 9A 5A B0 C5 67 22 0C B6 72 08 E6 CF 8F 4C A5 FE 38
+   5D 1B 11 FD 9A 57 3D 41 60 F3 B0 B2
+
+   Then, PRK_2e is calculated as defined in Section 4.1.2 of [RFC9528]
+
+   PRK_2e (Raw Value) (32 bytes)
+   59 A2 15 55 E2 8A 1C CB 05 52 B4 5E 60 81 40 5F 3F 33 94 63 35
+   E0 14 53 A2 C7 7B FD E8 00 0E 04
+
+   Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.
+
+   PRK_3e2m (Raw Value) (32 bytes)
+   59 A2 15 55 E2 8A 1C CB 05 52 B4 5E 60 81 40 5F 3F 33 94 63 35
+   E0 14 53 A2 C7 7B FD E8 00 0E 04
+
+   No external authorization data:
+
+   EAD_2 (CBOR Sequence) (0 bytes)
+
+   The Responder constructs PLAINTEXT_2B:
+
+   PLAINTEXT_2B (CBOR Sequence) (1 byte)
+   05
+
+   The Responder computes KEYSTREAM_2 as defined in Section 4.1.2 of
+   [RFC9528]
+
+   KEYSTREAM_2 (CBOR Sequence) (1 byte)
+   31
+
+   The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2B
+   and KEYSTREAM_2:
+
+   CIPHERTEXT_2B (CBOR Sequence) (1 byte)
+   34
+
+   The Responder constructs message_2 as defined in Section 5.3.1 of
+   [RFC9528]:
+
+   message_2 (CBOR Sequence) (35 bytes)
+   58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4
+   E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 34
+
+B.3.  message_3
+
+   The Initiator computes PRK_4e3m, as described in Section 4, using
+   SALT_4e3m:
+
+   SALT_4e3m (Raw Value) (32 bytes)
+   3C 90 D8 EE A2 0E A7 34 41 62 36 1B 76 C2 7F BF 1F 11 FE CA
+   F3 8F F7 47 30 B1 12 11 42 74 1F 06
+
+   PRK_4e3m (Raw Value) (32 bytes)
+   FA B9 D7 69 88 9A 07 F1 93 8D E5 C7 DE 4D FB DF 80 9F B0 73
+   56 A8 2E 5A AB 04 91 8F 56 B2 19 BE
+
+   The transcript hash TH_3 is calculated using the EDHOC hash
+   algorithm:
+
+   TH_3 = H( TH_2, PLAINTEXT_2 )
+
+   TH_3 (CBOR Data Item) (32 bytes)
+   A5 0B 64 8C E2 A6 23 BF C9 72 15 B2 6C 7C EE BD C4 4F 6F 79
+   EF AA BE 27 E8 A0 2A 25 C0 C4 93 CC
+
+   No external authorization data:
+
+   EAD_3 (CBOR Sequence) (0 bytes)
+
+   The Initiator constructs firstly PLAINTEXT_3B as defined in
+   Section 5.3.1.:
+
+   PLAINTEXT_3B (CBOR Sequence) (0 bytes)
+
+   It then computes CIPHERTEXT_3B as defined in Section 5.3.2.:
+
+   CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
+   48 70 2A FB 75 AA 52 C4 89
+
+   The Initiator computes KESYTREAM_3 as defined in Section 4:
+
+   KESYTREAM_3 (CBOR Sequence) ()
+   D0 1B 7A AD 4C AB BD 14 89 50
+
+   It then calculates PLAINTEXT_3A as stated in Section 5.3.2. and uses
+   KESYTREAM_3 to derive CIPHERTEXT_3A:
+
+   PLAINTEXT_3A (CBOR Sequence) (10 bytes)
+   10 48 70 2A FB 75 AA 52 C4 89
+
+   CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
+   C0 53 0A 87 B7 DE 17 46 4D D9
+
+   The initiator computes K_3 and IV_3
+
+   K_3 (CBOR Sequence) (16 bytes)
+   D8 57 B9 46 46 34 25 35 3C 3C DE BD CB 90 CB 26
+
+   IV_3 (CBOR Sequence) (13 bytes)
+   A1 F6 BE AF 84 64 83 2A 8D 02 C8 5F 04
+
+   The Initiator computes message_3 as defined in Section 5.3.2.:
+
+   message_3 (CBOR Sequence) (11 bytes)
+   4A C0 53 0A 87 B7 DE 17 46 4D D9
+
+   The transcript hash TH_4 is calculated using the EDHOC hash
+   algorithm: TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
+
+   TH_4 (CBOR Data Item) (32 bytes)
+   41 D7 D2 74 D2 23 E4 97 69 6E 1C BB 90 E2 F5 3F AD 2D 48 16
+   48 54 8F BD C7 E5 17 87 BC CD 79 B7
+
+B.4.  message_ 4
+
+   No external authorization data:
+
+   EAD_4 (CBOR Sequence) (0 bytes)
+
+   The Responder constructs PLAINTEXT_4:
+
+   PLAINTEXT_4 (CBOR Sequence) (0 bytes)
+
+   The Responder computes K_4 and IV_4
+
+   K_4 (CBOR Sequence) (16 bytes)
+   53 05 7B 1F A7 F0 C8 3B 25 F6 A6 06 60 A2 8F EE
+
+   IV_4 (CBOR Sequence) (13 bytes)
+   D9 AB C3 DD E0 68 E9 4C 36 24 C0 EC 90
+
+   The Responder computes message_4:
+
+   message_4 (CBOR Sequence) (9 bytes)
+   48 E5 00 D1 2B BB D1 AE F1
 
 Appendix C.  Change Log
 
