@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-20T01:06:35.693012+00:00",
+  "timestamp": "2025-05-22T01:05:56.507429+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -93,7 +93,7 @@
       "id": "I_kwDONwrUhc6pdKiM",
       "title": "Acknowledgments",
       "url": "https://github.com/lake-wg/psk/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -103,8 +103,8 @@
       "labels": [],
       "body": "Just add\n\nThe authors want to thank ....\n\nAnd list everyone that has provided relevant comments of any kind.\n",
       "createdAt": "2025-02-10T16:34:31Z",
-      "updatedAt": "2025-02-26T07:15:00Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-21T10:03:04Z",
+      "closedAt": "2025-05-21T10:03:04Z",
       "comments": [
         {
           "author": "emanjon",
@@ -576,7 +576,7 @@
       "id": "I_kwDONwrUhc6qdea6",
       "title": "Test vectors",
       "url": "https://github.com/lake-wg/psk/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -585,9 +585,17 @@
       "labels": [],
       "body": "Should have test vectors for EDHOC with PSK authentication. Does no need to be detailed as RFC 9529 but we should at a minimum have byte strings for\n\n- CRED_PSK\n- message_1\n- message_2\n- message_3\n- message_4\n",
       "createdAt": "2025-02-18T09:37:40Z",
-      "updatedAt": "2025-02-18T13:34:55Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-05-21T10:02:43Z",
+      "closedAt": "2025-05-21T10:02:41Z",
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Done",
+          "createdAt": "2025-05-21T10:02:41Z",
+          "updatedAt": "2025-05-21T10:02:41Z"
+        }
+      ]
     },
     {
       "number": 17,
