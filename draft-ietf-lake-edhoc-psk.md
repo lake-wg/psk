@@ -1,5 +1,5 @@
 ---
-title: "EDHOC Authenticated with Pre-Shred Keys (PSK)"
+title: "EDHOC Authenticated with Pre-Shared Keys (PSK)"
 docname: draft-ietf-lake-edhoc-psk-latest
 category: std
 
@@ -463,7 +463,7 @@ info = (
 
 ## message_1
 
-Both endpoints are authenticated with Pre-Shred Keys (METHOD = 4)
+Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)
 
 ~~~~~~~~~~~~
 METHOD (CBOR Data Item) (1 byte)
