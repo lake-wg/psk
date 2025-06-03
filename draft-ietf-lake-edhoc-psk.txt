@@ -5,14 +5,14 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 22 November 2025                              J. Preuß Mattsson
+Expires: 5 December 2025                               J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                             21 May 2025
+                                                             3 June 2025
 
 
-             EDHOC Authenticated with Pre-Shred Keys (PSK)
+             EDHOC Authenticated with Pre-Shared Keys (PSK)
                     draft-ietf-lake-edhoc-psk-latest
 
 Abstract
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 November 2025.
+   This Internet-Draft will expire on 5 December 2025.
 
 Copyright Notice
 
@@ -738,7 +738,7 @@ Appendix B.  Test Vectors
 
 B.1.  message_1
 
-   Both endpoints are authenticated with Pre-Shred Keys (METHOD = 4)
+   Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)
 
    METHOD (CBOR Data Item) (1 byte)
    04
