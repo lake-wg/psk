@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>EDHOC Authenticated with Pre-Shared Keys (PSK)</title>
+<title>EDHOC Authenticated with Pre-Shred Keys (PSK)</title>
 <meta content="Elsa Lopez-Perez" name="author">
 <meta content="Göran Selander" name="author">
 <meta content="John Preuß Mattsson" name="author">
@@ -1045,12 +1045,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">EDHOC Authenticated with Pre-Shared Keys</td>
+<td class="center">EDHOC Authenticated with Pre-Shred Keys </td>
 <td class="right">June 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 5 December 2025</td>
+<td class="center">Expires 14 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-03" class="published">3 June 2025</time>
+<time datetime="2025-06-12" class="published">12 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-05">5 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-14">14 December 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1090,7 +1090,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">EDHOC Authenticated with Pre-Shared Keys (PSK)</h1>
+<h1 id="title">EDHOC Authenticated with Pre-Shred Keys (PSK)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1130,7 +1130,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1488,7 +1488,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <p id="section-4-8">Additionally, the definition of the transcript hash TH_4 is modified as:<a href="#section-4-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4-9.1">
-          <p id="section-4-9.1.1">TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )<a href="#section-4-9.1.1" class="pilcrow">¶</a></p>
+          <p id="section-4-9.1.1">TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK )<a href="#section-4-9.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -2045,7 +2045,7 @@ info = (
         <h3 id="name-message_1">
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-message_1" class="section-name selfRef">message_1</a>
         </h3>
-<p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shred Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.1-2">
 <pre>
 METHOD (CBOR Data Item) (1 byte)
@@ -2094,7 +2094,7 @@ EAD_1 (CBOR Sequence) (0 bytes)
 <div class="alignLeft art-text artwork" id="appendix-B.1-13">
 <pre>
 message_1 (CBOR Sequence) (37 bytes)
-05 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
+04 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
 2D 95 72 49 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB 0A
 </pre><a href="#appendix-B.1-13" class="pilcrow">¶</a>
 </div>
@@ -2127,7 +2127,7 @@ ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4 E1 C4
 <div class="alignLeft art-text artwork" id="appendix-B.2-6">
 <pre>
 Connection identifier chosen by the Responder
-C_I (CBOR Data Item) (1 byte)
+C_R (CBOR Data Item) (1 byte)
 05
 </pre><a href="#appendix-B.2-6" class="pilcrow">¶</a>
 </div>
@@ -2136,15 +2136,15 @@ TH_2 = H( G_Y, H(message_1) ), where H(message_1) is:<a href="#appendix-B.2-7" c
 <div class="alignLeft art-text artwork" id="appendix-B.2-8">
 <pre>
 H(message_1) (CBOR Data Item) (32 bytes)
-22 4F 07 DF 2E 79 D7 38 00 50 E7 41 12 99 89 42 C0 D4 33 06
-49 6C 39 0E 57 73 4A E8 42 0D 0A 2B
+19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20 C2 4B 6A 34 BC
+21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 </pre><a href="#appendix-B.2-8" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.2-9">
 <pre>
 TH_2 (CBOR Data Item) (32 bytes)
-27 6D 5C 44 F8 0E BD A7 CF 00 E0 47 3F E5 9D 10 E6 1C 2A 74
-14 4B 87 AA D8 D4 F6 6C 39 7A 05 35
+5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D 01 64 78 C4
+BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
 </pre><a href="#appendix-B.2-9" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.2-10">PRK_2e is specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
@@ -2161,16 +2161,16 @@ G_XY (Raw Value) (ECDH shared secret) (32 bytes)
 <div class="alignLeft art-text artwork" id="appendix-B.2-13">
 <pre>
 PRK_2e (Raw Value) (32 bytes)
-59 A2 15 55 E2 8A 1C CB 05 52 B4 5E 60 81 40 5F 3F 33 94 63 35
-E0 14 53 A2 C7 7B FD E8 00 0E 04
+D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
+C4 36 20 50 99 48 A9 FD 47 FB D9 29
 </pre><a href="#appendix-B.2-13" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.2-14">Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.<a href="#appendix-B.2-14" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-15">
 <pre>
 PRK_3e2m (Raw Value) (32 bytes)
-59 A2 15 55 E2 8A 1C CB 05 52 B4 5E 60 81 40 5F 3F 33 94 63 35
-E0 14 53 A2 C7 7B FD E8 00 0E 04
+D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
+C4 36 20 50 99 48 A9 FD 47 FB D9 29
 </pre><a href="#appendix-B.2-15" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.2-16">No external authorization data:<a href="#appendix-B.2-16" class="pilcrow">¶</a></p>
@@ -2190,14 +2190,14 @@ PLAINTEXT_2B (CBOR Sequence) (1 byte)
 <div class="alignLeft art-text artwork" id="appendix-B.2-21">
 <pre>
 KEYSTREAM_2 (CBOR Sequence) (1 byte)
-31
+EC
 </pre><a href="#appendix-B.2-21" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.2-22">The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2B and KEYSTREAM_2:<a href="#appendix-B.2-22" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-23">
 <pre>
 CIPHERTEXT_2B (CBOR Sequence) (1 byte)
-34
+E9
 </pre><a href="#appendix-B.2-23" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.2-24">The Responder constructs message_2 as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.1" class="relref">Section 5.3.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>:<a href="#appendix-B.2-24" class="pilcrow">¶</a></p>
@@ -2205,7 +2205,7 @@ CIPHERTEXT_2B (CBOR Sequence) (1 byte)
 <pre>
 message_2 (CBOR Sequence) (35 bytes)
 58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4
-E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 34
+E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 E9
 </pre><a href="#appendix-B.2-25" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2215,97 +2215,126 @@ E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 34
         <h3 id="name-message_3">
 <a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-message_3" class="section-name selfRef">message_3</a>
         </h3>
-<p id="appendix-B.3-1">The Initiator computes PRK_4e3m, as described in Section 4, using SALT_4e3m:<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-1">The Initiator computes PRK_4e3m, as described in Section 4, using SALT_4e3m and CRED_PSK:<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-2">
 <pre>
 SALT_4e3m (Raw Value) (32 bytes)
-3C 90 D8 EE A2 0E A7 34 41 62 36 1B 76 C2 7F BF 1F 11 FE CA
-F3 8F F7 47 30 B1 12 11 42 74 1F 06
+A7 C6 8F ED 7C F9 BB BC A3 83 F0 2B A4 27 45 51 EE DD 07 4A
+1C F3 DB ED 4A 41 1F 33 1B 3A AA 59
 </pre><a href="#appendix-B.3-2" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.3-3">
 <pre>
-PRK_4e3m (Raw Value) (32 bytes)
-FA B9 D7 69 88 9A 07 F1 93 8D E5 C7 DE 4D FB DF 80 9F B0 73
-56 A8 2E 5A AB 04 91 8F 56 B2 19 BE
+CRED_PSK (Raw Value) (38 bytes)
+A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
+20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
 </pre><a href="#appendix-B.3-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-4">The transcript hash TH_3 is calculated using the EDHOC hash algorithm:<a href="#appendix-B.3-4" class="pilcrow">¶</a></p>
-<p id="appendix-B.3-5">TH_3 = H( TH_2, PLAINTEXT_2 )<a href="#appendix-B.3-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-6">
+<div class="alignLeft art-text artwork" id="appendix-B.3-4">
+<pre>
+PRK_4e3m (Raw Value) (32 bytes)
+6B 99 69 23 A8 81 B6 6E C4 05 AD 03 53 94 1A FB 2C DA A5 E2
+AC 65 1D A0 57 9A 08 C7 86 50 2A 66
+</pre><a href="#appendix-B.3-4" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-5">The transcript hash TH_3 is calculated using the EDHOC hash algorithm:<a href="#appendix-B.3-5" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-6">TH_3 = H( TH_2, PLAINTEXT_2 )<a href="#appendix-B.3-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-7">
+<pre>
+TH_3 (CBOR Data Item) (32 bytes)
+BC 3B C6 10 D7 25 16 CD 70 3E F7 4C 3A 98 20 17 E5 5D 70 D2
+7F 57 01 E8 91 BD 35 11 9E B9 79 88
+</pre><a href="#appendix-B.3-7" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-8">No external authorization data:<a href="#appendix-B.3-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-9">
+<pre>
+EAD_3 (CBOR Sequence) (0 bytes)
+</pre><a href="#appendix-B.3-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-10">The Initiator constructs firstly PLAINTEXT_3B as defined in Section 5.3.1.:<a href="#appendix-B.3-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-11">
+<pre>
+PLAINTEXT_3B (CBOR Sequence) (0 bytes)
+</pre><a href="#appendix-B.3-11" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-12">It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_PSK and TH_3 as external_aad:<a href="#appendix-B.3-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-13">
+<pre>
+ID_CRED_PSK (CBOR Sequence) (1 byte)
+10
+</pre><a href="#appendix-B.3-13" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="appendix-B.3-14">
+<pre>
+CRED_PSK (Raw Value) (38 bytes)
+A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
+20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
+</pre><a href="#appendix-B.3-14" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="appendix-B.3-15">
 <pre>
 TH_3 (CBOR Data Item) (32 bytes)
 A5 0B 64 8C E2 A6 23 BF C9 72 15 B2 6C 7C EE BD C4 4F 6F 79
 EF AA BE 27 E8 A0 2A 25 C0 C4 93 CC
-</pre><a href="#appendix-B.3-6" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-15" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-7">No external authorization data:<a href="#appendix-B.3-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-8">
-<pre>
-EAD_3 (CBOR Sequence) (0 bytes)
-</pre><a href="#appendix-B.3-8" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.3-9">The Initiator constructs firstly PLAINTEXT_3B as defined in Section 5.3.1.:<a href="#appendix-B.3-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-10">
-<pre>
-PLAINTEXT_3B (CBOR Sequence) (0 bytes)
-</pre><a href="#appendix-B.3-10" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.3-11">It then computes CIPHERTEXT_3B as defined in Section 5.3.2.:<a href="#appendix-B.3-11" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-12">
-<pre>
-CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-48 70 2A FB 75 AA 52 C4 89
-</pre><a href="#appendix-B.3-12" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.3-13">The Initiator computes KESYTREAM_3 as defined in Section 4:<a href="#appendix-B.3-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-14">
-<pre>
-KESYTREAM_3 (CBOR Sequence) ()
-D0 1B 7A AD 4C AB BD 14 89 50
-</pre><a href="#appendix-B.3-14" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.3-15">It then calculates PLAINTEXT_3A as stated in Section 5.3.2. and uses KESYTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-15" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-16">
-<pre>
-PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-10 48 70 2A FB 75 AA 52 C4 89
-</pre><a href="#appendix-B.3-16" class="pilcrow">¶</a>
-</div>
+<p id="appendix-B.3-16">The initiator computes K_3 and IV_3<a href="#appendix-B.3-16" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-17">
-<pre>
-CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-C0 53 0A 87 B7 DE 17 46 4D D9
-</pre><a href="#appendix-B.3-17" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.3-18">The initiator computes K_3 and IV_3<a href="#appendix-B.3-18" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-19">
 <pre>
 K_3 (CBOR Sequence) (16 bytes)
 D8 57 B9 46 46 34 25 35 3C 3C DE BD CB 90 CB 26
-</pre><a href="#appendix-B.3-19" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-17" class="pilcrow">¶</a>
 </div>
-<div class="alignLeft art-text artwork" id="appendix-B.3-20">
+<div class="alignLeft art-text artwork" id="appendix-B.3-18">
 <pre>
 IV_3 (CBOR Sequence) (13 bytes)
 A1 F6 BE AF 84 64 83 2A 8D 02 C8 5F 04
+</pre><a href="#appendix-B.3-18" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-19">It then computes CIPHERTEXT_3B:<a href="#appendix-B.3-19" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-20">
+<pre>
+CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
+48 D0 A4 37 3C 49 C1 76 9B
 </pre><a href="#appendix-B.3-20" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-21">The Initiator computes message_3 as defined in Section 5.3.2.:<a href="#appendix-B.3-21" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-21">The Initiator computes KESYTREAM_3 as defined in Section 4:<a href="#appendix-B.3-21" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-22">
 <pre>
-message_3 (CBOR Sequence) (11 bytes)
-4A C0 53 0A 87 B7 DE 17 46 4D D9
+KESYTREAM_3 (CBOR Sequence) ()
+D0 1B 7A AD 4C AB BD 14 89 50
 </pre><a href="#appendix-B.3-22" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-23">The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
-TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )<a href="#appendix-B.3-23" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-23">It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:<a href="#appendix-B.3-23" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-24">
 <pre>
-TH_4 (CBOR Data Item) (32 bytes)
-41 D7 D2 74 D2 23 E4 97 69 6E 1C BB 90 E2 F5 3F AD 2D 48 16
-48 54 8F BD C7 E5 17 87 BC CD 79 B7
+PLAINTEXT_3A (CBOR Sequence) (10 bytes)
+10 48 D0 A4 37 3C 49 C1 76 9B
 </pre><a href="#appendix-B.3-24" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-25">It then uses KESYTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-25" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-26">
+<pre>
+CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
+C2 47 AA 2F 94 B8 F9 41 21 C5
+</pre><a href="#appendix-B.3-26" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-27">The Initiator computes message_3 as defined in Section 5.3.2.:<a href="#appendix-B.3-27" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-28">
+<pre>
+message_3 (CBOR Sequence) (11 bytes)
+4A C2 47 AA 2F 94 B8 F9 41 21 C5
+</pre><a href="#appendix-B.3-28" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-29">The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
+TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )<a href="#appendix-B.3-29" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-30">
+<pre>
+TH_4 (CBOR Data Item) (32 bytes)
+E5 67 45 39 75 66 CF F9 A6 93 DF 29 8D A4 F9 9E 1F 92 57 54
+44 6B 5B 11 09 61 59 E5 C4 FC 0B FD
+</pre><a href="#appendix-B.3-30" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2330,20 +2359,20 @@ PLAINTEXT_4 (CBOR Sequence) (0 bytes)
 <div class="alignLeft art-text artwork" id="appendix-B.4-6">
 <pre>
 K_4 (CBOR Sequence) (16 bytes)
-53 05 7B 1F A7 F0 C8 3B 25 F6 A6 06 60 A2 8F EE
+BC 34 CE B4 E3 58 36 06 A0 81 6A 53 A5 0A E1 07
 </pre><a href="#appendix-B.4-6" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.4-7">
 <pre>
 IV_4 (CBOR Sequence) (13 bytes)
-D9 AB C3 DD E0 68 E9 4C 36 24 C0 EC 90
+12 2B 58 9D EB 77 81 A1 A5 9D D4 42 7C
 </pre><a href="#appendix-B.4-7" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.4-8">The Responder computes message_4:<a href="#appendix-B.4-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.4-9">
 <pre>
 message_4 (CBOR Sequence) (9 bytes)
-48 E5 00 D1 2B BB D1 AE F1
+48 69 C1 F1 2E 13 44 A3 93
 </pre><a href="#appendix-B.4-9" class="pilcrow">¶</a>
 </div>
 </section>
