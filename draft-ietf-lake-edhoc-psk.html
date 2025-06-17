@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>EDHOC Authenticated with Pre-Shred Keys (PSK)</title>
+<title>EDHOC Authenticated with Pre‑Shared Keys (PSK)</title>
 <meta content="Elsa Lopez-Perez" name="author">
 <meta content="Göran Selander" name="author">
 <meta content="John Preuß Mattsson" name="author">
@@ -16,7 +16,7 @@
 <meta content="draft-ietf-lake-edhoc-psk-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.28.1
-    Python 3.12.10
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -25,7 +25,7 @@
     platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
+    requests 2.32.4
     setuptools 80.9.0
     wcwidth 0.2.13
 -->
@@ -1045,12 +1045,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">EDHOC Authenticated with Pre-Shred Keys </td>
+<td class="center">EDHOC Authenticated with Pre‑Shared Keys</td>
 <td class="right">June 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 14 December 2025</td>
+<td class="center">Expires 19 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-12" class="published">12 June 2025</time>
+<time datetime="2025-06-17" class="published">17 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-14">14 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-19">19 December 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1090,7 +1090,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">EDHOC Authenticated with Pre-Shred Keys (PSK)</h1>
+<h1 id="title">EDHOC Authenticated with Pre‑Shared Keys (PSK)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1130,7 +1130,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1242,10 +1242,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-psk-usage-for-session-resum" class="internal xref">PSK usage for Session Resumtpion</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-psk-usage-for-session-resum" class="internal xref">PSK usage for Session Resumption</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-ciphersuite-requirements-fo" class="internal xref">Ciphersuite Requirements for Resumption</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-cipher-suite-requirements-f" class="internal xref">Cipher Suite Requirements for Resumption</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
                 <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-privacy-considerations-for-" class="internal xref">Privacy Considerations for Resumption</a></p>
@@ -1641,7 +1641,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
         <h3 id="name-identity-protection">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity protection</a>
         </h3>
-<p id="section-6.1-1">EDHOC-PSK encrypts ID_CRED_PSK in message 3, XOR encrypted with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>), EDHOC-PSK provides identity protection for both the Initator and the Responder against passive attackers.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">EDHOC-PSK encrypts ID_CRED_PSK in message 3, XOR encrypted with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>), EDHOC-PSK provides identity protection for both the Initiator and the Responder against passive attackers.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mutual-authentication">
@@ -1666,7 +1666,7 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-post-quantum-considerations" class="section-name selfRef">Post Quantum Considerations</a>
         </h3>
 <p id="section-6.4-1">Recent achievements in developing quantum computers demonstrate that it is probably feasible to build one that is cryptographically significant. If such a computer is implemented, many of the cryptographic algorithms and protocols currently in use would be insecure. A quantum computer would be able to solve Diffie-Hellman (DH) and Elliptic Curve Diffie-Hellman (ECDH) problems in polynomial time.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">EDCHOC with pre-shared keys would not be vulnerable to quantum attacks because those keys are used as inputs to the key derivation function. The use of intermediate keys derived through key derivation functions ensure that the message is not immediately compromised if the symmetrically distributed key (PSK) is compromised, or if the algorithm used to distribute keys asymmetrically (DH) is broken. If the pre-shared key has sufficient entropy and the Key Derivation Function (KDF), encryption, and authentication transforms are quantum secure, then the resulting system is believed to be quantum secure.
+<p id="section-6.4-2">EDHOC with pre-shared keys would not be vulnerable to quantum attacks because those keys are used as inputs to the key derivation function. The use of intermediate keys derived through key derivation functions ensure that the message is not immediately compromised if the symmetrically distributed key (PSK) is compromised, or if the algorithm used to distribute keys asymmetrically (DH) is broken. If the pre-shared key has sufficient entropy and the Key Derivation Function (KDF), encryption, and authentication transforms are quantum secure, then the resulting system is believed to be quantum secure.
 Therefore, provided that the PSK remains secret, EDHOC-PSK provides confidentiality, mutual authentication and Perfect Forward Secrecy (PFS) even in the presence of quantum attacks. What is more, the key exchange is still a key agreement where both parties contribute with randomness.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1698,7 +1698,7 @@ This consideration was important for the privacy properties when using asymmetri
 <div id="psk-resumption">
 <section id="section-7">
       <h2 id="name-psk-usage-for-session-resum">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumtpion</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumption</a>
       </h2>
 <p id="section-7-1">This section defines how PSKs are used for session resumption in EDHOC.
 Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:<a href="#section-7-1" class="pilcrow">¶</a></p>
@@ -1723,10 +1723,10 @@ To guarantee that both peers share the same resumption key, when a session is ru
     In this case, the Responder will have derived the next rPSK_(i+1), which the Initiator can know for sure, upon receiving EDHOC message_4.
   - The Responder can delete rPSK_(i-1), if any, after having successfully sent EDHOC message_4.
     That is, upon receiving EDHOC message_3, the Responder knows for sure that the other peer did derive rPSK_i at the end of the previous session in the "session series", thus making it safe to delete the previous resumption key rPSK_(i-1).<a href="#section-7-5" class="pilcrow">¶</a></p>
-<div id="ciphersuite-requirements-for-resumption">
+<div id="cipher-suite-requirements-for-resumption">
 <section id="section-7.1">
-        <h3 id="name-ciphersuite-requirements-fo">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-ciphersuite-requirements-fo" class="section-name selfRef">Ciphersuite Requirements for Resumption</a>
+        <h3 id="name-cipher-suite-requirements-f">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-cipher-suite-requirements-f" class="section-name selfRef">Cipher Suite Requirements for Resumption</a>
         </h3>
 <p id="section-7.1-1">When using a resumption PSK derived from a previous EDHOC exchange:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7.1-2">
@@ -1734,7 +1734,7 @@ To guarantee that both peers share the same resumption key, when a session is ru
             <p id="section-7.1-2.1.1">The resumption PSK <span class="bcp14">MUST</span> only be used with the same ciphersuite that was used in the original EDHOC exchange, or with a ciphersuite that provides equal or higher security guarantees.<a href="#section-7.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.1-2.2">
-            <p id="section-7.1-2.2.1">Implementations <span class="bcp14">SHOULD</span> manitain a mapping between the resumption PSK and its originating ciphersuite to enforce this requirement.<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-7.1-2.2.1">Implementations <span class="bcp14">SHOULD</span> maintain a mapping between the resumption PSK and its originating ciphersuite to enforce this requirement.<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.1-2.3">
             <p id="section-7.1-2.3.1">If a resumption PSK is offered with a ciphersuite different from the one used in the original EDHOC session, the recipient can fail the present EDHOC session according to application-specific policies.<a href="#section-7.1-2.3.1" class="pilcrow">¶</a></p>
@@ -2299,10 +2299,10 @@ CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 48 D0 A4 37 3C 49 C1 76 9B
 </pre><a href="#appendix-B.3-20" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-21">The Initiator computes KESYTREAM_3 as defined in Section 4:<a href="#appendix-B.3-21" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-21">The Initiator computes KEYSTREAM_3 as defined in Section 4:<a href="#appendix-B.3-21" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-22">
 <pre>
-KESYTREAM_3 (CBOR Sequence) ()
+KEYSTREAM_3 (CBOR Sequence) ()
 D0 1B 7A AD 4C AB BD 14 89 50
 </pre><a href="#appendix-B.3-22" class="pilcrow">¶</a>
 </div>
@@ -2313,7 +2313,7 @@ PLAINTEXT_3A (CBOR Sequence) (10 bytes)
 10 48 D0 A4 37 3C 49 C1 76 9B
 </pre><a href="#appendix-B.3-24" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-25">It then uses KESYTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-25" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-25">It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-25" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-26">
 <pre>
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
@@ -2393,7 +2393,7 @@ message_4 (CBOR Sequence) (9 bytes)
               <p id="appendix-C-2.1.2.1.1">Updated abstract and Introduction<a href="#appendix-C-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-C-2.1.2.2">
-              <p id="appendix-C-2.1.2.2.1">Changed message_3 to hide the identity lenght from passive attackers<a href="#appendix-C-2.1.2.2.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.1.2.2.1">Changed message_3 to hide the identity length from passive attackers<a href="#appendix-C-2.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-C-2.1.2.3">
               <p id="appendix-C-2.1.2.3.1">CDDL Definitions<a href="#appendix-C-2.1.2.3.1" class="pilcrow">¶</a></p>
