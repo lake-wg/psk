@@ -1442,7 +1442,7 @@ The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified i
           </figcaption></figure>
 </div>
 <p id="section-3.2-3">This approach provides protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relaying on external applications, such as OSCORE. With this fourth message, the protocol achieves both explicit key confirmation and mutual authentication.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. With this fourth message, the protocol achieves both explicit key confirmation and mutual authentication.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1711,7 +1711,7 @@ ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
 <p id="section-7-3">where:<a href="#section-7-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-4.1">
-          <p id="section-7-4.1.1">resumption_pks_length is by default, at least, the key_length (length of the encryption key of the EDHOC AEAD algorithm of the selected cipher suite) of the session in which the EDHOC_Exporter is called.<a href="#section-7-4.1.1" class="pilcrow">¶</a></p>
+          <p id="section-7-4.1.1">resumption_psk_length is by default, at least, the key_length (length of the encryption key of the EDHOC AEAD algorithm of the selected cipher suite) of the session in which the EDHOC_Exporter is called.<a href="#section-7-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-4.2">
           <p id="section-7-4.2.1">id_cred_psk_length is by default 2.<a href="#section-7-4.2.1" class="pilcrow">¶</a></p>
@@ -2045,7 +2045,7 @@ info = (
         <h3 id="name-message_1">
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-message_1" class="section-name selfRef">message_1</a>
         </h3>
-<p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shred Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.1-2">
 <pre>
 METHOD (CBOR Data Item) (1 byte)
