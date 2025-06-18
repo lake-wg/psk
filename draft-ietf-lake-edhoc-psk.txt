@@ -427,10 +427,9 @@ Table of Contents
 
    where:
 
-   *  resumption_psk_length is by default, at least, the key_length
-      (length of the encryption key of the EDHOC AEAD algorithm of the
-      selected cipher suite) of the session in which the EDHOC_Exporter
-      is called.
+   *  resumption_psk_length is by default the key_length (length of the
+      encryption key of the EDHOC AEAD algorithm of the selected cipher
+      suite) of the session in which the EDHOC_Exporter is called.
 
    *  id_cred_psk_length is by default 2.
 
