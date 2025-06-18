@@ -110,7 +110,6 @@ Table of Contents
    8.  IANA Considerations
      8.1.  EDHOC Method Type Registry
      8.2.  EDHOC Exporter Label Registry
-     8.3.  EDHOC Info Label Registry
    9.  Normative References
    Appendix A.  CDDL Definitions
    Appendix B.  Test Vectors
@@ -622,20 +621,6 @@ Table of Contents
     +-------+------------------------+-------------------+-----------+
 
          Table 2: Addition to the EDHOC Exporter Label Registry.
-
-8.3.  EDHOC Info Label Registry
-
-   IANA is requested to register the following registry "EDHOC Info
-   Label" under the group name "Ephemeral Diffie-Hellman Over OCSE
-   (EDHOC)".
-
-                    +=======+=============+===========+
-                    | Label | Key         | Reference |
-                    +=======+=============+===========+
-                    | 11    | KEYSTREAM_3 | Section 4 |
-                    +-------+-------------+-----------+
-
-                    Table 3: EDHOC Info Label Registry.
 
 9.  Normative References
 
