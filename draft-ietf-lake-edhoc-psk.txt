@@ -21,12 +21,12 @@ Abstract
    for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange
    protocol.  The PSK method enhances computational efficiency while
    providing mutual authentication, ephemeral key exchange, identity
-   protection, and quantum resistance.  It is particularly suited for
-   systems where nodes share a PSK provided out-of-band (external PSK)
-   and enables efficient session resumption with less computational
-   overhead when the PSK is provided from a previous EDHOC session
-   (resumption PSK).  This document details the PSK method flow, key
-   derivation changes, message formatting, processing, and security
+   protection, and a degree of quantum resistance.  It is particularly
+   suited for systems where nodes share a PSK provided out-of-band
+   (external PSK) and enables efficient session resumption with less
+   computational overhead when the PSK is provided from a previous EDHOC
+   session (resumption PSK).  This document details the PSK method flow,
+   key derivation changes, message formatting, processing, and security
    considerations.
 
 About This Document
@@ -258,12 +258,12 @@ Table of Contents
 
               Figure 1: Overview of Message Flow of EDHOC-PSK.
 
-   This approach provides protection against passive attackers for both
-   Initiator and Responder. message_4 remains optional, but is needed to
-   authenticate the Responder and achieve mutual authentication in EDHOC
-   if not relying on external applications, such as OSCORE.  With this
-   fourth message, the protocol achieves both explicit key confirmation
-   and mutual authentication.
+   This approach provides identity protection against passive attackers
+   for both Initiator and Responder. message_4 remains optional, but is
+   needed to authenticate the Responder and achieve mutual
+   authentication in EDHOC if not relying on external applications, such
+   as OSCORE.  With this fourth message, the protocol achieves both
+   explicit key confirmation and mutual authentication.
 
 4.  Key Derivation
 
@@ -497,24 +497,23 @@ Table of Contents
 
 7.1.  Identity protection
 
-   EDHOC-PSK encrypts ID_CRED_PSK in message 3, XOR encrypted with a
-   keystream derived from the ephemeral shared secret G_XY.  As a
-   consequence, contrary to the current EDHOC methods that protect the
-   Initiator’s identity against active attackers and the Responder’s
-   identity against passive attackers (See Section 9.1 of [RFC9528]),
-   EDHOC-PSK provides identity protection for both the Initiator and the
-   Responder against passive attackers.
+   EDHOC-PSK encrypts ID_CRED_PSK in message 3 with a keystream derived
+   from the ephemeral shared secret G_XY.  As a consequence, contrary to
+   the current EDHOC methods that protect the Initiator’s identity
+   against active attackers and the Responder’s identity against passive
+   attackers (See Section 9.1 of [RFC9528]), EDHOC-PSK provides identity
+   protection for both the Initiator and the Responder against passive
+   attackers.
 
 7.2.  Mutual Authentication
 
-   Authentication in EDHOC-PSK depends on the security of the session
-   key and the protocol's confidentiality.  Both security properties
-   hold as long as the PSK remains secret.  Even though the fourth
-   message (message_4) remains optional, mutual authentication is not
-   guaranteed without it, or without an OSCORE message or any
-   application data that confirms that the Responder owns the PSK.  When
-   message_4 is included, the protocol achieves explicit key
-   confirmation in addition to mutual authentication.
+   EDHOC-PSK provides mutual authentication, assuming the PSK remains
+   secret.  However, if the optional fourth message (message_4) is
+   omitted, mutual authentication is not guaranteed—unless the Responder
+   is later authenticated through an OSCORE message or other application
+   data demonstrating possession of the PSK.  When message_4 is
+   included, the protocol ensures both mutual authentication and
+   explicit key confirmation.
 
 7.3.  External Authorization Data Protection
 
@@ -525,28 +524,21 @@ Table of Contents
 
 7.4.  Post Quantum Considerations
 
-   Recent achievements in developing quantum computers demonstrate that
-   it is probably feasible to build one that is cryptographically
-   significant.  If such a computer is implemented, many of the
-   cryptographic algorithms and protocols currently in use would be
-   insecure.  A quantum computer would be able to solve Diffie-Hellman
-   (DH) and Elliptic Curve Diffie-Hellman (ECDH) problems in polynomial
-   time.
+   Recent advancements in quantum computing suggest that the development
+   of a Cryptographically Relevant Quantum Computer (CRQC) is likely
+   feasible long-term.  If realized, such a machine would render many
+   currently deployed asymmetric cryptographic algorithms—such as
+   Elliptic Curve Diffie-Hellman (ECDH)—insecure.
 
-   EDHOC with pre-shared keys would not be vulnerable to quantum attacks
-   because those keys are used as inputs to the key derivation function.
-   The use of intermediate keys derived through key derivation functions
-   ensure that the message is not immediately compromised if the
-   symmetrically distributed key (PSK) is compromised, or if the
-   algorithm used to distribute keys asymmetrically (DH) is broken.  If
-   the pre-shared key has sufficient entropy and the Key Derivation
-   Function (KDF), encryption, and authentication transforms are quantum
-   secure, then the resulting system is believed to be quantum secure.
-   Therefore, provided that the PSK remains secret, EDHOC-PSK provides
-   confidentiality, mutual authentication and Perfect Forward Secrecy
-   (PFS) even in the presence of quantum attacks.  What is more, the key
-   exchange is still a key agreement where both parties contribute with
-   randomness.
+   By leveraging a symmetric PSK for both authentication and key
+   derivation, EDHOC-PSK offers quantum-resistant key exchange and
+   authentication.  However, if a cryptographically relevant quantum
+   computer (CRQC) is built, the ECDHE component would be broken and
+   contribute only randomness to EDHOC-PSK.  As a result, EDHOC-PSK does
+   not provide identity protection or Perfect Forward Secrecy (PFS)
+   against quantum-capable adversaries.  If the PSK is compromised, a
+   passive quantum attacker can decrypt both past and future
+   communications.
 
 7.5.  Independence of Session Keys
 
