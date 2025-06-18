@@ -1001,6 +1001,10 @@ Appendix C.  Change Log
 
    RFC Editor: Please remove this appendix.
 
+   *  From -03 to -04
+
+      -  Editorial changes
+
    *  From -02 to -03
 
       -  Updated abstract and Introduction
