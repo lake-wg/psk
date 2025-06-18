@@ -598,13 +598,14 @@ Table of Contents
    Method Type" registry under the group name "Ephemeral Diffie-Hellman
    Over OCSE (EDHOC)".
 
-+------------+------------------------------+---------------------------------+-------------------+
-| Value      | Initiator Authentication Key | Responder Authentication Key    | Reference         |
-+============+==============================+=================================+===================+
-|  4         |                 PSK          |                 PSK             |                   |
-+------------+------------------------------+---------------------------------+-------------------+
+       +=======+==============================+====================+
+       | Value | Initiator Authentication Key | Responder          |
+       |       |                              | Authentication Key |
+       +=======+==============================+====================+
+       | 4     | PSK                          | PSK                |
+       +-------+------------------------------+--------------------+
 
-        Figure 3: Addition to the EDHOC Method Type Registry.
+            Table 1: Addition to the EDHOC Method Type Registry.
 
 8.2.  EDHOC Exporter Label Registry
 
@@ -612,15 +613,15 @@ Table of Contents
    Exporter Label" registry under the group name "Ephemeral Diffie-
    Hellman Over OCSE (EDHOC)".
 
-+------------+------------------------------+-------------------+-------------------+
-| Label      | Description                  | Change Controller | Reference         |
-+============+==============================+===================+===================+
-|  2         | Resumption CRED_PSK          |       IETF        | Section 7         |
-+------------+------------------------------+-------------------+-------------------+
-|  3         | Resumption ID_CRED_PSK       |       IETF        | Section 7         |
-+------------+------------------------------+-------------------+-------------------+
+    +=======+========================+===================+===========+
+    | Label | Description            | Change Controller | Reference |
+    +=======+========================+===================+===========+
+    | 2     | Resumption CRED_PSK    | IETF              | Section 7 |
+    +-------+------------------------+-------------------+-----------+
+    | 3     | Resumption ID_CRED_PSK | IETF              | Section 7 |
+    +-------+------------------------+-------------------+-----------+
 
-       Figure 4: Addition to the EDHOC Exporter Label Registry.
+         Table 2: Addition to the EDHOC Exporter Label Registry.
 
 8.3.  EDHOC Info Label Registry
 
@@ -628,13 +629,13 @@ Table of Contents
    Label" under the group name "Ephemeral Diffie-Hellman Over OCSE
    (EDHOC)".
 
-   +------------+-----------------------+-------------------+
-   | Label      |          Key          |  Reference        |
-   +============+=======================+===================+
-   |  11        |       KEYSTREAM_3     |   Section 4       |
-   +------------+-----------------------+-------------------+
+                    +=======+=============+===========+
+                    | Label | Key         | Reference |
+                    +=======+=============+===========+
+                    | 11    | KEYSTREAM_3 | Section 4 |
+                    +-------+-------------+-----------+
 
-                    Figure 5: EDHOC Info Label Registry.
+                    Table 3: EDHOC Info Label Registry.
 
 9.  Normative References
 
