@@ -21,12 +21,12 @@ Abstract
    for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange
    protocol.  The PSK method enhances computational efficiency while
    providing mutual authentication, ephemeral key exchange, identity
-   protection, and a degree of quantum resistance.  It is particularly
-   suited for systems where nodes share a PSK provided out-of-band
-   (external PSK) and enables efficient session resumption with less
-   computational overhead when the PSK is provided from a previous EDHOC
-   session (resumption PSK).  This document details the PSK method flow,
-   key derivation changes, message formatting, processing, and security
+   protection, and quantum resistance.  It is particularly suited for
+   systems where nodes share a PSK provided out-of-band (external PSK)
+   and enables efficient session resumption with less computational
+   overhead when the PSK is provided from a previous EDHOC session
+   (resumption PSK).  This document details the PSK method flow, key
+   derivation changes, message formatting, processing, and security
    considerations.
 
 About This Document
