@@ -612,7 +612,7 @@ Table of Contents
     | 3     | Resumption ID_CRED_PSK | IETF              | Section 7 |
     +-------+------------------------+-------------------+-----------+
 
-         Table 2: Addition to the EDHOC Exporter Label Registry.
+         Table 2: Additions to the EDHOC Exporter Label Registry.
 
 9.  Normative References
 
