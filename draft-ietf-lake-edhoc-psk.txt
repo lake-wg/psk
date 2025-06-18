@@ -144,7 +144,7 @@ Table of Contents
    attackers, while future communications are protected from passive
    attackers.  Additionally, by leveraging the PSK for both
    authentication and key derivation, the method offers quantum
-   resistance key exchange and authentication.
+   resistance key exchange and authentication even when used with ECDHE.
 
    Another key use case of PSK authentication in the EDHOC protocol is
    session resumption.  This enables previously connected parties to
@@ -234,8 +234,9 @@ Table of Contents
 
    The ID_CRED_PSK is sent in message_3, encrypted using a key derived
    from the ephemeral shared secret, G_XY, calculated from the
-   Initiator's ephemeral public key G_X and the private key
-   corresponding to the Responder's public key G_Y, or vice verca.  The
+   Initiator's ephemeral public key G_X or from the encapsulation G_Y
+   and the private key corresponding to G_X.  When ECDHE is used, the
+   encapsulation G_Y is the Responder's ephemeral public key.  The
    Responder authenticates the Initiator first.  Figure 1 shows the
    message flow of the EDHOC-PSK authentication method.
 
@@ -531,14 +532,17 @@ Table of Contents
    Elliptic Curve Diffie-Hellman (ECDH)—insecure.
 
    By leveraging a symmetric PSK for both authentication and key
-   derivation, EDHOC-PSK offers quantum-resistant key exchange and
-   authentication.  However, if a cryptographically relevant quantum
-   computer (CRQC) is built, the ECDHE component would be broken and
-   contribute only randomness to EDHOC-PSK.  As a result, EDHOC-PSK does
-   not provide identity protection or Perfect Forward Secrecy (PFS)
-   against quantum-capable adversaries.  If the PSK is compromised, a
-   passive quantum attacker can decrypt both past and future
-   communications.
+   derivation, EDHOC-PSK provides quantum-resistant key exchange and
+   authentication, even when used with ECDHE.  However, if a
+   cryptographically relevant quantum computer (CRQC) is realized, the
+   ECDHE component would be broken and contribute only randomness.
+   Consequently, EDHOC-PSK with ECDHE does not offer identity protection
+   or Perfect Forward Secrecy (PFS) against quantum-capable adversaries.
+   If the PSK is compromised, a passive quantum attacker could decrypt
+   both past and future sessions.  In contrast, EDHOC-PSK combined with
+   a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-
+   KEM, provides identity protection and PFS even in the presence of a
+   quantum attacker.
 
 7.5.  Independence of Session Keys
 
