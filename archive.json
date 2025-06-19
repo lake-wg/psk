@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-17T01:07:51.249619+00:00",
+  "timestamp": "2025-06-19T01:07:57.154010+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -52,6 +52,11 @@
       "name": "close?",
       "description": "",
       "color": "c5def5"
+    },
+    {
+      "name": "MUST be solved before formal analysis",
+      "description": "",
+      "color": "3d282b"
     }
   ],
   "issues": [
@@ -524,10 +529,12 @@
       "assignees": [
         "emanjon"
       ],
-      "labels": [],
+      "labels": [
+        "MUST be solved before formal analysis"
+      ],
       "body": "PSK authentication without identities is typically vulnerable to  reflection/Selfie attacks. Unless, we have some good reasons to believe that this is not the case we should probably mandate the inclusion of an identityin the sub field\n\n     2 : \"42-50-31-FF-EF-37-32-39\",               /sub/\n\nThis implies that there are two different \"CRED_PSK\"\n\n(Maybe this has been discussed and I missed it....)",
       "createdAt": "2025-02-17T17:12:26Z",
-      "updatedAt": "2025-02-18T13:35:22Z",
+      "updatedAt": "2025-06-18T06:09:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -564,10 +571,12 @@
       "assignees": [
         "emanjon"
       ],
-      "labels": [],
+      "labels": [
+        "MUST be solved before formal analysis"
+      ],
       "body": "```\n{                                               /CCS/\n   2 : \"mydotbot\",                               /sub/\n   8 : {                                         /cnf/\n     1 : {                                       /COSE_Key/\n        1 : 4,                                   /kty/\n        2 : h'0f',                               /kid/\n       -1 : h'50930FF462A77A3540CF546325DEA214'  /k/\n     }\n   }\n }\n```\n\n- sub identifies I or R, not the PSK.\n\n- sub cannot be included in \n`PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )\n` ",
       "createdAt": "2025-02-17T17:38:29Z",
-      "updatedAt": "2025-02-18T13:35:22Z",
+      "updatedAt": "2025-06-18T06:09:09Z",
       "closedAt": null,
       "comments": []
     },
@@ -634,7 +643,116 @@
           "updatedAt": "2025-02-26T07:14:39Z"
         }
       ]
+    },
+    {
+      "number": 20,
+      "id": "I_kwDONwrUhc68HTCe",
+      "title": "Should discuss ML-KEM",
+      "url": "https://github.com/lake-wg/psk/issues/20",
+      "state": "CLOSED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "MUST be solved before formal analysis"
+      ],
+      "body": "The text was not correct for ECDHE. I made commits to master making it correct for ECDHE.\n\nThe text should be updated to discuss both the current ECDHE cipher suites and future PQC cipher suites using e.g., ML-KEM. With ML-KEM, EDHOC-PSK would preserve all security properties against a quantum attacker.",
+      "createdAt": "2025-06-18T08:51:28Z",
+      "updatedAt": "2025-06-18T09:12:52Z",
+      "closedAt": "2025-06-18T09:12:52Z",
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDONwrUhc68HZHK",
+      "title": "Less ECDHE",
+      "url": "https://github.com/lake-wg/psk/issues/21",
+      "state": "CLOSED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The following addition is ECDHE focused.\n\n```\ncalculated from the the Initiator first.  Figure 1 shows the message flow of PSK Initiator's ephemeral public key G_X and the private key authentication method.\t  corresponding to the Responder's public key G_Y, or vice verca\n```\n\nWe should try to make the document agnostic to ECDHE or PQK KEMs.",
+      "createdAt": "2025-06-18T08:59:10Z",
+      "updatedAt": "2025-06-18T09:12:59Z",
+      "closedAt": "2025-06-18T09:12:59Z",
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDONwrUhc68HqFO",
+      "title": "Resumption use of Exporter",
+      "url": "https://github.com/lake-wg/psk/issues/22",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "MUST be solved before formal analysis"
+      ],
+      "body": "```\nto derive both CRED_PSK and ID_CRED_PSK:\t\n\t\t \t\t\n\t6.1.  Identity protection\t \t   CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )\t\n\t\t \t   ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )\n```\n\nWhat is derived is the PSK and the PSK identifier, not the above structures. \n\n",
+      "createdAt": "2025-06-18T09:21:10Z",
+      "updatedAt": "2025-06-18T11:44:48Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 18,
+      "id": "PR_kwDONwrUhc6bAYce",
+      "title": "Remove info label IANA",
+      "url": "https://github.com/lake-wg/psk/pull/18",
+      "state": "MERGED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft would need to create this registry, but I don't think it is needed. The requirement is that (mathod, info label) pairs don't collide. Info labels could be reused.",
+      "createdAt": "2025-06-18T05:36:22Z",
+      "updatedAt": "2025-06-18T06:12:17Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "0fca2860ca97bed6ee1581fb56ebff9aca8c3167",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "emanjon-patch-1",
+      "headRefOid": "41f749ff06eb868d442825da228e72af9d91a82a",
+      "closedAt": "2025-06-18T06:12:17Z",
+      "mergedAt": "2025-06-18T06:12:17Z",
+      "mergedBy": "emanjon",
+      "mergeCommit": {
+        "oid": "a6ff8bcf96d5be190b456c1fc0a66914bdd55acd"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDONwrUhc6bAk8x",
+      "title": "Update sec con",
+      "url": "https://github.com/lake-wg/psk/pull/19",
+      "state": "MERGED",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-18T06:07:42Z",
+      "updatedAt": "2025-06-18T06:14:03Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "a6ff8bcf96d5be190b456c1fc0a66914bdd55acd",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "emanjon-patch-2",
+      "headRefOid": "238aa90de25093325e105a50f11493037f50f742",
+      "closedAt": "2025-06-18T06:14:03Z",
+      "mergedAt": "2025-06-18T06:14:03Z",
+      "mergedBy": "emanjon",
+      "mergeCommit": {
+        "oid": "acc3829b1edef155d3d3ab1bfa9d5ded56507fde"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
