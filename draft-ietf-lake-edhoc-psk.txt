@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 20 December 2025                              J. Preuß Mattsson
+Expires: 21 December 2025                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                            18 June 2025
+                                                            19 June 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2025.
+   This Internet-Draft will expire on 21 December 2025.
 
 Copyright Notice
 
@@ -182,11 +182,13 @@ Table of Contents
 
 3.  Protocol
 
-   In this method, the Pre-Shared Key identifier (ID_CRED_PSK) is sent
-   in message_3.  The ID_CRED_PSK allows retrieval of CRED_PSK, an
-   authentication credential that contains the external or resumption
-   PSK.  Through this document we will refer to the Pre-Shared Key
-   authentication method as EDHOC-PSK.
+   In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which
+   allows retrieval of the CRED_PSK, is sent in message_3.  CRED_PSK is
+   an authentication credential associated with the PSK.  Although it
+   may use a COSE_Key representation for compatibility, the format is
+   not restricted to COSE_Key and can vary depending on the
+   implementation.  Through this document we will refer to the Pre-
+   Shared Key authentication method as EDHOC-PSK.
 
 3.1.  Credentials
 
@@ -206,9 +208,12 @@ Table of Contents
 
    ID_CRED_PSK = {4 : h'0f' }
 
-   *  CRED_PSK is an authentication credential, e.g., a CBOR Web Token
-      (CWT) or CWT Claims Set (CCS) [RFC8392] whose 'cnf' claim uses the
-      confirmation method 'COSE_Key' encoding the PSK.  For example:
+   *  CRED_PSK is an authentication credential that identifies the PSK.
+      It is often represented as a CBOR Web Token (CWT) or CWT Claims
+      Set (CCS) [RFC8392] whose 'cnf' claim uses the confirmation method
+      'COSE_Key' to carry the PSK.  However, other formats for CRED_PSK
+      are also allowed, as long as they enable the recipient to identify
+      and retrieve the correct PSK.  An example of CRED_PSK would be:
 
    {                                               /CCS/
      2 : "mydotbot",                               /sub/
