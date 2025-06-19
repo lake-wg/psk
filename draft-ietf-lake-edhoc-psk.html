@@ -1716,10 +1716,10 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumption</a>
       </h2>
 <p id="section-6-1">This section defines how PSKs are used for session resumption in EDHOC.
-Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter can be used to derive both CRED_PSK and ID_CRED_PSK:<a href="#section-6-1" class="pilcrow">¶</a></p>
+Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter can be used to derive both PSK and ID_CRED_PSK:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6-2">
 <pre>
-CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
+PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
 ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
 </pre><a href="#section-6-2" class="pilcrow">¶</a>
 </div>
