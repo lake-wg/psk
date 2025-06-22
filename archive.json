@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-19T01:07:57.154010+00:00",
+  "timestamp": "2025-06-22T01:14:17.379319+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -683,7 +683,7 @@
       "id": "I_kwDONwrUhc68HqFO",
       "title": "Resumption use of Exporter",
       "url": "https://github.com/lake-wg/psk/issues/22",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -692,7 +692,79 @@
       ],
       "body": "```\nto derive both CRED_PSK and ID_CRED_PSK:\t\n\t\t \t\t\n\t6.1.  Identity protection\t \t   CRED_PSK = EDHOC_Exporter( 2, h'', resumption_psk_length )\t\n\t\t \t   ID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )\n```\n\nWhat is derived is the PSK and the PSK identifier, not the above structures. \n\n",
       "createdAt": "2025-06-18T09:21:10Z",
-      "updatedAt": "2025-06-18T11:44:48Z",
+      "updatedAt": "2025-06-19T15:44:45Z",
+      "closedAt": "2025-06-19T15:44:45Z",
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "FIXED",
+          "createdAt": "2025-06-19T15:44:45Z",
+          "updatedAt": "2025-06-19T15:44:45Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "I_kwDONwrUhc68T2qE",
+      "title": "Guidelines specification for CRED_PSK",
+      "url": "https://github.com/lake-wg/psk/issues/23",
+      "state": "CLOSED",
+      "author": "ElsaLopez133",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* \"The authentication credential CRED_PSK substitutes CRED_I and CRED_R specified in [RFC9528], and, when applicable, MUST follow the same guidelines described in Section 3.5.2 and Section 3.5.3 of [RFC9528].\" (NOT FIXED)\n* Please spell out in this draft exactly what guidelines apply to CRED_PSK.",
+      "createdAt": "2025-06-19T07:41:23Z",
+      "updatedAt": "2025-06-19T08:41:06Z",
+      "closedAt": "2025-06-19T08:41:06Z",
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Fixed",
+          "createdAt": "2025-06-19T08:41:06Z",
+          "updatedAt": "2025-06-19T08:41:06Z"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "I_kwDONwrUhc68T3R3",
+      "title": "Explain why MAC_2, and Signature_or_MAC_2 are not used",
+      "url": "https://github.com/lake-wg/psk/issues/24",
+      "state": "OPEN",
+      "author": "ElsaLopez133",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-19T07:42:22Z",
+      "updatedAt": "2025-06-19T08:01:45Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Would it be correct to say the following?\n\nEDHOC-PSK replaces explicit MACs and Signatures with implicit authentication through key confirmation and successful AEAD decryption. MAC_2 is unnecessary because there is no responder credential (ID_CRED_R) involved, and PSK knowledge replaces asymmetric authentication. When using PSK, authentication is deferred and implicitly achieved in message_3 through the AEAD.",
+          "createdAt": "2025-06-19T08:01:45Z",
+          "updatedAt": "2025-06-19T08:01:45Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "I_kwDONwrUhc68VTBV",
+      "title": "Using the EDHOC + OSCORE request (RFC 9668)",
+      "url": "https://github.com/lake-wg/psk/issues/25",
+      "state": "OPEN",
+      "author": "marco-tiloca-sics",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "If EDHOC PSK still allows the Initiator to compute PRK_out before sending EDHOC message_3, then it should be possible to use the EDHOC + OSCORE request specified in RFC 9668 [1] here too.\n\nIf so, that can be explicitly mentioned in this document. Fundamentally, it should be just like in RFC 9668, but of course with EDHOC message_3 consistent with the present EDHOC session using PSK-based authentication.\n\n[1] https://www.ietf.org/rfc/rfc9668.html#section-3",
+      "createdAt": "2025-06-19T09:49:52Z",
+      "updatedAt": "2025-06-19T09:49:52Z",
       "closedAt": null,
       "comments": []
     }
