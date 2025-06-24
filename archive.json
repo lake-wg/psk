@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-22T01:14:17.379319+00:00",
+  "timestamp": "2025-06-24T01:08:27.337811+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -765,6 +765,22 @@
       "body": "If EDHOC PSK still allows the Initiator to compute PRK_out before sending EDHOC message_3, then it should be possible to use the EDHOC + OSCORE request specified in RFC 9668 [1] here too.\n\nIf so, that can be explicitly mentioned in this document. Fundamentally, it should be just like in RFC 9668, but of course with EDHOC message_3 consistent with the present EDHOC session using PSK-based authentication.\n\n[1] https://www.ietf.org/rfc/rfc9668.html#section-3",
       "createdAt": "2025-06-19T09:49:52Z",
       "updatedAt": "2025-06-19T09:49:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 26,
+      "id": "I_kwDONwrUhc684Exq",
+      "title": "Acknowledge the CYPRESS project",
+      "url": "https://github.com/lake-wg/psk/issues/26",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add to Acknowledgments:\n\n\"This work was supported partially by Vinnova - the Swedish Agency for Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.\"",
+      "createdAt": "2025-06-23T16:46:32Z",
+      "updatedAt": "2025-06-23T16:46:32Z",
       "closedAt": null,
       "comments": []
     }
