@@ -103,17 +103,18 @@ Table of Contents
      6.1.  Cipher Suite Requirements for Resumption
      6.2.  Privacy Considerations for Resumption
      6.3.  Security Considerations for Resumption
-   7.  Security Considerations
-     7.1.  Identity protection
-     7.2.  Mutual Authentication
-     7.3.  External Authorization Data Protection
-     7.4.  Post Quantum Considerations
-     7.5.  Independence of Session Keys
-     7.6.  Unified Approach and Recommendations
-   8.  IANA Considerations
-     8.1.  EDHOC Method Type Registry
-     8.2.  EDHOC Exporter Label Registry
-   9.  Normative References
+   7.  EDHOC PSK and OSCORE
+   8.  Security Considerations
+     8.1.  Identity protection
+     8.2.  Mutual Authentication
+     8.3.  External Authorization Data Protection
+     8.4.  Post Quantum Considerations
+     8.5.  Independence of Session Keys
+     8.6.  Unified Approach and Recommendations
+   9.  IANA Considerations
+     9.1.  EDHOC Method Type Registry
+     9.2.  EDHOC Exporter Label Registry
+   10. Normative References
    Appendix A.  CDDL Definitions
    Appendix B.  Test Vectors
      B.1.  message_1
@@ -643,13 +644,21 @@ Table of Contents
    *  Parties SHOULD implement mechanisms to detect and prevent
       excessive reuse of the same resumption PSK.
 
-7.  Security Considerations
+7.  EDHOC PSK and OSCORE
+
+   When PSK authenitcation is used and the Initiator is able to derive
+   PRK_out before sending message_3, then the optimization described in
+   Section 3 of [RFC9668] applies.  In this scenario, the Initiator MAY
+   concatenate EDHOC message_3 and the first OSCORE request in a single
+   CoAP message.
+
+8.  Security Considerations
 
    The EDHOC-PSK authentication method introduces changes with respect
    to the current specification of EDHOC [RFC9528].  This section
    analyzes the security implications of these changes.
 
-7.1.  Identity protection
+8.1.  Identity protection
 
    EDHOC-PSK encrypts ID_CRED_PSK in message 3 with a keystream derived
    from the ephemeral shared secret G_XY.  As a consequence, contrary to
@@ -664,7 +673,7 @@ Table of Contents
    reflection or Selfie attacks.  Separate identities in sub serve as
    non-cryptographic role binders and MUST be distinct.
 
-7.2.  Mutual Authentication
+8.2.  Mutual Authentication
 
    EDHOC-PSK provides mutual authentication, assuming the PSK remains
    secret.  However, if the optional fourth message (message_4) is
@@ -674,14 +683,14 @@ Table of Contents
    included, the protocol ensures both mutual authentication and
    explicit key confirmation.
 
-7.3.  External Authorization Data Protection
+8.3.  External Authorization Data Protection
 
    Similarly to [RFC9528], EDHOC-PSK provides external authorization
    data protection.  The integrity and confidentiality of EAD fields
    follow the same security guarantees as in the original EDHOC
    specification.
 
-7.4.  Post Quantum Considerations
+8.4.  Post Quantum Considerations
 
    Recent advancements in quantum computing suggest that the development
    of a Cryptographically Relevant Quantum Computer (CRQC) is likely
@@ -702,7 +711,7 @@ Table of Contents
    KEM, provides identity protection and PFS even in the presence of a
    quantum attacker.
 
-7.5.  Independence of Session Keys
+8.5.  Independence of Session Keys
 
    NIST mandates that an ephemeral private key shall be used in exactly
    one key-establishment transaction (see Section 5.6.3.3 of
@@ -719,7 +728,7 @@ Table of Contents
    between legitimate parties.  Assuming breach and minimizing the
    impact of compromise are fundamental zero-trust principles.
 
-7.6.  Unified Approach and Recommendations
+8.6.  Unified Approach and Recommendations
 
    For use cases involving the transmission of application data,
    application data can be sent concurrently with message_3, maintaining
@@ -741,11 +750,11 @@ Table of Contents
    for the privacy properties when using asymmetric authentication but
    is not significant in the context of symmetric key usage.
 
-8.  IANA Considerations
+9.  IANA Considerations
 
    This document has IANA actions.
 
-8.1.  EDHOC Method Type Registry
+9.1.  EDHOC Method Type Registry
 
    IANA is requested to register the following entry in the "EDHOC
    Method Type" registry under the group name "Ephemeral Diffie-Hellman
@@ -760,7 +769,7 @@ Table of Contents
 
             Table 1: Addition to the EDHOC Method Type Registry.
 
-8.2.  EDHOC Exporter Label Registry
+9.2.  EDHOC Exporter Label Registry
 
    IANA is requested to register the following entry in the "EDHOC
    Exporter Label" registry under the group name "Ephemeral Diffie-
@@ -776,7 +785,7 @@ Table of Contents
 
          Table 2: Additions to the EDHOC Exporter Label Registry.
 
-9.  Normative References
+10.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -819,6 +828,13 @@ Table of Contents
               "Ephemeral Diffie-Hellman Over COSE (EDHOC)", RFC 9528,
               DOI 10.17487/RFC9528, March 2024,
               <https://www.rfc-editor.org/rfc/rfc9528>.
+
+   [RFC9668]  Palombini, F., Tiloca, M., Höglund, R., Hristozov, S., and
+              G. Selander, "Using Ephemeral Diffie-Hellman Over COSE
+              (EDHOC) with the Constrained Application Protocol (CoAP)
+              and Object Security for Constrained RESTful Environments
+              (OSCORE)", RFC 9668, DOI 10.17487/RFC9668, November 2024,
+              <https://www.rfc-editor.org/rfc/rfc9668>.
 
    [SP-800-56A]
               Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
