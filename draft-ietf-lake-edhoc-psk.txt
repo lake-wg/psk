@@ -260,11 +260,9 @@ Table of Contents
    This enables corrcte identification of parties and prevents
    misbinding attacks, as per Appendix D.2 of [RFC9528].  These
    identities are not transmitted on the wire, but they MUST be included
-   in the computation of transcript hashes, such as:
+   in the computation of transcript hashe:
 
-   *  TH_3 = H( TH_2, PLAINTEXT_2, CRED_PSK )
-
-   *  TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
+   *  TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK )
 
    This prevents reflection attacks and enforces correct binding of
    credentials to roles.  Note that sub is used solely for identity
