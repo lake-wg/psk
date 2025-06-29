@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T01:08:27.337811+00:00",
+  "timestamp": "2025-06-29T01:15:59.944444+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -460,9 +460,17 @@
       "labels": [],
       "body": "The current specification is written as a diff against RFC 9528. This is good from an economy of specification and may be good for a person who is familiar with RFC 9528, which anyway is assumed. \n\nHowever, it is difficult to read when you need to have RFC 9528 open on the side, and it isn't clear which parts of RFC 9528 that are not used. Moreover, since some terms are given a different definition and/or a different interpretation, there is risk for both confusion and potential errors.\n\nFor readability, some parts may not be repeated. This has the drawback when there is a need for update.\n\nWe should not have contradicting CDDL definitions between this spec and RFC 9528.\n\nAlso, the labeling of the parameters becomes confusing when the original meaning is lost, e.g. the \"2m\" part of PRK_3e2m does mean anything when there is no MAC in message 2. \n\nI'm in favor of defining new terms that makes sense for the new protocol, but also indicate what parts carry over directly from RFC 9528. Some overall refactoring is needed to carry out this. \n\n",
       "createdAt": "2025-02-11T10:53:32Z",
-      "updatedAt": "2025-02-18T13:36:57Z",
+      "updatedAt": "2025-06-26T09:33:43Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\nI have added more explanations in the message formatting rather than just referring to RFC9528",
+          "createdAt": "2025-06-26T09:33:43Z",
+          "updatedAt": "2025-06-26T09:33:43Z"
+        }
+      ]
     },
     {
       "number": 11,
@@ -523,7 +531,7 @@
       "id": "I_kwDONwrUhc6qX-7V",
       "title": "Reflection/selfie attacks",
       "url": "https://github.com/lake-wg/psk/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -534,8 +542,8 @@
       ],
       "body": "PSK authentication without identities is typically vulnerable to  reflection/Selfie attacks. Unless, we have some good reasons to believe that this is not the case we should probably mandate the inclusion of an identityin the sub field\n\n     2 : \"42-50-31-FF-EF-37-32-39\",               /sub/\n\nThis implies that there are two different \"CRED_PSK\"\n\n(Maybe this has been discussed and I missed it....)",
       "createdAt": "2025-02-17T17:12:26Z",
-      "updatedAt": "2025-06-18T06:09:09Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-27T08:00:06Z",
+      "closedAt": "2025-06-27T07:59:55Z",
       "comments": [
         {
           "author": "emanjon",
@@ -557,6 +565,13 @@
           "body": "Yes, I agree. I think having a list of active G_X is not worthy. Having two identifies should be fine. Or deriving two CRED_PSKs from the CRED_PSK: CRED_PSK_IR and CRED_PSK_RI",
           "createdAt": "2025-02-18T11:31:41Z",
           "updatedAt": "2025-02-18T11:31:41Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I added a comment on this in the credential section, as well as in the security considerations",
+          "createdAt": "2025-06-27T07:59:55Z",
+          "updatedAt": "2025-06-27T08:00:06Z"
         }
       ]
     },
@@ -565,7 +580,7 @@
       "id": "I_kwDONwrUhc6qYMfM",
       "title": "CRED_PSK, sub field, and key derivation",
       "url": "https://github.com/lake-wg/psk/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -576,9 +591,17 @@
       ],
       "body": "```\n{                                               /CCS/\n   2 : \"mydotbot\",                               /sub/\n   8 : {                                         /cnf/\n     1 : {                                       /COSE_Key/\n        1 : 4,                                   /kty/\n        2 : h'0f',                               /kid/\n       -1 : h'50930FF462A77A3540CF546325DEA214'  /k/\n     }\n   }\n }\n```\n\n- sub identifies I or R, not the PSK.\n\n- sub cannot be included in \n`PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )\n` ",
       "createdAt": "2025-02-17T17:38:29Z",
-      "updatedAt": "2025-06-18T06:09:09Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-06-27T07:49:46Z",
+      "closedAt": "2025-06-27T07:49:46Z",
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Added an explanation in the Credential's section",
+          "createdAt": "2025-06-27T07:49:46Z",
+          "updatedAt": "2025-06-27T07:49:46Z"
+        }
+      ]
     },
     {
       "number": 16,
@@ -733,15 +756,15 @@
       "id": "I_kwDONwrUhc68T3R3",
       "title": "Explain why MAC_2, and Signature_or_MAC_2 are not used",
       "url": "https://github.com/lake-wg/psk/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ElsaLopez133",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-06-19T07:42:22Z",
-      "updatedAt": "2025-06-19T08:01:45Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-26T09:33:10Z",
+      "closedAt": "2025-06-26T09:33:10Z",
       "comments": [
         {
           "author": "ElsaLopez133",
@@ -764,24 +787,53 @@
       "labels": [],
       "body": "If EDHOC PSK still allows the Initiator to compute PRK_out before sending EDHOC message_3, then it should be possible to use the EDHOC + OSCORE request specified in RFC 9668 [1] here too.\n\nIf so, that can be explicitly mentioned in this document. Fundamentally, it should be just like in RFC 9668, but of course with EDHOC message_3 consistent with the present EDHOC session using PSK-based authentication.\n\n[1] https://www.ietf.org/rfc/rfc9668.html#section-3",
       "createdAt": "2025-06-19T09:49:52Z",
-      "updatedAt": "2025-06-19T09:49:52Z",
+      "updatedAt": "2025-06-27T14:45:24Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I added a new section including this optimization (section 7)",
+          "createdAt": "2025-06-27T08:51:14Z",
+          "updatedAt": "2025-06-27T08:51:14Z"
+        },
+        {
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "body": "Thanks!",
+          "createdAt": "2025-06-27T09:58:46Z",
+          "updatedAt": "2025-06-27T09:58:46Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Should I simply refer to the RFC 9668 or should I describe it more extensively in the draft?",
+          "createdAt": "2025-06-27T10:20:50Z",
+          "updatedAt": "2025-06-27T10:20:50Z"
+        },
+        {
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "body": "If it's just about using the EDHOC + OSCORE request as-is (which seems to be the case), then I believe that it should be fine to have high-level text like that in the new Section 7, without re-explaining that part of RFC 9668 in detail.\n\nEven if there were minor things specific of using the EDHOC + OSCORE request with EDHOC PSK (I can't think of any at the moment), they could hopefully be described without needing to re-explain the whole thing.",
+          "createdAt": "2025-06-27T14:45:24Z",
+          "updatedAt": "2025-06-27T14:45:24Z"
+        }
+      ]
     },
     {
       "number": 26,
       "id": "I_kwDONwrUhc684Exq",
       "title": "Acknowledge the CYPRESS project",
       "url": "https://github.com/lake-wg/psk/issues/26",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gselander",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Add to Acknowledgments:\n\n\"This work was supported partially by Vinnova - the Swedish Agency for Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.\"",
       "createdAt": "2025-06-23T16:46:32Z",
-      "updatedAt": "2025-06-23T16:46:32Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-27T08:01:17Z",
+      "closedAt": "2025-06-27T08:01:17Z",
       "comments": []
     }
   ],
