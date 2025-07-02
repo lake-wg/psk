@@ -373,8 +373,8 @@ Table of Contents
 
     PRK_3e2m     = PRK_2e
     PRK_4e3m     = EDHOC_Extract( SALT_4e3m, CRED_PSK )
-    KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )
-    KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2 )
+    KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3a )
+    KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
     K_3          = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
     IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 
@@ -389,9 +389,9 @@ Table of Contents
 
    *  TH_3 = H( TH_2, PLAINTEXT_2B ).
 
-   *  plaintext_length_2 is the length of PLAINTEXT_2A in message_2.
+   *  plaintext_length_2a is the length of PLAINTEXT_2A in message_2.
 
-   *  plaintext_length_3 is the length of PLAINTEXT_3A in message_3.
+   *  plaintext_length_3a is the length of PLAINTEXT_3A in message_3.
 
    Additionally, the definition of the transcript hash TH_4 is modified
    as:
@@ -433,7 +433,7 @@ Table of Contents
    Upon receiving message_2, the Initiator processes it as follows:
 
    *  It computes KEYSTREAM_2A, following Section 4, where
-      plaintext_length_2 is the length of PLAINTEXT_2A.
+      plaintext_length_2a is the length of PLAINTEXT_2A.
 
    *  It decrypts CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A =
       CIPHERTEXT_2A XOR KEYSTREAM_2A
@@ -462,7 +462,7 @@ Table of Contents
          o  If the length of PLAINTEXT_3A exceeds the output of
             EDHOC_KDF, then Appendix G of [RFC9528] applies.
 
-      -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length_3
+      -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length_3a
          is the length of PLAINTEXT_3A.
 
       -  CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A
