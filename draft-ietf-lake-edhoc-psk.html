@@ -1538,21 +1538,19 @@ The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in 
           </ul>
 </li>
         <li class="normal" id="section-4-6.2">
-          <p id="section-4-6.2.1">KEYSTREAM_2 is derived from PRK_2e and TH_2, see Figure 6 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4-6.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-4-6.3">
-          <p id="section-4-6.3.1">SALT_4e3m is derived from PRK_3e2m and TH_3, see Figure 6 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4-6.3.1" class="pilcrow">¶</a></p>
+          <p id="section-4-6.2.1">SALT_4e3m is derived from PRK_3e2m and TH_3, see Figure 6 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-4-6.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <span id="name-key-derivation-of-edhoc-psk"></span><div id="fig-variant2key">
 <figure id="figure-2">
         <div class="alignCenter art-text artwork" id="section-4-7.1">
 <pre>
-PRK_3e2m    = PRK_2e
-PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )
-KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )
-K_3         = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
-IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
+PRK_3e2m     = PRK_2e
+PRK_4e3m     = EDHOC_Extract( SALT_4e3m, CRED_PSK )
+KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )
+KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2 )
+K_3          = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
+IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1562,13 +1560,19 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <p id="section-4-8">where:<a href="#section-4-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4-9.1">
-          <p id="section-4-9.1.1">KEYSTREAM_3 is used to encrypt the PLAINTEXT_3A, a concatenation of ID_CRED_PSK and CIPHERTEXT_3B, in message_3.<a href="#section-4-9.1.1" class="pilcrow">¶</a></p>
+          <p id="section-4-9.1.1">KEYSTREAM_3A is used to encrypt the PLAINTEXT_3A, a concatenation of ID_CRED_PSK and CIPHERTEXT_3B, in message_3.<a href="#section-4-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-4-9.2">
-          <p id="section-4-9.2.1">TH_3 = H( TH_2, PLAINTEXT_2B )<a href="#section-4-9.2.1" class="pilcrow">¶</a></p>
+          <p id="section-4-9.2.1">KEYSTREAM_2A is used to encrypt PLAINTEXT_2A in message_2.<a href="#section-4-9.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-4-9.3">
-          <p id="section-4-9.3.1">plaintext_length_3 is the length of PLAINTEXT_3A in message_3<a href="#section-4-9.3.1" class="pilcrow">¶</a></p>
+          <p id="section-4-9.3.1">TH_3 = H( TH_2, PLAINTEXT_2B ).<a href="#section-4-9.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-9.4">
+          <p id="section-4-9.4.1">plaintext_length_2 is the length of PLAINTEXT_2A in message_2.<a href="#section-4-9.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-9.5">
+          <p id="section-4-9.5.1">plaintext_length_3 is the length of PLAINTEXT_3A in message_3.<a href="#section-4-9.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-4-10">Additionally, the definition of the transcript hash TH_4 is modified as:<a href="#section-4-10" class="pilcrow">¶</a></p>
@@ -1611,16 +1615,16 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
           <h4 id="name-responder-composition-of-me">
 <a href="#section-5.2.2" class="section-number selfRef">5.2.2. </a><a href="#name-responder-composition-of-me" class="section-name selfRef">Responder Composition of Message 2</a>
           </h4>
-<p id="section-5.2.2-1">CIPHERTEXT_2B is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.2-1">CIPHERTEXT_2A is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.2-2.1">
-              <p id="section-5.2.2-2.1.1">PLAINTEXT_2B = ( C_R, ? EAD_2 )<a href="#section-5.2.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.2-2.1.1">PLAINTEXT_2A = ( C_R, ? EAD_2 )<a href="#section-5.2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.2-2.2">
-              <p id="section-5.2.2-2.2.1">CIPHERTEXT_2B = PLAINTEXT_2B XOR KEYSTREAM_2<a href="#section-5.2.2-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.2-2.2.1">CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.2-3">Contrary to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. C_R, EAD_2, and KEYSTREAM_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.2-3">Contrary to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. C_R, EAD_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. KESYTREAM_2A is defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="initiator-processing-of-message-2">
@@ -1631,10 +1635,10 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <p id="section-5.2.3-1">Upon receiving message_2, the Initiator processes it as follows:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.3-2.1">
-              <p id="section-5.2.3-2.1.1">It computes KEYSTREAM_2, following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, where plaintext_length is the length of PLAINTEXT_2B.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.1.1">It computes KEYSTREAM_2A, following <a href="#key-der" class="auto internal xref">Section 4</a>, where plaintext_length_2 is the length of PLAINTEXT_2A.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.3-2.2">
-              <p id="section-5.2.3-2.2.1">It decrypts CIPHERTEXT_2B using binary XOR, i.e., PLAINTEXT_2B = CIPHERTEXT_2B XOR KEYSTREAM_2<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.2.1">It decrypts CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-5.2.3-3">Compared to <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
@@ -1676,10 +1680,10 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
                   </ul>
 </li>
                 <li class="normal" id="section-5.3.2-1.1.2.2">
-                  <p id="section-5.3.2-1.1.2.2.1">Compute KEYSTREAM_3 as in <a href="#key-der" class="auto internal xref">Section 4</a>, where plaintext_length is the length of PLAINTEXT_3A.<a href="#section-5.3.2-1.1.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.1.2.2.1">Compute KEYSTREAM_3 as in <a href="#key-der" class="auto internal xref">Section 4</a>, where plaintext_length_3 is the length of PLAINTEXT_3A.<a href="#section-5.3.2-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-5.3.2-1.1.2.3">
-                  <p id="section-5.3.2-1.1.2.3.1">CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3<a href="#section-5.3.2-1.1.2.3.1" class="pilcrow">¶</a></p>
+                  <p id="section-5.3.2-1.1.2.3.1">CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A<a href="#section-5.3.2-1.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
@@ -1716,13 +1720,13 @@ IV_3        = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.3.3-2.1.1">Derive the decryption key K_3 and IV_3 as defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.2">
-              <p id="section-5.3.3-2.2.1">Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.<a href="#section-5.3.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.2.1">Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.<a href="#section-5.3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.3">
-              <p id="section-5.3.3-2.3.1">Generate KEYSTREAM_3 with the same method the initiator used.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.3.1">Generate KEYSTREAM_3A with the same method the initiator used.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.4">
-              <p id="section-5.3.3-2.4.1">Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3, resulting in PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ).<a href="#section-5.3.3-2.4.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.4.1">Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A, resulting in PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ).<a href="#section-5.3.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.5">
               <p id="section-5.3.3-2.5.1">Validate or match ID_CRED_PSK to identify which PSK to use. If the ID is unrecognized, the Responder aborts.<a href="#section-5.3.3-2.5.1" class="pilcrow">¶</a></p>
