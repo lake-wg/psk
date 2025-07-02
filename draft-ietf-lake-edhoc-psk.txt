@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 2 January 2026                                J. Preuß Mattsson
+Expires: 3 January 2026                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                             1 July 2025
+                                                             2 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 January 2026.
+   This Internet-Draft will expire on 3 January 2026.
 
 Copyright Notice
 
@@ -384,9 +384,12 @@ Table of Contents
 
    where:
 
-   *  KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.
+   *  KEYSTREAM_3 is used to encrypt the PLAINTEXT_3A, a concatenation
+      of ID_CRED_PSK and CIPHERTEXT_3B, in message_3.
 
-   *  TH_3 = H( TH_2, PLAINTEXT_2 )
+   *  TH_3 = H( TH_2, PLAINTEXT_2B )
+
+   *  plaintext_length_3 is the length of PLAINTEXT_3A in message_3
 
    Additionally, the definition of the transcript hash TH_4 is modified
    as:
@@ -411,13 +414,13 @@ Table of Contents
 
 5.2.2.  Responder Composition of Message 2
 
-   CIPHERTEXT_2 is calculated with a binary additive stream cipher,
+   CIPHERTEXT_2B is calculated with a binary additive stream cipher,
    using a keystream generated with EDHOC_Expand, and the following
    plaintext:
 
    *  PLAINTEXT_2B = ( C_R, ? EAD_2 )
 
-   *  CIPHERTEXT_2 = PLAINTEXT_2B XOR KEYSTREAM_2
+   *  CIPHERTEXT_2B = PLAINTEXT_2B XOR KEYSTREAM_2
 
    Contrary to [RFC9528], ID_CRED_R, MAC_2, and Signature_or_MAC_2 are
    not used.  C_R, EAD_2, and KEYSTREAM_2 are defined in Section 5.3.2
@@ -427,12 +430,11 @@ Table of Contents
 
    Upon receiving message_2, the Initiator processes it as follows:
 
-   *  It computes KEYSTREAM_2, following Section 5.3.2 of [RFC9528].
-      The length of the keystream matches the expected length of
-      PLAINTEXT_2B.
+   *  It computes KEYSTREAM_2, following Section 5.3.2 of [RFC9528],
+      where plaintext_length is the length of PLAINTEXT_2B.
 
-   *  It decrypts CIPHERTEXT_2 using binary XOR, i.e., PLAINTEXT_2B =
-      CIPHERTEXT_2 XOR KEYSTREAM_2
+   *  It decrypts CIPHERTEXT_2B using binary XOR, i.e., PLAINTEXT_2B =
+      CIPHERTEXT_2B XOR KEYSTREAM_2
 
    Compared to Section 5.3.3 of [RFC9528], ID_CRED_R is not made
    available to the application in step 4, and steps 5 and 6 are skipped
@@ -445,7 +447,7 @@ Table of Contents
 
 5.3.2.  Initiator Composition of Message 3
 
-   *  CIPHERTEXT_3 is calculated with a binary additive stream cipher,
+   *  CIPHERTEXT_3A is calculated with a binary additive stream cipher,
       using a keystream generated with EDHOC_Expand, and the following
       plaintext:
 
@@ -461,7 +463,7 @@ Table of Contents
       -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length is
          the length of PLAINTEXT_3A.
 
-      -  CIPHERTEXT_3 = PLAINTEXT_3A XOR KEYSTREAM_3
+      -  CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3
 
    *  CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as
       defined in Section 5.2 and Section 5.3 of [RFC9528], with the
@@ -499,7 +501,7 @@ Table of Contents
 
    *  Generate KEYSTREAM_3 with the same method the initiator used.
 
-   *  Decrypt CIPHERTEXT_3 using binary XOR with KEYSTREAM_3, resulting
+   *  Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3, resulting
       in PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ).
 
    *  Validate or match ID_CRED_PSK to identify which PSK to use.  If
