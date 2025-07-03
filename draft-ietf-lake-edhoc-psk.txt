@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 3 January 2026                                J. Preuß Mattsson
+Expires: 4 January 2026                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                             2 July 2025
+                                                             3 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2026.
+   This Internet-Draft will expire on 4 January 2026.
 
 Copyright Notice
 
@@ -347,12 +347,24 @@ Table of Contents
 
    The pseudorandom keys (PRKs) used for the PSK authentication method
    in EDHOC are derived using EDHOC_Extract, as done in [RFC9528].
+   EDHOC_Extract allows to derive fixed-length uniformly pseudorandom
+   keys (PRKs) from ECDH shared secrets.
 
    PRK  = EDHOC_Extract( salt, IKM )
 
    where salt and input keying material (IKM) are defined for each key.
    The definition of EDHOC_Extract depends on the EDHOC hash algorithm
    selected in the cipher suite, see Section 4.1.1 of [RFC9528].
+
+   To maintain a uniform key schedule across the different EDHOC
+   authentication methods, the same pseudorandom key notation (PRK_2e,
+   PRK_3e2m, and PRK_4e3m) is retained.  In the case of EDHOC with PSK-
+   based authentication, no MACs are used.  Consequently, while the
+   naming convention suggests involvement in both encryption and MAC
+   operations, only the parts related to encryption (2e, 3e, and 4e) are
+   relevant.  The index notation does not fully reflect the functional
+   role of the keys in this method but is preserved for consistency with
+   other EDHOC authentication variants
 
    The transcript hash TH_2 = H( G_Y, H(message_1) ) is defined as in
    Section 5.3.2 of [RFC9528], the others are modified as specified
@@ -387,7 +399,7 @@ Table of Contents
 
    *  KEYSTREAM_2A is used to encrypt PLAINTEXT_2A in message_2.
 
-   *  TH_3 = H( TH_2, PLAINTEXT_2B ).
+   *  TH_3 = H( TH_2, PLAINTEXT_2A ).
 
    *  plaintext_length_2a is the length of PLAINTEXT_2A in message_2.
 
@@ -853,7 +865,7 @@ Appendix A.  CDDL Definitions
      G_Y_CIPHERTEXT_2 : bstr,
    )
 
-   PLAINTEXT_2B = (
+   PLAINTEXT_2A = (
      C_R : bstr / -24..23,
      ? EAD_2,
    )
@@ -997,9 +1009,9 @@ B.2.  message_2
 
    EAD_2 (CBOR Sequence) (0 bytes)
 
-   The Responder constructs PLAINTEXT_2B:
+   The Responder constructs PLAINTEXT_2A:
 
-   PLAINTEXT_2B (CBOR Sequence) (1 byte)
+   PLAINTEXT_2A (CBOR Sequence) (1 byte)
    05
 
    The Responder computes KEYSTREAM_2 as defined in Section 4.1.2 of
@@ -1008,7 +1020,7 @@ B.2.  message_2
    KEYSTREAM_2 (CBOR Sequence) (1 byte)
    EC
 
-   The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2B
+   The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A
    and KEYSTREAM_2:
 
    CIPHERTEXT_2B (CBOR Sequence) (1 byte)
@@ -1041,7 +1053,7 @@ B.3.  message_3
    The transcript hash TH_3 is calculated using the EDHOC hash
    algorithm:
 
-   TH_3 = H( TH_2, PLAINTEXT_2 )
+   TH_3 = H( TH_2, PLAINTEXT_2A )
 
    TH_3 (CBOR Data Item) (32 bytes)
    BC 3B C6 10 D7 25 16 CD 70 3E F7 4C 3A 98 20 17 E5 5D 70 D2
