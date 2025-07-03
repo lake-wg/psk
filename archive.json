@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-29T01:15:59.944444+00:00",
+  "timestamp": "2025-07-03T01:08:33.901473+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -460,7 +460,7 @@
       "labels": [],
       "body": "The current specification is written as a diff against RFC 9528. This is good from an economy of specification and may be good for a person who is familiar with RFC 9528, which anyway is assumed. \n\nHowever, it is difficult to read when you need to have RFC 9528 open on the side, and it isn't clear which parts of RFC 9528 that are not used. Moreover, since some terms are given a different definition and/or a different interpretation, there is risk for both confusion and potential errors.\n\nFor readability, some parts may not be repeated. This has the drawback when there is a need for update.\n\nWe should not have contradicting CDDL definitions between this spec and RFC 9528.\n\nAlso, the labeling of the parameters becomes confusing when the original meaning is lost, e.g. the \"2m\" part of PRK_3e2m does mean anything when there is no MAC in message 2. \n\nI'm in favor of defining new terms that makes sense for the new protocol, but also indicate what parts carry over directly from RFC 9528. Some overall refactoring is needed to carry out this. \n\n",
       "createdAt": "2025-02-11T10:53:32Z",
-      "updatedAt": "2025-06-26T09:33:43Z",
+      "updatedAt": "2025-07-02T11:18:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -469,6 +469,55 @@
           "body": "\nI have added more explanations in the message formatting rather than just referring to RFC9528",
           "createdAt": "2025-06-26T09:33:43Z",
           "updatedAt": "2025-06-26T09:33:43Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Good start, but we are not there yet. If you go through each term you'll find some disconnect with RFC 9528.\n\n> TH_3 = H( TH_2, PLAINTEXT_2 )\n\nThere is no PLAINTEXT_2 in this draft\n\n> KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 )\n\nplaintext_length_3 is not mentioned elsewhere in this draft, only plaintext_length. \n\nAnd if we inherit the definitions from RFC 9528, then plaintext_length refers to the parameter used to derive KEYSTREAM_2. But here it is used to derive KEYSTREAM_3.\n\nInstead of using the term \"plaintext_length\" when describing the calculation of KEYSTREAM_2 it is stated: \"The length of the keystream matches the expected length of PLAINTEXT_2B.\" Better copy and adapt the text from RFC 9528: \"plaintext_length is the length of PLAINTEXT_2B\".\n\nI also noted (which I may be guilty of)\n>  * KEYSTREAM_3 is used to encrypt the ID_CRED_PSK in message_3.\n\nbut this is only a partial description of what is encrypted. Either we remove this bullet or improve / reference its later definition.\n\nI have not made a side-by-side comparison and may have missed other mismatches or reformulations between this draft and RFC 9528.\n\nMorover, some terminology is not very intuitive in the draft:\nPLAINTEXT_2B  -->  CIPHERTEXT_2\nPLAINTEXT_3A  -->  CIPHERTEXT_3\nPLAINTEXT_3B  -->  CIPHERTEXT_3B\n\nHow about, for example:\nPLAINTEXT_2B  -->  CIPHERTEXT_2B\nPLAINTEXT_3A  -->  CIPHERTEXT_3A\nPLAINTEXT_3B  -->  CIPHERTEXT_3B\n",
+          "createdAt": "2025-07-02T09:02:18Z",
+          "updatedAt": "2025-07-02T09:03:13Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I made the following changes:\n1.  TH_3 = H( TH_2, PLAINTEXT_2 ) --> TH_3 = H( TH_2, PLAINTEXT_2B )\n2. KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 ) --> added plaintext_length_3 is the length of PLAINTEXT_3A in message_3\n3. Modified: plaintext_length is the length of PLAINTEXT_2B.\n4. And I agree with the newer definition, it is indeed a bit more clear.",
+          "createdAt": "2025-07-02T09:21:52Z",
+          "updatedAt": "2025-07-02T09:21:52Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As for the PRK, I agree it may be better to redefine them. I can do that. It would be as follows:\n1. PRK_2e --> same\n2. PRK_3e2m --> PRK_3e\n3. PRK_4e3m --> PRK_4e\n4. SALT_3e2m --> SALT_3e\n5. SALT_4e3m --> SALT_4e\n6. KESYTREAM_2 --> KESYTREAM_2B??\n7. KESYTREAM_3 --> KESYTREAM_3A??",
+          "createdAt": "2025-07-02T09:24:23Z",
+          "updatedAt": "2025-07-02T09:24:23Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, maybe. Then you may get plaintext_length_2B and plaintext_length_3B as well ... \n\nHow much references to RFC 9528 do we have left then (in terms of definitions and equations)? \n\nHow much of the processing can we still refer to RFC 9528, even if all / most definitions are made in this draft? \n\nIt is a delicate balance before you need to repeat the steps with the new terminology. Without having tried I can't say if it is possible.",
+          "createdAt": "2025-07-02T11:02:20Z",
+          "updatedAt": "2025-07-02T11:02:20Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Also remember definition of PRK_out, and K_4, IV_4 if you change the namesof PRK_4e3m ...\n\nPerhaps need to stop before you rename PRKs ... ",
+          "createdAt": "2025-07-02T11:06:09Z",
+          "updatedAt": "2025-07-02T11:06:09Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "And if we go for terminology revolution, then consider 2B --> 2A. In that case all things with label A in this draft is encrypted with XOR, which also simplifies the understanding. \n\nCIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2  ( or KEYSTREAM_2A)\nCIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3  ( or KEYSTREAM_3A)",
+          "createdAt": "2025-07-02T11:16:58Z",
+          "updatedAt": "2025-07-02T11:16:58Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I made the following changes:\n> \n>     1. TH_3 = H( TH_2, PLAINTEXT_2 ) --> TH_3 = H( TH_2, PLAINTEXT_2B )\n> \n>     2. KEYSTREAM_3 = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3 ) --> added plaintext_length_3 is the length of PLAINTEXT_3A in message_3\n> \n>     3. Modified: plaintext_length is the length of PLAINTEXT_2B.\n> \n>     4. And I agree with the newer definition, it is indeed a bit more clear.\n\nThere is still one plaintext_length --> plaintext_length_3 change missing",
+          "createdAt": "2025-07-02T11:18:26Z",
+          "updatedAt": "2025-07-02T11:18:26Z"
         }
       ]
     },
@@ -580,7 +629,7 @@
       "id": "I_kwDONwrUhc6qYMfM",
       "title": "CRED_PSK, sub field, and key derivation",
       "url": "https://github.com/lake-wg/psk/issues/15",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -591,8 +640,8 @@
       ],
       "body": "```\n{                                               /CCS/\n   2 : \"mydotbot\",                               /sub/\n   8 : {                                         /cnf/\n     1 : {                                       /COSE_Key/\n        1 : 4,                                   /kty/\n        2 : h'0f',                               /kid/\n       -1 : h'50930FF462A77A3540CF546325DEA214'  /k/\n     }\n   }\n }\n```\n\n- sub identifies I or R, not the PSK.\n\n- sub cannot be included in \n`PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )\n` ",
       "createdAt": "2025-02-17T17:38:29Z",
-      "updatedAt": "2025-06-27T07:49:46Z",
-      "closedAt": "2025-06-27T07:49:46Z",
+      "updatedAt": "2025-07-01T07:34:18Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "ElsaLopez133",
