@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-03T01:08:33.901473+00:00",
+  "timestamp": "2025-07-06T01:14:47.385833+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -640,7 +640,7 @@
       ],
       "body": "```\n{                                               /CCS/\n   2 : \"mydotbot\",                               /sub/\n   8 : {                                         /cnf/\n     1 : {                                       /COSE_Key/\n        1 : 4,                                   /kty/\n        2 : h'0f',                               /kid/\n       -1 : h'50930FF462A77A3540CF546325DEA214'  /k/\n     }\n   }\n }\n```\n\n- sub identifies I or R, not the PSK.\n\n- sub cannot be included in \n`PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )\n` ",
       "createdAt": "2025-02-17T17:38:29Z",
-      "updatedAt": "2025-07-01T07:34:18Z",
+      "updatedAt": "2025-07-03T09:00:28Z",
       "closedAt": null,
       "comments": [
         {
@@ -649,6 +649,13 @@
           "body": "Added an explanation in the Credential's section",
           "createdAt": "2025-06-27T07:49:46Z",
           "updatedAt": "2025-06-27T07:49:46Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have a question regarding this sub field. So, if I understand correctly, the sub field allows to bind the authentication credential to some identity. This means that it would be different for the Initiator and the Responder, and they both need to know each other's in advance (?). \n\nHowever, the CRED_PSK is used in the derivation of PRK_4e3m, and this must be the same for both peers, which means that the sub field MUST not be included (how to do that, in terms of implementation, I do not see this part from the practical point of view). \nIn addition, CRED_PSK is also used in TH_4. And this needs also to be the same for both, since it is used in PRK_out, K_4 and IV_4, so it should not be used there either (?)",
+          "createdAt": "2025-07-03T08:59:38Z",
+          "updatedAt": "2025-07-03T09:00:28Z"
         }
       ]
     },
