@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 4 January 2026                                J. Preuß Mattsson
+Expires: 8 January 2026                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                             3 July 2025
+                                                             7 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2026.
+   This Internet-Draft will expire on 8 January 2026.
 
 Copyright Notice
 
@@ -159,15 +159,16 @@ Table of Contents
    overhead compared to public-key authentication.  In this case, the
    PSK (resumption PSK) is provisioned after the establishment of a
    previous EDHOC session by using EDHOC_Exporter (resumption PSK).
-
    Therefore, the external PSK is supposed to be a long-term credential
    while the resumption PSK is a session key.
 
    Section 3 provides an overview of the PSK method flow and
    credentials.  Section 4 outlines the changes to key derivation
    compared to [RFC9528].  Section 5 details message formatting and
-   processing, and Section 6 discusses security considerations.  How to
-   derive keys for resumption is described in Section 7.
+   processing, and Section 6 describes the usage of PSK for resumption.
+   Section 7 defines the use of EDHOC-PSK with OSCORE.  Security
+   considerations are described in Section 8, and Section 9 outlines the
+   IANA considerations.
 
 2.  Conventions and Definitions
 
@@ -474,7 +475,7 @@ Table of Contents
          o  If the length of PLAINTEXT_3A exceeds the output of
             EDHOC_KDF, then Appendix G of [RFC9528] applies.
 
-      -  Compute KEYSTREAM_3 as in Section 4, where plaintext_length_3a
+      -  Compute KEYSTREAM_3A as in Section 4, where plaintext_length_3a
          is the length of PLAINTEXT_3A.
 
       -  CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A
