@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-06T01:14:47.385833+00:00",
+  "timestamp": "2025-07-08T01:09:16.304234+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -836,15 +836,15 @@
       "id": "I_kwDONwrUhc68VTBV",
       "title": "Using the EDHOC + OSCORE request (RFC 9668)",
       "url": "https://github.com/lake-wg/psk/issues/25",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "marco-tiloca-sics",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "If EDHOC PSK still allows the Initiator to compute PRK_out before sending EDHOC message_3, then it should be possible to use the EDHOC + OSCORE request specified in RFC 9668 [1] here too.\n\nIf so, that can be explicitly mentioned in this document. Fundamentally, it should be just like in RFC 9668, but of course with EDHOC message_3 consistent with the present EDHOC session using PSK-based authentication.\n\n[1] https://www.ietf.org/rfc/rfc9668.html#section-3",
       "createdAt": "2025-06-19T09:49:52Z",
-      "updatedAt": "2025-06-27T14:45:24Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-07T08:32:31Z",
+      "closedAt": "2025-07-07T08:32:31Z",
       "comments": [
         {
           "author": "ElsaLopez133",
