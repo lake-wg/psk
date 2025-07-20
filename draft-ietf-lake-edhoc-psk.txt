@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 8 January 2026                                J. Preuß Mattsson
+Expires: 21 January 2026                               J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                             7 July 2025
+                                                            20 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2026.
+   This Internet-Draft will expire on 21 January 2026.
 
 Copyright Notice
 
@@ -281,7 +281,7 @@ Table of Contents
       cause mismatches when comparing identifiers such as hash values or
       'kid' references.
 
-   *  ID_CRED_PSK SHOULD uniquely identify the correspoding CRED_PSK to
+   *  ID_CRED_PSK SHOULD uniquely identify the corresponding CRED_PSK to
       avoid ambiguity.  In cases where ID_CRED_PSK is a reference to a
       key identifier, care must be taken to ensure that 'kid' is
       globally unique for the PSK.
@@ -534,7 +534,7 @@ Table of Contents
 
    If verification fails, this indicates either the Initiator does not
    know the correct PSK, or the message was tampered with.  Contrary, if
-   verification succeeds, the Responder conlcudes that the Initiator
+   verification succeeds, the Responder concludes that the Initiator
    knows the correct PSK, has correctly derived the transcript hash TH_3
    and is actively participating in the protocol.
 
@@ -640,7 +640,7 @@ Table of Contents
 
 7.  EDHOC PSK and OSCORE
 
-   When PSK authenitcation is used and the Initiator is able to derive
+   When PSK authentication is used and the Initiator is able to derive
    PRK_out before sending message_3, then the optimization described in
    Section 3 of [RFC9668] applies.  In this scenario, the Initiator MAY
    concatenate EDHOC message_3 and the first OSCORE request in a single
