@@ -839,6 +839,7 @@ message_4 (CBOR Sequence) (9 bytes)
 RFC Editor: Please remove this appendix.
 
 * From -04 to -05
+
   * Fixed misbinding attacks and resumption
   * Updated privacy considerations
   * Editorial changes
