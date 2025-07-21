@@ -355,7 +355,7 @@ where:
 
   * id_cred_psk_length is by default 2.
 
-A peer that has successfully completed an EDHOC session, regardless of the used authentication method, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
+A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
 To guarantee that both peers share the same resumption key, when a session is run using rPSK_i as a resumption key:
 
   * The Initiator can delete rPSK_i after having successfully verified EDHOC message_4.
@@ -377,9 +377,7 @@ When using a resumption PSK derived from a previous EDHOC exchange:
 
 When using resumption PSKs:
 
-  * The same ID_CRED_PSK is reused each time EDHOC is executed with a specific resumption PSK.
-  * To prevent long-term tracking, implementations SHOULD periodically initiate a full EDHOC exchange to generate a new resumption PSK and corresponding ID_CRED_PSK. Alternatively, as stated in {{Appendix H of RFC9528}}, EDHOC_KeyUpdate can be used to derive a new PRK_out, and consequently a new PSK and ID_CRED_PSK for session resumption.
-
+  * During normal operation, the same same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. This is seen as a minor privacy problem. EDHOC-PSK provides much stronger privacy properties than many other popular protocols with PSK authentication.
 
 ## Security Considerations for Resumption
 
@@ -839,6 +837,10 @@ message_4 (CBOR Sequence) (9 bytes)
 # Change Log
 
 RFC Editor: Please remove this appendix.
+
+* From -04 to -05
+  * Fixed misbinding attacks and resumption
+  * Editorial changes
 
 * From -03 to -04
 
