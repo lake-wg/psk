@@ -941,8 +941,9 @@ B.1.  message_1
    The Initiator constructs message_1:
 
    message_1 (CBOR Sequence) (37 bytes)
-   04 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
-   2D 95 72 49 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB 0A
+   04 02 58 20 7e c6 81 02 94 06 02 aa b5 48 53 9b
+   f4 2a 35 99 2d 95 72 49 eb 7f 18 88 40 6d 17 8a
+   04 c9 12 db 0a
 
 B.2.  message_2
 
@@ -964,7 +965,7 @@ B.2.  message_2
 
    The Responder selects its connection identifier C_R to be the byte
    string 0x5, which is encoded as 0x5 since it is represented by the
-   1-byte CBOR int -10:
+   1-byte CBOR int 05:
 
    Connection identifier chosen by the Responder
    C_R (CBOR Data Item) (1 byte)
@@ -978,8 +979,8 @@ B.2.  message_2
    21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 
    TH_2 (CBOR Data Item) (32 bytes)
-   5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D 01 64 78 C4
-   BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+   5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
+   01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
 
    PRK_2e is specified in Section 4.1.2 of [RFC9528].  To compute it,
    the Elliptic Curve Diffie-Hellman (ECDH) shared secret G_XY is
@@ -992,14 +993,14 @@ B.2.  message_2
    Then, PRK_2e is calculated as defined in Section 4.1.2 of [RFC9528]
 
    PRK_2e (Raw Value) (32 bytes)
-   D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
-   C4 36 20 50 99 48 A9 FD 47 FB D9 29
+   D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
+   1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
 
    Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.
 
    PRK_3e2m (Raw Value) (32 bytes)
-   D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
-   C4 36 20 50 99 48 A9 FD 47 FB D9 29
+   D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
+   1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
 
    No external authorization data:
 
@@ -1026,25 +1027,25 @@ B.2.  message_2
    [RFC9528]:
 
    message_2 (CBOR Sequence) (35 bytes)
-   58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4
-   E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 E9
+   58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42
+   9D 5A D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9
+   7D 83 E9
 
 B.3.  message_3
 
    The Initiator computes PRK_4e3m, as described in Section 4, using
-   SALT_4e3m and CRED_PSK:
+   SALT_4e3m and PSK:
 
    SALT_4e3m (Raw Value) (32 bytes)
-   A7 C6 8F ED 7C F9 BB BC A3 83 F0 2B A4 27 45 51 EE DD 07 4A
-   1C F3 DB ED 4A 41 1F 33 1B 3A AA 59
+   ED E0 76 12 14 83 19 EB 72 59 52 71 2A 54 2C 20
+   97 61 0A 13 9C 4A 14 1C 8E C5 7A 5F 62 E5 E9 DD
 
-   CRED_PSK (Raw Value) (38 bytes)
-   A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
-   20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
+   PSK (Raw Value) (16 bytes)
+   50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
 
    PRK_4e3m (Raw Value) (32 bytes)
-   6B 99 69 23 A8 81 B6 6E C4 05 AD 03 53 94 1A FB 2C DA A5 E2
-   AC 65 1D A0 57 9A 08 C7 86 50 2A 66
+   B3 65 6C 57 B6 14 4E 9C A3 72 08 81 D8 AF 69 53
+   C4 69 17 A8 5D D8 92 E6 E6 13 65 4F FC 4F A8 0B
 
    The transcript hash TH_3 is calculated using the EDHOC hash
    algorithm:
@@ -1052,8 +1053,8 @@ B.3.  message_3
    TH_3 = H( TH_2, PLAINTEXT_2A )
 
    TH_3 (CBOR Data Item) (32 bytes)
-   BC 3B C6 10 D7 25 16 CD 70 3E F7 4C 3A 98 20 17 E5 5D 70 D2
-   7F 57 01 E8 91 BD 35 11 9E B9 79 88
+   38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
+   74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 
    No external authorization data:
 
@@ -1065,58 +1066,70 @@ B.3.  message_3
    PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 
    It then computes CIPHERTEXT_3B as defined in Section 5.3.2.  It uses
-   ID_CRED_PSK, CRED_PSK and TH_3 as external_aad:
+   ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:
 
    ID_CRED_PSK (CBOR Sequence) (1 byte)
    10
 
-   CRED_PSK (Raw Value) (38 bytes)
-   A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
-   20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
+   CRED_I (Raw Value) (38 bytes)
+   A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
+   01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+   CF 54 63 25 DE A2 14
+
+   CRED_R (Raw Value) (38 bytes)
+   A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
+   01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+   CF 54 63 25 DE A2 14
 
    TH_3 (CBOR Data Item) (32 bytes)
-   A5 0B 64 8C E2 A6 23 BF C9 72 15 B2 6C 7C EE BD C4 4F 6F 79
-   EF AA BE 27 E8 A0 2A 25 C0 C4 93 CC
+   38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
+   74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 
    The initiator computes K_3 and IV_3
 
    K_3 (CBOR Sequence) (16 bytes)
-   D8 57 B9 46 46 34 25 35 3C 3C DE BD CB 90 CB 26
+   A4 A5 35 4E 1F 79 EC 99 D8 24 35 45 7F A8 FA 0C
 
    IV_3 (CBOR Sequence) (13 bytes)
-   A1 F6 BE AF 84 64 83 2A 8D 02 C8 5F 04
+   18 09 36 AD 4C 31 9A E8 D5 DC C7 E0 09
 
    It then computes CIPHERTEXT_3B:
 
    CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-   48 D0 A4 37 3C 49 C1 76 9B
+   48 11 D0 49 1F C8 BB 2E 16 0A
 
    The Initiator computes KEYSTREAM_3 as defined in Section 4:
 
    KEYSTREAM_3 (CBOR Sequence) ()
-   D0 1B 7A AD 4C AB BD 14 89 50
+   A3 60 2B 68 19 A4 84 40 68 7E 00
 
    It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:
 
    PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-   10 48 D0 A4 37 3C 49 C1 76 9B
+   10 48 11 D0 49 1F C8 BB 2E 16 0A
 
    It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:
 
    CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-   C2 47 AA 2F 94 B8 F9 41 21 C5
+   B3 28 3A B8 50 BB 4C FB 46 68 00
 
    The Initiator computes message_3 as defined in Section 5.3.2.:
 
    message_3 (CBOR Sequence) (11 bytes)
-   4A C2 47 AA 2F 94 B8 F9 41 21 C5
+   4A B3 28 3A B8 50 BB 4C FB 46 68
 
    The transcript hash TH_4 is calculated using the EDHOC hash
-   algorithm: TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
+   algorithm: TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
    TH_4 (CBOR Data Item) (32 bytes)
-   E5 67 45 39 75 66 CF F9 A6 93 DF 29 8D A4 F9 9E 1F 92 57 54
-   44 6B 5B 11 09 61 59 E5 C4 FC 0B FD
+   11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
+   0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+
+   After sending message_3, the Initiator can compute PRK_out
+
+   PRK_out (Raw  value) (32 bytes)
+   B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
+   D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 
 B.4.  message_4
 
@@ -1131,15 +1144,20 @@ B.4.  message_4
    The Responder computes K_4 and IV_4
 
    K_4 (CBOR Sequence) (16 bytes)
-   BC 34 CE B4 E3 58 36 06 A0 81 6A 53 A5 0A E1 07
+   81 C8 1A 4F DC 80 AE 09 99 59 98 61 CA 55 0A B3
 
    IV_4 (CBOR Sequence) (13 bytes)
-   12 2B 58 9D EB 77 81 A1 A5 9D D4 42 7C
+   BF 14 F7 95 6D 54 49 99 B0 9A 6A CB 0D
 
    The Responder computes message_4:
 
-   message_4 (CBOR Sequence) (9 bytes)
-   48 69 C1 F1 2E 13 44 A3 93
+   48 AA CC FA 23 A4 0F 4A B5
+
+   The Responder then computes PRK_out:
+
+   PRK_out (Raw  value) (32 bytes)
+   B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
+   D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 
 Appendix C.  Change Log
 
@@ -1152,6 +1170,8 @@ Appendix C.  Change Log
       -  Updated privacy considerations
 
       -  Editorial changes
+
+      -  Fixed test vectors
 
    *  From -03 to -04
 
