@@ -599,7 +599,7 @@ ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4 E1 C4
 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83
 ~~~~~~~~~~~~
 
-The Responder selects its connection identifier C_R to be the byte string 0x5, which is encoded as 0x5 since it is represented by the 1-byte CBOR int 05:
+The Responder selects its connection identifier C_R to be the byte string 0x05, which is encoded as 0x05 since it is represented by the 1-byte CBOR int 05:
 
 ~~~~~~~~~~~~
 Connection identifier chosen by the Responder
