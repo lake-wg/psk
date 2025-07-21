@@ -1794,7 +1794,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.2.1">id_cred_psk_length is by default 2.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the used authentication method, <span class="bcp14">MUST</span> generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
+<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, <span class="bcp14">MUST</span> generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
 To guarantee that both peers share the same resumption key, when a session is run using rPSK_i as a resumption key:<a href="#section-6-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-6.1">
@@ -1833,10 +1833,7 @@ That is, upon receiving EDHOC message_3, the Responder knows for sure that the o
 <p id="section-6.2-1">When using resumption PSKs:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1">The same ID_CRED_PSK is reused each time EDHOC is executed with a specific resumption PSK.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.2-2.2">
-            <p id="section-6.2-2.2.1">To prevent long-term tracking, implementations <span class="bcp14">SHOULD</span> periodically initiate a full EDHOC exchange to generate a new resumption PSK and corresponding ID_CRED_PSK. Alternatively, as stated in <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-H" class="relref">Appendix H</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_KeyUpdate can be used to derive a new PRK_out, and consequently a new PSK and ID_CRED_PSK for session resumption.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.1.1">During normal operation, the same same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. This is seen as a minor privacy problem. EDHOC-PSK provides much stronger privacy properties than many other popular protocols with PSK authentication.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -2487,10 +2484,10 @@ message_4 (CBOR Sequence) (9 bytes)
 <p id="appendix-C-1">RFC Editor: Please remove this appendix.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.1">
-          <p id="appendix-C-2.1.1">From -03 to -04<a href="#appendix-C-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.1.1">From -04 to -05<a href="#appendix-C-2.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.1.2.1">
-              <p id="appendix-C-2.1.2.1.1">Test Vectors<a href="#appendix-C-2.1.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.1.2.1.1">Fixed misbinding attacks and resumption<a href="#appendix-C-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-C-2.1.2.2">
               <p id="appendix-C-2.1.2.2.1">Editorial changes<a href="#appendix-C-2.1.2.2.1" class="pilcrow">¶</a></p>
@@ -2498,38 +2495,49 @@ message_4 (CBOR Sequence) (9 bytes)
           </ul>
 </li>
         <li class="normal" id="appendix-C-2.2">
-          <p id="appendix-C-2.2.1">From -02 to -03<a href="#appendix-C-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.2.1">From -03 to -04<a href="#appendix-C-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.2.2.1">
-              <p id="appendix-C-2.2.2.1.1">Updated abstract and Introduction<a href="#appendix-C-2.2.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.2.2.1.1">Test Vectors<a href="#appendix-C-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-C-2.2.2.2">
-              <p id="appendix-C-2.2.2.2.1">Changed message_3 to hide the identity length from passive attackers<a href="#appendix-C-2.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-C-2.2.2.3">
-              <p id="appendix-C-2.2.2.3.1">CDDL Definitions<a href="#appendix-C-2.2.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-C-2.2.2.4">
-              <p id="appendix-C-2.2.2.4.1">Security considerations of independence of Session Keys<a href="#appendix-C-2.2.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-C-2.2.2.5">
-              <p id="appendix-C-2.2.2.5.1">Editorial changes<a href="#appendix-C-2.2.2.5.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.2.2.2.1">Editorial changes<a href="#appendix-C-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-C-2.3">
-          <p id="appendix-C-2.3.1">From -01 to -02<a href="#appendix-C-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.3.1">From -02 to -03<a href="#appendix-C-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.3.2.1">
-              <p id="appendix-C-2.3.2.1.1">Changes to message_3 formatting and processing<a href="#appendix-C-2.3.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.3.2.1.1">Updated abstract and Introduction<a href="#appendix-C-2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-C-2.3.2.2">
+              <p id="appendix-C-2.3.2.2.1">Changed message_3 to hide the identity length from passive attackers<a href="#appendix-C-2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-C-2.3.2.3">
+              <p id="appendix-C-2.3.2.3.1">CDDL Definitions<a href="#appendix-C-2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-C-2.3.2.4">
+              <p id="appendix-C-2.3.2.4.1">Security considerations of independence of Session Keys<a href="#appendix-C-2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-C-2.3.2.5">
+              <p id="appendix-C-2.3.2.5.1">Editorial changes<a href="#appendix-C-2.3.2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-C-2.4">
-          <p id="appendix-C-2.4.1">From -00 to -01<a href="#appendix-C-2.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.4.1">From -01 to -02<a href="#appendix-C-2.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.4.2.1">
-              <p id="appendix-C-2.4.2.1.1">Editorial changes and corrections<a href="#appendix-C-2.4.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-C-2.4.2.1.1">Changes to message_3 formatting and processing<a href="#appendix-C-2.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="appendix-C-2.5">
+          <p id="appendix-C-2.5.1">From -00 to -01<a href="#appendix-C-2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-C-2.5.2.1">
+              <p id="appendix-C-2.5.2.1.1">Editorial changes and corrections<a href="#appendix-C-2.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
