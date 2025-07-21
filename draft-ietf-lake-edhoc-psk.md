@@ -840,6 +840,7 @@ RFC Editor: Please remove this appendix.
 
 * From -04 to -05
   * Fixed misbinding attacks and resumption
+  * Updated privacy considerations
   * Editorial changes
 
 * From -03 to -04
