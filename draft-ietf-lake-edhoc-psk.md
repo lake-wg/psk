@@ -679,8 +679,8 @@ The Responder constructs message_2 as defined in {{Section 5.3.1 of RFC9528}}:
 
 ~~~~~~~~~~~~
 message_2 (CBOR Sequence) (35 bytes)
-58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42  
-9D 5A D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9  
+58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42
+9D 5A D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9
 7D 83 E9
 ~~~~~~~~~~~~
 
@@ -690,7 +690,7 @@ The Initiator computes PRK_4e3m, as described in Section 4, using SALT_4e3m and 
 
 ~~~~~~~~~~~~
 SALT_4e3m (Raw Value) (32 bytes)
-ED E0 76 12 14 83 19 EB 72 59 52 71 2A 54 2C 20  
+ED E0 76 12 14 83 19 EB 72 59 52 71 2A 54 2C 20
 97 61 0A 13 9C 4A 14 1C 8E C5 7A 5F 62 E5 E9 DD
 ~~~~~~~~~~~~
 
@@ -701,7 +701,7 @@ PSK (Raw Value) (16 bytes)
 
 ~~~~~~~~~~~~
 PRK_4e3m (Raw Value) (32 bytes)
-B3 65 6C 57 B6 14 4E 9C A3 72 08 81 D8 AF 69 53  
+B3 65 6C 57 B6 14 4E 9C A3 72 08 81 D8 AF 69 53
 C4 69 17 A8 5D D8 92 E6 E6 13 65 4F FC 4F A8 0B
 ~~~~~~~~~~~~
 
@@ -711,7 +711,7 @@ TH_3 = H( TH_2, PLAINTEXT_2A )
 
 ~~~~~~~~~~~~
 TH_3 (CBOR Data Item) (32 bytes)
-38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32  
+38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
@@ -736,21 +736,21 @@ ID_CRED_PSK (CBOR Sequence) (1 byte)
 
 ~~~~~~~~~~~~
 CRED_I (Raw Value) (38 bytes)
-A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3  
-01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40  
+A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
 CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 CRED_R (Raw Value) (38 bytes)
-A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3  
-01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40  
+A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
 CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 TH_3 (CBOR Data Item) (32 bytes)
-38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32  
+38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
@@ -806,7 +806,7 @@ TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
 ~~~~~~~~~~~~
 TH_4 (CBOR Data Item) (32 bytes)
-11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E  
+11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 ~~~~~~~~~~~~
 
@@ -814,7 +814,7 @@ After sending message_3, the Initiator can compute PRK_out
 
 ~~~~~~~~~~~~
 PRK_out (Raw  value) (32 bytes)
-B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA  
+B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
 D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 ~~~~~~~~~~~~
 
@@ -854,7 +854,7 @@ The Responder then computes PRK_out:
 
 ~~~~~~~~~~~~
 PRK_out (Raw  value) (32 bytes)
-B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA  
+B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
 D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 ~~~~~~~~~~~~
 
