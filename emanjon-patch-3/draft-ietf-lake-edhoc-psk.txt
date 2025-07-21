@@ -127,9 +127,10 @@ Table of Contents
 
 1.  Introduction
 
-   method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key
-   exchange protocol [RFC9528].  The PSK method balances the complexity
-   of credential distribution with computational efficiency.  While
+   This document defines a Pre-Shared Key (PSK) authentication method
+   for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange
+   protocol [RFC9528].  The PSK method balances the complexity of
+   credential distribution with computational efficiency.  While
    symmetrical key distribution is more complex than asymmetrical
    approaches, PSK authentication offers greater computational
    efficiency compared to the methods outlined in [RFC9528].  The PSK
