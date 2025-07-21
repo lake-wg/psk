@@ -117,7 +117,7 @@ It is RECOMMENDED that ID_CRED_PSK uniquely identifies the corresponding PSK, si
 
 ### CRED_I and CRED_R
 
-CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and posteriorly decrypt protected messages.
+CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.
 
 A common representation of CRED_I and CRED_R when using an external PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}} whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_I and CRED_R associated with the same PSK would be:
 
