@@ -1379,7 +1379,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
           <h4 id="name-cred_i-and-cred_r">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-cred_i-and-cred_r" class="section-name selfRef">CRED_I and CRED_R</a>
           </h4>
-<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and posteriorly decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-2">A common representation of CRED_I and CRED_R when using an external PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_I and CRED_R associated with the same PSK would be:<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1.2-3">
 <pre>
