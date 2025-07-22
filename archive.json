@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T01:09:16.304234+00:00",
+  "timestamp": "2025-07-22T01:12:21.638114+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -640,7 +640,7 @@
       ],
       "body": "```\n{                                               /CCS/\n   2 : \"mydotbot\",                               /sub/\n   8 : {                                         /cnf/\n     1 : {                                       /COSE_Key/\n        1 : 4,                                   /kty/\n        2 : h'0f',                               /kid/\n       -1 : h'50930FF462A77A3540CF546325DEA214'  /k/\n     }\n   }\n }\n```\n\n- sub identifies I or R, not the PSK.\n\n- sub cannot be included in \n`PRK_4e3m    = EDHOC_Extract( SALT_4e3m, CRED_PSK )\n` ",
       "createdAt": "2025-02-17T17:38:29Z",
-      "updatedAt": "2025-07-03T09:00:28Z",
+      "updatedAt": "2025-07-21T13:34:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -656,6 +656,13 @@
           "body": "I have a question regarding this sub field. So, if I understand correctly, the sub field allows to bind the authentication credential to some identity. This means that it would be different for the Initiator and the Responder, and they both need to know each other's in advance (?). \n\nHowever, the CRED_PSK is used in the derivation of PRK_4e3m, and this must be the same for both peers, which means that the sub field MUST not be included (how to do that, in terms of implementation, I do not see this part from the practical point of view). \nIn addition, CRED_PSK is also used in TH_4. And this needs also to be the same for both, since it is used in PRK_out, K_4 and IV_4, so it should not be used there either (?)",
           "createdAt": "2025-07-03T08:59:38Z",
           "updatedAt": "2025-07-03T09:00:28Z"
+        },
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "#27",
+          "createdAt": "2025-07-21T13:34:09Z",
+          "updatedAt": "2025-07-21T13:34:09Z"
         }
       ]
     },
@@ -949,6 +956,294 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDONwrUhc6fypZR",
+      "title": "ID_CRED_PSK, PSK, CRED_I, and CRED_R",
+      "url": "https://github.com/lake-wg/psk/pull/27",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Several changes are needed to the document to mitigate reflection attacks and to enable resumption. Additionally the terminology regarding ID_CRED_PSK, PSK, and CRED_x are fixed.",
+      "createdAt": "2025-07-21T06:54:58Z",
+      "updatedAt": "2025-07-21T18:37:56Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "01c12bce5b7f86fcb661b78ad3a1e27079215607",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "emanjon-patch-3",
+      "headRefOid": "f0e8b877ae58105f2d672b4096b737d9013067e0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks for the pull request John. Looks good to me. I can start working on the test vectors (since they will be different now)",
+          "createdAt": "2025-07-21T09:10:04Z",
+          "updatedAt": "2025-07-21T09:10:04Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDONwrUhc61IeBp",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T16:41:07Z",
+          "updatedAt": "2025-07-21T16:41:08Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Why is this removed, accidental?",
+              "createdAt": "2025-07-21T16:41:07Z",
+              "updatedAt": "2025-07-21T16:41:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JiTF",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:05:07Z",
+          "updatedAt": "2025-07-21T18:05:07Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "CRED_I and CRED_R aren't properly introduced yet.",
+              "createdAt": "2025-07-21T18:05:07Z",
+              "updatedAt": "2025-07-21T18:05:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Jjr9",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:06:39Z",
+          "updatedAt": "2025-07-21T18:06:40Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "* CRED_I and CRED_R are authentication credentials OF INITIATOR AND RESPONDER, RESPECTIVELY, associated with the PSK.\r\n* \"posterorily\" is unknown term to me; \"subsequently\"?\r\n",
+              "createdAt": "2025-07-21T18:06:39Z",
+              "updatedAt": "2025-07-21T18:07:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Jlpn",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:08:35Z",
+          "updatedAt": "2025-07-21T18:08:36Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "Do we need to include the key?",
+              "createdAt": "2025-07-21T18:08:36Z",
+              "updatedAt": "2025-07-21T18:08:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JmcB",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:09:56Z",
+          "updatedAt": "2025-07-21T18:09:57Z",
+          "comments": [
+            {
+              "originalPosition": 81,
+              "body": "CRED_x could be introduced earlier",
+              "createdAt": "2025-07-21T18:09:56Z",
+              "updatedAt": "2025-07-21T18:09:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JnTq",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:11:28Z",
+          "updatedAt": "2025-07-21T18:11:28Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "Should we clarify that CRED_I is provisioned to R and v.v.?",
+              "createdAt": "2025-07-21T18:11:28Z",
+              "updatedAt": "2025-07-21T18:11:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JoE_",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:12:33Z",
+          "updatedAt": "2025-07-21T18:12:33Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "Do you mean \"is a reference to a kid\" or \"contains a kid\"?",
+              "createdAt": "2025-07-21T18:12:33Z",
+              "updatedAt": "2025-07-21T18:12:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JpJc",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:14:04Z",
+          "updatedAt": "2025-07-21T18:14:04Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "We have TH_4 defined in two places, should we make a reference instead?",
+              "createdAt": "2025-07-21T18:14:04Z",
+              "updatedAt": "2025-07-21T18:14:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JqE8",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:15:26Z",
+          "updatedAt": "2025-07-21T18:15:27Z",
+          "comments": [
+            {
+              "originalPosition": 152,
+              "body": "Do you mean \"... derive both rPSK and rKID\"?",
+              "createdAt": "2025-07-21T18:15:26Z",
+              "updatedAt": "2025-07-21T18:15:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Jvyz",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:22:57Z",
+          "updatedAt": "2025-07-21T18:22:57Z",
+          "comments": [
+            {
+              "originalPosition": 158,
+              "body": "After resumption rKID will be stochastically unique. Should we require this also for the KID we start with (in the case of initial PSK authentication)?",
+              "createdAt": "2025-07-21T18:22:57Z",
+              "updatedAt": "2025-07-21T18:22:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61JyNU",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:26:28Z",
+          "updatedAt": "2025-07-21T18:26:29Z",
+          "comments": [
+            {
+              "originalPosition": 178,
+              "body": "> typo \"same same\"",
+              "createdAt": "2025-07-21T18:26:28Z",
+              "updatedAt": "2025-07-21T18:26:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Jytr",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T18:27:20Z",
+          "updatedAt": "2025-07-21T18:27:20Z",
+          "comments": [
+            {
+              "originalPosition": 219,
+              "body": "Replace 0x5 with 0x05",
+              "createdAt": "2025-07-21T18:27:20Z",
+              "updatedAt": "2025-07-21T18:27:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Jzjd",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "I've made some comments. I can also propose changes, not before Wednesday.",
+          "createdAt": "2025-07-21T18:28:35Z",
+          "updatedAt": "2025-07-21T18:28:35Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
