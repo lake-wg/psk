@@ -1050,7 +1050,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 22 January 2026</td>
+<td class="center">Expires 23 January 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-21" class="published">21 July 2025</time>
+<time datetime="2025-07-22" class="published">22 July 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-22">22 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-01-23">23 January 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1130,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1427,7 +1427,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
               <p id="section-3.1.3-2.2.1">If CRED_x is provisioned out-of-band and transported by value, it <span class="bcp14">SHOULD</span> be used as-is without re-encoding. Re-encoding might cause mismatches when comparing identifiers such as hash values or 'kid' references.<a href="#section-3.1.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.3-2.3">
-              <p id="section-3.1.3-2.3.1">ID_CRED_PSK <span class="bcp14">SHOULD</span> uniquely identify the corresponding PSK to avoid ambiguity. In cases where ID_CRED_PSK is a reference to a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.<a href="#section-3.1.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.1.3-2.3.1">ID_CRED_PSK <span class="bcp14">SHOULD</span> uniquely identify the corresponding PSK to avoid ambiguity. In cases where ID_CRED_PSK contains a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.<a href="#section-3.1.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.3-2.4">
               <p id="section-3.1.3-2.4.1">When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-3.5.3.2" class="relref">Section 3.5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> <span class="bcp14">MUST</span> be applied in plaintext fields (such as PLAINTEXT_3A). For example:<a href="#section-3.1.3-2.4.1" class="pilcrow">¶</a></p>
@@ -1708,7 +1708,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               </ul>
 </li>
           </ul>
-<p id="section-5.3.2-2">The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_I, CRED_R ), defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.3.2-2">The Initiator computes TH_4 as defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.3.2-3">There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provides implicit authentication of the Initiator.<a href="#section-5.3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1777,7 +1777,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumption</a>
       </h2>
 <p id="section-6-1">This section defines how PSKs are used for session resumption in EDHOC.
-Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter is used to derive both rPSK and rID_CRED_PSK:<a href="#section-6-1" class="pilcrow">¶</a></p>
+Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter is used to derive both rPSK and rKID:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6-2">
 <pre>
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -1958,7 +1958,7 @@ This consideration was important for the privacy properties when using asymmetri
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">4</td>
+              <td class="text-left" rowspan="1" colspan="1">4 (suggested)</td>
               <td class="text-left" rowspan="1" colspan="1">PSK</td>
               <td class="text-left" rowspan="1" colspan="1">PSK</td>
             </tr>
@@ -1989,13 +1989,13 @@ This consideration was important for the privacy properties when using asymmetri
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">2</td>
+              <td class="text-left" rowspan="1" colspan="1">2 (suggested)</td>
               <td class="text-left" rowspan="1" colspan="1">Resumption PSK</td>
               <td class="text-left" rowspan="1" colspan="1">IETF</td>
               <td class="text-left" rowspan="1" colspan="1">Section 7</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">3</td>
+              <td class="text-left" rowspan="1" colspan="1">3 (suggested)</td>
               <td class="text-left" rowspan="1" colspan="1">Resumption kid</td>
               <td class="text-left" rowspan="1" colspan="1">IETF</td>
               <td class="text-left" rowspan="1" colspan="1">Section 7</td>

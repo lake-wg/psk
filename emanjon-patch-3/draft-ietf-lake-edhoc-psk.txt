@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 22 January 2026                               J. Preuß Mattsson
+Expires: 23 January 2026                               J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                            21 July 2025
+                                                            22 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 January 2026.
+   This Internet-Draft will expire on 23 January 2026.
 
 Copyright Notice
 
@@ -285,9 +285,9 @@ Table of Contents
       references.
 
    *  ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to
-      avoid ambiguity.  In cases where ID_CRED_PSK is a reference to a
-      key identifier, care must be taken to ensure that 'kid' is unique
-      for the PSK.
+      avoid ambiguity.  In cases where ID_CRED_PSK contains a key
+      identifier, care must be taken to ensure that 'kid' is unique for
+      the PSK.
 
    *  When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 :
       kid }), the compact encoding optimization defined in
@@ -492,8 +492,7 @@ Table of Contents
 
       -  PLAINTEXT_3B = ( ? EAD_3 )
 
-   The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B,
-   CRED_I, CRED_R ), defined in Section 4.
+   The Initiator computes TH_4 as defined in Section 4.
 
    There is no need for MAC_3 or signature, since AEAD's built-in
    integrity and the use of PSK-based key derivation provides implicit
@@ -561,7 +560,7 @@ Table of Contents
 
    This section defines how PSKs are used for session resumption in
    EDHOC.  Following Section 4.2 of [RFC9528], EDHOC_Exporter is used to
-   derive both rPSK and rID_CRED_PSK:
+   derive both rPSK and rKID:
 
    rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
    rKID  = EDHOC_Exporter( 3, h'', id_cred_psk_length )
@@ -751,12 +750,13 @@ Table of Contents
    Method Type" registry under the group name "Ephemeral Diffie-Hellman
    Over OCSE (EDHOC)".
 
-       +=======+==============================+====================+
-       | Value | Initiator Authentication Key | Responder          |
-       |       |                              | Authentication Key |
-       +=======+==============================+====================+
-       | 4     | PSK                          | PSK                |
-       +-------+------------------------------+--------------------+
+    +=============+==============================+====================+
+    | Value       | Initiator Authentication Key | Responder          |
+    |             |                              | Authentication Key |
+    +=============+==============================+====================+
+    | 4           | PSK                          | PSK                |
+    | (suggested) |                              |                    |
+    +-------------+------------------------------+--------------------+
 
             Table 1: Addition to the EDHOC Method Type Registry.
 
@@ -766,13 +766,13 @@ Table of Contents
    Exporter Label" registry under the group name "Ephemeral Diffie-
    Hellman Over OCSE (EDHOC)".
 
-        +=======+================+===================+===========+
-        | Label | Description    | Change Controller | Reference |
-        +=======+================+===================+===========+
-        | 2     | Resumption PSK | IETF              | Section 7 |
-        +-------+----------------+-------------------+-----------+
-        | 3     | Resumption kid | IETF              | Section 7 |
-        +-------+----------------+-------------------+-----------+
+    +===============+================+===================+===========+
+    | Label         | Description    | Change Controller | Reference |
+    +===============+================+===================+===========+
+    | 2 (suggested) | Resumption PSK | IETF              | Section 7 |
+    +---------------+----------------+-------------------+-----------+
+    | 3 (suggested) | Resumption kid | IETF              | Section 7 |
+    +---------------+----------------+-------------------+-----------+
 
          Table 2: Additions to the EDHOC Exporter Label Registry.
 
