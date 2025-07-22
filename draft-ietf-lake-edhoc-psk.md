@@ -117,7 +117,7 @@ It is RECOMMENDED that ID_CRED_PSK uniquely identifies the corresponding PSK, si
 
 ### CRED_I and CRED_R
 
-CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.
+CRED_I and CRED_R are authentication credentials associated with the PSK. We use the notation CRED_x to refer to CRED_I or CRED_R. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.
 
 A common representation of CRED_I and CRED_R when using an external PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}} whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_I and CRED_R associated with the same PSK would be:
 
@@ -153,7 +153,7 @@ Implementations MUST ensure that CRED_I and CRED_R are distict, e.g., by carryin
 
 ### Encoding and processing guidelines
 
-The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. We use the notation CRED_x to refer to CRED_I or CRED_R.  Requirements on CRED_x applies both to CRED_I and to CRED_R.
+The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x applies both to CRED_I and to CRED_R.
 
 - If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. This ensures consistent identification and avoids interoperability issues due to non-deterministic CBOR variants.
 
