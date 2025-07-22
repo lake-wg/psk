@@ -225,9 +225,10 @@ Table of Contents
 3.1.2.  CRED_I and CRED_R
 
    CRED_I and CRED_R are authentication credentials associated with the
-   PSK.  Authentication is achieved implicitly via the successful use of
-   the PSK to derive keying material and encrypt and subsequently
-   decrypt protected messages.
+   PSK.  We use the notation CRED_x to refer to CRED_I or CRED_R.
+   Authentication is achieved implicitly via the successful use of the
+   PSK to derive keying material and encrypt and subsequently decrypt
+   protected messages.
 
    A common representation of CRED_I and CRED_R when using an external
    PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) [RFC8392] whose
@@ -271,8 +272,8 @@ Table of Contents
 3.1.3.  Encoding and processing guidelines
 
    The following guidelines apply to the encoding and handling of CRED_x
-   and ID_CRED_PSK.  We use the notation CRED_x to refer to CRED_I or
-   CRED_R.  Requirements on CRED_x applies both to CRED_I and to CRED_R.
+   and ID_CRED_PSK.  Requirements on CRED_x applies both to CRED_I and
+   to CRED_R.
 
    *  If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as
       specified in Sections 4.2.1 and 4.2.2. of [RFC8949].  This ensures

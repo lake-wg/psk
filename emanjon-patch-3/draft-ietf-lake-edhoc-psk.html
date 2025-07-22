@@ -1379,7 +1379,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
           <h4 id="name-cred_i-and-cred_r">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-cred_i-and-cred_r" class="section-name selfRef">CRED_I and CRED_R</a>
           </h4>
-<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. We use the notation CRED_x to refer to CRED_I or CRED_R. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-2">A common representation of CRED_I and CRED_R when using an external PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_I and CRED_R associated with the same PSK would be:<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1.2-3">
 <pre>
@@ -1418,7 +1418,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
           <h4 id="name-encoding-and-processing-gui">
 <a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-encoding-and-processing-gui" class="section-name selfRef">Encoding and processing guidelines</a>
           </h4>
-<p id="section-3.1.3-1">The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. We use the notation CRED_x to refer to CRED_I or CRED_R.  Requirements on CRED_x applies both to CRED_I and to CRED_R.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-1">The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x applies both to CRED_I and to CRED_R.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1.3-2.1">
               <p id="section-3.1.3-2.1.1">If CRED_x is CBOR-encoded, it <span class="bcp14">SHOULD</span> use deterministic encoding as specified in Sections <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2.1" class="relref">4.2.1</a> and <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2.2." class="relref">4.2.2.</a> of <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>. This ensures consistent identification and avoids interoperability issues due to non-deterministic CBOR variants.<a href="#section-3.1.3-2.1.1" class="pilcrow">¶</a></p>
