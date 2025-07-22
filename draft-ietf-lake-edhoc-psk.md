@@ -159,7 +159,7 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 
 - If CRED_x is provisioned out-of-band and transported by value, it SHOULD be used as-is without re-encoding. Re-encoding might cause mismatches when comparing identifiers such as hash values or 'kid' references.
 
-- ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to avoid ambiguity. In cases where ID_CRED_PSK is a reference to a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.
+- ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to avoid ambiguity. In cases where ID_CRED_PSK contains a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.
 
 - When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). For example:
   - { 4 : h'0f' } encoded as h'0f' (CBOR byte string)
@@ -299,7 +299,7 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}.
   - K_3 and IV_3 as defined in {{key-der}}
   - PLAINTEXT_3B = ( ? EAD_3 )
 
-The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_I, CRED_R ), defined in {{key-der}}.
+The Initiator computes TH_4 as defined in {{key-der}}.
 
 There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provides implicit authentication of the Initiator.
 
@@ -341,7 +341,7 @@ After verifying message_4, the Initiator is assured that the Responder has calcu
 # PSK usage for Session Resumption {#psk-resumption}
 
 This section defines how PSKs are used for session resumption in EDHOC.
-Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both rPSK and rID_CRED_PSK:
+Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both rPSK and rKID:
 
 ~~~~~~~~~~~~
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -440,17 +440,17 @@ This document has IANA actions.
 
 IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
-| Value | Initiator Authentication Key | Responder Authentication Key |
-| 4     | PSK                          | PSK                          |
+| Value         | Initiator Authentication Key | Responder Authentication Key |
+| 4 (suggested) | PSK                          | PSK                          |
 {: #tab-method-psk title="Addition to the EDHOC Method Type Registry."}
 
 ## EDHOC Exporter Label Registry
 
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
-| Label | Description            | Change Controller | Reference |
-| 2     | Resumption PSK         | IETF              | Section 7 |
-| 3     | Resumption kid         | IETF              | Section 7 |
+| Label         | Description            | Change Controller | Reference |
+| 2 (suggested) | Resumption PSK         | IETF              | Section 7 |
+| 3 (suggested) | Resumption kid         | IETF              | Section 7 |
 {: #tab-exporter-psk title="Additions to the EDHOC Exporter Label Registry."}
 
 --- back
