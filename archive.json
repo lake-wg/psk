@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-22T01:12:21.638114+00:00",
+  "timestamp": "2025-07-24T01:12:29.875347+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -969,13 +969,13 @@
       "labels": [],
       "body": "Several changes are needed to the document to mitigate reflection attacks and to enable resumption. Additionally the terminology regarding ID_CRED_PSK, PSK, and CRED_x are fixed.",
       "createdAt": "2025-07-21T06:54:58Z",
-      "updatedAt": "2025-07-21T18:37:56Z",
+      "updatedAt": "2025-07-22T09:34:05Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "01c12bce5b7f86fcb661b78ad3a1e27079215607",
       "headRepository": "lake-wg/psk",
       "headRefName": "emanjon-patch-3",
-      "headRefOid": "f0e8b877ae58105f2d672b4096b737d9013067e0",
+      "headRefOid": "fe57fd72e0c62c549e0d4b1f723f0255b646e828",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1242,6 +1242,186 @@
           "createdAt": "2025-07-21T18:28:35Z",
           "updatedAt": "2025-07-21T18:28:35Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Tm_Z",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T08:28:58Z",
+          "updatedAt": "2025-07-22T08:28:58Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "What do you mean they are not yet introduced?",
+              "createdAt": "2025-07-22T08:28:58Z",
+              "updatedAt": "2025-07-22T08:28:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61T513",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T08:46:33Z",
+          "updatedAt": "2025-07-22T08:46:33Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "My understanding is that COSE_Key would be one of the formats to store the PSK related information including the PSK itself but the CRED_I and CRED_R must not be sent in the ID_CRED_PSK",
+              "createdAt": "2025-07-22T08:46:33Z",
+              "updatedAt": "2025-07-22T08:46:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61T6oe",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T08:47:14Z",
+          "updatedAt": "2025-07-22T08:47:14Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "Yes, both should be provided as part of the PSK provisioning process",
+              "createdAt": "2025-07-22T08:47:14Z",
+              "updatedAt": "2025-07-22T08:47:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61UGi5",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T08:56:10Z",
+          "updatedAt": "2025-07-22T08:56:10Z",
+          "comments": [
+            {
+              "originalPosition": 152,
+              "body": "Yes, it should be rPSK and rKID",
+              "createdAt": "2025-07-22T08:56:10Z",
+              "updatedAt": "2025-07-22T08:56:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61UH-r",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T08:57:02Z",
+          "updatedAt": "2025-07-22T08:57:02Z",
+          "comments": [
+            {
+              "originalPosition": 158,
+              "body": "I think so , yes",
+              "createdAt": "2025-07-22T08:57:02Z",
+              "updatedAt": "2025-07-22T08:57:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61UTje",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T09:04:18Z",
+          "updatedAt": "2025-07-22T09:04:18Z",
+          "comments": [
+            {
+              "originalPosition": 178,
+              "body": "with \"normal operation\" you mean \"resumption operation\"? ",
+              "createdAt": "2025-07-22T09:04:18Z",
+              "updatedAt": "2025-07-22T09:04:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61UdXQ",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T09:16:31Z",
+          "updatedAt": "2025-07-22T09:16:31Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "external_aad = << ID_CRED_PSK, TH_3, CRED_PSK >> should be also changed to external_aad = << ID_CRED_PSK, TH_3, CRED_I, CRED_R >>. It also defined in two places but I think it is necessary",
+              "createdAt": "2025-07-22T09:16:31Z",
+              "updatedAt": "2025-07-22T09:16:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61UoYf",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T09:26:23Z",
+          "updatedAt": "2025-07-22T09:26:23Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "Yes, I fixed this\r\n",
+              "createdAt": "2025-07-22T09:26:23Z",
+              "updatedAt": "2025-07-22T09:26:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc61Updv",
+          "commit": {
+            "abbreviatedOid": "0e0107b"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-22T09:27:40Z",
+          "updatedAt": "2025-07-22T09:27:40Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "I removed the double definition of TH_4 and added a reference in the second one. The external_aad is also corrected\r\n",
+              "createdAt": "2025-07-22T09:27:40Z",
+              "updatedAt": "2025-07-22T09:27:41Z"
+            }
+          ]
         }
       ]
     }
