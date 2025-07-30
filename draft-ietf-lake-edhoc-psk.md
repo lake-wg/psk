@@ -533,11 +533,11 @@ METHOD (CBOR Data Item) (1 byte)
 04
 ~~~~~~~~~~~~
 
-The initiator selects cipher suite 0. A single cipher suite is encoded as an int:
+The initiator selects cipher suite 02. A single cipher suite is encoded as an int:
 
 ~~~~~~~~~~~~
 SUITES_I (CBOR Data Item) (1 byte)
-00
+02
 ~~~~~~~~~~~~
 
 The Initiator creates an ephemeral key pair for use with the EDHOC key exchange algorithm:
