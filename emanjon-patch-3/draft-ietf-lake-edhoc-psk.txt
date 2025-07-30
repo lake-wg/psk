@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 23 January 2026                               J. Preuß Mattsson
+Expires: 31 January 2026                               J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                            22 July 2025
+                                                            30 July 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 January 2026.
+   This Internet-Draft will expire on 31 January 2026.
 
 Copyright Notice
 
@@ -910,11 +910,11 @@ B.1.  message_1
    METHOD (CBOR Data Item) (1 byte)
    04
 
-   The initiator selects cipher suite 0.  A single cipher suite is
+   The initiator selects cipher suite 02.  A single cipher suite is
    encoded as an int:
 
    SUITES_I (CBOR Data Item) (1 byte)
-   00
+   02
 
    The Initiator creates an ephemeral key pair for use with the EDHOC
    key exchange algorithm:
