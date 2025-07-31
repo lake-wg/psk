@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-24T01:12:29.875347+00:00",
+  "timestamp": "2025-07-31T01:13:40.361160+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -969,13 +969,13 @@
       "labels": [],
       "body": "Several changes are needed to the document to mitigate reflection attacks and to enable resumption. Additionally the terminology regarding ID_CRED_PSK, PSK, and CRED_x are fixed.",
       "createdAt": "2025-07-21T06:54:58Z",
-      "updatedAt": "2025-07-22T09:34:05Z",
+      "updatedAt": "2025-07-30T13:52:47Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "01c12bce5b7f86fcb661b78ad3a1e27079215607",
       "headRepository": "lake-wg/psk",
       "headRefName": "emanjon-patch-3",
-      "headRefOid": "fe57fd72e0c62c549e0d4b1f723f0255b646e828",
+      "headRefOid": "e8b9bcbd2dfb2d8cd478c721a0b1feb59d921efc",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -987,6 +987,13 @@
           "body": "Thanks for the pull request John. Looks good to me. I can start working on the test vectors (since they will be different now)",
           "createdAt": "2025-07-21T09:10:04Z",
           "updatedAt": "2025-07-21T09:10:04Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Should I finally merge this pull request?",
+          "createdAt": "2025-07-30T13:52:47Z",
+          "updatedAt": "2025-07-30T13:52:47Z"
         }
       ],
       "reviews": [
@@ -1422,6 +1429,19 @@
               "updatedAt": "2025-07-22T09:27:41Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc62xVJM",
+          "commit": {
+            "abbreviatedOid": "fe57fd7"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "The Initiator is using suite 02 (as stated in the second byte of message_1), need to change it in the test vectors, where it says:\r\n\r\nThe initiator selects cipher suite 0. (...)\r\nSUITES_I (CBOR Data Item) (1 byte)\r\n00\r\n",
+          "createdAt": "2025-07-29T09:04:59Z",
+          "updatedAt": "2025-07-29T09:04:59Z",
+          "comments": []
         }
       ]
     }
