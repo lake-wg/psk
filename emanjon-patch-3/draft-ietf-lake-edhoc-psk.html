@@ -1046,11 +1046,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">EDHOC-PSK</td>
-<td class="right">July 2025</td>
+<td class="right">August 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 31 January 2026</td>
+<td class="center">Expires 6 February 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-30" class="published">30 July 2025</time>
+<time datetime="2025-08-05" class="published">5 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-31">31 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-02-06">6 February 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1130,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1344,7 +1344,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-protocol">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
       </h2>
-<p id="section-3-1">In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3. CRED_I and CRED_R are authentication credentials of Initiator and Responder, respectively, associated with the PSK. The format of CRED_I and CRED_R can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3. CRED_I and CRED_R are authentication credentials of Initiator and Responder, respectively, associated with the PSK. CRED_I is provisioned to the Responder and CRED_R is provisoned to the Initiator. The format of CRED_I and CRED_R can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="credentials">
 <section id="section-3.1">
         <h3 id="name-credentials">
@@ -1371,7 +1371,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 </pre><a href="#section-3.1.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1.1-3">The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK may adopt encoding and representation patterns from <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, it differs fundamentally in that it identifies a symmetric key, not a public authentication key.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-4">It is <span class="bcp14">RECOMMENDED</span> that ID_CRED_PSK uniquely identifies the corresponding PSK, since ambiguity may require the recipient to try multiple keys.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-4">It is <span class="bcp14">RECOMMENDED</span> that ID_CRED_PSK stochastically and uniquely identifies the corresponding PSK. Uniqueness avoids ambiguity that may require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. This aligns with the requirements for rKID in session resumption.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="credi-and-credr">
