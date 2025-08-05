@@ -94,14 +94,14 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 
 # Protocol
 
-In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of the CRED_PSK, is sent in message_3. CRED_PSK is an authentication credential associated with the PSK. Although it may use a COSE_Key representation for compatibility, the format is not restricted to COSE_Key and can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.
+In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3. CRED_I and CRED_R are authentication credentials of Initiator and Responder, respectively, associated with the PSK. CRED_I is provisioned to the Responder and CRED_R is provisoned to the Initiator. The format of CRED_I and CRED_R can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.
 
 ## Credentials
 
 The Initiator and Responder are assumed to share a PSK (external PSK or resumption PSK) with good amount of entropy and the following requirements:
 
 - Only the Initiator and the Responder have access to the PSK.
-- The Responder is able to retrieve CRED_PSK and the PSK, using ID_CRED_PSK.
+- The Responder is able to retrieve PSK, CRED_I, and CRED_R, using ID_CRED_PSK.
 
 ### ID_CRED_PSK
 
@@ -111,23 +111,19 @@ ID_CRED_PSK is a COSE header map containing header parameters that can identify 
 ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. It is RECOMMENDED that ID_CRED_PSK uniquely identifies the corresponding CRED_PSK, since ambiguity may require the recipient to try multiple keys.
+The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK may adopt encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key, not a public authentication key.
 
-### CRED_PSK
+It is RECOMMENDED that ID_CRED_PSK stochastically and uniquely identifies the corresponding PSK. Uniqueness avoids ambiguity that may require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. This aligns with the requirements for rKID in session resumption.
 
-CRED_PSK is an authentication credential that identifies and encapsulates the PSK. It substitutes the public-key based credentials CRED_I and CRED_R defined in {{RFC9528}}.
+### CRED_I and CRED_R
 
-While CRED_PSK may adopt encoding and representation patterns from {{Section 3.5.2 and Section 3.5.3 of RFC9528}}, it differs fundamentally in that:
+CRED_I and CRED_R are authentication credentials associated with the PSK. We use the notation CRED_x to refer to CRED_I or CRED_R. Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and subsequently decrypt protected messages.
 
-- CRED_PSK contains or identifies a symmetric key, not a public authentication key.
-
-- Authentication is achieved implicitly via the successful use of the PSK to derive keying material and encrypt and posteriorly decrypt protected messages.
-
-A common representation of CRED_PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}} whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_PSK would be:
+A common representation of CRED_I and CRED_R when using an external PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}} whose 'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK. An example of CRED_I and CRED_R associated with the same PSK would be:
 
 ~~~~~~~~~~~~
 {                                               /CCS/
-  2 : "mydotbot",                               /sub/
+  2 : "42-50-31-FF-EF-37-32-39",                /sub/
   8 : {                                         /cnf/
     1 : {                                       /COSE_Key/
        1 : 4,                                   /kty/
@@ -138,19 +134,32 @@ A common representation of CRED_PSK is a CBOR Web Token (CWT) or CWT Claims Set 
 }
 ~~~~~~~~~~~~
 
-Alternative formats for CRED_PSK MAY be used, as long as they allow the recipient to identify and retrieve the correct PSK. When the authentication credential includes only a COSE_Key (e.g., a raw key reference), it SHOULD be wrapped as a CCS by prefixing it with a 'cnf' claim. In this case, the resulting CRED_PSK contains no identity beyond the key itself.
+~~~~~~~~~~~~
+{                                               /CCS/
+  2 : "23-11-58-AA-B3-7F-10",                   /sub/
+  8 : {                                         /cnf/
+    1 : {                                       /COSE_Key/
+       1 : 4,                                   /kty/
+       2 : h'0f',                               /kid/
+      -1 : h'50930FF462A77A3540CF546325DEA214'  /k/
+    }
+  }
+}
+~~~~~~~~~~~~
 
-Implementations MUST ensure that CRED_PSK values used by the Initiator and the Responder carry distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This enables correct identification of parties and prevents misbinding attacks, as per {{Appendix D.2 of RFC9528}}. Note that sub is used solely for identity binding and MUST NOT be included in the key derivation function, such as EDHOC_Extract(), where only the cryptographic key material (e.g., cnf) is used.
+Alternative formats for CRED_I and CRED_R MAY be used. When using a resumption PSK, CRED_I and CRED_R are the credentials from the initial EDHOC exchange and can for example be public-key credentials such as certicates.
+
+Implementations MUST ensure that CRED_I and CRED_R are distict, e.g., by carrying distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This enables correct identification of parties and prevents reflection and misbinding attacks, as per {{Appendix D.2 of RFC9528}}.
 
 ### Encoding and processing guidelines
 
-The following guidelines apply to the encoding and handling of CRED_PSK and ID_CRED_PSK.
+The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x applies both to CRED_I and to CRED_R.
 
-- If CRED_PSK is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. This ensures consistent identification and avoids interoperability issues due to non-deterministic CBOR variants.
+- If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. This ensures consistent identification and avoids interoperability issues due to non-deterministic CBOR variants.
 
-- If CRED_PSK is provisioned out-of-band and transported by value, it SHOULD be used as-is without re-encoding. Re-encoding might cause mismatches when comparing identifiers such as hash values or 'kid' references.
+- If CRED_x is provisioned out-of-band and transported by value, it SHOULD be used as-is without re-encoding. Re-encoding might cause mismatches when comparing identifiers such as hash values or 'kid' references.
 
-- ID_CRED_PSK SHOULD uniquely identify the corresponding CRED_PSK to avoid ambiguity. In cases where ID_CRED_PSK is a reference to a key identifier, care must be taken to ensure that 'kid' is globally unique for the PSK.
+- ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to avoid ambiguity. In cases where ID_CRED_PSK contains a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.
 
 - When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). For example:
   - { 4 : h'0f' } encoded as h'0f' (CBOR byte string)
@@ -158,10 +167,7 @@ The following guidelines apply to the encoding and handling of CRED_PSK and ID_C
 
 These optimizations MUST NOT be applied in COSE header parameters or other contexts where full map structure is required.
 
-- To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in CRED_PSK. If no such identity is present, the authentication credential binds only to the key.
-
-- Guidelines in {{RFC9528}} related to certificate chains, X.509 DER encoding, or public key validation do not apply to CRED_PSK, since it encapsulates a symmetric key and is not used for explicit signature or certificate validation.
-
+- To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in CRED_I and CRED_R.
 
 ## Message Flow of EDHOC-PSK
 
@@ -214,7 +220,7 @@ The transcript hash TH_2 = H( G_Y, H(message_1) ) is defined as in {{Section 5.3
 
 ~~~~~~~~~~~~
 PRK_3e2m     = PRK_2e
-PRK_4e3m     = EDHOC_Extract( SALT_4e3m, CRED_PSK )
+PRK_4e3m     = EDHOC_Extract( SALT_4e3m, PSK )
 KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3a )
 KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
 K_3          = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
@@ -232,7 +238,7 @@ where:
 
 Additionally, the definition of the transcript hash TH_4 is modified as:
 
-- TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK )
+- TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_I, CRED_R )
 
 # Message Formatting and Processing
 
@@ -289,11 +295,11 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}.
 * CIPHERTEXT_3B is the 'ciphertext' of COSE_Encrypt0 object as defined in {{Section 5.2 and Section 5.3 of RFC9528}}, with the EDHOC AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in {{Section 5.2 of RFC9528}}, plaintext PLAINTEXT_3B and the following parameters as input:
 
   - protected = h''
-  - external_aad = << ID_CRED_PSK, TH_3, CRED_PSK >>
+  - external_aad = << ID_CRED_PSK, TH_3, CRED_I, CRED_R >>
   - K_3 and IV_3 as defined in {{key-der}}
   - PLAINTEXT_3B = ( ? EAD_3 )
 
-The Initiator computes TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_PSK ), defined in {{key-der}}.
+The Initiator computes TH_4 as defined in {{key-der}}.
 
 There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provides implicit authentication of the Initiator.
 
@@ -314,7 +320,7 @@ Upon receiving message_3, the Responder performs the following steps:
 * AEAD-decrypt CIPHERTEXT_3B using:
 
   - K_3, IV_3
-  - external_aad = << ID_CRED_PSK, TH_3, CRED_PSK >>
+  - external_aad = << ID_CRED_PSK, TH_3, CRED_I, CRED_R >>
   - protected = h''
   - AEAD algorithm from cipher suite
 
@@ -335,11 +341,12 @@ After verifying message_4, the Initiator is assured that the Responder has calcu
 # PSK usage for Session Resumption {#psk-resumption}
 
 This section defines how PSKs are used for session resumption in EDHOC.
-Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter can be used to derive both rPSK and rID_CRED_PSK:
+Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both rPSK and rKID:
 
 ~~~~~~~~~~~~
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
-rID_CRED_PSK = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+rKID  = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+rID_CRED_PSK = { 4 : rKID }
 ~~~~~~~~~~~~
 
 where:
@@ -348,7 +355,7 @@ where:
 
   * id_cred_psk_length is by default 2.
 
-A peer that has successfully completed an EDHOC session, regardless of the used authentication method, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
+A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
 To guarantee that both peers share the same resumption key, when a session is run using rPSK_i as a resumption key:
 
   * The Initiator can delete rPSK_i after having successfully verified EDHOC message_4.
@@ -370,9 +377,7 @@ When using a resumption PSK derived from a previous EDHOC exchange:
 
 When using resumption PSKs:
 
-  * The same ID_CRED_PSK is reused each time EDHOC is executed with a specific resumption PSK.
-  * To prevent long-term tracking, implementations SHOULD periodically initiate a full EDHOC exchange to generate a new resumption PSK and corresponding ID_CRED_PSK. Alternatively, as stated in {{Appendix H of RFC9528}}, EDHOC_KeyUpdate can be used to derive a new PRK_out, and consequently a new CRED_PSK and ID_CRED_PSK for session resumption.
-
+  * During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. This is seen as a minor privacy problem. EDHOC-PSK provides much stronger privacy properties than many other popular protocols with PSK authentication.
 
 ## Security Considerations for Resumption
 
@@ -393,7 +398,7 @@ The EDHOC-PSK authentication method introduces changes with respect to the curre
 
 EDHOC-PSK encrypts ID_CRED_PSK in message 3 with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See {{Section 9.1 of RFC9528}}), EDHOC-PSK provides identity protection for both the Initiator and the Responder against passive attackers.
 
-In symmetric key setups, using the same CRED_PSK for both parties or omitting role identity (e.g., sub) makes the protocol vulnerable to reflection or Selfie attacks. Separate identities in sub serve as non-cryptographic role binders and MUST be distinct.
+In symmetric key setups, using the same CRED_x for both parties makes the protocol vulnerable to reflection or Selfie attacks. Separate identities in sub serve as non-cryptographic role binders and MUST be distinct.
 
 ## Mutual Authentication
 
@@ -435,17 +440,17 @@ This document has IANA actions.
 
 IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
-| Value | Initiator Authentication Key | Responder Authentication Key |
-| 4     | PSK                          | PSK                          |
+| Value         | Initiator Authentication Key | Responder Authentication Key |
+| 4 (suggested) | PSK                          | PSK                          |
 {: #tab-method-psk title="Addition to the EDHOC Method Type Registry."}
 
 ## EDHOC Exporter Label Registry
 
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
-| Label | Description            | Change Controller | Reference |
-| 2     | Resumption CRED_PSK    | IETF              | Section 7 |
-| 3     | Resumption ID_CRED_PSK | IETF              | Section 7 |
+| Label         | Description            | Change Controller | Reference |
+| 2 (suggested) | Resumption PSK         | IETF              | Section 7 |
+| 3 (suggested) | Resumption kid         | IETF              | Section 7 |
 {: #tab-exporter-psk title="Additions to the EDHOC Exporter Label Registry."}
 
 --- back
@@ -528,11 +533,11 @@ METHOD (CBOR Data Item) (1 byte)
 04
 ~~~~~~~~~~~~
 
-The initiator selects cipher suite 0. A single cipher suite is encoded as an int:
+The initiator selects cipher suite 02. A single cipher suite is encoded as an int:
 
 ~~~~~~~~~~~~
 SUITES_I (CBOR Data Item) (1 byte)
-00
+02
 ~~~~~~~~~~~~
 
 The Initiator creates an ephemeral key pair for use with the EDHOC key exchange algorithm:
@@ -569,8 +574,9 @@ The Initiator constructs message_1:
 
 ~~~~~~~~~~~~
 message_1 (CBOR Sequence) (37 bytes)
-04 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
-2D 95 72 49 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB 0A
+04 02 58 20 7e c6 81 02 94 06 02 aa b5 48 53 9b
+f4 2a 35 99 2d 95 72 49 eb 7f 18 88 40 6d 17 8a
+04 c9 12 db 0a
 ~~~~~~~~~~~~
 
 ## message_2
@@ -593,7 +599,7 @@ ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4 E1 C4
 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83
 ~~~~~~~~~~~~
 
-The Responder selects its connection identifier C_R to be the byte string 0x5, which is encoded as 0x5 since it is represented by the 1-byte CBOR int -10:
+The Responder selects its connection identifier C_R to be the byte string 0x05, which is encoded as 0x05 since it is represented by the 1-byte CBOR int 05:
 
 ~~~~~~~~~~~~
 Connection identifier chosen by the Responder
@@ -612,8 +618,8 @@ H(message_1) (CBOR Data Item) (32 bytes)
 
 ~~~~~~~~~~~~
 TH_2 (CBOR Data Item) (32 bytes)
-5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D 01 64 78 C4
-BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
+01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
 ~~~~~~~~~~~~
 
 PRK_2e is specified in {{Section 4.1.2 of RFC9528}}.
@@ -630,16 +636,16 @@ Then, PRK_2e is calculated as defined in {{Section 4.1.2 of RFC9528}}
 
 ~~~~~~~~~~~~
 PRK_2e (Raw Value) (32 bytes)
-D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
-C4 36 20 50 99 48 A9 FD 47 FB D9 29
+D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
+1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
 ~~~~~~~~~~~~
 
 Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.
 
 ~~~~~~~~~~~~
 PRK_3e2m (Raw Value) (32 bytes)
-D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E 1F 30 3E FC
-C4 36 20 50 99 48 A9 FD 47 FB D9 29
+D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
+1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
 ~~~~~~~~~~~~
 
 No external authorization data:
@@ -673,30 +679,30 @@ The Responder constructs message_2 as defined in {{Section 5.3.1 of RFC9528}}:
 
 ~~~~~~~~~~~~
 message_2 (CBOR Sequence) (35 bytes)
-58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4
-E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83 E9
+58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42
+9D 5A D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9
+7D 83 E9
 ~~~~~~~~~~~~
 
 ## message_3
 
-The Initiator computes PRK_4e3m, as described in Section 4, using SALT_4e3m and CRED_PSK:
+The Initiator computes PRK_4e3m, as described in Section 4, using SALT_4e3m and PSK:
 
 ~~~~~~~~~~~~
 SALT_4e3m (Raw Value) (32 bytes)
-A7 C6 8F ED 7C F9 BB BC A3 83 F0 2B A4 27 45 51 EE DD 07 4A
-1C F3 DB ED 4A 41 1F 33 1B 3A AA 59
+ED E0 76 12 14 83 19 EB 72 59 52 71 2A 54 2C 20
+97 61 0A 13 9C 4A 14 1C 8E C5 7A 5F 62 E5 E9 DD
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-CRED_PSK (Raw Value) (38 bytes)
-A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
-20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
+PSK (Raw Value) (16 bytes)
+50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 PRK_4e3m (Raw Value) (32 bytes)
-6B 99 69 23 A8 81 B6 6E C4 05 AD 03 53 94 1A FB 2C DA A5 E2
-AC 65 1D A0 57 9A 08 C7 86 50 2A 66
+B3 65 6C 57 B6 14 4E 9C A3 72 08 81 D8 AF 69 53
+C4 69 17 A8 5D D8 92 E6 E6 13 65 4F FC 4F A8 0B
 ~~~~~~~~~~~~
 
 The transcript hash TH_3 is calculated using the EDHOC hash algorithm:
@@ -705,8 +711,8 @@ TH_3 = H( TH_2, PLAINTEXT_2A )
 
 ~~~~~~~~~~~~
 TH_3 (CBOR Data Item) (32 bytes)
-BC 3B C6 10 D7 25 16 CD 70 3E F7 4C 3A 98 20 17 E5 5D 70 D2
-7F 57 01 E8 91 BD 35 11 9E B9 79 88
+38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
+74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
 No external authorization data:
@@ -721,7 +727,7 @@ The Initiator constructs firstly PLAINTEXT_3B as defined in Section 5.3.1.:
 PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 ~~~~~~~~~~~~
 
-It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_PSK and TH_3 as external_aad:
+It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:
 
 ~~~~~~~~~~~~
 ID_CRED_PSK (CBOR Sequence) (1 byte)
@@ -729,71 +735,87 @@ ID_CRED_PSK (CBOR Sequence) (1 byte)
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-CRED_PSK (Raw Value) (38 bytes)
-A2 02 68 6D 79 64 6F 74 62 6F 74 08 A1 01 A3 01 04 02 41 10
-20 50 50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
+CRED_I (Raw Value) (38 bytes)
+A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+CF 54 63 25 DE A2 14
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+CRED_R (Raw Value) (38 bytes)
+A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 TH_3 (CBOR Data Item) (32 bytes)
-A5 0B 64 8C E2 A6 23 BF C9 72 15 B2 6C 7C EE BD C4 4F 6F 79
-EF AA BE 27 E8 A0 2A 25 C0 C4 93 CC
+38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
+74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
 The initiator computes K_3 and IV_3
 
 ~~~~~~~~~~~~
 K_3 (CBOR Sequence) (16 bytes)
-D8 57 B9 46 46 34 25 35 3C 3C DE BD CB 90 CB 26
+A4 A5 35 4E 1F 79 EC 99 D8 24 35 45 7F A8 FA 0C
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 IV_3 (CBOR Sequence) (13 bytes)
-A1 F6 BE AF 84 64 83 2A 8D 02 C8 5F 04
+18 09 36 AD 4C 31 9A E8 D5 DC C7 E0 09
 ~~~~~~~~~~~~
 
 It then computes CIPHERTEXT_3B:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-48 D0 A4 37 3C 49 C1 76 9B
+48 11 D0 49 1F C8 BB 2E 16 0A
 ~~~~~~~~~~~~
 
 The Initiator computes KEYSTREAM_3 as defined in Section 4:
 
 ~~~~~~~~~~~~
 KEYSTREAM_3 (CBOR Sequence) ()
-D0 1B 7A AD 4C AB BD 14 89 50
+A3 60 2B 68 19 A4 84 40 68 7E 00
 ~~~~~~~~~~~~
 
 It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:
 
 ~~~~~~~~~~~~
 PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-10 48 D0 A4 37 3C 49 C1 76 9B
+10 48 11 D0 49 1F C8 BB 2E 16 0A
 ~~~~~~~~~~~~
 
 It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-C2 47 AA 2F 94 B8 F9 41 21 C5
+B3 28 3A B8 50 BB 4C FB 46 68 00
 ~~~~~~~~~~~~
 
 The Initiator computes message_3 as defined in Section 5.3.2.:
 
 ~~~~~~~~~~~~
 message_3 (CBOR Sequence) (11 bytes)
-4A C2 47 AA 2F 94 B8 F9 41 21 C5
+4A B3 28 3A B8 50 BB 4C FB 46 68
 ~~~~~~~~~~~~
 
 The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
-TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_PSK )
+TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
 ~~~~~~~~~~~~
 TH_4 (CBOR Data Item) (32 bytes)
-E5 67 45 39 75 66 CF F9 A6 93 DF 29 8D A4 F9 9E 1F 92 57 54
-44 6B 5B 11 09 61 59 E5 C4 FC 0B FD
+11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
+0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+~~~~~~~~~~~~
+
+After sending message_3, the Initiator can compute PRK_out
+
+~~~~~~~~~~~~
+PRK_out (Raw  value) (32 bytes)
+B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
+D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 ~~~~~~~~~~~~
 
 ## message_4
@@ -814,24 +836,38 @@ The Responder computes K_4 and IV_4
 
 ~~~~~~~~~~~~
 K_4 (CBOR Sequence) (16 bytes)
-BC 34 CE B4 E3 58 36 06 A0 81 6A 53 A5 0A E1 07
+81 C8 1A 4F DC 80 AE 09 99 59 98 61 CA 55 0A B3
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 IV_4 (CBOR Sequence) (13 bytes)
-12 2B 58 9D EB 77 81 A1 A5 9D D4 42 7C
+BF 14 F7 95 6D 54 49 99 B0 9A 6A CB 0D
 ~~~~~~~~~~~~
 
 The Responder computes message_4:
 
 ~~~~~~~~~~~~
-message_4 (CBOR Sequence) (9 bytes)
-48 69 C1 F1 2E 13 44 A3 93
+48 AA CC FA 23 A4 0F 4A B5
+~~~~~~~~~~~~
+
+The Responder then computes PRK_out:
+
+~~~~~~~~~~~~
+PRK_out (Raw  value) (32 bytes)
+B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
+D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
 ~~~~~~~~~~~~
 
 # Change Log
 
 RFC Editor: Please remove this appendix.
+
+* From -04 to -05
+
+  * Fixed misbinding attacks and resumption
+  * Updated privacy considerations
+  * Editorial changes
+  * Fixed test vectors
 
 * From -03 to -04
 
