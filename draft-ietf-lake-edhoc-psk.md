@@ -94,7 +94,7 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 
 # Protocol
 
-In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3. CRED_I and CRED_R are authentication credentials of Initiator and Responder, respectively, associated with the PSK. The format of CRED_I and CRED_R can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.
+In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3. CRED_I and CRED_R are authentication credentials of Initiator and Responder, respectively, associated with the PSK. CRED_I is provisioned to the Responder and CRED_R is provisoned to the Initiator. The format of CRED_I and CRED_R can vary depending on the implementation. Through this document we will refer to the Pre-Shared Key authentication method as EDHOC-PSK.
 
 ## Credentials
 
@@ -113,7 +113,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 
 The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK may adopt encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key, not a public authentication key.
 
-It is RECOMMENDED that ID_CRED_PSK uniquely identifies the corresponding PSK, since ambiguity may require the recipient to try multiple keys.
+It is RECOMMENDED that ID_CRED_PSK stochastically and uniquely identifies the corresponding PSK. Uniqueness avoids ambiguity that may require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. This aligns with the requirements for rKID in session resumption.
 
 ### CRED_I and CRED_R
 
