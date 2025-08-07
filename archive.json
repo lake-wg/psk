@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-31T01:13:40.361160+00:00",
+  "timestamp": "2025-08-07T01:14:35.491363+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -962,24 +962,26 @@
       "id": "PR_kwDONwrUhc6fypZR",
       "title": "ID_CRED_PSK, PSK, CRED_I, and CRED_R",
       "url": "https://github.com/lake-wg/psk/pull/27",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Several changes are needed to the document to mitigate reflection attacks and to enable resumption. Additionally the terminology regarding ID_CRED_PSK, PSK, and CRED_x are fixed.",
       "createdAt": "2025-07-21T06:54:58Z",
-      "updatedAt": "2025-07-30T13:52:47Z",
+      "updatedAt": "2025-08-05T11:01:48Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "01c12bce5b7f86fcb661b78ad3a1e27079215607",
       "headRepository": "lake-wg/psk",
       "headRefName": "emanjon-patch-3",
-      "headRefOid": "e8b9bcbd2dfb2d8cd478c721a0b1feb59d921efc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "45339f32777b44deca1b0db431dd4054d9cc9fd6",
+      "closedAt": "2025-08-05T11:01:48Z",
+      "mergedAt": "2025-08-05T11:01:48Z",
+      "mergedBy": "ElsaLopez133",
+      "mergeCommit": {
+        "oid": "dfef93d8d302d8afbb5884c822d30f2c76cd5184"
+      },
       "comments": [
         {
           "author": "ElsaLopez133",
@@ -1442,6 +1444,26 @@
           "createdAt": "2025-07-29T09:04:59Z",
           "updatedAt": "2025-07-29T09:04:59Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDONwrUhc64C6z4",
+          "commit": {
+            "abbreviatedOid": "e8b9bcb"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-05T10:57:36Z",
+          "updatedAt": "2025-08-05T10:57:36Z",
+          "comments": [
+            {
+              "originalPosition": 158,
+              "body": "I added a comment in section 3.1 Credentials",
+              "createdAt": "2025-08-05T10:57:36Z",
+              "updatedAt": "2025-08-05T10:57:36Z"
+            }
+          ]
         }
       ]
     }
