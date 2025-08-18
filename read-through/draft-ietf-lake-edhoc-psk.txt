@@ -272,7 +272,7 @@ Table of Contents
    Implementations MUST ensure that CRED_I and CRED_R are distinct,
    e.g., by carrying distinct identities in their sub claims (e.g.,
    "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10").  This
-   alleviates correct identification of parties and prevents reflection
+   simplifies correct identification of parties and prevents reflection
    and misbinding attacks, as per Appendix D.2 of [RFC9528].
 
 3.1.3.  Encoding and processing guidelines
@@ -320,7 +320,7 @@ Table of Contents
 
    ID_CRED_PSK is encrypted using a key derived from a shared secret
    obtained through the first two messages.  In case a Diffie-Hellman
-   key exchange is used, G_X and G_Y are the ephemeral public keys and
+   key exchange is used, G_X and G_Y are the ephemeral public keys, and
    the shared secret G_XY is the DH shared secret, just as in [RFC9528].
    If the Diffie-Hellman procedure is replaced by a KEM procedure, then
    G_X and G_Y are encapsulation key and ciphertext, respectively, and
@@ -354,7 +354,7 @@ Table of Contents
    needed to authenticate the Responder and achieve mutual
    authentication in EDHOC if not relying on external applications, such
    as OSCORE.  In either case, with a fourth message the protocol
-   additionally provides explicit key confirmation.
+   additionally enables explicit key confirmation, see Section 5.4.
 
 4.  Key Derivation
 
@@ -553,11 +553,13 @@ Table of Contents
 
    After verifying message_4, the Initiator is assured that the
    Responder has calculated the key PRK_out (key confirmation) and that
-   no other party can derive the key.  The Initiator MUST NOT
-   persistently store PRK_out or application keys until the Initiator
-   has verified message_4 or some other fourth message protected with a
-   derived application key, such as an OSCORE message, from the
-   Responder and the application has authenticated the Responder.
+   no other party can derive the key.
+
+   The Initiator MUST NOT persistently store PRK_out or application keys
+   until the Initiator has verified message_4, or some other fourth
+   message from the Responder protected with an exported application key
+   such as an OSCORE message, and the application has authenticated the
+   Responder.
 
    Compared to [RFC9528], a fourth message does not only provide key
    confirmation but also Responder authentication.  For mutual
@@ -734,7 +736,7 @@ Table of Contents
    message_4, with a required change in the protocol's language to: The
    Initiator SHALL NOT persistently store PRK_out or application keys
    until the Initiator has verified message_4 or a message protected
-   with a derived application key, such as an OSCORE message.
+   with an exported application key, such as an OSCORE message.
 
    This change ensures that key materials are only stored once their
    integrity and authenticity are confirmed, thereby enhancing privacy

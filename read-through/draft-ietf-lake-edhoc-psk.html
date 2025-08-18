@@ -1409,7 +1409,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 </pre><a href="#section-3.1.2-4" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1.2-5">Alternative formats for CRED_I and CRED_R <span class="bcp14">MAY</span> be used. When using a resumption PSK, CRED_I and CRED_R <span class="bcp14">MUST</span> be the credentials from the initial EDHOC exchange, for example public-key credentials such as X.509 certificates.<a href="#section-3.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-6">Implementations <span class="bcp14">MUST</span> ensure that CRED_I and CRED_R are distinct, e.g., by carrying distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This alleviates correct identification of parties and prevents reflection and misbinding attacks, as per <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-D.2" class="relref">Appendix D.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-6">Implementations <span class="bcp14">MUST</span> ensure that CRED_I and CRED_R are distinct, e.g., by carrying distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This simplifies correct identification of parties and prevents reflection and misbinding attacks, as per <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-D.2" class="relref">Appendix D.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3.1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="encoding-and-processing-guidelines">
@@ -1456,7 +1456,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-message-flow-of-edhoc-psk" class="section-name selfRef">Message Flow of EDHOC-PSK</a>
         </h3>
 <p id="section-3.2-1">The message flow of EDHOC-PSK aligns with the methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, replacing authentication based on public keys with symmetric keys. For identity protection, credential related message fields appear first in message_3.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. In case a Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys and the shared secret G_XY is the DH shared secret, just as in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. If the Diffie-Hellman procedure is replaced by a KEM procedure, then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is given by the KEM, see <span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. In case a Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys, and the shared secret G_XY is the DH shared secret, just as in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. If the Diffie-Hellman procedure is replaced by a KEM procedure, then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is given by the KEM, see <span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">The Responder authenticates the Initiator first. <a href="#fig-variant2" class="auto internal xref">Figure 1</a> shows the message flow of the EDHOC-PSK authentication method.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <span id="name-overview-of-message-flow-of"></span><div id="fig-variant2">
 <figure id="figure-1">
@@ -1508,7 +1508,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
           </figcaption></figure>
 </div>
 <p id="section-3.2-5">This approach provides identity protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. In either case, with a fourth message the protocol additionally provides explicit key confirmation.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. In either case, with a fourth message the protocol additionally enables explicit key confirmation, see <a href="#message-4" class="auto internal xref">Section 5.4</a>.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1765,8 +1765,9 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-message-4" class="section-name selfRef">Message 4</a>
         </h3>
 <p id="section-5.4-1">Message 4 is formatted and processed as specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.5" class="relref">Section 5.5</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key. The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or some other fourth message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
-<p id="section-5.4-3">Compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, a fourth message does not only provide key confirmation but also Responder authentication. For mutual authentication a fourth message is mandatory.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-3">The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4, or some other fourth message from the Responder protected with an exported application key such as an OSCORE message, and the application has authenticated the Responder.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">Compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, a fourth message does not only provide key confirmation but also Responder authentication. For mutual authentication a fourth message is mandatory.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1923,7 +1924,7 @@ That is, upon receiving EDHOC message_3, the Responder knows for sure that the o
 <p id="section-8.6-1">For use cases involving the transmission of application data, application data can be sent concurrently with message_3, maintaining the protocol's efficiency.
 In applications such as EAP-EDHOC, where application data is not sent, message_4 is mandatory. Thus, the EDHOC-PSK authentication method does not include any extra messages.
 Other implementations may continue using OSCORE in place of EDHOC message_4, with a required change in the protocol's language to:
-      The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message.<a href="#section-8.6-1" class="pilcrow">¶</a></p>
+      The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with an exported application key, such as an OSCORE message.<a href="#section-8.6-1" class="pilcrow">¶</a></p>
 <p id="section-8.6-2">This change ensures that key materials are only stored once their integrity and authenticity are confirmed, thereby enhancing privacy by preventing early storage of potentially compromised keys.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
 <p id="section-8.6-3">Lastly, whether the Initiator or Responder authenticates first is not relevant when using symmetric keys.
 This consideration was important for the privacy properties when using asymmetric authentication but is not significant in the context of symmetric key usage.<a href="#section-8.6-3" class="pilcrow">¶</a></p>
