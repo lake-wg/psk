@@ -1778,7 +1778,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumption</a>
       </h2>
 <p id="section-6-1">This section defines how PSKs are used for session resumption in EDHOC.
-Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter is used to derive both rPSK and rKID:<a href="#section-6-1" class="pilcrow">¶</a></p>
+Following <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC_Exporter is used to derive both resumption parameters rPSK and rKID:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6-2">
 <pre>
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -1792,7 +1792,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.1.1">resumption_psk_length is by default the key_length (length of the encryption key of the EDHOC AEAD algorithm of the selected cipher suite) of the session in which the EDHOC_Exporter is called.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.2">
-          <p id="section-6-4.2.1">id_cred_psk_length is by default 2.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-4.2.1">id_cred_psk_length is by default 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, <span class="bcp14">MUST</span> generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
@@ -1834,7 +1834,7 @@ That is, upon receiving EDHOC message_3, the Responder knows for sure that the o
 <p id="section-6.2-1">When using resumption PSKs:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1">During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. This is seen as a minor privacy problem. EDHOC-PSK provides much stronger privacy properties than many other popular protocols with PSK authentication.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.1.1">During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. Considering the overall identify protection properties of EDHOC-PSK, this is considered a minor privacy issue.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
