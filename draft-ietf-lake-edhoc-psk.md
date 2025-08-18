@@ -97,7 +97,7 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 
 This document specifies a new EDHOC authentication method (see {{Section 3.2 of RFC9528}}) which we will refer to as the Pre-Shared Key method (EDHOC-PSK). The new EDHOC method shares some features and have some differences compared to the previously specified EDHOC methods.
 
-The basis for the security is the Pre-Shared Key (PSK) shared between Initiator and Responder. Similar to the EDHOC methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information of the Initiator and Responder, respectively. However, there is only one shared authentication credential identifier, ID_CRED_PSK, used by the Responder to retrieve the PSK and the authentication credentials.
+The basis for authentication is the Pre-Shared Key (PSK) shared between Initiator and Responder. Similar to the EDHOC methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information of the Initiator and Responder, respectively. However, there is only one shared authentication credential identifier, ID_CRED_PSK, used by the Responder to retrieve the PSK and the authentication credentials.
 
 ## Credentials
 
