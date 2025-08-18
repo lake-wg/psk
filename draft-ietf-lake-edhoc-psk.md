@@ -150,7 +150,7 @@ A common representation of CRED_I and CRED_R when using an external PSK is a CBO
 
 Alternative formats for CRED_I and CRED_R MAY be used. When using a resumption PSK, CRED_I and CRED_R MUST be the credentials from the initial EDHOC exchange, for example public-key credentials such as X.509 certificates.
 
-Implementations MUST ensure that CRED_I and CRED_R are distinct, e.g., by carrying distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This alleviates correct identification of parties and prevents reflection and misbinding attacks, as per {{Appendix D.2 of RFC9528}}.
+Implementations MUST ensure that CRED_I and CRED_R are distinct, e.g., by carrying distinct identities in their sub claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). This simplifies correct identification of parties and prevents reflection and misbinding attacks, as per {{Appendix D.2 of RFC9528}}.
 
 ### Encoding and processing guidelines
 
@@ -174,7 +174,7 @@ These optimizations MUST NOT be applied in COSE header parameters or other conte
 
 The message flow of EDHOC-PSK aligns with the methods defined in {{RFC9528}}, replacing authentication based on public keys with symmetric keys. For identity protection, credential related message fields appear first in message_3.
 
-ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. In case a Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys and the shared secret G_XY is the DH shared secret, just as in {{RFC9528}}. If the Diffie-Hellman procedure is replaced by a KEM procedure, then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is given by the KEM, see {{I-D.spm-lake-pqsuites}}.
+ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. In case a Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys, and the shared secret G_XY is the DH shared secret, just as in {{RFC9528}}. If the Diffie-Hellman procedure is replaced by a KEM procedure, then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is given by the KEM, see {{I-D.spm-lake-pqsuites}}.
 
  The Responder authenticates the Initiator first. {{fig-variant2}} shows the message flow of the EDHOC-PSK authentication method.
 
@@ -199,7 +199,7 @@ Initiator                                                   Responder
 {: #fig-variant2 title="Overview of Message Flow of EDHOC-PSK." artwork-align="center"}
 
 This approach provides identity protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. In either case, with a fourth message the protocol additionally provides explicit key confirmation.
+message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. In either case, with a fourth message the protocol additionally enables explicit key confirmation, see {{message-4}}.
 
 # Key Derivation {#key-der}
 
@@ -338,11 +338,13 @@ Lastly, the Responder computes TH_4 as defined in {{key-der}}
 
 No MAC_3 or signature is needed, as the AEAD tag guarantees both integrity and authenticity in this symmetric setting.
 
-## Message 4
+## Message 4 {#message-4}
 
 Message 4 is formatted and processed as specified in {{Section 5.5 of RFC9528}}.
 
-After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key. The Initiator MUST NOT persistently store PRK_out or application keys until the Initiator has verified message_4 or some other fourth message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.
+After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key.
+
+The Initiator MUST NOT persistently store PRK_out or application keys until the Initiator has verified message_4, or some other fourth message from the Responder protected with an exported application key such as an OSCORE message, and the application has authenticated the Responder.
 
 Compared to {{RFC9528}}, a fourth message does not only provide key confirmation but also Responder authentication. For mutual authentication a fourth message is mandatory.
 
@@ -433,7 +435,7 @@ In other protocols, the reuse of ephemeral keys, particularly when combined with
 For use cases involving the transmission of application data, application data can be sent concurrently with message_3, maintaining the protocol's efficiency.
 In applications such as EAP-EDHOC, where application data is not sent, message_4 is mandatory. Thus, the EDHOC-PSK authentication method does not include any extra messages.
 Other implementations may continue using OSCORE in place of EDHOC message_4, with a required change in the protocol's language to:
-      The Initiator SHALL NOT persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message.
+      The Initiator SHALL NOT persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with an exported application key, such as an OSCORE message.
 
 This change ensures that key materials are only stored once their integrity and authenticity are confirmed, thereby enhancing privacy by preventing early storage of potentially compromised keys.
 
