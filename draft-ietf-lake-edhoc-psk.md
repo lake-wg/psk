@@ -199,7 +199,7 @@ Initiator                                                   Responder
 {: #fig-variant2 title="Overview of Message Flow of EDHOC-PSK." artwork-align="center"}
 
 This approach provides identity protection against passive attackers for both Initiator and Responder.
-message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. With this fourth message, the protocol achieves both explicit key confirmation and mutual authentication.
+message_4 remains optional, but is needed to authenticate the Responder and achieve mutual authentication in EDHOC if not relying on external applications, such as OSCORE. In either case, with a fourth message the protocol additionally provides explicit key confirmation.
 
 # Key Derivation {#key-der}
 
@@ -342,9 +342,9 @@ No MAC_3 or signature is needed, as the AEAD tag guarantees both integrity and a
 
 Message 4 is formatted and processed as specified in {{Section 5.5 of RFC9528}}.
 
-Compared to {{RFC9528}}, a fourth message does not only provide key confirmation but also Responder authentication. To authenticate the Responder and achieve mutual authentication, a fourth message is mandatory.
+After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key. The Initiator MUST NOT persistently store PRK_out or application keys until the Initiator has verified message_4 or some other fourth message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.
 
-After verifying message_4, the Initiator is assured that the Responder has calculated the key PRK_out (key confirmation) and that no other party can derive the key. The Initiator MUST NOT persistently store PRK_out or application keys until the Initiator has verified message_4 or a message protected with a derived application key, such as an OSCORE message, from the Responder and the application has authenticated the Responder.
+Compared to {{RFC9528}}, a fourth message does not only provide key confirmation but also Responder authentication. For mutual authentication a fourth message is mandatory.
 
 # PSK usage for Session Resumption {#psk-resumption}
 
@@ -410,7 +410,7 @@ In symmetric key setups, using the same CRED_x for both parties makes the protoc
 
 ## Mutual Authentication
 
-EDHOC-PSK provides mutual authentication, assuming the PSK remains secret. However, if the optional fourth message (message_4) is omitted, mutual authentication is not guaranteed—unless the Responder is later authenticated through an OSCORE message or other application data demonstrating possession of the PSK. When message_4 is included, the protocol ensures both mutual authentication and explicit key confirmation.
+EDHOC-PSK enables mutual authentication and explicit key confirmation with the inclusion of a fourth message demonstrating possession of the PSK (assuming the PSK remains secret). The fourth message may either be the optional message_4 or application data such as an OSCORE message protected with an exported application key.
 
 ## External Authorization Data Protection
 
