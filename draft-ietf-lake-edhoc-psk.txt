@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 6 February 2026                               J. Preuß Mattsson
+Expires: 19 February 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                           5 August 2025
+                                                          18 August 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 February 2026.
+   This Internet-Draft will expire on 19 February 2026.
 
 Copyright Notice
 
@@ -159,8 +159,8 @@ Table of Contents
    overhead compared to public-key authentication.  In this case, the
    PSK (resumption PSK) is provisioned after the establishment of a
    previous EDHOC session by using EDHOC_Exporter (resumption PSK).
-   Therefore, the external PSK is supposed to be a long-term credential
-   while the resumption PSK is a session key.
+   Thus, the external PSK is supposed to be a long-term credential while
+   the resumption PSK is a session key.
 
    Section 3 provides an overview of the PSK method flow and
    credentials.  Section 4 outlines the changes to key derivation
@@ -187,14 +187,19 @@ Table of Contents
 
 3.  Protocol
 
-   In this method, the Pre-Shared Key identifier (ID_CRED_PSK), which
-   allows retrieval of PSK, CRED_I, and CRED_R, is sent in message_3.
-   CRED_I and CRED_R are authentication credentials of Initiator and
-   Responder, respectively, associated with the PSK.  CRED_I is
-   provisioned to the Responder and CRED_R is provisoned to the
-   Initiator.  The format of CRED_I and CRED_R can vary depending on the
-   implementation.  Through this document we will refer to the Pre-
-   Shared Key authentication method as EDHOC-PSK.
+   This document specifies a new EDHOC authentication method (see
+   Section 3.2 of [RFC9528]) which we will refer to as the Pre-Shared
+   Key method (EDHOC-PSK).  The new EDHOC method shares some features
+   and have some differences compared to the previously specified EDHOC
+   methods.
+
+   The basis for authentication is the Pre-Shared Key (PSK) shared
+   between Initiator and Responder.  Similar to the EDHOC methods
+   defined in [RFC9528], CRED_I and CRED_R are authentication
+   credentials containing identifying information of the Initiator and
+   Responder, respectively.  However, there is only one shared
+   authentication credential identifier, ID_CRED_PSK, used by the
+   Responder to retrieve the PSK and the authentication credentials.
 
 3.1.  Credentials
 
@@ -219,7 +224,7 @@ Table of Contents
    patterns from [RFC9528], it differs fundamentally in that it
    identifies a symmetric key, not a public authentication key.
 
-   It is RECOMMENDED that ID_CRED_PSK stochastically and uniquely
+   It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically
    identifies the corresponding PSK.  Uniqueness avoids ambiguity that
    may require the recipient to try multiple keys, while stochasticity
    reduces the risk of identifier collisions and supports stateless
@@ -236,9 +241,8 @@ Table of Contents
 
    A common representation of CRED_I and CRED_R when using an external
    PSK is a CBOR Web Token (CWT) or CWT Claims Set (CCS) [RFC8392] whose
-   'cnf' claim uses the confirmation method 'COSE_Key' to carry the PSK.
-   An example of CRED_I and CRED_R associated with the same PSK would
-   be:
+   'cnf' claim uses the confirmation method 'COSE_Key'.  An example of
+   CRED_I and CRED_R could be:
 
    {                                               /CCS/
      2 : "42-50-31-FF-EF-37-32-39",                /sub/
@@ -246,7 +250,6 @@ Table of Contents
        1 : {                                       /COSE_Key/
           1 : 4,                                   /kty/
           2 : h'0f',                               /kid/
-         -1 : h'50930FF462A77A3540CF546325DEA214'  /k/
        }
      }
    }
@@ -257,21 +260,20 @@ Table of Contents
        1 : {                                       /COSE_Key/
           1 : 4,                                   /kty/
           2 : h'0f',                               /kid/
-         -1 : h'50930FF462A77A3540CF546325DEA214'  /k/
        }
      }
    }
 
    Alternative formats for CRED_I and CRED_R MAY be used.  When using a
-   resumption PSK, CRED_I and CRED_R are the credentials from the
-   initial EDHOC exchange and can for example be public-key credentials
-   such as certicates.
+   resumption PSK, CRED_I and CRED_R MUST be the credentials from the
+   initial EDHOC exchange, for example public-key credentials such as
+   X.509 certificates.
 
-   Implementations MUST ensure that CRED_I and CRED_R are distict, e.g.,
-   by carrying distinct identities in their sub claims (e.g., "42-50-31-
-   FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10").  This enables correct
-   identification of parties and prevents reflection and misbinding
-   attacks, as per Appendix D.2 of [RFC9528].
+   Implementations MUST ensure that CRED_I and CRED_R are distinct,
+   e.g., by carrying distinct identities in their sub claims (e.g.,
+   "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10").  This
+   simplifies correct identification of parties and prevents reflection
+   and misbinding attacks, as per Appendix D.2 of [RFC9528].
 
 3.1.3.  Encoding and processing guidelines
 
@@ -311,12 +313,21 @@ Table of Contents
 
 3.2.  Message Flow of EDHOC-PSK
 
-   The ID_CRED_PSK is sent in message_3, encrypted using a key derived
-   from the ephemeral shared secret, G_XY, calculated from the
-   Initiator's ephemeral public key G_X or from the encapsulation G_Y
-   and the private key corresponding to G_X.  When ECDHE is used, the
-   encapsulation G_Y is the Responder's ephemeral public key.  The
-   Responder authenticates the Initiator first.  Figure 1 shows the
+   The message flow of EDHOC-PSK aligns with the methods defined in
+   [RFC9528], replacing authentication based on public keys with
+   symmetric keys.  For identity protection, credential related message
+   fields appear first in message_3.
+
+   ID_CRED_PSK is encrypted using a key derived from a shared secret
+   obtained through the first two messages.  In case a Diffie-Hellman
+   key exchange is used, G_X and G_Y are the ephemeral public keys, and
+   the shared secret G_XY is the DH shared secret, just as in [RFC9528].
+   If the Diffie-Hellman procedure is replaced by a KEM procedure, then
+   G_X and G_Y are encapsulation key and ciphertext, respectively, and
+   the shared secret G_XY is given by the KEM, see
+   [I-D.spm-lake-pqsuites].
+
+   The Responder authenticates the Initiator first.  Figure 1 shows the
    message flow of the EDHOC-PSK authentication method.
 
    Initiator                                                   Responder
@@ -342,15 +353,13 @@ Table of Contents
    for both Initiator and Responder. message_4 remains optional, but is
    needed to authenticate the Responder and achieve mutual
    authentication in EDHOC if not relying on external applications, such
-   as OSCORE.  With this fourth message, the protocol achieves both
-   explicit key confirmation and mutual authentication.
+   as OSCORE.  In either case, with a fourth message the protocol
+   additionally enables explicit key confirmation, see Section 5.4.
 
 4.  Key Derivation
 
    The pseudorandom keys (PRKs) used for the PSK authentication method
-   in EDHOC are derived using EDHOC_Extract, as done in [RFC9528].
-   EDHOC_Extract allows to derive fixed-length uniformly pseudorandom
-   keys (PRKs) from ECDH shared secrets.
+   in EDHOC are derived using EDHOC_Extract, as in [RFC9528].
 
    PRK  = EDHOC_Extract( salt, IKM )
 
@@ -360,35 +369,31 @@ Table of Contents
 
    To maintain a uniform key schedule across the different EDHOC
    authentication methods, the same pseudorandom key notation (PRK_2e,
-   PRK_3e2m, and PRK_4e3m) is retained.  In the case of EDHOC with PSK-
-   based authentication, no MACs are used.  Consequently, while the
-   naming convention suggests involvement in both encryption and MAC
-   operations, only the parts related to encryption (2e, 3e, and 4e) are
-   relevant.  The index notation does not fully reflect the functional
-   role of the keys in this method but is preserved for consistency with
-   other EDHOC authentication variants
+   PRK_3e2m, and PRK_4e3m) is retained.  The index notation is preserved
+   for consistency with other EDHOC authentication variants although it
+   does not fully reflect the functional role of the keys in this
+   method; for example, no MACs are used in EDHOC-PSK.
 
-   The transcript hash TH_2 = H( G_Y, H(message_1) ) is defined as in
-   Section 5.3.2 of [RFC9528], the others are modified as specified
-   below.
+   PRK_2e is extracted as in [RFC9528] with
 
-   Figure 2 lists the key derivations that differ from those specified
-   in Section 4.1.2 of [RFC9528].  The following data is used as in
-   [RFC9528]:
+   *  salt = TH_2, and
 
-   *  PRK_2e is extracted with
+   *  IKM = G_XY,
 
-      -  salt = TH_2, and
+   where the transcript hash TH_2 = H( G_Y, H(message_1) ) is defined as
+   in Section 5.3.2 of [RFC9528].
 
-      -  IKM = G_XY.
+   SALT_4e3m is derived from PRK_3e2m and TH_3, as in Figure 6 of
+   [RFC9528].
 
-   *  SALT_4e3m is derived from PRK_3e2m and TH_3, see Figure 6 of
-      [RFC9528].
+   The other PRKs and THs are modified as specified below.  Figure 2
+   lists the key derivations that differ from those specified in
+   Section 4.1.2 of [RFC9528].
 
     PRK_3e2m     = PRK_2e
+    KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
     PRK_4e3m     = EDHOC_Extract( SALT_4e3m, PSK )
     KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3a )
-    KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
     K_3          = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
     IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 
@@ -396,16 +401,16 @@ Table of Contents
 
    where:
 
+   *  KEYSTREAM_2A is used to encrypt PLAINTEXT_2A in message_2.
+
+      -  plaintext_length_2a is the length of PLAINTEXT_2A in message_2.
+
    *  KEYSTREAM_3A is used to encrypt the PLAINTEXT_3A, a concatenation
       of ID_CRED_PSK and CIPHERTEXT_3B, in message_3.
 
-   *  KEYSTREAM_2A is used to encrypt PLAINTEXT_2A in message_2.
+      -  plaintext_length_3a is the length of PLAINTEXT_3A in message_3.
 
    *  TH_3 = H( TH_2, PLAINTEXT_2A ).
-
-   *  plaintext_length_2a is the length of PLAINTEXT_2A in message_2.
-
-   *  plaintext_length_3a is the length of PLAINTEXT_3A in message_3.
 
    Additionally, the definition of the transcript hash TH_4 is modified
    as:
@@ -438,16 +443,15 @@ Table of Contents
 
    *  CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A
 
-   Contrary to [RFC9528], ID_CRED_R, MAC_2, and Signature_or_MAC_2 are
-   not used.  C_R, EAD_2 are defined in Section 5.3.2 of [RFC9528].
-   KESYTREAM_2A is defined in Section 4.
+   C_R, EAD_2 are defined in Section 5.3.2 of [RFC9528].  Contrary to
+   [RFC9528], ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used.
+   KEYSTREAM_2A is defined in Section 4.
 
 5.2.3.  Initiator Processing of Message 2
 
    Upon receiving message_2, the Initiator processes it as follows:
 
-   *  It computes KEYSTREAM_2A, following Section 4, where
-      plaintext_length_2a is the length of PLAINTEXT_2A.
+   *  It computes KEYSTREAM_2A, following Section 4.
 
    *  It decrypts CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A =
       CIPHERTEXT_2A XOR KEYSTREAM_2A
@@ -476,8 +480,7 @@ Table of Contents
          o  If the length of PLAINTEXT_3A exceeds the output of
             EDHOC_KDF, then Appendix G of [RFC9528] applies.
 
-      -  Compute KEYSTREAM_3A as in Section 4, where plaintext_length_3a
-         is the length of PLAINTEXT_3A.
+      -  Compute KEYSTREAM_3A as in Section 4.
 
       -  CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A
 
@@ -533,7 +536,7 @@ Table of Contents
       -  AEAD algorithm from cipher suite
 
    If verification fails, this indicates either the Initiator does not
-   know the correct PSK, or the message was tampered with.  Contrary, if
+   know the correct PSK, or the message was tampered with.  If
    verification succeeds, the Responder concludes that the Initiator
    knows the correct PSK, has correctly derived the transcript hash TH_3
    and is actively participating in the protocol.
@@ -548,24 +551,25 @@ Table of Contents
    Message 4 is formatted and processed as specified in Section 5.5 of
    [RFC9528].
 
-   Compared to [RFC9528], a fourth message does not only provide key
-   confirmation but also Responder authentication.  To authenticate the
-   Responder and achieve mutual authentication, a fourth message is
-   mandatory.
-
    After verifying message_4, the Initiator is assured that the
    Responder has calculated the key PRK_out (key confirmation) and that
-   no other party can derive the key.  The Initiator MUST NOT
-   persistently store PRK_out or application keys until the Initiator
-   has verified message_4 or a message protected with a derived
-   application key, such as an OSCORE message, from the Responder and
-   the application has authenticated the Responder.
+   no other party can derive the key.
+
+   The Initiator MUST NOT persistently store PRK_out or application keys
+   until the Initiator has verified message_4, or some other fourth
+   message from the Responder protected with an exported application key
+   such as an OSCORE message, and the application has authenticated the
+   Responder.
+
+   Compared to [RFC9528], a fourth message does not only provide key
+   confirmation but also Responder authentication.  For mutual
+   authentication a fourth message is mandatory.
 
 6.  PSK usage for Session Resumption
 
    This section defines how PSKs are used for session resumption in
    EDHOC.  Following Section 4.2 of [RFC9528], EDHOC_Exporter is used to
-   derive both rPSK and rKID:
+   derive both resumption parameters rPSK and rKID:
 
    rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
    rKID  = EDHOC_Exporter( 3, h'', id_cred_psk_length )
@@ -577,7 +581,7 @@ Table of Contents
       encryption key of the EDHOC AEAD algorithm of the selected cipher
       suite) of the session in which the EDHOC_Exporter is called.
 
-   *  id_cred_psk_length is by default 2.
+   *  id_cred_psk_length is by default 2 bytes.
 
    A peer that has successfully completed an EDHOC session, regardless
    of the used authentication method and regardless of if the session is
@@ -623,10 +627,9 @@ Table of Contents
       not visible to a passive attacker.  Reuse of the same ID_CRED_PSK
       can however happen due to transmission errors or when one peer
       lose its stored resumption key.  An active attacker can force
-      reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK.  This is
-      seen as a minor privacy problem.  EDHOC-PSK provides much stronger
-      privacy properties than many other popular protocols with PSK
-      authentication.
+      reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK.
+      Considering the overall identify protection properties of EDHOC-
+      PSK, this is considered a minor privacy issue.
 
 6.3.  Security Considerations for Resumption
 
@@ -670,13 +673,11 @@ Table of Contents
 
 8.2.  Mutual Authentication
 
-   EDHOC-PSK provides mutual authentication, assuming the PSK remains
-   secret.  However, if the optional fourth message (message_4) is
-   omitted, mutual authentication is not guaranteed—unless the Responder
-   is later authenticated through an OSCORE message or other application
-   data demonstrating possession of the PSK.  When message_4 is
-   included, the protocol ensures both mutual authentication and
-   explicit key confirmation.
+   EDHOC-PSK enables mutual authentication and explicit key confirmation
+   with the inclusion of a fourth message demonstrating possession of
+   the PSK (assuming the PSK remains secret).  The fourth message may
+   either be the optional message_4 or application data such as an
+   OSCORE message protected with an exported application key.
 
 8.3.  External Authorization Data Protection
 
@@ -734,7 +735,7 @@ Table of Contents
    message_4, with a required change in the protocol's language to: The
    Initiator SHALL NOT persistently store PRK_out or application keys
    until the Initiator has verified message_4 or a message protected
-   with a derived application key, such as an OSCORE message.
+   with an exported application key, such as an OSCORE message.
 
    This change ensures that key materials are only stored once their
    integrity and authenticity are confirmed, thereby enhancing privacy
@@ -782,6 +783,13 @@ Table of Contents
          Table 2: Additions to the EDHOC Exporter Label Registry.
 
 10.  Normative References
+
+   [I-D.spm-lake-pqsuites]
+              Selander, G. and J. P. Mattsson, "Quantum-Resistant Cipher
+              Suites for EDHOC", Work in Progress, Internet-Draft,
+              draft-spm-lake-pqsuites-00, 6 July 2025,
+              <https://datatracker.ietf.org/doc/html/draft-spm-lake-
+              pqsuites-00>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
