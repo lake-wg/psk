@@ -351,7 +351,7 @@ Compared to {{RFC9528}}, a fourth message does not only provide key confirmation
 # PSK usage for Session Resumption {#psk-resumption}
 
 This section defines how PSKs are used for session resumption in EDHOC.
-Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both rPSK and rKID:
+Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both resumption parameters rPSK and rKID:
 
 ~~~~~~~~~~~~
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -363,7 +363,7 @@ where:
 
   * resumption_psk_length is by default the key_length (length of the encryption key of the EDHOC AEAD algorithm of the selected cipher suite) of the session in which the EDHOC_Exporter is called.
 
-  * id_cred_psk_length is by default 2.
+  * id_cred_psk_length is by default 2 bytes.
 
 A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
 To guarantee that both peers share the same resumption key, when a session is run using rPSK_i as a resumption key:
@@ -387,7 +387,7 @@ When using a resumption PSK derived from a previous EDHOC exchange:
 
 When using resumption PSKs:
 
-  * During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. This is seen as a minor privacy problem. EDHOC-PSK provides much stronger privacy properties than many other popular protocols with PSK authentication.
+  * During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. Considering the overall identify protection properties of EDHOC-PSK, this is considered a minor privacy issue.
 
 ## Security Considerations for Resumption
 
