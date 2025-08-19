@@ -267,7 +267,7 @@ CIPHERTEXT_2A is calculated with a binary additive stream cipher, using a keystr
 * PLAINTEXT_2A = ( C_R, ? EAD_2 )
 * CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A
 
-C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. This omission is the primary difference from the signature- and MAC-based authentication methods defined in {{RFC9528}}, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
+C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature- and MAC-based authentication methods defined in {{RFC9528}}, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
 
 ### Initiator Processing of Message 2
 
