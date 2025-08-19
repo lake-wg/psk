@@ -348,8 +348,7 @@ Compared to {{RFC9528}}, the fourth message not only provide key confirmation bu
 
 # PSK usage for Session Resumption {#psk-resumption}
 
-This section defines how PSKs are used for session resumption in EDHOC.
-Following {{Section 4.2 of RFC9528}}, EDHOC_Exporter is used to derive both resumption parameters rPSK and rKID:
+This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in {{Section 4.2 of RFC9528}}, is used to derive the resumption parameters rPSK and rKID:
 
 ~~~~~~~~~~~~
 rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
@@ -359,33 +358,31 @@ rID_CRED_PSK = { 4 : rKID }
 
 where:
 
-  * resumption_psk_length is by default the key_length (length of the encryption key of the EDHOC AEAD algorithm of the selected cipher suite) of the session in which the EDHOC_Exporter is called.
+  * resumption_psk_length defaults to the key_length, i.e., the length of the encryption key of the EDHOC AEAD algorithm in the selected cipher suite of the session where the EDHOC_Exporter is invoked.
 
-  * id_cred_psk_length is by default 2 bytes.
+  * id_cred_psk_length defaults to 2 bytes.
 
-A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session is a PSK resumption session, MUST generate a resumption key to use for the next resumption in the present "session series", as long as it supports PSK resumption.
-To guarantee that both peers share the same resumption key, when a session is run using rPSK_i as a resumption key:
+A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session was PSK resumption, MUST generate a resumption key for use in the next resumption within the current "session series", provided it supports PSK resumption.
 
-  * The Initiator can delete rPSK_i after having successfully verified EDHOC message_4.
-    In this case, the Responder will have derived the next rPSK_(i+1), which the Initiator can know for sure, upon receiving EDHOC message_4.
+To ensure both peers share the same resumption key, when a session is run using rPSK_i as the resumption key:
 
-  * The Responder can delete rPSK_(i-1), if any, after having successfully sent EDHOC message_4.
-    That is, upon receiving EDHOC message_3, the Responder knows for sure that the other peer did derive rPSK_i at the end of the previous session in the "session series", thus making it safe to delete the previous resumption key rPSK_(i-1).
-
+  * The Initiator MAY delete rPSK_i after successfully verifying the forth message. At that point, the Responder will already have derived the next rPSK_(i+1), which the Initiator can be certain of upon receiving the forth message.
+    
+  * The Responder MAY delete rPSK_(i-1), if present, after successfully sending the forth message. Upon receiving message_3, the Responder knows with certainty that the Initiator derived rPSK_i at the end of the previous session in the session series, making it safe to delete the prior resumption key rPSK_(i-1).
 
 ## Cipher Suite Requirements for Resumption
 
 When using a resumption PSK derived from a previous EDHOC exchange:
 
-  1. The resumption PSK MUST only be used with the same cipher suite that was used in the original EDHOC exchange, or with a cipher suite that provides equal or higher security guarantees.
-  2. Implementations SHOULD maintain a mapping between the resumption PSK and its originating cipher suite to enforce this requirement.
-  3. If a resumption PSK is offered with a cipher suite different from the one used in the original EDHOC session, the recipient can fail the present EDHOC session according to application-specific policies.
+  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived, or with a cipher suite that provides stronger security guarantees.
+  2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
+  3. If a resumption PSK is offered with a cipher suite that provides weaker security, the Responder MUST reject the ongoing EDHOC session.
 
 ## Privacy Considerations for Resumption
 
 When using resumption PSKs:
 
-  * During normal operation, the same ID_CRED_PSK is not reused, and not visible to a passive attacker. Reuse of the same ID_CRED_PSK can however happen due to transmission errors or when one peer lose its stored resumption key. An active attacker can force reuse of the same ID_CRED_PSK and decrypt ID_CRED_PSK. Considering the overall identify protection properties of EDHOC-PSK, this is considered a minor privacy issue.
+  * ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of EDHOC-PSK, which aim to provide identity protection against passive, but not active, attackers.
 
 ## Security Considerations for Resumption
 
@@ -442,7 +439,7 @@ This consideration was important for the privacy properties when using asymmetri
 
 # IANA Considerations
 
-This document has IANA actions.
+This document requires the following IANA actions.
 
 ## EDHOC Method Type Registry
 
@@ -465,7 +462,7 @@ IANA is requested to register the following entry in the "EDHOC Exporter Label" 
 
 # CDDL Definitions {#CDDL}
 
-This section compiles the CDDL definitions for easy reference, incorporating errata filed against {{RFC9528}}.
+This section compiles the CDDL definitions for convenience, incorporating errata filed against {{RFC9528}}.
 
 ~~~~~~~~~~~ CDDL
 suites = [ 2* int ] / int
