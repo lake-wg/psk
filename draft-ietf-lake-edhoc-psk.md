@@ -267,16 +267,16 @@ CIPHERTEXT_2A is calculated with a binary additive stream cipher, using a keystr
 * PLAINTEXT_2A = ( C_R, ? EAD_2 )
 * CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A
 
-C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. Contrary to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. KEYSTREAM_2A is defined in {{key-der}}.
+C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. This omission is the primary difference from the signature- and MAC-based authentication methods defined in {{RFC9528}}, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
 
 ### Initiator Processing of Message 2
 
 Upon receiving message_2, the Initiator processes it as follows:
 
-* It computes KEYSTREAM_2A, following {{key-der}}.
-* It decrypts CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A
+* Compute KEYSTREAM_2A as defined in {{key-der}}.
+* Decrypt CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A
 
-Compared to {{Section 5.3.3 of RFC9528}}, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped
+In contrast to {{Section 5.3.3 of RFC9528}}, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped
 
 ## Message 3
 
@@ -286,7 +286,7 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}.
 
 ### Initiator Composition of Message 3
 
-* CIPHERTEXT_3A is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:
+* CIPHERTEXT_3A is computed using a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:
 
    * PLAINTEXT_3A = ( ID_CRED_PSK / bstr / -24..23, CIPHERTEXT_3B )
 
