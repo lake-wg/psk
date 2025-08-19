@@ -1624,7 +1624,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.2.2-2.2.1">CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.2-3">C_R, EAD_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. Contrary to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. KEYSTREAM_2A is defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.2-3">C_R, EAD_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. In contrast to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not used. This omission is the primary difference from the signature- and MAC-based authentication methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="initiator-processing-of-message-2">
@@ -1635,13 +1635,13 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <p id="section-5.2.3-1">Upon receiving message_2, the Initiator processes it as follows:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.3-2.1">
-              <p id="section-5.2.3-2.1.1">It computes KEYSTREAM_2A, following <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.1.1">Compute KEYSTREAM_2A as defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.3-2.2">
-              <p id="section-5.2.3-2.2.1">It decrypts CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.2.1">Decrypt CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.3-3">Compared to <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-3">In contrast to <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1666,7 +1666,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
           </h4>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.1">
-              <p id="section-5.3.2-1.1.1">CIPHERTEXT_3A is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:<a href="#section-5.3.2-1.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.2-1.1.1">CIPHERTEXT_3A is computed using a binary additive stream cipher, using a keystream generated with EDHOC_Expand, and the following plaintext:<a href="#section-5.3.2-1.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.1.2.1">
                   <p id="section-5.3.2-1.1.2.1.1">PLAINTEXT_3A = ( ID_CRED_PSK / bstr / -24..23, CIPHERTEXT_3B )<a href="#section-5.3.2-1.1.2.1.1" class="pilcrow">¶</a></p>
