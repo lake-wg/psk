@@ -248,7 +248,7 @@ The definition of the transcript hash TH_4 is modified as follows:
 
 # Message Formatting and Processing
 
-This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that if any processing step fails, then the Responder MUST send an EDHOC error message back as defined in {Section 6 of RFC9528}}, and the EDHOC session MUST be aborted.
+This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that if any processing step fails, then the Responder MUST send an EDHOC error message back as defined in {{Section 6 of RFC9528}}, and the EDHOC session MUST be aborted.
 
 ## Message 1
 
