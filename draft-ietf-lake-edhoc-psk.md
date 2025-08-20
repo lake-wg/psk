@@ -248,7 +248,7 @@ The definition of the transcript hash TH_4 is modified as follows:
 
 # Message Formatting and Processing
 
-This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}.
+This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that if any processing step fails, then the Responder MUST send an EDHOC error message back as defined in {Section 6 of RFC9528}}, and the EDHOC session MUST be aborted.
 
 ## Message 1
 
@@ -321,7 +321,7 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.
 
-* Validate ID_CRED_PSK to identify which PSK to use. If the identifier is unknown, abort.
+* Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK.
 
 * AEAD-decrypt CIPHERTEXT_3B using:
 
