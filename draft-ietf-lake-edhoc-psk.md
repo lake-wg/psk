@@ -351,10 +351,11 @@ Compared to {{RFC9528}}, the fourth message not only provide key confirmation bu
 This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in {{Section 4.2 of RFC9528}}, is used to derive the resumption parameters rPSK and rKID:
 
 ~~~~~~~~~~~~
-rPSK = EDHOC_Exporter( 2, h'', resumption_psk_length )
-rKID  = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+rPSK         = EDHOC_Exporter( 2, h'', resumption_psk_length )
+rKID         = EDHOC_Exporter( 3, h'', id_cred_psk_length )
 rID_CRED_PSK = { 4 : rKID }
 ~~~~~~~~~~~~
+{: #fig-resumption title="Resumption Parameters." artwork-align="center"}
 
 where:
 
