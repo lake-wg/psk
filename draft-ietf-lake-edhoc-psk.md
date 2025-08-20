@@ -366,9 +366,9 @@ A peer that has successfully completed an EDHOC session, regardless of the used 
 
 To ensure both peers share the same resumption key, when a session is run using rPSK_i as the resumption key:
 
-  * The Initiator MAY delete rPSK_i after successfully verifying the forth message. At that point, the Responder will already have derived the next rPSK_(i+1), which the Initiator can be certain of upon receiving the forth message.
+  * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Responder will already have derived the next rPSK_(i+1), which the Initiator can be certain of upon receiving the fourth message.
 
-  * The Responder MAY delete rPSK_(i-1), if present, after successfully sending the forth message. Upon receiving message_3, the Responder knows with certainty that the Initiator derived rPSK_i at the end of the previous session in the session series, making it safe to delete the prior resumption key rPSK_(i-1).
+  * The Responder MAY delete rPSK_(i-1), if present, after successfully sending the fourth message. Upon receiving message_3, the Responder knows with certainty that the Initiator derived rPSK_i at the end of the previous session in the session series, making it safe to delete the prior resumption key rPSK_(i-1).
 
 ## Cipher Suite Requirements for Resumption
 
