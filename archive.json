@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-19T01:06:02.559061+00:00",
+  "timestamp": "2025-08-21T01:03:17.653880+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -912,6 +912,30 @@
       "updatedAt": "2025-06-27T08:01:17Z",
       "closedAt": "2025-06-27T08:01:17Z",
       "comments": []
+    },
+    {
+      "number": 30,
+      "id": "I_kwDONwrUhc7GsZyQ",
+      "title": "Some incorrect claims",
+      "url": "https://github.com/lake-wg/psk/issues/30",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": ">If AEAD verification fails, the Responder concludes either that the Initiator does not know the correct PSK...\n\nThis does not follow. What is true is that if AEAD verification succeeds, the Responder concludes that the Initiator possesses the PSK.\n\ncorrect A => B <=> not B => not A\nincorrect A => B <=> not A => not B\n",
+      "createdAt": "2025-08-19T08:58:35Z",
+      "updatedAt": "2025-08-19T11:38:44Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": ">    *  The Initiator can delete rPSK_i after having successfully verified\n>       EDHOC message_4.  In this case, the Responder will have derived\n>       the next rPSK_(i+1), which the Initiator can know for sure, upon\n>       receiving EDHOC message_4.\n> \n>    *  The Responder can delete rPSK_(i-1), if any, after having\n>       successfully sent EDHOC message_4. \n\nThis talks about message_4. Should talk about the forth message.\n",
+          "createdAt": "2025-08-19T11:38:44Z",
+          "updatedAt": "2025-08-19T11:38:44Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -1561,6 +1585,61 @@
           "body": "",
           "createdAt": "2025-08-18T07:24:15Z",
           "updatedAt": "2025-08-18T07:24:15Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDONwrUhc6kOj3o",
+      "title": "Review of whole text befor formal verification",
+      "url": "https://github.com/lake-wg/psk/pull/29",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-19T06:05:40Z",
+      "updatedAt": "2025-08-20T08:38:30Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "ae7a498e019eb45a0d68809c3ed7846dc70db9ea",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "emanjon-patch-4",
+      "headRefOid": "fe3b55e43e5533a659b114363d6a06a37afff67d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I reviewed Section 1-4 so far. Only minor language improvements. Will review the rest of the document later today. The security considerations needs additional attension.",
+          "createdAt": "2025-08-19T06:07:43Z",
+          "updatedAt": "2025-08-19T06:07:43Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'll fix some typos\r\n",
+          "createdAt": "2025-08-20T07:41:24Z",
+          "updatedAt": "2025-08-20T07:41:24Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDONwrUhc6633Hm",
+          "commit": {
+            "abbreviatedOid": "269cc06"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-20T07:38:20Z",
+          "updatedAt": "2025-08-20T07:38:20Z",
           "comments": []
         }
       ]
