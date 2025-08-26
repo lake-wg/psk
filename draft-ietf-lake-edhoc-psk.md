@@ -393,7 +393,7 @@ When using resumption PSKs:
 
 # EDHOC PSK and OSCORE
 
-When PSK authentication is used and the Initiator can derive PRK_out before sending message_3, the optimization described in {{Section 3 of RFC9668}} MAY be used. In this optimization, the request payload conveys both an EDHOC message_3 and OSCORE-protected data combined together.
+Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}.
 
 # Security Considerations
 
