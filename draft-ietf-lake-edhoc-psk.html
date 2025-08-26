@@ -1886,7 +1886,7 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-mutual-authentication">
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
         </h3>
-<p id="section-8.2-1">EDHOC-PSK enables mutual authentication and explicit key confirmation with the inclusion of a fourth message demonstrating possession of the PSK (assuming the PSK remains secret). The fourth message may either be the optional message_4 or application data such as an OSCORE message protected with an exported application key.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-1">EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.2-2">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
