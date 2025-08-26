@@ -105,9 +105,9 @@ Table of Contents
      6.3.  Security Considerations for Resumption
    7.  EDHOC PSK and OSCORE
    8.  Security Considerations
-     8.1.  Identity protection
+     8.1.  Identity Protection
      8.2.  Mutual Authentication
-     8.3.  External Authorization Data Protection
+     8.3.  Protection of External Authorization Data (EAD)
      8.4.  Post Quantum Considerations
      8.5.  Independence of Session Keys
      8.6.  Unified Approach and Recommendations
@@ -665,7 +665,7 @@ Table of Contents
    initial specification of EDHOC [RFC9528].  This section analyzes the
    security implications of these changes.
 
-8.1.  Identity protection
+8.1.  Identity Protection
 
    In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream
    derived from the ephemeral shared secret G_XY.  As a result, unlike
@@ -686,33 +686,33 @@ Table of Contents
    To mitigate reflection or Selfie attacks, the identities in CRED_I
    and CRED_R MUST be distinct.
 
-8.3.  External Authorization Data Protection
+8.3.  Protection of External Authorization Data (EAD)
 
-   Similarly to [RFC9528], EDHOC-PSK provides external authorization
-   data protection.  The integrity and confidentiality of EAD fields
-   follow the same security guarantees as in the original EDHOC
-   specification.
+   As in [RFC9528], EDHOC-PSK ensures the confidentiality and integrity
+   of External Authorization Data (EAD).  The security guarantees for
+   EAD fields remain unchanged from the original EDHOC specification.
 
 8.4.  Post Quantum Considerations
 
-   Recent advancements in quantum computing suggest that the development
-   of a Cryptographically Relevant Quantum Computer (CRQC) is likely
-   feasible long-term.  If realized, such a machine would render many
-   currently deployed asymmetric cryptographic algorithms—such as
-   Elliptic Curve Diffie-Hellman (ECDH)—insecure.
+   Advances in quantum computing suggest that a Cryptographically
+   Relevant Quantum Computer (CRQC) may eventually be realized.  Such a
+   machine would render many asymmetric algorithms, including Elliptic
+   Curve Diffie-Hellman (ECDH), insecure.
 
-   By leveraging a symmetric PSK for both authentication and key
-   derivation, EDHOC-PSK provides quantum-resistant key exchange and
-   authentication, even when used with ECDHE.  However, if a
-   cryptographically relevant quantum computer (CRQC) is realized, the
-   ECDHE component would be broken and contribute only randomness.
-   Consequently, EDHOC-PSK with ECDHE does not offer identity protection
-   or Perfect Forward Secrecy (PFS) against quantum-capable adversaries.
-   If the PSK is compromised, a passive quantum attacker could decrypt
-   both past and future sessions.  In contrast, EDHOC-PSK combined with
-   a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-
-   KEM, provides identity protection and PFS even in the presence of a
-   quantum attacker.
+   EDHOC-PSK derives authentication and session keys primarily from a
+   symmetric PSK, which provides quantum resistance even when combined
+   with ECDHE.  However, if a CRQC is realized, the ECDHE contribution
+   degenerates to providing only randomness.  In that case, EDHOC-PSK
+   with ECDHE offers neither identity protection nor Perfect Forward
+   Secrecy (PFS) against quantum adversaries.  Moreover, if the PSK is
+   compromised, a passive quantum attacker could decrypt both past and
+   future sessions.
+
+   By contrast, combining EDHOC-PSK with a quantum-resistant Key
+   Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity
+   protection and PFS even against quantum-capable attackers.  Future
+   EDHOC cipher suites incorporating ML-KEM are expected to be
+   registered; see [I-D.spm-lake-pqsuites].
 
 8.5.  Independence of Session Keys
 

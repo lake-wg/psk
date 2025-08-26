@@ -1250,13 +1250,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-identity-protection" class="internal xref">Identity protection</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-identity-protection" class="internal xref">Identity Protection</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-mutual-authentication" class="internal xref">Mutual Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-external-authorization-data" class="internal xref">External Authorization Data Protection</a></p>
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-protection-of-external-auth" class="internal xref">Protection of External Authorization Data (EAD)</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
                 <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="auto internal xref">8.4</a>.  <a href="#name-post-quantum-considerations" class="internal xref">Post Quantum Considerations</a></p>
@@ -1876,7 +1876,7 @@ rID_CRED_PSK = { 4 : rKID }
 <div id="identity-protection">
 <section id="section-8.1">
         <h3 id="name-identity-protection">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity protection</a>
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity Protection</a>
         </h3>
 <p id="section-8.1-1">In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, unlike the asymmetric authentication methods in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 </section>
@@ -1890,12 +1890,12 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-8.2-2">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="external-authorization-data-protection">
+<div id="protection-of-external-authorization-data-ead">
 <section id="section-8.3">
-        <h3 id="name-external-authorization-data">
-<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-external-authorization-data" class="section-name selfRef">External Authorization Data Protection</a>
+        <h3 id="name-protection-of-external-auth">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-protection-of-external-auth" class="section-name selfRef">Protection of External Authorization Data (EAD)</a>
         </h3>
-<p id="section-8.3-1">Similarly to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC-PSK provides external authorization data protection. The integrity and confidentiality of EAD fields follow the same security guarantees as in the original EDHOC specification.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-1">As in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC-PSK ensures the confidentiality and integrity of External Authorization Data (EAD). The security guarantees for EAD fields remain unchanged from the original EDHOC specification.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="post-quantum-considerations">
@@ -1903,8 +1903,9 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-post-quantum-considerations">
 <a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-post-quantum-considerations" class="section-name selfRef">Post Quantum Considerations</a>
         </h3>
-<p id="section-8.4-1">Recent advancements in quantum computing suggest that the development of a Cryptographically Relevant Quantum Computer (CRQC) is likely feasible long-term. If realized, such a machine would render many currently deployed asymmetric cryptographic algorithms—such as Elliptic Curve Diffie-Hellman (ECDH)—insecure.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
-<p id="section-8.4-2">By leveraging a symmetric PSK for both authentication and key derivation, EDHOC-PSK provides quantum-resistant key exchange and authentication, even when used with ECDHE. However, if a cryptographically relevant quantum computer (CRQC) is realized, the ECDHE component would be broken and contribute only randomness. Consequently, EDHOC-PSK with ECDHE does not offer identity protection or Perfect Forward Secrecy (PFS) against quantum-capable adversaries. If the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions. In contrast, EDHOC-PSK combined with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, provides identity protection and PFS even in the presence of a quantum attacker.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.4-1">Advances in quantum computing suggest that a Cryptographically Relevant Quantum Computer (CRQC) may eventually be realized. Such a machine would render many asymmetric algorithms, including Elliptic Curve Diffie-Hellman (ECDH), insecure.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.4-3">By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see <span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="independence-of-session-keys">
