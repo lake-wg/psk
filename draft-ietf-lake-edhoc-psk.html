@@ -1872,14 +1872,13 @@ rID_CRED_PSK = { 4 : rKID }
       <h2 id="name-security-considerations">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-8-1">The EDHOC-PSK authentication method introduces changes with respect to the current specification of EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. This section analyzes the security implications of these changes.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. This section analyzes the security implications of these changes.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="identity-protection">
 <section id="section-8.1">
         <h3 id="name-identity-protection">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity protection</a>
         </h3>
-<p id="section-8.1-1">EDHOC-PSK encrypts ID_CRED_PSK in message 3 with a keystream derived from the ephemeral shared secret G_XY. As a consequence, contrary to the current EDHOC methods that protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers (See <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>), EDHOC-PSK provides identity protection for both the Initiator and the Responder against passive attackers.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">In symmetric key setups, using the same CRED_x for both parties makes the protocol vulnerable to reflection or Selfie attacks. Separate identities in sub serve as non-cryptographic role binders and <span class="bcp14">MUST</span> be distinct.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, unlike the asymmetric authentication methods in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mutual-authentication">
@@ -1888,6 +1887,7 @@ rID_CRED_PSK = { 4 : rKID }
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
         </h3>
 <p id="section-8.2-1">EDHOC-PSK enables mutual authentication and explicit key confirmation with the inclusion of a fourth message demonstrating possession of the PSK (assuming the PSK remains secret). The fourth message may either be the optional message_4 or application data such as an OSCORE message protected with an exported application key.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="external-authorization-data-protection">

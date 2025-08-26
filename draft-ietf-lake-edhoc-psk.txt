@@ -661,24 +661,19 @@ Table of Contents
 
 8.  Security Considerations
 
-   The EDHOC-PSK authentication method introduces changes with respect
-   to the current specification of EDHOC [RFC9528].  This section
-   analyzes the security implications of these changes.
+   The EDHOC-PSK authentication method introduces deviations from the
+   initial specification of EDHOC [RFC9528].  This section analyzes the
+   security implications of these changes.
 
 8.1.  Identity protection
 
-   EDHOC-PSK encrypts ID_CRED_PSK in message 3 with a keystream derived
-   from the ephemeral shared secret G_XY.  As a consequence, contrary to
-   the current EDHOC methods that protect the Initiator’s identity
-   against active attackers and the Responder’s identity against passive
-   attackers (See Section 9.1 of [RFC9528]), EDHOC-PSK provides identity
-   protection for both the Initiator and the Responder against passive
-   attackers.
-
-   In symmetric key setups, using the same CRED_x for both parties makes
-   the protocol vulnerable to reflection or Selfie attacks.  Separate
-   identities in sub serve as non-cryptographic role binders and MUST be
-   distinct.
+   In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream
+   derived from the ephemeral shared secret G_XY.  As a result, unlike
+   the asymmetric authentication methods in Section 9.1 of [RFC9528],
+   which protect the Initiator’s identity against active attackers and
+   the Responder’s identity against passive attackers, EDHOC-PSK
+   protects both the Initiator and the Responder identities against
+   passive attackers.
 
 8.2.  Mutual Authentication
 
@@ -687,6 +682,9 @@ Table of Contents
    the PSK (assuming the PSK remains secret).  The fourth message may
    either be the optional message_4 or application data such as an
    OSCORE message protected with an exported application key.
+
+   To mitigate reflection or Selfie attacks, the identities in CRED_I
+   and CRED_R MUST be distinct.
 
 8.3.  External Authorization Data Protection
 
