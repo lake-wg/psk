@@ -653,11 +653,11 @@ Table of Contents
 
 7.  EDHOC PSK and OSCORE
 
-   When PSK authentication is used and the Initiator is able to derive
-   PRK_out before sending message_3, then the optimization described in
-   Section 3 of [RFC9668] applies.  In this scenario, the Initiator MAY
-   concatenate EDHOC message_3 and the first OSCORE request in a single
-   CoAP message.
+   When PSK authentication is used and the Initiator can derive PRK_out
+   before sending message_3, the optimization described in Section 3 of
+   [RFC9668] MAY be used.  In this optimization, the request payload
+   conveys both an EDHOC message_3 and OSCORE-protected data combined
+   together.
 
 8.  Security Considerations
 

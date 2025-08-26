@@ -1864,7 +1864,7 @@ rID_CRED_PSK = { 4 : rKID }
       <h2 id="name-edhoc-psk-and-oscore">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-edhoc-psk-and-oscore" class="section-name selfRef">EDHOC PSK and OSCORE</a>
       </h2>
-<p id="section-7-1">When PSK authentication is used and the Initiator is able to derive PRK_out before sending message_3, then the optimization described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> applies. In this scenario, the Initiator <span class="bcp14">MAY</span> concatenate EDHOC message_3 and the first OSCORE request in a single CoAP message.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">When PSK authentication is used and the Initiator can derive PRK_out before sending message_3, the optimization described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> <span class="bcp14">MAY</span> be used. In this optimization, the request payload conveys both an EDHOC message_3 and OSCORE-protected data combined together.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
