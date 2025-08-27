@@ -351,8 +351,8 @@ Compared to {{RFC9528}}, the fourth message not only provide key confirmation bu
 This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in {{Section 4.2 of RFC9528}}, is used to derive the resumption parameters rPSK and rKID:
 
 ~~~~~~~~~~~~
-rPSK         = EDHOC_Exporter( 2, h'', resumption_psk_length )
-rKID         = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
+rKID         = EDHOC_Exporter( TBD3, h'', id_cred_psk_length )
 rID_CRED_PSK = { 4 : rKID }
 ~~~~~~~~~~~~
 {: #fig-resumption title="Resumption Parameters." artwork-align="center"}
@@ -440,17 +440,23 @@ This document requires the following IANA actions.
 IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
 | Value         | Initiator Authentication Key | Responder Authentication Key |
-| 4 (suggested) | PSK                          | PSK                          |
+| TBD4          | PSK                          | PSK                          |
 {: #tab-method-psk title="Addition to the EDHOC Method Type Registry."}
+
+NOTE: Suggested value: TBD4 = 4.
+RFC Editor: Remove this note.
 
 ## EDHOC Exporter Label Registry
 
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
 
 | Label         | Description            | Change Controller | Reference |
-| 2 (suggested) | Resumption PSK         | IETF              | Section 7 |
-| 3 (suggested) | Resumption kid         | IETF              | Section 7 |
+| TBD2          | Resumption PSK         | IETF              | Section 7 |
+| TBD3          | Resumption kid         | IETF              | Section 7 |
 {: #tab-exporter-psk title="Additions to the EDHOC Exporter Label Registry."}
+
+NOTE: Suggested values: TBD2 = 2, TBD3 = 3.
+RFC Editor: Remove this note.
 
 --- back
 
@@ -526,6 +532,9 @@ info = (
 ## message_1
 
 Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)
+
+NOTE: Assuming TB4 = 4, to be confirmed by IANA.
+RFC Editor: Remove this note.
 
 ~~~~~~~~~~~~
 METHOD (CBOR Data Item) (1 byte)
