@@ -568,7 +568,7 @@ Table of Contents
    an OSCORE message has been received and the application has
    authenticated the Responder.
 
-   Compared to [RFC9528], the fourth message not only provide key
+   Compared to [RFC9528], the fourth message not only provides key
    confirmation but also authenticates the Responder.  For mutual
    authentication a fourth message is therefore mandatory.
 
