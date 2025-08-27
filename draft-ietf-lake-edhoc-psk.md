@@ -340,9 +340,9 @@ No MAC_3 or signature is needed, as the AEAD tag guarantees both integrity and a
 
 Message 4 is formatted and processed as specified in {{Section 5.5 of RFC9528}}.
 
-After successfully verifying message_4, the Initiator is assured that the Responder has derived PRK_out (key confirmation) and that no other party can derive this key.
+After successfully verifying message_4, or another fourth message from the Responder protected with an exported application key such as an OSCORE message, the Initiator is assured that the Responder has derived PRK_out (key confirmation) and that no other party can derive this key.
 
-The Initiator MUST NOT persistently store PRK_out or application keys until message_4 has been verified, or until another fourth message from the Responder protected with an exported application key such as an OSCORE message has been received and the application has authenticated the Responder.
+The Initiator MUST NOT persistently store PRK_out or application keys until it has successfully verified such a fourth message and the application has authenticated the Responder.
 
 Compared to {{RFC9528}}, the fourth message not only provides key confirmation but also authenticates the Responder. For mutual authentication a fourth message is therefore mandatory.
 
