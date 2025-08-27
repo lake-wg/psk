@@ -607,10 +607,10 @@ Table of Contents
       upon receiving the fourth message.
 
    *  The Responder MAY delete rPSK_(i-1), if present, after
-      successfully sending the fourth message.  Upon receiving
-      message_3, the Responder knows with certainty that the Initiator
-      derived rPSK_i at the end of the previous session in the session
-      series, making it safe to delete the prior resumption key
+      successfully sending the fourth message.  Upon successfully
+      verifying message_3, the Responder knows with certainty that the
+      Initiator derived rPSK_i at the end of the previous session in the
+      session series, making it safe to delete the prior resumption key
       rPSK_(i-1).
 
 6.1.  Cipher Suite Requirements for Resumption
@@ -735,15 +735,15 @@ Table of Contents
    number of messages.  Other implementations may replace message_4 with
    an OSCORE-protected message.  In this case, the following requirement
    applies: The Initiator SHALL NOT persistently store PRK_out or
-   derived application keys until verifying message_4 or a message
-   protected with an exported application key (e.g., an OSCORE message).
-   This ensures that key material is stored only after its authenticity
-   is confirmed, thereby strengthening privacy by preventing premature
-   storage of potentially compromised keys.  Finally, the order of
-   authentication (i.e., whether the Initiator or the Responder
-   authenticates first) is not relevant in EDHOC-PSK.  While this
-   ordering affects privacy properties in the asymmetric methods of
-   [RFC9528], it has no significant impact in EDHOC-PSK.
+   derived application keys until successfully verifying message_4 or a
+   message protected with an exported application key (e.g., an OSCORE
+   message).  This ensures that key material is stored only after its
+   authenticity is confirmed, thereby strengthening privacy by
+   preventing premature storage of potentially compromised keys.
+   Finally, the order of authentication (i.e., whether the Initiator or
+   the Responder authenticates first) is not relevant in EDHOC-PSK.
+   While this ordering affects privacy properties in the asymmetric
+   methods of [RFC9528], it has no significant impact in EDHOC-PSK.
 
 9.  IANA Considerations
 
