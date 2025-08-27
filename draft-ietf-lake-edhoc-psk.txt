@@ -5,11 +5,11 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 27 February 2026                              J. Preuß Mattsson
+Expires: 28 February 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                     University of Murcia
-                                                          26 August 2025
+                                                          27 August 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2026.
+   This Internet-Draft will expire on 28 February 2026.
 
 Copyright Notice
 
@@ -646,10 +646,9 @@ Table of Contents
       session resumption.
 
    *  Resumption PSKs MUST be securely stored with the same level of
-      protection as the original session keys.
+      protection as the session keys.
 
-   *  Parties SHOULD implement mechanisms to detect and prevent
-      excessive reuse of the same resumption PSK.
+   *  Parties SHOULD prevent excessive reuse of the same resumption PSK.
 
 7.  EDHOC PSK and OSCORE
 
