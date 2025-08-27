@@ -1762,7 +1762,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-message-4" class="section-name selfRef">Message 4</a>
         </h3>
 <p id="section-5.4-1">Message 4 is formatted and processed as specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.5" class="relref">Section 5.5</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">After verifying message_4, the Initiator is assured that the Responder has derived PRK_out (key confirmation) and that no other party can derive this key.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">After successfully verifying message_4, the Initiator is assured that the Responder has derived PRK_out (key confirmation) and that no other party can derive this key.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 <p id="section-5.4-3">The Initiator <span class="bcp14">MUST NOT</span> persistently store PRK_out or application keys until message_4 has been verified, or until another fourth message from the Responder protected with an exported application key such as an OSCORE message has been received and the application has authenticated the Responder.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
 <p id="section-5.4-4">Compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, the fourth message not only provide key confirmation but also authenticates the Responder. For mutual authentication a fourth message is therefore mandatory.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 </section>
