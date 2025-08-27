@@ -1779,8 +1779,8 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <figure id="figure-3">
         <div class="alignCenter art-text artwork" id="section-6-2.1">
 <pre>
-rPSK         = EDHOC_Exporter( 2, h'', resumption_psk_length )
-rKID         = EDHOC_Exporter( 3, h'', id_cred_psk_length )
+rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
+rKID         = EDHOC_Exporter( TBD3, h'', id_cred_psk_length )
 rID_CRED_PSK = { 4 : rKID }
 </pre>
 </div>
@@ -1954,13 +1954,15 @@ rID_CRED_PSK = { 4 : rKID }
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">4 (suggested)</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD4</td>
               <td class="text-left" rowspan="1" colspan="1">PSK</td>
               <td class="text-left" rowspan="1" colspan="1">PSK</td>
             </tr>
           </tbody>
         </table>
 </div>
+<p id="section-9.1-3">NOTE: Suggested value: TBD4 = 4.
+RFC Editor: Remove this note.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="edhoc-exporter-label-registry">
@@ -1985,13 +1987,13 @@ rID_CRED_PSK = { 4 : rKID }
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">2 (suggested)</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD2</td>
               <td class="text-left" rowspan="1" colspan="1">Resumption PSK</td>
               <td class="text-left" rowspan="1" colspan="1">IETF</td>
               <td class="text-left" rowspan="1" colspan="1">Section 7</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">3 (suggested)</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD3</td>
               <td class="text-left" rowspan="1" colspan="1">Resumption kid</td>
               <td class="text-left" rowspan="1" colspan="1">IETF</td>
               <td class="text-left" rowspan="1" colspan="1">Section 7</td>
@@ -1999,6 +2001,8 @@ rID_CRED_PSK = { 4 : rKID }
           </tbody>
         </table>
 </div>
+<p id="section-9.2-3">NOTE: Suggested values: TBD2 = 2, TBD3 = 3.
+RFC Editor: Remove this note.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2143,58 +2147,60 @@ info = (
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-message_1" class="section-name selfRef">message_1</a>
         </h3>
 <p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-2">
+<p id="appendix-B.1-2">NOTE: Assuming TB4 = 4, to be confirmed by IANA.
+RFC Editor: Remove this note.<a href="#appendix-B.1-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-3">
 <pre>
 METHOD (CBOR Data Item) (1 byte)
 04
-</pre><a href="#appendix-B.1-2" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.1-3">The initiator selects cipher suite 02. A single cipher suite is encoded as an int:<a href="#appendix-B.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-4">
+<p id="appendix-B.1-4">The initiator selects cipher suite 02. A single cipher suite is encoded as an int:<a href="#appendix-B.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-5">
 <pre>
 SUITES_I (CBOR Data Item) (1 byte)
 02
-</pre><a href="#appendix-B.1-4" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-5" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.1-5">The Initiator creates an ephemeral key pair for use with the EDHOC key exchange algorithm:<a href="#appendix-B.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-6">
+<p id="appendix-B.1-6">The Initiator creates an ephemeral key pair for use with the EDHOC key exchange algorithm:<a href="#appendix-B.1-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-7">
 <pre>
 Initiator's ephemeral private key
 X (Raw Value) (32 bytes)
 09 97 2D FE F1 EA AB 92 6E C9 6E 80 05 FE D2 9F 70 FF BF 4E
 36 1C 3A 06 1A 7A CD B5 17 0C 10 E5
-</pre><a href="#appendix-B.1-6" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-7" class="pilcrow">¶</a>
 </div>
-<div class="alignLeft art-text artwork" id="appendix-B.1-7">
+<div class="alignLeft art-text artwork" id="appendix-B.1-8">
 <pre>
 Initiator's ephemeral public key
 G_X (Raw Value) (32 bytes)
 7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99 2D 95 72 49
 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB
-</pre><a href="#appendix-B.1-7" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-8" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.1-8">The Initiator selects its connection identifier C_I to be the byte string 0xA, which is encoded as 0xA since it is represented by the 1-byte CBOR int 10:<a href="#appendix-B.1-8" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-9">
+<p id="appendix-B.1-9">The Initiator selects its connection identifier C_I to be the byte string 0xA, which is encoded as 0xA since it is represented by the 1-byte CBOR int 10:<a href="#appendix-B.1-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-10">
 <pre>
 Connection identifier chosen by the Initiator
 C_I (CBOR Data Item) (1 byte)
 0A
-</pre><a href="#appendix-B.1-9" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-10" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.1-10">No external authorization data<a href="#appendix-B.1-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-11">
+<p id="appendix-B.1-11">No external authorization data<a href="#appendix-B.1-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-12">
 <pre>
 EAD_1 (CBOR Sequence) (0 bytes)
-</pre><a href="#appendix-B.1-11" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-12" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.1-12">The Initiator constructs message_1:<a href="#appendix-B.1-12" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.1-13">
+<p id="appendix-B.1-13">The Initiator constructs message_1:<a href="#appendix-B.1-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.1-14">
 <pre>
 message_1 (CBOR Sequence) (37 bytes)
 04 02 58 20 7e c6 81 02 94 06 02 aa b5 48 53 9b
 f4 2a 35 99 2d 95 72 49 eb 7f 18 88 40 6d 17 8a
 04 c9 12 db 0a
-</pre><a href="#appendix-B.1-13" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.1-14" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
