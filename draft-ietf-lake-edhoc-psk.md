@@ -344,7 +344,7 @@ After successfully verifying message_4, the Initiator is assured that the Respon
 
 The Initiator MUST NOT persistently store PRK_out or application keys until message_4 has been verified, or until another fourth message from the Responder protected with an exported application key such as an OSCORE message has been received and the application has authenticated the Responder.
 
-Compared to {{RFC9528}}, the fourth message not only provide key confirmation but also authenticates the Responder. For mutual authentication a fourth message is therefore mandatory.
+Compared to {{RFC9528}}, the fourth message not only provides key confirmation but also authenticates the Responder. For mutual authentication a fourth message is therefore mandatory.
 
 # PSK usage for Session Resumption {#psk-resumption}
 
