@@ -365,7 +365,7 @@ where:
 
 A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session was PSK resumption, MUST generate a resumption key for use in the next resumption within the current "session series", provided it supports PSK resumption.
 
-To ensure both peers share the same resumption key, when a session is run using rPSK_i as the resumption key:
+To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
   * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Responder will already have derived the next rPSK_(i+1), which the Initiator can be certain of upon receiving the fourth message.
 
