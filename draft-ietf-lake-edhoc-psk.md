@@ -388,8 +388,8 @@ When using resumption PSKs:
 ## Security Considerations for Resumption
 
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
-* Resumption PSKs MUST be securely stored with the same level of protection as the original session keys.
-* Parties SHOULD implement mechanisms to detect and prevent excessive reuse of the same resumption PSK.
+* Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
+* Parties SHOULD prevent excessive reuse of the same resumption PSK.
 
 # EDHOC PSK and OSCORE
 
