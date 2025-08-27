@@ -1798,7 +1798,7 @@ rID_CRED_PSK = { 4 : rKID }
 </li>
       </ul>
 <p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session was PSK resumption, <span class="bcp14">MUST</span> generate a resumption key for use in the next resumption within the current "session series", provided it supports PSK resumption.<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">To ensure both peers share the same resumption key, when a session is run using rPSK_i as the resumption key:<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-6">To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:<a href="#section-6-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-7.1">
           <p id="section-6-7.1.1">The Initiator <span class="bcp14">MAY</span> delete rPSK_i after successfully verifying the fourth message. At that point, the Responder will already have derived the next rPSK_(i+1), which the Initiator can be certain of upon receiving the fourth message.<a href="#section-6-7.1.1" class="pilcrow">¶</a></p>
