@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-21T01:03:17.653880+00:00",
+  "timestamp": "2025-08-28T01:01:51.981834+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -918,15 +918,15 @@
       "id": "I_kwDONwrUhc7GsZyQ",
       "title": "Some incorrect claims",
       "url": "https://github.com/lake-wg/psk/issues/30",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": ">If AEAD verification fails, the Responder concludes either that the Initiator does not know the correct PSK...\n\nThis does not follow. What is true is that if AEAD verification succeeds, the Responder concludes that the Initiator possesses the PSK.\n\ncorrect A => B <=> not B => not A\nincorrect A => B <=> not A => not B\n",
       "createdAt": "2025-08-19T08:58:35Z",
-      "updatedAt": "2025-08-19T11:38:44Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-26T03:05:16Z",
+      "closedAt": "2025-08-26T03:05:16Z",
       "comments": [
         {
           "author": "emanjon",
@@ -1594,24 +1594,26 @@
       "id": "PR_kwDONwrUhc6kOj3o",
       "title": "Review of whole text befor formal verification",
       "url": "https://github.com/lake-wg/psk/pull/29",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-19T06:05:40Z",
-      "updatedAt": "2025-08-20T08:38:30Z",
+      "updatedAt": "2025-08-26T03:01:53Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "ae7a498e019eb45a0d68809c3ed7846dc70db9ea",
       "headRepository": "lake-wg/psk",
       "headRefName": "emanjon-patch-4",
       "headRefOid": "fe3b55e43e5533a659b114363d6a06a37afff67d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-26T03:01:52Z",
+      "mergedAt": "2025-08-26T03:01:52Z",
+      "mergedBy": "emanjon",
+      "mergeCommit": {
+        "oid": "10ae21f3350db0e559e3886a92dba75baee3e8fd"
+      },
       "comments": [
         {
           "author": "emanjon",
@@ -1643,6 +1645,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDONwrUhc6lk-O5",
+      "title": "Resumption key management with fifth message",
+      "url": "https://github.com/lake-wg/psk/pull/31",
+      "state": "OPEN",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-27T10:51:30Z",
+      "updatedAt": "2025-08-27T10:51:30Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "6758db9616eadc3da0ec0e1c2caaa420444408b8",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "fifth-message",
+      "headRefOid": "94b24bffb52ef53601d896a0783d8a65ca43d032",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
