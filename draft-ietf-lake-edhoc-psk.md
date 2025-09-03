@@ -149,7 +149,7 @@ When using an external PSK, a common representation of CRED_I and CRED_R is a CB
 }
 ~~~~~~~~~~~~
 
-Alternative formats for CRED_I and CRED_R MAY be used. When a resumption PSK is employed, CRED_I and CRED_R MUST be the same credentials used in the initial EDHOC exchange, for example, public-key credentials such as X.509 certificates.
+Alternative formats for CRED_I and CRED_R MAY be used. When a resumption PSK is employed, CRED_I and CRED_R MUST refer to the same long-term credentials as in the initial EDHOC exchange, for example, public-key credentials such as X.509 certificates. The identifier associated with the resumption PSK (e.g., a kid) can change between resumptions, but it continues to resolve to the same underlying credential.
 
 Implementations MUST ensure that CRED_I and CRED_R are distinct, for example by including different identities in their sub-claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). Ensuring distinct credentials simplifies correct party identification and prevents reflection and misbinding attacks, as described in {{Appendix D.2 of RFC9528}}.
 
