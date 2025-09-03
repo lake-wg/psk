@@ -1380,7 +1380,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
           <h4 id="name-cred_i-and-cred_r">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-cred_i-and-cred_r" class="section-name selfRef">CRED_I and CRED_R</a>
           </h4>
-<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through the successful use of the PSK to derive keying material, and to encrypt and subsequently decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">CRED_I and CRED_R are authentication credentials associated with the PSK. In addition to the PSK itself, each entity (Initiator and Responder) <span class="bcp14">MUST</span> be provisioned out-of-band with both CRED_I and CRED_R, since these credentials are not conveyed in any EDHOC-PSK message. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through the successful use of the PSK to derive keying material, and to encrypt and subsequently decrypt protected messages.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-2">When using an external PSK, a common representation of CRED_I and CRED_R is a CBOR Web Token (CWT) or CWT Claims Set (CCS) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, where the 'cnf' claim includes the confirmation method COSE_Key. An example of CRED_I and CRED_R is shown below:<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1.2-3">
 <pre>
