@@ -39,6 +39,10 @@ author:
     name: Rafael Marin-Lopez
     organization: University of Murcia
     email: rafa@um.es
+ -
+    name: Francisco Lopez-Gomez
+    organization: University of Murcia
+    email: francisco.lopezg@um.es
 
 normative:
 
@@ -363,7 +367,7 @@ where:
 
   * id_cred_psk_length defaults to 2 bytes.
 
-A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session was PSK resumption, MUST generate a resumption key for use in the next resumption within the current "session series", provided it supports PSK resumption.
+A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MUST generate a resumption key for the next resumption within the current "session series," provided that PSK resumption is supported.
 
 To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
@@ -385,7 +389,7 @@ When using a resumption PSK derived from a previous EDHOC exchange:
 
 When using resumption PSKs:
 
-  * ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of EDHOC-PSK, which aim to provide identity protection against passive, but not active, attackers.
+  * ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of EDHOC-PSK, which are to provide identity protection against passive attackers, but not against active attackers.
 
 ## Security Considerations for Resumption
 
@@ -393,7 +397,7 @@ When using resumption PSKs:
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
 
-# EDHOC PSK and OSCORE
+# EDHOC-PSK and OSCORE
 
 Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}.
 
@@ -439,7 +443,7 @@ This document requires the following IANA actions.
 
 ## EDHOC Method Type Registry
 
-IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
+IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
 | Value         | Initiator Authentication Key | Responder Authentication Key |
 | TBD4          | PSK                          | PSK                          |
@@ -450,7 +454,7 @@ RFC Editor: Remove this note.
 
 ## EDHOC Exporter Label Registry
 
-IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".
+IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
 | Label         | Description            | Change Controller | Reference |
 | TBD2          | Resumption PSK         | IETF              | Section 7 |
@@ -535,7 +539,7 @@ info = (
 
 Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)
 
-NOTE: Assuming TB4 = 4, to be confirmed by IANA.
+NOTE: Assuming TBD4 = 4, to be confirmed by IANA.
 RFC Editor: Remove this note.
 
 ~~~~~~~~~~~~
