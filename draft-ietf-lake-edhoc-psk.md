@@ -371,6 +371,8 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
 
+  * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
+
 ## Cipher Suite Requirements for Resumption
 
 When using a resumption PSK derived from a previous EDHOC exchange:
