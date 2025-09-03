@@ -9,6 +9,7 @@
 <meta content="Göran Selander" name="author">
 <meta content="John Preuß Mattsson" name="author">
 <meta content="Rafael Marin-Lopez" name="author">
+<meta content="Francisco Lopez-Gomez" name="author">
 <meta content="
        This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations. 
     " name="description">
@@ -1087,6 +1088,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <div class="author-name">R. Marin-Lopez</div>
 <div class="org">University of Murcia</div>
 </div>
+<div class="author">
+      <div class="author-name">F. Lopez-Gomez</div>
+<div class="org">University of Murcia</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -1244,7 +1249,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-edhoc-psk-and-oscore" class="internal xref">EDHOC PSK and OSCORE</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-edhoc-psk-and-oscore" class="internal xref">EDHOC-PSK and OSCORE</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1797,7 +1802,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.2.1">id_cred_psk_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the used authentication method and regardless of if the session was PSK resumption, <span class="bcp14">MUST</span> generate a resumption key for use in the next resumption within the current "session series", provided it supports PSK resumption.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">MUST</span> generate a resumption key for the next resumption within the current "session series," provided that PSK resumption is supported.<a href="#section-6-5" class="pilcrow">¶</a></p>
 <p id="section-6-6">To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:<a href="#section-6-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-7.1">
@@ -1837,7 +1842,7 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-6.2-1">When using resumption PSKs:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1">ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of EDHOC-PSK, which aim to provide identity protection against passive, but not active, attackers.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.1.1">ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of EDHOC-PSK, which are to provide identity protection against passive attackers, but not against active attackers.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1865,7 +1870,7 @@ rID_CRED_PSK = { 4 : rKID }
 <div id="edhoc-psk-and-oscore">
 <section id="section-7">
       <h2 id="name-edhoc-psk-and-oscore">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-edhoc-psk-and-oscore" class="section-name selfRef">EDHOC PSK and OSCORE</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-edhoc-psk-and-oscore" class="section-name selfRef">EDHOC-PSK and OSCORE</a>
       </h2>
 <p id="section-7-1">Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload <span class="bcp14">MAY</span> convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
@@ -1941,7 +1946,7 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-edhoc-method-type-registry">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-edhoc-method-type-registry" class="section-name selfRef">EDHOC Method Type Registry</a>
         </h3>
-<p id="section-9.1-1">IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 <span id="name-addition-to-the-edhoc-metho"></span><div id="tab-method-psk">
 <table class="center" id="table-1">
           <caption>
@@ -1973,7 +1978,7 @@ RFC Editor: Remove this note.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
         <h3 id="name-edhoc-exporter-label-regist">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-edhoc-exporter-label-regist" class="section-name selfRef">EDHOC Exporter Label Registry</a>
         </h3>
-<p id="section-9.2-1">IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over OCSE (EDHOC)".<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <span id="name-additions-to-the-edhoc-expo"></span><div id="tab-exporter-psk">
 <table class="center" id="table-2">
           <caption>
@@ -2150,7 +2155,7 @@ info = (
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-message_1" class="section-name selfRef">message_1</a>
         </h3>
 <p id="appendix-B.1-1">Both endpoints are authenticated with Pre-Shared Keys (METHOD = 4)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.1-2">NOTE: Assuming TB4 = 4, to be confirmed by IANA.
+<p id="appendix-B.1-2">NOTE: Assuming TBD4 = 4, to be confirmed by IANA.
 RFC Editor: Remove this note.<a href="#appendix-B.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.1-3">
 <pre>
@@ -2636,6 +2641,14 @@ for reviewing and commenting on intermediate versions of the draft.<a href="#app
 <div class="email">
 <span>Email:</span>
 <a href="mailto:rafa@um.es" class="email">rafa@um.es</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Francisco Lopez-Gomez</span></div>
+<div dir="auto" class="left"><span class="org">University of Murcia</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:francisco.lopezg@um.es" class="email">francisco.lopezg@um.es</a>
 </div>
 </address>
 </section>
