@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-28T01:01:51.981834+00:00",
+  "timestamp": "2025-09-04T00:59:09.651309+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1651,26 +1651,75 @@
       "id": "PR_kwDONwrUhc6lk-O5",
       "title": "Resumption key management with fifth message",
       "url": "https://github.com/lake-wg/psk/pull/31",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "gselander",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-27T10:51:30Z",
-      "updatedAt": "2025-08-27T10:51:30Z",
+      "updatedAt": "2025-09-03T15:35:17Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "6758db9616eadc3da0ec0e1c2caaa420444408b8",
       "headRepository": "lake-wg/psk",
       "headRefName": "fifth-message",
       "headRefOid": "94b24bffb52ef53601d896a0783d8a65ca43d032",
+      "closedAt": "2025-09-03T15:35:17Z",
+      "mergedAt": "2025-09-03T15:35:17Z",
+      "mergedBy": "francislopezg",
+      "mergeCommit": {
+        "oid": "2a6575806d9649583943392532d65b536125da9e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDONwrUhc6mrvX1",
+      "title": "Fixing some details + some considerations about CREDs",
+      "url": "https://github.com/lake-wg/psk/pull/32",
+      "state": "OPEN",
+      "author": "francislopezg",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-09-03T16:16:08Z",
+      "updatedAt": "2025-09-03T16:45:07Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "2a6575806d9649583943392532d65b536125da9e",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "francisco-patch-1",
+      "headRefOid": "25e764ee1da684e94908e959802565966923cbde",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDONwrUhc69oGpx",
+          "commit": {
+            "abbreviatedOid": "f0eadf4"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-03T16:23:46Z",
+          "updatedAt": "2025-09-03T16:23:46Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The old text suggested that the entire CRED_R and CRED_I structures remain identical across resumptions. This is not correct, since fields such as the kid (which refers to the PSK) may change. What remains identical are the underlying long-term credentials, not the CRED structures themselves.",
+              "createdAt": "2025-09-03T16:23:46Z",
+              "updatedAt": "2025-09-03T16:23:46Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
