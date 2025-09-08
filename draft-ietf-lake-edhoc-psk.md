@@ -911,9 +911,8 @@ The authors want to thank
 {{{Christian Amsüss}}},
 {{{Scott Fluhrer}}},
 {{{Charlie Jacomme}}},
-{{{Marco Tiloca}}},
 and
-{{{Francisco Lopez-Gomez}}}
+{{{Marco Tiloca}}}
 for reviewing and commenting on intermediate versions of the draft.
 
 
