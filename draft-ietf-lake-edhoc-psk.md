@@ -232,7 +232,7 @@ The other PRKs and transcript hashes are modified as specified below. {{fig-vari
 PRK_3e2m     = PRK_2e
 KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
 PRK_4e3m     = EDHOC_Extract( SALT_4e3m, PSK )
-KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 11, TH_3, plaintext_length_3a )
+KEYSTREAM_3A = EDHOC_KDF( PRK_3e2m, 12, TH_3, plaintext_length_3a )
 K_3          = EDHOC_KDF( PRK_4e3m, 3, TH_3, key_length )
 IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 ~~~~~~~~~~~~
