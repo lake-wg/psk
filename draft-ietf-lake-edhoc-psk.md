@@ -367,7 +367,7 @@ where:
 
   * id_cred_psk_length defaults to 2 bytes.
 
-A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MUST generate a resumption key for the next resumption within the current "session series," provided that PSK resumption is supported.
+A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MUST generate a resumption key for the next resumption within the current "session series", provided that PSK resumption is supported.
 
 To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
