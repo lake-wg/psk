@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-04T00:59:09.651309+00:00",
+  "timestamp": "2025-09-09T01:01:42.406376+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1677,7 +1677,7 @@
     {
       "number": 32,
       "id": "PR_kwDONwrUhc6mrvX1",
-      "title": "Fixing some details + some considerations about CREDs",
+      "title": "Fixing some details + some considerations about CREDs + fixing KEYSTREAM_3A derivation",
       "url": "https://github.com/lake-wg/psk/pull/32",
       "state": "OPEN",
       "author": "francislopezg",
@@ -1686,13 +1686,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-03T16:16:08Z",
-      "updatedAt": "2025-09-03T16:45:07Z",
+      "updatedAt": "2025-09-08T15:49:29Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "2a6575806d9649583943392532d65b536125da9e",
       "headRepository": "lake-wg/psk",
       "headRefName": "francisco-patch-1",
-      "headRefOid": "25e764ee1da684e94908e959802565966923cbde",
+      "headRefOid": "f8fae6074266d9d7002e4d3aff3a0a8b60d96339",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1716,6 +1716,26 @@
               "body": "The old text suggested that the entire CRED_R and CRED_I structures remain identical across resumptions. This is not correct, since fields such as the kid (which refers to the PSK) may change. What remains identical are the underlying long-term credentials, not the CRED structures themselves.",
               "createdAt": "2025-09-03T16:23:46Z",
               "updatedAt": "2025-09-03T16:23:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-i7be",
+          "commit": {
+            "abbreviatedOid": "d18e1af"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-08T14:32:49Z",
+          "updatedAt": "2025-09-08T14:32:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Tag _11_ is already being used by the EDHOC_KeyUpdate function (see Appendix H of RFC9528) to define a new PRK_out: new PRK_out = EDHOC_KDF( old PRK_out, **11**, context, hash_length ). Thus, I think we will need to change it to _12_.",
+              "createdAt": "2025-09-08T14:32:49Z",
+              "updatedAt": "2025-09-08T14:32:50Z"
             }
           ]
         }
