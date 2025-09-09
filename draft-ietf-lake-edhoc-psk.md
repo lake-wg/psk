@@ -125,7 +125,7 @@ It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically identifies the cor
 
 ### CRED_I and CRED_R
 
-CRED_I and CRED_R are authentication credentials associated with the PSK. In addition to the PSK itself, each entity (Initiator and Responder) MUST be provisioned out-of-band with both CRED_I and CRED_R, since these credentials are not conveyed in any EDHOC-PSK message. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through the successful use of the PSK to derive keying material, and to encrypt and subsequently decrypt protected messages.
+CRED_I and CRED_R are authentication credentials associated with the PSK. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through the successful use of the PSK to derive keying material, and to encrypt and subsequently decrypt protected messages.
 
 When using an external PSK, a common representation of CRED_I and CRED_R is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}}, where the 'cnf' claim includes the confirmation method COSE_Key. An example of CRED_I and CRED_R is shown below:
 
@@ -153,7 +153,7 @@ When using an external PSK, a common representation of CRED_I and CRED_R is a CB
 }
 ~~~~~~~~~~~~
 
-Alternative formats for CRED_I and CRED_R MAY be used. When a resumption PSK is employed, CRED_I and CRED_R MUST refer to the same long-term credentials as in the initial EDHOC exchange, for example, public-key credentials such as X.509 certificates. The identifier associated with the resumption PSK (e.g., a kid) can change between resumptions, but it continues to resolve to the same underlying credential.
+Alternative formats for CRED_I and CRED_R MAY be used. When a resumption PSK is employed, CRED_I and CRED_R MUST be the same credentials used in the initial EDHOC exchange, for example, public-key credentials such as X.509 certificates.
 
 Implementations MUST ensure that CRED_I and CRED_R are distinct, for example by including different identities in their sub-claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). Ensuring distinct credentials simplifies correct party identification and prevents reflection and misbinding attacks, as described in {{Appendix D.2 of RFC9528}}.
 
