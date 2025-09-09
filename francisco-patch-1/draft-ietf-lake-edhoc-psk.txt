@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 12 March 2026                                 J. Preuß Mattsson
+Expires: 13 March 2026                                 J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                        8 September 2025
+                                                        9 September 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 March 2026.
+   This Internet-Draft will expire on 13 March 2026.
 
 Copyright Notice
 
@@ -236,10 +236,7 @@ Table of Contents
 3.1.2.  CRED_I and CRED_R
 
    CRED_I and CRED_R are authentication credentials associated with the
-   PSK.  In addition to the PSK itself, each entity (Initiator and
-   Responder) MUST be provisioned out-of-band with both CRED_I and
-   CRED_R, since these credentials are not conveyed in any EDHOC-PSK
-   message.  The notation CRED_x refers to either CRED_I or CRED_R.
+   PSK.  The notation CRED_x refers to either CRED_I or CRED_R.
    Authentication is achieved implicitly through the successful use of
    the PSK to derive keying material, and to encrypt and subsequently
    decrypt protected messages.
@@ -270,12 +267,9 @@ Table of Contents
    }
 
    Alternative formats for CRED_I and CRED_R MAY be used.  When a
-   resumption PSK is employed, CRED_I and CRED_R MUST refer to the same
-   long-term credentials as in the initial EDHOC exchange, for example,
-   public-key credentials such as X.509 certificates.  The identifier
-   associated with the resumption PSK (e.g., a kid) can change between
-   resumptions, but it continues to resolve to the same underlying
-   credential.
+   resumption PSK is employed, CRED_I and CRED_R MUST be the same
+   credentials used in the initial EDHOC exchange, for example, public-
+   key credentials such as X.509 certificates.
 
    Implementations MUST ensure that CRED_I and CRED_R are distinct, for
    example by including different identities in their sub-claims (e.g.,
