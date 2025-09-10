@@ -820,14 +820,6 @@ TH_4 (CBOR Data Item) (32 bytes)
 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 ~~~~~~~~~~~~
 
-After sending message_3, the Initiator can compute PRK_out
-
-~~~~~~~~~~~~
-PRK_out (Raw  value) (32 bytes)
-BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
-49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
-~~~~~~~~~~~~
-
 ## message_4
 
 No external authorization data:
@@ -842,7 +834,7 @@ The Responder constructs PLAINTEXT_4:
 PLAINTEXT_4 (CBOR Sequence) (0 bytes)
 ~~~~~~~~~~~~
 
-The Responder computes K_4 and IV_4
+The Responder computes K_4 and IV_4:
 
 ~~~~~~~~~~~~
 K_4 (CBOR Sequence) (16 bytes)
@@ -861,12 +853,34 @@ message_4 (CBOR Sequence) (9 bytes)
 48 8A DD 93 DB 40 48 59 F9
 ~~~~~~~~~~~~
 
-The Responder then computes PRK_out:
+## PRK_out and PRK_exporter
+
+After the exchange, the following PRK_out and PRK_exporter are derived by both entities:
 
 ~~~~~~~~~~~~
 PRK_out (Raw  value) (32 bytes)
 BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
 49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+PRK_exporter (Raw  value) (32 bytes)
+2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
+E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
+~~~~~~~~~~~~
+
+## rPSK and rKID
+
+Both peers generate a resumption key for use in the next resumption attempt, as explained in {{psk-resumption}}:
+
+~~~~~~~~~~~~
+rPSK (Raw  value) (16 bytes)
+5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+rKID (Raw  value) (1 byte)
+55
 ~~~~~~~~~~~~
 
 # Change Log
