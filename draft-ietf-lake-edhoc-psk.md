@@ -625,15 +625,27 @@ The transcript hash TH_2 is calculated using the EDHOC hash algorithm:
 TH_2 = H( G_Y, H(message_1) ), where H(message_1) is:
 
 ~~~~~~~~~~~~
-H(message_1) (CBOR Data Item) (32 bytes)
+H(message_1) (Raw Value) (32 bytes)
 19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20 C2
 4B 6A 34 BC 21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-TH_2 (CBOR Data Item) (32 bytes)
+H(message_1) (CBOR Data Item) (34 bytes)
+58 20 19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20
+C2 4B 6A 34 BC 21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+TH_2 (Raw Value) (32 bytes)
 5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
 01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+TH_2 (CBOR Data Item) (34 bytes)
+58 20 5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60
+4D 01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
 ~~~~~~~~~~~~
 
 PRK_2e is specified in {{Section 4.1.2 of RFC9528}}.
@@ -678,7 +690,7 @@ PLAINTEXT_2A (CBOR Sequence) (1 byte)
 The Responder computes KEYSTREAM_2 as defined in {{Section 4.1.2 of RFC9528}}
 
 ~~~~~~~~~~~~
-KEYSTREAM_2A (CBOR Sequence) (1 byte)
+KEYSTREAM_2A (Raw Value) (1 byte)
 EC
 ~~~~~~~~~~~~
 
@@ -724,9 +736,15 @@ The transcript hash TH_3 is calculated using the EDHOC hash algorithm:
 TH_3 = H( TH_2, PLAINTEXT_2A )
 
 ~~~~~~~~~~~~
-TH_3 (CBOR Data Item) (32 bytes)
+TH_3 (Raw Value) (32 bytes)
 38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+TH_3 (CBOR Data Item) (34 bytes)
+58 20 38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D
+32 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
 No external authorization data:
@@ -744,7 +762,7 @@ PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:
 
 ~~~~~~~~~~~~
-ID_CRED_PSK (CBOR Sequence) (1 byte)
+ID_CRED_PSK (CBOR Data Item) (1 byte)
 10
 ~~~~~~~~~~~~
 
@@ -763,7 +781,7 @@ CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-TH_3 (CBOR Data Item) (32 bytes)
+TH_3 (Raw Value) (32 bytes)
 38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
@@ -771,12 +789,12 @@ TH_3 (CBOR Data Item) (32 bytes)
 The initiator computes K_3 and IV_3
 
 ~~~~~~~~~~~~
-K_3 (CBOR Sequence) (16 bytes)
+K_3 (Raw Value) (16 bytes)
 96 6A 57 9C EA 26 CA 3C EB 44 2A C7 27 EA B2 32
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-IV_3 (CBOR Sequence) (13 bytes)
+IV_3 (Raw Value) (13 bytes)
 5B F1 AD 0E 4F FB 96 76 D7 8D F2 3F 6E
 ~~~~~~~~~~~~
 
@@ -790,7 +808,7 @@ CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 The Initiator computes KEYSTREAM_3 as defined in Section 4:
 
 ~~~~~~~~~~~~
-KEYSTREAM_3A (CBOR Sequence) (10 bytes)
+KEYSTREAM_3A (Raw Value) (10 bytes)
 03 E5 D1 57 1B BC 93 32 47 1B
 ~~~~~~~~~~~~
 
@@ -819,9 +837,15 @@ The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
 TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
 ~~~~~~~~~~~~
-TH_4 (CBOR Data Item) (32 bytes)
+TH_4 (Raw Value) (32 bytes)
 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+TH_4 (CBOR Data Item) (34 bytes)
+58 20 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD
+0E 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 ~~~~~~~~~~~~
 
 ## message_4
@@ -841,12 +865,12 @@ PLAINTEXT_4 (CBOR Sequence) (0 bytes)
 The Responder computes K_4 and IV_4:
 
 ~~~~~~~~~~~~
-K_4 (CBOR Sequence) (16 bytes)
+K_4 (Raw Value) (16 bytes)
 BC AB 1D F0 13 8D C0 5C 88 5F D3 71 E9 50 C6 7F
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-IV_4 (CBOR Sequence) (13 bytes)
+IV_4 (Raw Value) (13 bytes)
 41 11 34 D0 E0 C5 08 D9 5D A7 C3 AC DC
 ~~~~~~~~~~~~
 
@@ -862,13 +886,13 @@ message_4 (CBOR Sequence) (9 bytes)
 After the exchange, the following PRK_out and PRK_exporter are derived by both entities:
 
 ~~~~~~~~~~~~
-PRK_out (Raw  value) (32 bytes)
+PRK_out (Raw Value) (32 bytes)
 BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
 49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-PRK_exporter (Raw  value) (32 bytes)
+PRK_exporter (Raw Value) (32 bytes)
 2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
 E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 ~~~~~~~~~~~~
@@ -878,12 +902,12 @@ E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 Both peers generate a resumption key for use in the next resumption attempt, as explained in {{psk-resumption}}:
 
 ~~~~~~~~~~~~
-rPSK (Raw  value) (16 bytes)
+rPSK (Raw Value) (16 bytes)
 5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-rKID (Raw  value) (1 byte)
+rKID (Raw Value) (1 byte)
 55
 ~~~~~~~~~~~~
 
