@@ -2253,79 +2253,93 @@ C_R (CBOR Data Item) (1 byte)
 TH_2 = H( G_Y, H(message_1) ), where H(message_1) is:<a href="#appendix-B.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-8">
 <pre>
-H(message_1) (CBOR Data Item) (32 bytes)
+H(message_1) (Raw Value) (32 bytes)
 19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20 C2
 4B 6A 34 BC 21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 </pre><a href="#appendix-B.2-8" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.2-9">
 <pre>
-TH_2 (CBOR Data Item) (32 bytes)
-5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
-01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+H(message_1) (CBOR Data Item) (34 bytes)
+58 20 19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20
+C2 4B 6A 34 BC 21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 </pre><a href="#appendix-B.2-9" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-10">PRK_2e is specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-To compute it, the Elliptic Curve Diffie-Hellman (ECDH) shared secret G_XY is needed.
-It is computed from G_X and Y or G_Y and X:<a href="#appendix-B.2-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-10">
+<pre>
+TH_2 (Raw Value) (32 bytes)
+5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
+01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+</pre><a href="#appendix-B.2-10" class="pilcrow">¶</a>
+</div>
 <div class="alignLeft art-text artwork" id="appendix-B.2-11">
+<pre>
+TH_2 (CBOR Data Item) (34 bytes)
+58 20 5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60
+4D 01 64 78 C4 BC 81 87 BB 76 4D D4 0F 2B EE 3D DE
+</pre><a href="#appendix-B.2-11" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2-12">PRK_2e is specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
+To compute it, the Elliptic Curve Diffie-Hellman (ECDH) shared secret G_XY is needed.
+It is computed from G_X and Y or G_Y and X:<a href="#appendix-B.2-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-13">
 <pre>
 G_XY (Raw Value) (ECDH shared secret) (32 bytes)
 2F 4A 79 9A 5A B0 C5 67 22 0C B6 72 08 E6 CF 8F
 4C A5 FE 38 5D 1B 11 FD 9A 57 3D 41 60 F3 B0 B2
-</pre><a href="#appendix-B.2-11" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.2-13" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-12">Then, PRK_2e is calculated as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#appendix-B.2-12" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.2-13">
+<p id="appendix-B.2-14">Then, PRK_2e is calculated as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#appendix-B.2-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-15">
 <pre>
 PRK_2e (Raw Value) (32 bytes)
 D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
 1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
-</pre><a href="#appendix-B.2-13" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.2-15" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-14">Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.<a href="#appendix-B.2-14" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.2-15">
+<p id="appendix-B.2-16">Since the Responder authenticates using PSK, PRK_3e2m = PRK_2e.<a href="#appendix-B.2-16" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-17">
 <pre>
 PRK_3e2m (Raw Value) (32 bytes)
 D0 39 D6 C3 CF 35 EC A0 CD F8 19 E3 25 79 C7 7E
 1F 30 3E FC C4 36 20 50 99 48 A9 FD 47 FB D9 29
-</pre><a href="#appendix-B.2-15" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.2-16">No external authorization data:<a href="#appendix-B.2-16" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.2-17">
-<pre>
-EAD_2 (CBOR Sequence) (0 bytes)
 </pre><a href="#appendix-B.2-17" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-18">The Responder constructs PLAINTEXT_2A:<a href="#appendix-B.2-18" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-18">No external authorization data:<a href="#appendix-B.2-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-19">
+<pre>
+EAD_2 (CBOR Sequence) (0 bytes)
+</pre><a href="#appendix-B.2-19" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2-20">The Responder constructs PLAINTEXT_2A:<a href="#appendix-B.2-20" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-21">
 <pre>
 PLAINTEXT_2A (CBOR Sequence) (1 byte)
 05
-</pre><a href="#appendix-B.2-19" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.2-20">The Responder computes KEYSTREAM_2 as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#appendix-B.2-20" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.2-21">
-<pre>
-KEYSTREAM_2A (CBOR Sequence) (1 byte)
-EC
 </pre><a href="#appendix-B.2-21" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-22">The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2:<a href="#appendix-B.2-22" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-22">The Responder computes KEYSTREAM_2 as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.1.2" class="relref">Section 4.1.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#appendix-B.2-22" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-23">
+<pre>
+KEYSTREAM_2A (Raw Value) (1 byte)
+EC
+</pre><a href="#appendix-B.2-23" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2-24">The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2:<a href="#appendix-B.2-24" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-25">
 <pre>
 CIPHERTEXT_2B (CBOR Sequence) (1 byte)
 E9
-</pre><a href="#appendix-B.2-23" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.2-25" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2-24">The Responder constructs message_2 as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.1" class="relref">Section 5.3.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>:<a href="#appendix-B.2-24" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.2-25">
+<p id="appendix-B.2-26">The Responder constructs message_2 as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.1" class="relref">Section 5.3.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>:<a href="#appendix-B.2-26" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.2-27">
 <pre>
 message_2 (CBOR Sequence) (35 bytes)
 58 21 ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42
 9D 5A D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9
 7D 83 E9
-</pre><a href="#appendix-B.2-25" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.2-27" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2359,109 +2373,123 @@ A2 FF 6C A8 4B 9E D6 11 6C 86 5C D8 1E 06 24 60
 <p id="appendix-B.3-6">TH_3 = H( TH_2, PLAINTEXT_2A )<a href="#appendix-B.3-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-7">
 <pre>
-TH_3 (CBOR Data Item) (32 bytes)
+TH_3 (Raw Value) (32 bytes)
 38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 </pre><a href="#appendix-B.3-7" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-8">No external authorization data:<a href="#appendix-B.3-8" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-9">
+<div class="alignLeft art-text artwork" id="appendix-B.3-8">
+<pre>
+TH_3 (CBOR Data Item) (34 bytes)
+58 20 38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D
+32 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
+</pre><a href="#appendix-B.3-8" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-9">No external authorization data:<a href="#appendix-B.3-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-10">
 <pre>
 EAD_3 (CBOR Sequence) (0 bytes)
-</pre><a href="#appendix-B.3-9" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-10" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-10">The Initiator constructs firstly PLAINTEXT_3B as defined in Section 5.3.1.:<a href="#appendix-B.3-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-11">
+<p id="appendix-B.3-11">The Initiator constructs firstly PLAINTEXT_3B as defined in Section 5.3.1.:<a href="#appendix-B.3-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-12">
 <pre>
 PLAINTEXT_3B (CBOR Sequence) (0 bytes)
-</pre><a href="#appendix-B.3-11" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-12" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-12">It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:<a href="#appendix-B.3-12" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-13">
-<pre>
-ID_CRED_PSK (CBOR Sequence) (1 byte)
-10
-</pre><a href="#appendix-B.3-13" class="pilcrow">¶</a>
-</div>
+<p id="appendix-B.3-13">It then computes CIPHERTEXT_3B as defined in Section 5.3.2. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:<a href="#appendix-B.3-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-14">
 <pre>
-CRED_I (Raw Value) (38 bytes)
-A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
-01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
-CF 54 63 25 DE A2 14
+ID_CRED_PSK (CBOR Data Item) (1 byte)
+10
 </pre><a href="#appendix-B.3-14" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.3-15">
 <pre>
-CRED_R (Raw Value) (38 bytes)
-A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
+CRED_I (Raw Value) (38 bytes)
+A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
 01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
 CF 54 63 25 DE A2 14
 </pre><a href="#appendix-B.3-15" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.3-16">
 <pre>
-TH_3 (CBOR Data Item) (32 bytes)
-38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
-74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
+CRED_R (Raw Value) (38 bytes)
+A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+CF 54 63 25 DE A2 14
 </pre><a href="#appendix-B.3-16" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-17">The initiator computes K_3 and IV_3<a href="#appendix-B.3-17" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-18">
+<div class="alignLeft art-text artwork" id="appendix-B.3-17">
 <pre>
-K_3 (CBOR Sequence) (16 bytes)
-96 6A 57 9C EA 26 CA 3C EB 44 2A C7 27 EA B2 32
-</pre><a href="#appendix-B.3-18" class="pilcrow">¶</a>
+TH_3 (Raw Value) (32 bytes)
+38 6A 9D 05 2B 25 59 92 EE E5 FF B5 94 34 7D 32
+74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
+</pre><a href="#appendix-B.3-17" class="pilcrow">¶</a>
 </div>
+<p id="appendix-B.3-18">The initiator computes K_3 and IV_3<a href="#appendix-B.3-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-19">
 <pre>
-IV_3 (CBOR Sequence) (13 bytes)
-5B F1 AD 0E 4F FB 96 76 D7 8D F2 3F 6E
+K_3 (Raw Value) (16 bytes)
+96 6A 57 9C EA 26 CA 3C EB 44 2A C7 27 EA B2 32
 </pre><a href="#appendix-B.3-19" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-20">It then computes CIPHERTEXT_3B:<a href="#appendix-B.3-20" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-21">
+<div class="alignLeft art-text artwork" id="appendix-B.3-20">
+<pre>
+IV_3 (Raw Value) (13 bytes)
+5B F1 AD 0E 4F FB 96 76 D7 8D F2 3F 6E
+</pre><a href="#appendix-B.3-20" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.3-21">It then computes CIPHERTEXT_3B:<a href="#appendix-B.3-21" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-22">
 <pre>
 CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 48 04 88 B7 F2 A6 66 B6 29
-</pre><a href="#appendix-B.3-21" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-22" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-22">The Initiator computes KEYSTREAM_3 as defined in Section 4:<a href="#appendix-B.3-22" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-23">
+<p id="appendix-B.3-23">The Initiator computes KEYSTREAM_3 as defined in Section 4:<a href="#appendix-B.3-23" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-24">
 <pre>
-KEYSTREAM_3A (CBOR Sequence) (10 bytes)
+KEYSTREAM_3A (Raw Value) (10 bytes)
 03 E5 D1 57 1B BC 93 32 47 1B
-</pre><a href="#appendix-B.3-23" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-24" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-24">It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:<a href="#appendix-B.3-24" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-25">
+<p id="appendix-B.3-25">It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:<a href="#appendix-B.3-25" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-26">
 <pre>
 PLAINTEXT_3A (CBOR Sequence) (10 bytes)
 10 48 04 88 B7 F2 A6 66 B6 29
-</pre><a href="#appendix-B.3-25" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-26" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-26">It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-26" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-27">
+<p id="appendix-B.3-27">It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-27" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-28">
 <pre>
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
 13 AD D5 DF AC 4E 35 54 F1 32
-</pre><a href="#appendix-B.3-27" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-28" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-28">The Initiator computes message_3 as defined in Section 5.3.2.:<a href="#appendix-B.3-28" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-29">
+<p id="appendix-B.3-29">The Initiator computes message_3 as defined in Section 5.3.2.:<a href="#appendix-B.3-29" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-30">
 <pre>
 message_3 (CBOR Sequence) (11 bytes)
 4A 13 AD D5 DF AC 4E 35 54 F1 32
-</pre><a href="#appendix-B.3-29" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-30" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-30">The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
-TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )<a href="#appendix-B.3-30" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-31">
+<p id="appendix-B.3-31">The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
+TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )<a href="#appendix-B.3-31" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-32">
 <pre>
-TH_4 (CBOR Data Item) (32 bytes)
+TH_4 (Raw Value) (32 bytes)
 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
-</pre><a href="#appendix-B.3-31" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-32" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="appendix-B.3-33">
+<pre>
+TH_4 (CBOR Data Item) (34 bytes)
+58 20 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD
+0E 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+</pre><a href="#appendix-B.3-33" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2485,13 +2513,13 @@ PLAINTEXT_4 (CBOR Sequence) (0 bytes)
 <p id="appendix-B.4-5">The Responder computes K_4 and IV_4:<a href="#appendix-B.4-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.4-6">
 <pre>
-K_4 (CBOR Sequence) (16 bytes)
+K_4 (Raw Value) (16 bytes)
 BC AB 1D F0 13 8D C0 5C 88 5F D3 71 E9 50 C6 7F
 </pre><a href="#appendix-B.4-6" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.4-7">
 <pre>
-IV_4 (CBOR Sequence) (13 bytes)
+IV_4 (Raw Value) (13 bytes)
 41 11 34 D0 E0 C5 08 D9 5D A7 C3 AC DC
 </pre><a href="#appendix-B.4-7" class="pilcrow">¶</a>
 </div>
@@ -2512,14 +2540,14 @@ message_4 (CBOR Sequence) (9 bytes)
 <p id="appendix-B.5-1">After the exchange, the following PRK_out and PRK_exporter are derived by both entities:<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.5-2">
 <pre>
-PRK_out (Raw  value) (32 bytes)
+PRK_out (Raw Value) (32 bytes)
 BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
 49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
 </pre><a href="#appendix-B.5-2" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.5-3">
 <pre>
-PRK_exporter (Raw  value) (32 bytes)
+PRK_exporter (Raw Value) (32 bytes)
 2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
 E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 </pre><a href="#appendix-B.5-3" class="pilcrow">¶</a>
@@ -2534,13 +2562,13 @@ E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 <p id="appendix-B.6-1">Both peers generate a resumption key for use in the next resumption attempt, as explained in <a href="#psk-resumption" class="auto internal xref">Section 6</a>:<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.6-2">
 <pre>
-rPSK (Raw  value) (16 bytes)
+rPSK (Raw Value) (16 bytes)
 5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
 </pre><a href="#appendix-B.6-2" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="appendix-B.6-3">
 <pre>
-rKID (Raw  value) (1 byte)
+rKID (Raw Value) (1 byte)
 55
 </pre><a href="#appendix-B.6-3" class="pilcrow">¶</a>
 </div>
