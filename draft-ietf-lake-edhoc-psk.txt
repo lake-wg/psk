@@ -944,13 +944,13 @@ B.1.  message_1
 
    Initiator's ephemeral private key
    X (Raw Value) (32 bytes)
-   09 97 2D FE F1 EA AB 92 6E C9 6E 80 05 FE D2 9F 70 FF BF 4E
-   36 1C 3A 06 1A 7A CD B5 17 0C 10 E5
+   09 97 2D FE F1 EA AB 92 6E C9 6E 80 05 FE D2 9F
+   70 FF BF 4E 36 1C 3A 06 1A 7A CD B5 17 0C 10 E5
 
    Initiator's ephemeral public key
    G_X (Raw Value) (32 bytes)
-   7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99 2D 95 72 49
-   EB 7F 18 88 40 6D 17 8A 04 C9 12 DB
+   7E C6 81 02 94 06 02 AA B5 48 53 9B F4 2A 35 99
+   2D 95 72 49 EB 7F 18 88 40 6D 17 8A 04 C9 12 DB
 
    The Initiator selects its connection identifier C_I to be the byte
    string 0xA, which is encoded as 0xA since it is represented by the
@@ -967,9 +967,9 @@ B.1.  message_1
    The Initiator constructs message_1:
 
    message_1 (CBOR Sequence) (37 bytes)
-   04 02 58 20 7e c6 81 02 94 06 02 aa b5 48 53 9b
-   f4 2a 35 99 2d 95 72 49 eb 7f 18 88 40 6d 17 8a
-   04 c9 12 db 0a
+   04 02 58 20 7E C6 81 02 94 06 02 AA B5 48 53 9B
+   F4 2A 35 99 2D 95 72 49 EB 7F 18 88 40 6D 17 8A
+   04 C9 12 DB 0A
 
 B.2.  message_2
 
@@ -981,13 +981,13 @@ B.2.  message_2
 
    Responder's ephemeral private key
    Y (Raw Value) (32 bytes)
-   1E 1C 8F 2D F1 AA 71 10 B3 9F 33 BA 5E A8 DC CF 31 41 1E B3
-   3D 4F 9A 09 4C F6 51 92 D3 35 A7 A3
+   1E 1C 8F 2D F1 AA 71 10 B3 9F 33 BA 5E A8 DC CF
+   31 41 1E B3 3D 4F 9A 09 4C F6 51 92 D3 35 A7 A3
 
    Responder's ephemeral public key
    G_Y (Raw Value) (32 bytes)
-   ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A D5 E4 E1 C4
-   32 F7 6A 6E DE 8F 79 24 7B B9 7D 83
+   ED 15 6A 62 43 E0 AF EC 9E FB AA BC E8 42 9D 5A
+   D5 E4 E1 C4 32 F7 6A 6E DE 8F 79 24 7B B9 7D 83
 
    The Responder selects its connection identifier C_R to be the byte
    string 0x05, which is encoded as 0x05 since it is represented by the
@@ -1001,8 +1001,8 @@ B.2.  message_2
    algorithm: TH_2 = H( G_Y, H(message_1) ), where H(message_1) is:
 
    H(message_1) (CBOR Data Item) (32 bytes)
-   19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20 C2 4B 6A 34 BC
-   21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
+   19 CC 2D 2A 95 7E DD 80 10 90 42 FD E6 CC 20 C2
+   4B 6A 34 BC 21 C6 D4 9F EA 89 5D 4C 75 92 34 0E
 
    TH_2 (CBOR Data Item) (32 bytes)
    5B 48 34 AE 63 0A 8A 0E D0 B0 C6 F3 66 42 60 4D
@@ -1013,8 +1013,8 @@ B.2.  message_2
    needed.  It is computed from G_X and Y or G_Y and X:
 
    G_XY (Raw Value) (ECDH shared secret) (32 bytes)
-   2F 4A 79 9A 5A B0 C5 67 22 0C B6 72 08 E6 CF 8F 4C A5 FE 38
-   5D 1B 11 FD 9A 57 3D 41 60 F3 B0 B2
+   2F 4A 79 9A 5A B0 C5 67 22 0C B6 72 08 E6 CF 8F
+   4C A5 FE 38 5D 1B 11 FD 9A 57 3D 41 60 F3 B0 B2
 
    Then, PRK_2e is calculated as defined in Section 4.1.2 of [RFC9528]
 
@@ -1040,7 +1040,7 @@ B.2.  message_2
    The Responder computes KEYSTREAM_2 as defined in Section 4.1.2 of
    [RFC9528]
 
-   KEYSTREAM_2 (CBOR Sequence) (1 byte)
+   KEYSTREAM_2A (CBOR Sequence) (1 byte)
    EC
 
    The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A
@@ -1070,8 +1070,8 @@ B.3.  message_3
    50 93 0F F4 62 A7 7A 35 40 CF 54 63 25 DE A2 14
 
    PRK_4e3m (Raw Value) (32 bytes)
-   B3 65 6C 57 B6 14 4E 9C A3 72 08 81 D8 AF 69 53
-   C4 69 17 A8 5D D8 92 E6 E6 13 65 4F FC 4F A8 0B
+   C6 2C C0 4F 55 D0 08 CF EB 8A 68 1E 84 63 FD DD
+   A2 FF 6C A8 4B 9E D6 11 6C 86 5C D8 1E 06 24 60
 
    The transcript hash TH_3 is calculated using the EDHOC hash
    algorithm:
@@ -1114,35 +1114,35 @@ B.3.  message_3
    The initiator computes K_3 and IV_3
 
    K_3 (CBOR Sequence) (16 bytes)
-   A4 A5 35 4E 1F 79 EC 99 D8 24 35 45 7F A8 FA 0C
+   96 6A 57 9C EA 26 CA 3C EB 44 2A C7 27 EA B2 32
 
    IV_3 (CBOR Sequence) (13 bytes)
-   18 09 36 AD 4C 31 9A E8 D5 DC C7 E0 09
+   5B F1 AD 0E 4F FB 96 76 D7 8D F2 3F 6E
 
    It then computes CIPHERTEXT_3B:
 
    CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-   48 11 D0 49 1F C8 BB 2E 16 0A
+   48 04 88 B7 F2 A6 66 B6 29
 
    The Initiator computes KEYSTREAM_3 as defined in Section 4:
 
-   KEYSTREAM_3 (CBOR Sequence) ()
-   A3 60 2B 68 19 A4 84 40 68 7E 00
+   KEYSTREAM_3A (CBOR Sequence) (10 bytes)
+   03 E5 D1 57 1B BC 93 32 47 1B
 
    It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:
 
    PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-   10 48 11 D0 49 1F C8 BB 2E 16 0A
+   10 48 04 88 B7 F2 A6 66 B6 29
 
    It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:
 
    CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-   B3 28 3A B8 50 BB 4C FB 46 68 00
+   13 AD D5 DF AC 4E 35 54 F1 32
 
    The Initiator computes message_3 as defined in Section 5.3.2.:
 
    message_3 (CBOR Sequence) (11 bytes)
-   4A B3 28 3A B8 50 BB 4C FB 46 68
+   4A 13 AD D5 DF AC 4E 35 54 F1 32
 
    The transcript hash TH_4 is calculated using the EDHOC hash
    algorithm: TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
@@ -1154,8 +1154,8 @@ B.3.  message_3
    After sending message_3, the Initiator can compute PRK_out
 
    PRK_out (Raw  value) (32 bytes)
-   B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
-   D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
+   BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
+   49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
 
 B.4.  message_4
 
@@ -1170,20 +1170,21 @@ B.4.  message_4
    The Responder computes K_4 and IV_4
 
    K_4 (CBOR Sequence) (16 bytes)
-   81 C8 1A 4F DC 80 AE 09 99 59 98 61 CA 55 0A B3
+   BC AB 1D F0 13 8D C0 5C 88 5F D3 71 E9 50 C6 7F
 
    IV_4 (CBOR Sequence) (13 bytes)
-   BF 14 F7 95 6D 54 49 99 B0 9A 6A CB 0D
+   41 11 34 D0 E0 C5 08 D9 5D A7 C3 AC DC
 
    The Responder computes message_4:
 
-   48 AA CC FA 23 A4 0F 4A B5
+   message_4 (CBOR Sequence) (9 bytes)
+   48 8A DD 93 DB 40 48 59 F9
 
    The Responder then computes PRK_out:
 
    PRK_out (Raw  value) (32 bytes)
-   B7 1F A6 27 07 34 54 63 91 D6 DC D0 C4 0F 58 CA
-   D4 25 8E F4 63 5A 81 37 C1 FD 8B F7 92 C8 07 F4
+   BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
+   49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
 
 Appendix C.  Change Log
 
