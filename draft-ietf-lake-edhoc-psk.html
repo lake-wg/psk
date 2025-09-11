@@ -1306,6 +1306,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
                 <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-B.4" class="auto internal xref">B.4</a>.  <a href="#name-message_4" class="internal xref">message_4</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
+                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-B.5" class="auto internal xref">B.5</a>.  <a href="#name-prk_out-and-prk_exporter" class="internal xref">PRK_out and PRK_exporter</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.6">
+                <p id="section-toc.1-1.12.2.6.1"><a href="#appendix-B.6" class="auto internal xref">B.6</a>.  <a href="#name-rpsk-and-rkid" class="internal xref">rPSK and rKID</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
@@ -2457,14 +2463,6 @@ TH_4 (CBOR Data Item) (32 bytes)
 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 </pre><a href="#appendix-B.3-31" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-32">After sending message_3, the Initiator can compute PRK_out<a href="#appendix-B.3-32" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-33">
-<pre>
-PRK_out (Raw  value) (32 bytes)
-BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
-49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
-</pre><a href="#appendix-B.3-33" class="pilcrow">¶</a>
-</div>
 </section>
 </div>
 <div id="message4">
@@ -2484,7 +2482,7 @@ EAD_4 (CBOR Sequence) (0 bytes)
 PLAINTEXT_4 (CBOR Sequence) (0 bytes)
 </pre><a href="#appendix-B.4-4" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.4-5">The Responder computes K_4 and IV_4<a href="#appendix-B.4-5" class="pilcrow">¶</a></p>
+<p id="appendix-B.4-5">The Responder computes K_4 and IV_4:<a href="#appendix-B.4-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.4-6">
 <pre>
 K_4 (CBOR Sequence) (16 bytes)
@@ -2504,13 +2502,47 @@ message_4 (CBOR Sequence) (9 bytes)
 48 8A DD 93 DB 40 48 59 F9
 </pre><a href="#appendix-B.4-9" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.4-10">The Responder then computes PRK_out:<a href="#appendix-B.4-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.4-11">
+</section>
+</div>
+<div id="prkout-and-prkexporter">
+<section id="appendix-B.5">
+        <h3 id="name-prk_out-and-prk_exporter">
+<a href="#appendix-B.5" class="section-number selfRef">B.5. </a><a href="#name-prk_out-and-prk_exporter" class="section-name selfRef">PRK_out and PRK_exporter</a>
+        </h3>
+<p id="appendix-B.5-1">After the exchange, the following PRK_out and PRK_exporter are derived by both entities:<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.5-2">
 <pre>
 PRK_out (Raw  value) (32 bytes)
 BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
 49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
-</pre><a href="#appendix-B.4-11" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.5-2" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="appendix-B.5-3">
+<pre>
+PRK_exporter (Raw  value) (32 bytes)
+2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
+E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
+</pre><a href="#appendix-B.5-3" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="rpsk-and-rkid">
+<section id="appendix-B.6">
+        <h3 id="name-rpsk-and-rkid">
+<a href="#appendix-B.6" class="section-number selfRef">B.6. </a><a href="#name-rpsk-and-rkid" class="section-name selfRef">rPSK and rKID</a>
+        </h3>
+<p id="appendix-B.6-1">Both peers generate a resumption key for use in the next resumption attempt, as explained in <a href="#psk-resumption" class="auto internal xref">Section 6</a>:<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.6-2">
+<pre>
+rPSK (Raw  value) (16 bytes)
+5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
+</pre><a href="#appendix-B.6-2" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="appendix-B.6-3">
+<pre>
+rKID (Raw  value) (1 byte)
+55
+</pre><a href="#appendix-B.6-3" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
