@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-09T01:01:42.406376+00:00",
+  "timestamp": "2025-09-11T01:01:29.560052+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1686,13 +1686,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-03T16:16:08Z",
-      "updatedAt": "2025-09-08T15:49:29Z",
+      "updatedAt": "2025-09-09T11:14:30Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "2a6575806d9649583943392532d65b536125da9e",
       "headRepository": "lake-wg/psk",
       "headRefName": "francisco-patch-1",
-      "headRefOid": "f8fae6074266d9d7002e4d3aff3a0a8b60d96339",
+      "headRefOid": "d2cd247b24493a8171ad97255aa32f2a8eda0eaa",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1738,6 +1738,99 @@
               "updatedAt": "2025-09-08T14:32:50Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-wG8n",
+          "commit": {
+            "abbreviatedOid": "f8fae60"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-09T09:09:34Z",
+          "updatedAt": "2025-09-09T09:09:35Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "I think \"MUST be provisioned out-of-band\" is too strong. ID_CRED_PSK may include CRED_I, as a way to transport information about the identity (assuming there is an appropriate policy allowing this). I don't think we should have any normative text, but we can have security considerations about potential issues.",
+              "createdAt": "2025-09-09T09:09:35Z",
+              "updatedAt": "2025-09-09T09:09:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-wduk",
+          "commit": {
+            "abbreviatedOid": "f8fae60"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-09T09:24:48Z",
+          "updatedAt": "2025-09-09T09:24:48Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "\"CRED_I and CRED_R MUST refer to the same long-term credentials as in the initial EDHOC exchange\"\r\nI have problems with this change. We want to allow different formats for CRED_x, it may contain the PSK or not. The terminology is still that CRED_x are the \"authentication credenitals\" and ID_CRED_PSK is referring to the authentcation credentials. Saying that CRED_x refers to credentials therefore becomes confusing. I think the original formulation is correct: We discussed different options for maintaining disambiguation and agreed on the simple method to always use the initial CRED_I and CRED_R, and this applies even in resumption when PSK and kid are changed.\r\n",
+              "createdAt": "2025-09-09T09:24:48Z",
+              "updatedAt": "2025-09-09T09:24:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-yP50",
+          "commit": {
+            "abbreviatedOid": "f8fae60"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-09T10:45:04Z",
+          "updatedAt": "2025-09-09T10:45:04Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "Understood. Thank you for the clarification.",
+              "createdAt": "2025-09-09T10:45:04Z",
+              "updatedAt": "2025-09-09T10:45:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-ytVi",
+          "commit": {
+            "abbreviatedOid": "d18e1af"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-09T11:09:49Z",
+          "updatedAt": "2025-09-09T11:09:50Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I don't think there is a problem using label 11 since the keys are different, but since KEYSTREAM_3A is a new object defined in this document it doesn't hurt to use a new label.",
+              "createdAt": "2025-09-09T11:09:49Z",
+              "updatedAt": "2025-09-09T11:09:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc6-yw_Q",
+          "commit": {
+            "abbreviatedOid": "d2cd247"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-09T11:14:30Z",
+          "updatedAt": "2025-09-09T11:14:30Z",
+          "comments": []
         }
       ]
     }
