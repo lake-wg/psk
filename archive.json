@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-11T01:01:29.560052+00:00",
+  "timestamp": "2025-09-14T01:04:56.119132+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1679,24 +1679,26 @@
       "id": "PR_kwDONwrUhc6mrvX1",
       "title": "Fixing some details + some considerations about CREDs + fixing KEYSTREAM_3A derivation",
       "url": "https://github.com/lake-wg/psk/pull/32",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "francislopezg",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-03T16:16:08Z",
-      "updatedAt": "2025-09-09T11:14:30Z",
+      "updatedAt": "2025-09-11T08:28:58Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "2a6575806d9649583943392532d65b536125da9e",
       "headRepository": "lake-wg/psk",
       "headRefName": "francisco-patch-1",
       "headRefOid": "d2cd247b24493a8171ad97255aa32f2a8eda0eaa",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-11T08:28:58Z",
+      "mergedAt": "2025-09-11T08:28:58Z",
+      "mergedBy": "ElsaLopez133",
+      "mergeCommit": {
+        "oid": "db4a67270c5293d7eb29d0a3de78257cdf458962"
+      },
       "comments": [],
       "reviews": [
         {
