@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 15 March 2026                                 J. Preuß Mattsson
+Expires: 19 March 2026                                 J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                       11 September 2025
+                                                       15 September 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 March 2026.
+   This Internet-Draft will expire on 19 March 2026.
 
 Copyright Notice
 
@@ -737,20 +737,21 @@ Table of Contents
 
    For use cases where application data is transmitted, it can be sent
    together with message_3, maintaining efficiency.  In applications
-   such as EAP-EDHOC, where no application data is exchanged, message_4
-   is mandatory.  In such cases, EDHOC-PSK does not increase the total
-   number of messages.  Other implementations may replace message_4 with
-   an OSCORE-protected message.  In this case, the following requirement
-   applies: The Initiator SHALL NOT persistently store PRK_out or
-   derived application keys until successfully verifying message_4 or a
-   message protected with an exported application key (e.g., an OSCORE
-   message).  This ensures that key material is stored only after its
-   authenticity is confirmed, thereby strengthening privacy by
-   preventing premature storage of potentially compromised keys.
-   Finally, the order of authentication (i.e., whether the Initiator or
-   the Responder authenticates first) is not relevant in EDHOC-PSK.
-   While this ordering affects privacy properties in the asymmetric
-   methods of [RFC9528], it has no significant impact in EDHOC-PSK.
+   such as EAP-EDHOC, where no application data is exchanged between
+   Initiator and Responder, message_4 is mandatory.  In such cases,
+   EDHOC-PSK does not increase the total number of messages.  Other
+   implementations may replace message_4 with an OSCORE-protected
+   message.  In this case, the following requirement applies: The
+   Initiator SHALL NOT persistently store PRK_out or derived application
+   keys until successfully verifying message_4 or a message protected
+   with an exported application key (e.g., an OSCORE message).  This
+   ensures that key material is stored only after its authenticity is
+   confirmed, thereby strengthening privacy by preventing premature
+   storage of potentially compromised keys.  Finally, the order of
+   authentication (i.e., whether the Initiator or the Responder
+   authenticates first) is not relevant in EDHOC-PSK.  While this
+   ordering affects privacy properties in the asymmetric methods of
+   [RFC9528], it has no significant impact in EDHOC-PSK.
 
 9.  IANA Considerations
 
