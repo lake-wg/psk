@@ -690,7 +690,8 @@ Table of Contents
    agility, and ephemeral key exchange, now considered essential for
    meeting current security requirements.  Without perfect forward
    secrecy, compromise of the PSK enables a passive attacker to decrypt
-   both past and future sessions.
+   both past and future sessions.  Note that PSK authentication is not
+   allowed in EAP-TLS [RFC9190].
 
 8.  EDHOC-PSK and OSCORE
 
