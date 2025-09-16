@@ -46,16 +46,16 @@ author:
 
 normative:
 
-  RFC9528:
-  RFC9052:
-  RFC9053:
+  RFC8392:
+  RFC8610:
   RFC8742:
   RFC8949:
-  RFC8610:
+  RFC9052:
+  RFC9053:
+  RFC9528:
   RFC9668:
-  RFC8392:
-  I-D.spm-lake-pqsuites:
   I-D.ietf-emu-eap-edhoc:
+  I-D.spm-lake-pqsuites:
   SP-800-56A:
     target: https://doi.org/10.6028/NIST.SP.800-56Ar3
     title: Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography
