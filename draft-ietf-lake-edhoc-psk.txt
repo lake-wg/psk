@@ -686,13 +686,11 @@ Table of Contents
    full handshake.
 
    EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK
-   [RFC4764], which lacks support for ephemeral key exchange, now
-   considered essential for meeting current security requirements.
-   Without perfect forward secrecy, compromise of the PSK enables a
-   passive attacker to decrypt both past and future sessions.  In
-   addition, EAP-EDHOC-PSK addresses another limitation of EAP-PSK: if a
-   server holds multiple PSKs, it must try each candidate until the
-   encrypted PSK identity decrypts successfully.
+   [RFC4764], which lacks support for identity protection, cryptographic
+   agility, and ephemeral key exchange, now considered essential for
+   meeting current security requirements.  Without perfect forward
+   secrecy, compromise of the PSK enables a passive attacker to decrypt
+   both past and future sessions.
 
 8.  EDHOC-PSK and OSCORE
 
