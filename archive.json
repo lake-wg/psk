@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-14T01:04:56.119132+00:00",
+  "timestamp": "2025-09-16T01:00:02.097488+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -936,6 +936,22 @@
           "updatedAt": "2025-08-19T11:38:44Z"
         }
       ]
+    },
+    {
+      "number": 33,
+      "id": "I_kwDONwrUhc7LteVM",
+      "title": "More info on how EDHOC-PSK works in EAP",
+      "url": "https://github.com/lake-wg/psk/issues/33",
+      "state": "OPEN",
+      "author": "emanjon",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Initial EAP-EDHOC\n- Resumption for EAP-EDHOC\n- Great replacement for EAP-PSK, which does not live up to current security practices.\n\nI will write and commit some text later today",
+      "createdAt": "2025-09-15T12:13:09Z",
+      "updatedAt": "2025-09-15T12:13:09Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
