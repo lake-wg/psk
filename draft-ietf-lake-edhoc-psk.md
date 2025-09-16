@@ -76,6 +76,9 @@ normative:
 
 informative:
 
+  RFC4764:
+  RFC9190:
+
 --- abstract
 
 This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
@@ -397,6 +400,16 @@ When using resumption PSKs:
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
+
+# EDHOC-PSK and Extensible Authentication Protocol (EAP)
+
+EDHOC with PSK authentication has several important use cases within the Extensible Authentication Protocol (EAP).
+
+One key use case is as a resumption method for all other EDHOC-based methods used with EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, similar to the resumption mechanism in EAP-TLS 1.3 {{RFC9190}}. Resumption reduces the number of round trips and allows the EAP-EDHOC server to avoid database lookups that might be required during an initial handshake. If the server accepts resumption, the resumed session is considered authenticated and securely bound to the prior authentication or resumption.
+
+The use of resumption is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server may, however, require a initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
+
+EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. In addition, EAP-EDHOC-PSK addresses another limitation of EAP-PSK: if a server holds multiple PSKs, it must try each candidate until the encrypted PSK identity decrypts successfully.
 
 # EDHOC-PSK and OSCORE
 
