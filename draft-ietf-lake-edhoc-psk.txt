@@ -665,10 +665,10 @@ Table of Contents
    EDHOC with PSK authentication has several important use cases within
    the Extensible Authentication Protocol (EAP).
 
-   One key use case is the resumption of a session established with the
-   EAP method EAP-EDHOC [I-D.ietf-emu-eap-edhoc], regardless of the
-   EDHOC-based authentication method originally used in that session.
-   This is similar to the resumption mechanism in EAP-TLS 1.3 [RFC9190].
+   One use case is the resumption of a session established with the EAP
+   method EAP-EDHOC [I-D.ietf-emu-eap-edhoc], regardless of the EDHOC-
+   based authentication method originally used in that session.  This is
+   similar to the resumption mechanism in EAP-TLS 1.3 [RFC9190].
    Resumption reduces the number of round trips and allows the EAP-EDHOC
    server to avoid database lookups that might be required during an
    initial handshake.  If the server accepts resumption, the resumed
