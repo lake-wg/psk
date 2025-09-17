@@ -1646,7 +1646,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.2.2-2.2.1">CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.2-3">C_R, EAD_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. In contrast to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature- and MAC-based authentication methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.2-3">C_R, EAD_2 are defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. In contrast to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature and MAC-based authentication methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="initiator-processing-of-message-2">
@@ -1663,7 +1663,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.2.3-2.2.1">Decrypt CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.3-3">In contrast to <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-3">In contrast to <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped.<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1745,7 +1745,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.3.3-2.2.1">Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.<a href="#section-5.3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.3">
-              <p id="section-5.3.3-2.3.1">Generate KEYSTREAM_3A with the same method the initiator used.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.3.1">Generate KEYSTREAM_3A with the same method the Initiator used.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.4">
               <p id="section-5.3.3-2.4.1">Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.<a href="#section-5.3.3-2.4.1" class="pilcrow">¶</a></p>
@@ -2273,7 +2273,7 @@ F4 2A 35 99 2D 95 72 49 EB 7F 18 88 40 6D 17 8A
         <h3 id="name-message_2">
 <a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-message_2" class="section-name selfRef">message_2</a>
         </h3>
-<p id="appendix-B.2-1">The Responder supports the most preferred and selected cipher suite 0, so SUITES_I is acceptable.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-1">The Responder supports the most preferred and selected cipher suite 02, so SUITES_I is acceptable.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2-2">The Responder creates an ephemeral key pair for use with the EDHOC key exchange algorithm:<a href="#appendix-B.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.2-3">
 <pre>
@@ -2477,7 +2477,7 @@ TH_3 (Raw Value) (32 bytes)
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 </pre><a href="#appendix-B.3-17" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-18">The initiator computes K_3 and IV_3<a href="#appendix-B.3-18" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-18">The Initiator computes K_3 and IV_3<a href="#appendix-B.3-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-19">
 <pre>
 K_3 (Raw Value) (16 bytes)
@@ -2497,7 +2497,7 @@ CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 48 04 88 B7 F2 A6 66 B6 29
 </pre><a href="#appendix-B.3-22" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-23">The Initiator computes KEYSTREAM_3 as defined in Section 4:<a href="#appendix-B.3-23" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-23">The Initiator computes KEYSTREAM_3A as defined in Section 4:<a href="#appendix-B.3-23" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-24">
 <pre>
 KEYSTREAM_3A (Raw Value) (10 bytes)
@@ -2511,7 +2511,7 @@ PLAINTEXT_3A (CBOR Sequence) (10 bytes)
 10 48 04 88 B7 F2 A6 66 B6 29
 </pre><a href="#appendix-B.3-26" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-27">It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:<a href="#appendix-B.3-27" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-27">It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:<a href="#appendix-B.3-27" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-28">
 <pre>
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
