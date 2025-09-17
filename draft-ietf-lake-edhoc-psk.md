@@ -275,7 +275,7 @@ CIPHERTEXT_2A is calculated with a binary additive stream cipher, using a keystr
 * PLAINTEXT_2A = ( C_R, ? EAD_2 )
 * CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A
 
-C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature- and MAC-based authentication methods defined in {{RFC9528}}, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
+C_R, EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature and MAC-based authentication methods defined in {{RFC9528}}, as authentication in EDHOC-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
 
 ### Initiator Processing of Message 2
 
@@ -284,7 +284,7 @@ Upon receiving message_2, the Initiator processes it as follows:
 * Compute KEYSTREAM_2A as defined in {{key-der}}.
 * Decrypt CIPHERTEXT_2A using binary XOR, i.e., PLAINTEXT_2A = CIPHERTEXT_2A XOR KEYSTREAM_2A
 
-In contrast to {{Section 5.3.3 of RFC9528}}, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped
+In contrast to {{Section 5.3.3 of RFC9528}}, ID_CRED_R is not made available to the application in step 4, and steps 5 and 6 are skipped.
 
 ## Message 3
 
@@ -325,7 +325,7 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.
 
-* Generate KEYSTREAM_3A with the same method the initiator used.
+* Generate KEYSTREAM_3A with the same method the Initiator used.
 
 * Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.
 
@@ -609,7 +609,7 @@ F4 2A 35 99 2D 95 72 49 EB 7F 18 88 40 6D 17 8A
 
 ## message_2
 
-The Responder supports the most preferred and selected cipher suite 0, so SUITES_I is acceptable.
+The Responder supports the most preferred and selected cipher suite 02, so SUITES_I is acceptable.
 
 The Responder creates an ephemeral key pair for use with the EDHOC key exchange algorithm:
 
@@ -800,7 +800,7 @@ TH_3 (Raw Value) (32 bytes)
 74 18 A2 EA 51 83 48 6C 0C 9E 20 42 6E 0B CA 2F
 ~~~~~~~~~~~~
 
-The initiator computes K_3 and IV_3
+The Initiator computes K_3 and IV_3
 
 ~~~~~~~~~~~~
 K_3 (Raw Value) (16 bytes)
@@ -819,7 +819,7 @@ CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 48 04 88 B7 F2 A6 66 B6 29
 ~~~~~~~~~~~~
 
-The Initiator computes KEYSTREAM_3 as defined in Section 4:
+The Initiator computes KEYSTREAM_3A as defined in Section 4:
 
 ~~~~~~~~~~~~
 KEYSTREAM_3A (Raw Value) (10 bytes)
@@ -833,7 +833,7 @@ PLAINTEXT_3A (CBOR Sequence) (10 bytes)
 10 48 04 88 B7 F2 A6 66 B6 29
 ~~~~~~~~~~~~
 
-It then uses KEYSTREAM_3 to derive CIPHERTEXT_3A:
+It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
