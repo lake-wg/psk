@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-16T01:00:02.097488+00:00",
+  "timestamp": "2025-09-18T00:59:26.207737+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -942,16 +942,31 @@
       "id": "I_kwDONwrUhc7LteVM",
       "title": "More info on how EDHOC-PSK works in EAP",
       "url": "https://github.com/lake-wg/psk/issues/33",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emanjon",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "- Initial EAP-EDHOC\n- Resumption for EAP-EDHOC\n- Great replacement for EAP-PSK, which does not live up to current security practices.\n\nI will write and commit some text later today",
       "createdAt": "2025-09-15T12:13:09Z",
-      "updatedAt": "2025-09-15T12:13:09Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-09-17T11:30:37Z",
+      "closedAt": "2025-09-17T11:30:37Z",
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Commited to main, plese review",
+          "createdAt": "2025-09-16T06:50:54Z",
+          "updatedAt": "2025-09-16T06:50:54Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I reviewed and added a commit. Does anyone else want to review or are we done?",
+          "createdAt": "2025-09-17T06:51:56Z",
+          "updatedAt": "2025-09-17T06:51:56Z"
+        }
+      ]
     }
   ],
   "pulls": [
