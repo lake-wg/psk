@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-18T00:59:26.207737+00:00",
+  "timestamp": "2025-09-28T01:07:13.373830+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1866,6 +1866,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDONwrUhc6quiTX",
+      "title": "security considerations",
+      "url": "https://github.com/lake-wg/psk/pull/34",
+      "state": "OPEN",
+      "author": "ElsaLopez133",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We should list the claimed properties, including Confidentiality (and PFS), Mutual Authentication and explicit key confirmation, Downgrade Protection, Cryptographic Protection, EAD Protection and Identity Protection.\r\nI was following the requirements of RFC9528 and those in https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/",
+      "createdAt": "2025-09-26T13:53:03Z",
+      "updatedAt": "2025-09-26T13:53:03Z",
+      "baseRepository": "lake-wg/psk",
+      "baseRefName": "main",
+      "baseRefOid": "c72e769cfbc9cfca065fe645e9e13a5f7f818062",
+      "headRepository": "lake-wg/psk",
+      "headRefName": "security-properties",
+      "headRefOid": "cb4ff9d71a8b1899d85595bcd7a364ce36f1ca20",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
