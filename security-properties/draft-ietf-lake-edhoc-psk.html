@@ -1264,25 +1264,22 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-mutual-authentication" class="internal xref">Mutual Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-confidentiality" class="internal xref">Confidentiality</a></p>
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-protection-of-external-auth" class="internal xref">Protection of External Authorization Data (EAD)</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
-                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-protection-of-external-auth" class="internal xref">Protection of External Authorization Data (EAD)</a></p>
+                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-cryptographic-strength" class="internal xref">Cryptographic strength</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.5">
-                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-cryptographic-strength" class="internal xref">Cryptographic strength</a></p>
+                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-downgrade-protection" class="internal xref">Downgrade Protection</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
-                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-downgrade-protection" class="internal xref">Downgrade Protection</a></p>
+                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-post-quantum-considerations" class="internal xref">Post Quantum Considerations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.7">
-                <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="auto internal xref">9.7</a>.  <a href="#name-post-quantum-considerations" class="internal xref">Post Quantum Considerations</a></p>
+                <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="auto internal xref">9.7</a>.  <a href="#name-independence-of-session-key" class="internal xref">Independence of Session Keys</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.8">
-                <p id="section-toc.1-1.9.2.8.1"><a href="#section-9.8" class="auto internal xref">9.8</a>.  <a href="#name-independence-of-session-key" class="internal xref">Independence of Session Keys</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.9">
-                <p id="section-toc.1-1.9.2.9.1"><a href="#section-9.9" class="auto internal xref">9.9</a>.  <a href="#name-unified-approach-and-recomm" class="internal xref">Unified Approach and Recommendations</a></p>
+                <p id="section-toc.1-1.9.2.8.1"><a href="#section-9.8" class="auto internal xref">9.8</a>.  <a href="#name-unified-approach-and-recomm" class="internal xref">Unified Approach and Recommendations</a></p>
 </li>
             </ul>
 </li>
@@ -1917,7 +1914,7 @@ rID_CRED_PSK = { 4 : rKID }
       <h2 id="name-security-considerations">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK, following those of <span>[<a href="#I-D.ietf-lake-reqs" class="cite xref">I-D.ietf-lake-reqs</a>]</span>.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-1">The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <div id="identity-protection">
 <section id="section-9.1">
         <h3 id="name-identity-protection">
@@ -1931,69 +1928,59 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-mutual-authentication">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
         </h3>
-<p id="section-9.2-1">At the end of the protocol, each endpoint <span class="bcp14">SHALL</span> have freshly authenticated the other's credential if a fourth message is sent, even with long-term key compromise (Key Compromise Impersonation), resisting
-active Man-in-the-Middle (MitM) adversaries, replay attacks and identity misbinding. In particular, both endpoints <span class="bcp14">MUST</span> agree on a fresh session identifier, and the roles and credentials of both endpoints.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.2-2">EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
-<p id="section-9.2-3">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="confidentiality">
-<section id="section-9.3">
-        <h3 id="name-confidentiality">
-<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-confidentiality" class="section-name selfRef">Confidentiality</a>
-        </h3>
-<p id="section-9.3-1">The shared secret established by the protocol <span class="bcp14">MUST</span> be known only to the two authenticated endpoints. A passive network attacker <span class="bcp14">SHOULD</span> never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential <span class="bcp14">SHALL</span> still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties are achieved with an ephemeral Diffie-Hellman key exchange.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protection-of-external-authorization-data-ead">
-<section id="section-9.4">
+<section id="section-9.3">
         <h3 id="name-protection-of-external-auth">
-<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-protection-of-external-auth" class="section-name selfRef">Protection of External Authorization Data (EAD)</a>
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-protection-of-external-auth" class="section-name selfRef">Protection of External Authorization Data (EAD)</a>
         </h3>
-<p id="section-9.4-1">As in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC-PSK ensures the confidentiality and integrity of External Authorization Data (EAD). The security guarantees for EAD fields remain unchanged from the original EDHOC specification.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">As in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, EDHOC-PSK ensures the confidentiality and integrity of External Authorization Data (EAD). The security guarantees for EAD fields remain unchanged from the original EDHOC specification.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cryptographic-strength">
-<section id="section-9.5">
+<section id="section-9.4">
         <h3 id="name-cryptographic-strength">
-<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic strength</a>
+<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic strength</a>
         </h3>
-<p id="section-9.5-1">The target security level of the protocol's key must be of 128 bits.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
+<p id="section-9.4-1">The target security level of the protocol's key must be of 128 bits.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="downgrade-protection">
-<section id="section-9.6">
+<section id="section-9.5">
         <h3 id="name-downgrade-protection">
-<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-downgrade-protection" class="section-name selfRef">Downgrade Protection</a>
+<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-downgrade-protection" class="section-name selfRef">Downgrade Protection</a>
         </h3>
-<p id="section-9.6-1">The protocol must support cryptographic agility, including modularity and negotiation of preferred cryptographic primitives.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
+<p id="section-9.5-1">The protocol must support cryptographic agility, including modularity and negotiation of preferred cryptographic primitives.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="post-quantum-considerations">
-<section id="section-9.7">
+<section id="section-9.6">
         <h3 id="name-post-quantum-considerations">
-<a href="#section-9.7" class="section-number selfRef">9.7. </a><a href="#name-post-quantum-considerations" class="section-name selfRef">Post Quantum Considerations</a>
+<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-post-quantum-considerations" class="section-name selfRef">Post Quantum Considerations</a>
         </h3>
-<p id="section-9.7-1">Advances in quantum computing suggest that a Cryptographically Relevant Quantum Computer (CRQC) may eventually be realized. Such a machine would render many asymmetric algorithms, including Elliptic Curve Diffie-Hellman (ECDH), insecure.<a href="#section-9.7-1" class="pilcrow">¶</a></p>
-<p id="section-9.7-2">EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.<a href="#section-9.7-2" class="pilcrow">¶</a></p>
-<p id="section-9.7-3">By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see <span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>.<a href="#section-9.7-3" class="pilcrow">¶</a></p>
+<p id="section-9.6-1">Advances in quantum computing suggest that a Cryptographically Relevant Quantum Computer (CRQC) may eventually be realized. Such a machine would render many asymmetric algorithms, including Elliptic Curve Diffie-Hellman (ECDH), insecure.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
+<p id="section-9.6-2">EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.<a href="#section-9.6-2" class="pilcrow">¶</a></p>
+<p id="section-9.6-3">By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see <span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>.<a href="#section-9.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="independence-of-session-keys">
-<section id="section-9.8">
+<section id="section-9.7">
         <h3 id="name-independence-of-session-key">
-<a href="#section-9.8" class="section-number selfRef">9.8. </a><a href="#name-independence-of-session-key" class="section-name selfRef">Independence of Session Keys</a>
+<a href="#section-9.7" class="section-number selfRef">9.7. </a><a href="#name-independence-of-session-key" class="section-name selfRef">Independence of Session Keys</a>
         </h3>
-<p id="section-9.8-1">NIST requires that an ephemeral private key be used in only one key-establishment transaction (<span>[<a href="#SP-800-56A" class="cite xref">SP-800-56A</a>]</span>, Section 5.6.3.3). This requirement preserves session key independence and forward secrecy, and EDHOC-PSK complies with it.<a href="#section-9.8-1" class="pilcrow">¶</a></p>
-<p id="section-9.8-2">In other protocols, reuse of ephemeral keys, especially when combined with missing public key validation, has led to severe vulnerabilities, enabling attackers to recover “ephemeral” private keys and compromise both past and future sessions between two legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental principles of zero-trust security.<a href="#section-9.8-2" class="pilcrow">¶</a></p>
+<p id="section-9.7-1">NIST requires that an ephemeral private key be used in only one key-establishment transaction (<span>[<a href="#SP-800-56A" class="cite xref">SP-800-56A</a>]</span>, Section 5.6.3.3). This requirement preserves session key independence and forward secrecy, and EDHOC-PSK complies with it.<a href="#section-9.7-1" class="pilcrow">¶</a></p>
+<p id="section-9.7-2">In other protocols, reuse of ephemeral keys, especially when combined with missing public key validation, has led to severe vulnerabilities, enabling attackers to recover “ephemeral” private keys and compromise both past and future sessions between two legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental principles of zero-trust security.<a href="#section-9.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="unified-approach-and-recommendations">
-<section id="section-9.9">
+<section id="section-9.8">
         <h3 id="name-unified-approach-and-recomm">
-<a href="#section-9.9" class="section-number selfRef">9.9. </a><a href="#name-unified-approach-and-recomm" class="section-name selfRef">Unified Approach and Recommendations</a>
+<a href="#section-9.8" class="section-number selfRef">9.8. </a><a href="#name-unified-approach-and-recomm" class="section-name selfRef">Unified Approach and Recommendations</a>
         </h3>
-<p id="section-9.9-1">For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC <span>[<a href="#I-D.ietf-emu-eap-edhoc" class="cite xref">I-D.ietf-emu-eap-edhoc</a>]</span>, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages. Other implementations may replace message_4 with an OSCORE-protected message. In this case, the following requirement applies: The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed, thereby strengthening privacy by preventing premature storage of potentially compromised keys. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, it has no significant impact in EDHOC-PSK.<a href="#section-9.9-1" class="pilcrow">¶</a></p>
+<p id="section-9.8-1">For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC <span>[<a href="#I-D.ietf-emu-eap-edhoc" class="cite xref">I-D.ietf-emu-eap-edhoc</a>]</span>, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages. Other implementations may replace message_4 with an OSCORE-protected message. In this case, the following requirement applies: The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed, thereby strengthening privacy by preventing premature storage of potentially compromised keys. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, it has no significant impact in EDHOC-PSK.<a href="#section-9.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2092,10 +2079,6 @@ RFC Editor: Remove this note.<a href="#section-10.2-3" class="pilcrow">¶</a></p
 <dt id="I-D.ietf-emu-eap-edhoc">[I-D.ietf-emu-eap-edhoc]</dt>
         <dd>
 <span class="refAuthor">Garcia-Carrillo, D.</span>, <span class="refAuthor">Marin-Lopez, R.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Lopez-Gomez</span>, <span class="refTitle">"Using the Extensible Authentication Protocol (EAP) with Ephemeral Diffie-Hellman over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-emu-eap-edhoc-05</span>, <time datetime="2025-07-30" class="refDate">30 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-05">https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-05</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-lake-reqs">[I-D.ietf-lake-reqs]</dt>
-        <dd>
-<span class="refAuthor">Vučinić, M.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">D. Garcia-Carillo</span>, <span class="refTitle">"Requirements for a Lightweight AKE for OSCORE"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-reqs-04</span>, <time datetime="2020-06-08" class="refDate">8 June 2020</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-reqs-04">https://datatracker.ietf.org/doc/html/draft-ietf-lake-reqs-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.spm-lake-pqsuites">[I-D.spm-lake-pqsuites]</dt>
         <dd>

@@ -109,13 +109,12 @@ Table of Contents
    9.  Security Considerations
      9.1.  Identity Protection
      9.2.  Mutual Authentication
-     9.3.  Confidentiality
-     9.4.  Protection of External Authorization Data (EAD)
-     9.5.  Cryptographic strength
-     9.6.  Downgrade Protection
-     9.7.  Post Quantum Considerations
-     9.8.  Independence of Session Keys
-     9.9.  Unified Approach and Recommendations
+     9.3.  Protection of External Authorization Data (EAD)
+     9.4.  Cryptographic strength
+     9.5.  Downgrade Protection
+     9.6.  Post Quantum Considerations
+     9.7.  Independence of Session Keys
+     9.8.  Unified Approach and Recommendations
    10. IANA Considerations
      10.1.  EDHOC Method Type Registry
      10.2.  EDHOC Exporter Label Registry
@@ -710,8 +709,7 @@ Table of Contents
    The EDHOC-PSK authentication method introduces deviations from the
    initial specification of EDHOC [RFC9528].  This section analyzes the
    security implications of these changes and specifies the security
-   properties of EDHOC authenticated with PSK, following those of
-   [I-D.ietf-lake-reqs].
+   properties of EDHOC authenticated with PSK.
 
 9.1.  Identity Protection
 
@@ -725,14 +723,6 @@ Table of Contents
 
 9.2.  Mutual Authentication
 
-   At the end of the protocol, each endpoint SHALL have freshly
-   authenticated the other's credential if a fourth message is sent,
-   even with long-term key compromise (Key Compromise Impersonation),
-   resisting active Man-in-the-Middle (MitM) adversaries, replay attacks
-   and identity misbinding.  In particular, both endpoints MUST agree on
-   a fresh session identifier, and the roles and credentials of both
-   endpoints.
-
    EDHOC-PSK provides mutual authentication and explicit key
    confirmation through an additional message that demonstrates
    possession of the PSK.  This may be the optional message_4 or an
@@ -742,32 +732,22 @@ Table of Contents
    To mitigate reflection or Selfie attacks, the identities in CRED_I
    and CRED_R MUST be distinct.
 
-9.3.  Confidentiality
-
-   The shared secret established by the protocol MUST be known only to
-   the two authenticated endpoints.  A passive network attacker SHOULD
-   never learn any session keys, even if it knows both endpoints' long-
-   term keys.  An active attacker who has compromised the initiator or
-   responder credential SHALL still not be able to compute past session
-   keys (Perfect Forward Secrecy, PFS).  These properties are achieved
-   with an ephemeral Diffie-Hellman key exchange.
-
-9.4.  Protection of External Authorization Data (EAD)
+9.3.  Protection of External Authorization Data (EAD)
 
    As in [RFC9528], EDHOC-PSK ensures the confidentiality and integrity
    of External Authorization Data (EAD).  The security guarantees for
    EAD fields remain unchanged from the original EDHOC specification.
 
-9.5.  Cryptographic strength
+9.4.  Cryptographic strength
 
    The target security level of the protocol's key must be of 128 bits.
 
-9.6.  Downgrade Protection
+9.5.  Downgrade Protection
 
    The protocol must support cryptographic agility, including modularity
    and negotiation of preferred cryptographic primitives.
 
-9.7.  Post Quantum Considerations
+9.6.  Post Quantum Considerations
 
    Advances in quantum computing suggest that a Cryptographically
    Relevant Quantum Computer (CRQC) may eventually be realized.  Such a
@@ -789,7 +769,7 @@ Table of Contents
    EDHOC cipher suites incorporating ML-KEM are expected to be
    registered; see [I-D.spm-lake-pqsuites].
 
-9.8.  Independence of Session Keys
+9.7.  Independence of Session Keys
 
    NIST requires that an ephemeral private key be used in only one key-
    establishment transaction ([SP-800-56A], Section 5.6.3.3).  This
@@ -803,7 +783,7 @@ Table of Contents
    legitimate parties.  Assuming breach and minimizing the impact of
    compromise are fundamental principles of zero-trust security.
 
-9.9.  Unified Approach and Recommendations
+9.8.  Unified Approach and Recommendations
 
    For use cases where application data is transmitted, it can be sent
    together with message_3, maintaining efficiency.  In applications
@@ -875,13 +855,6 @@ Table of Contents
               Draft, draft-ietf-emu-eap-edhoc-05, 30 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-
               edhoc-05>.
-
-   [I-D.ietf-lake-reqs]
-              Vučinić, M., Selander, G., Mattsson, J. P., and D. Garcia-
-              Carillo, "Requirements for a Lightweight AKE for OSCORE",
-              Work in Progress, Internet-Draft, draft-ietf-lake-reqs-04,
-              8 June 2020, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-lake-reqs-04>.
 
    [I-D.spm-lake-pqsuites]
               Selander, G. and J. P. Mattsson, "Quantum-Resistant Cipher
