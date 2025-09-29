@@ -426,7 +426,7 @@ In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream derived fro
 
 ## Mutual Authentication
 
-At the end of the protocol, each endpoint SHALL have freshly authenticated the other's credential, even with long-term key compromise (Key Compromise Impersonation), resisting
+At the end of the protocol, each endpoint SHALL have freshly authenticated the other's credential if a fourth message is sent, even with long-term key compromise (Key Compromise Impersonation), resisting
 active Man-in-the-Middle (MitM) adversaries, replay attacks and identity misbinding. In particular, both endpoints MUST agree on a fresh session identifier, and the roles and credentials of both endpoints.
 
 EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
@@ -435,7 +435,7 @@ To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MU
 
 ## Confidentiality
 
-The shared secret established by the protocol MUST be known only to the two authenticated endpoints. A passive network attacker SHOULD never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential SHALL still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties can be achieved, e.g., with an ephemeral Diffie-Hellman key exchange.
+The shared secret established by the protocol MUST be known only to the two authenticated endpoints. A passive network attacker SHOULD never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential SHALL still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties are achieved with an ephemeral Diffie-Hellman key exchange.
 
 ## Protection of External Authorization Data (EAD)
 
