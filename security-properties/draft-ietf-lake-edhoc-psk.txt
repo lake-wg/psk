@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 30 March 2026                                 J. Preuß Mattsson
+Expires: 2 April 2026                                  J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                       26 September 2025
+                                                       29 September 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 March 2026.
+   This Internet-Draft will expire on 2 April 2026.
 
 Copyright Notice
 
@@ -726,11 +726,12 @@ Table of Contents
 9.2.  Mutual Authentication
 
    At the end of the protocol, each endpoint SHALL have freshly
-   authenticated the other's credential, even with long-term key
-   compromise (Key Compromise Impersonation), resisting active Man-in-
-   the-Middle (MitM) adversaries, replay attacks and identity
-   misbinding.  In particular, both endpoints MUST agree on a fresh
-   session identifier, and the roles and credentials of both endpoints.
+   authenticated the other's credential if a fourth message is sent,
+   even with long-term key compromise (Key Compromise Impersonation),
+   resisting active Man-in-the-Middle (MitM) adversaries, replay attacks
+   and identity misbinding.  In particular, both endpoints MUST agree on
+   a fresh session identifier, and the roles and credentials of both
+   endpoints.
 
    EDHOC-PSK provides mutual authentication and explicit key
    confirmation through an additional message that demonstrates
@@ -748,8 +749,8 @@ Table of Contents
    never learn any session keys, even if it knows both endpoints' long-
    term keys.  An active attacker who has compromised the initiator or
    responder credential SHALL still not be able to compute past session
-   keys (Perfect Forward Secrecy, PFS).  These properties can be
-   achieved, e.g., with an ephemeral Diffie-Hellman key exchange.
+   keys (Perfect Forward Secrecy, PFS).  These properties are achieved
+   with an ephemeral Diffie-Hellman key exchange.
 
 9.4.  Protection of External Authorization Data (EAD)
 

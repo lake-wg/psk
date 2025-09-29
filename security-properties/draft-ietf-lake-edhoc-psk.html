@@ -1051,7 +1051,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Lopez-Perez, et al.</td>
-<td class="center">Expires 30 March 2026</td>
+<td class="center">Expires 2 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-edhoc-psk-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-09-26" class="published">26 September 2025</time>
+<time datetime="2025-09-29" class="published">29 September 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-30">30 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-02">2 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1135,7 +1135,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1931,7 +1931,7 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-mutual-authentication">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
         </h3>
-<p id="section-9.2-1">At the end of the protocol, each endpoint <span class="bcp14">SHALL</span> have freshly authenticated the other's credential, even with long-term key compromise (Key Compromise Impersonation), resisting
+<p id="section-9.2-1">At the end of the protocol, each endpoint <span class="bcp14">SHALL</span> have freshly authenticated the other's credential if a fourth message is sent, even with long-term key compromise (Key Compromise Impersonation), resisting
 active Man-in-the-Middle (MitM) adversaries, replay attacks and identity misbinding. In particular, both endpoints <span class="bcp14">MUST</span> agree on a fresh session identifier, and the roles and credentials of both endpoints.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <p id="section-9.2-2">EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.2-3">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
@@ -1942,7 +1942,7 @@ active Man-in-the-Middle (MitM) adversaries, replay attacks and identity misbind
         <h3 id="name-confidentiality">
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-confidentiality" class="section-name selfRef">Confidentiality</a>
         </h3>
-<p id="section-9.3-1">The shared secret established by the protocol <span class="bcp14">MUST</span> be known only to the two authenticated endpoints. A passive network attacker <span class="bcp14">SHOULD</span> never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential <span class="bcp14">SHALL</span> still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties can be achieved, e.g., with an ephemeral Diffie-Hellman key exchange.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">The shared secret established by the protocol <span class="bcp14">MUST</span> be known only to the two authenticated endpoints. A passive network attacker <span class="bcp14">SHOULD</span> never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential <span class="bcp14">SHALL</span> still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties are achieved with an ephemeral Diffie-Hellman key exchange.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protection-of-external-authorization-data-ead">
