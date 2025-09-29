@@ -56,7 +56,6 @@ normative:
   RFC9668:
   I-D.ietf-emu-eap-edhoc:
   I-D.spm-lake-pqsuites:
-  I-D.ietf-lake-reqs:
   SP-800-56A:
     target: https://doi.org/10.6028/NIST.SP.800-56Ar3
     title: Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography
@@ -418,7 +417,7 @@ Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-p
 
 # Security Considerations
 
-The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK, following those of {{I-D.ietf-lake-reqs}}.
+The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK.
 
 ## Identity Protection
 
@@ -426,16 +425,9 @@ In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream derived fro
 
 ## Mutual Authentication
 
-At the end of the protocol, each endpoint SHALL have freshly authenticated the other's credential if a fourth message is sent, even with long-term key compromise (Key Compromise Impersonation), resisting
-active Man-in-the-Middle (MitM) adversaries, replay attacks and identity misbinding. In particular, both endpoints MUST agree on a fresh session identifier, and the roles and credentials of both endpoints.
-
 EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
-
-## Confidentiality
-
-The shared secret established by the protocol MUST be known only to the two authenticated endpoints. A passive network attacker SHOULD never learn any session keys, even if it knows both endpoints' long-term keys. An active attacker who has compromised the initiator or responder credential SHALL still not be able to compute past session keys (Perfect Forward Secrecy, PFS). These properties are achieved with an ephemeral Diffie-Hellman key exchange.
 
 ## Protection of External Authorization Data (EAD)
 
