@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-28T01:07:13.373830+00:00",
+  "timestamp": "2025-09-30T01:01:50.269628+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1879,19 +1879,134 @@
       "labels": [],
       "body": "We should list the claimed properties, including Confidentiality (and PFS), Mutual Authentication and explicit key confirmation, Downgrade Protection, Cryptographic Protection, EAD Protection and Identity Protection.\r\nI was following the requirements of RFC9528 and those in https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/",
       "createdAt": "2025-09-26T13:53:03Z",
-      "updatedAt": "2025-09-26T13:53:03Z",
+      "updatedAt": "2025-09-29T11:35:26Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "c72e769cfbc9cfca065fe645e9e13a5f7f818062",
       "headRepository": "lake-wg/psk",
       "headRefName": "security-properties",
-      "headRefOid": "cb4ff9d71a8b1899d85595bcd7a364ce36f1ca20",
+      "headRefOid": "9e8914988caaba0e1f7c29cac6771a17174c6488",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is not security considerations. Text from https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ should not be in the draft. LAKE can refer researchers to https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ if needed. But https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ was abondoned before the real work started so it might not be so relevant. ",
+          "createdAt": "2025-09-29T09:48:52Z",
+          "updatedAt": "2025-09-29T09:48:52Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDONwrUhc7DZ9fw",
+          "commit": {
+            "abbreviatedOid": "cb4ff9d"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-29T07:49:48Z",
+          "updatedAt": "2025-09-29T08:00:04Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "In the last phrase I would say: \"These properties are achieved with the ephemeral Diffie-Hellman key exchange.\"",
+              "createdAt": "2025-09-29T07:49:48Z",
+              "updatedAt": "2025-09-29T08:00:04Z"
+            },
+            {
+              "originalPosition": 21,
+              "body": "Be careful with that. The responder is not authenticated during the protocol if the optional EDHOC message_4 is not used.",
+              "createdAt": "2025-09-29T07:59:24Z",
+              "updatedAt": "2025-09-29T08:00:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7DaN_L",
+          "commit": {
+            "abbreviatedOid": "cb4ff9d"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-29T08:06:51Z",
+          "updatedAt": "2025-09-29T08:06:52Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I clarified it. However, I do say it below.",
+              "createdAt": "2025-09-29T08:06:51Z",
+              "updatedAt": "2025-09-29T08:06:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7DaSrF",
+          "commit": {
+            "abbreviatedOid": "cb4ff9d"
+          },
+          "author": "francislopezg",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-29T08:10:10Z",
+          "updatedAt": "2025-09-29T08:10:10Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "Looks good. Thanks Elsa.",
+              "createdAt": "2025-09-29T08:10:10Z",
+              "updatedAt": "2025-09-29T08:10:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7DcIGH",
+          "commit": {
+            "abbreviatedOid": "4d33ec9"
+          },
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-29T10:05:45Z",
+          "updatedAt": "2025-09-29T10:05:45Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": ">even with long-term key compromise (Key Compromise Impersonation),\r\nWith compromise of the long-term key, the attacker can trivially impersonate both parties. PSK does not provide KCI",
+              "createdAt": "2025-09-29T10:05:45Z",
+              "updatedAt": "2025-09-29T10:05:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7DcKAm",
+          "commit": {
+            "abbreviatedOid": "4d33ec9"
+          },
+          "author": "emanjon",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-29T10:07:06Z",
+          "updatedAt": "2025-09-29T10:07:06Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": ">SHALL still not be able to compute past session keys \r\n\r\nWe already have much better and more complete text in the draft",
+              "createdAt": "2025-09-29T10:07:06Z",
+              "updatedAt": "2025-09-29T10:07:06Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
