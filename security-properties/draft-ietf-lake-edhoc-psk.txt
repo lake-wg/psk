@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 2 April 2026                                  J. Preuß Mattsson
+Expires: 5 April 2026                                  J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                       29 September 2025
+                                                          2 October 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 April 2026.
+   This Internet-Draft will expire on 5 April 2026.
 
 Copyright Notice
 
@@ -732,6 +732,14 @@ Table of Contents
    To mitigate reflection or Selfie attacks, the identities in CRED_I
    and CRED_R MUST be distinct.
 
+   EDHOC-PSK does not provide Key Compromise Impersonation (KCI)
+   protection.  Compromise of the long-term PSK enables an attacker to
+   impersonate either the Initiator or the Responder to the other party.
+   While compromise of the ephemeral Diffie-Hellman secret only affects
+   the specific session in which it is used, compromise of the PSK
+   allows full active impersonation in all future sessions that rely on
+   the compromised key.
+
 9.3.  Protection of External Authorization Data (EAD)
 
    As in [RFC9528], EDHOC-PSK ensures the confidentiality and integrity
@@ -740,12 +748,28 @@ Table of Contents
 
 9.4.  Cryptographic strength
 
-   The target security level of the protocol's key must be of 128 bits.
+   EDHOC-PSK provides a minimum of 64-bit security against online brute
+   force attacks and, provided the PSK has sufficient entropy, a minimum
+   of 128-bit security against offline brute force attacks.  If the PSK
+   entropy is lower, the effective offline security is limited by the
+   entropy of the PSK. o break 64-bit security against online brute
+   force, an attacker would on average have to send 4.3 billion messages
+   per second for 68 years, which is infeasible in constrained IoT radio
+   technologies.  A successful forgery of the AEAD authentication tag in
+   EDHOC-PSK breaks the security of all future application data derived
+   from the session, while a forgery in the subsequent application
+   protocol (e.g., OSCORE [RFC8613]) typically only breaks the security
+   of the forged packet.
 
 9.5.  Downgrade Protection
 
-   The protocol must support cryptographic agility, including modularity
-   and negotiation of preferred cryptographic primitives.
+   Following [RFC9528], EDHOC-PSK must support cryptographic agility,
+   including modularity and negotiation of preferred cryptographic
+   primitives.  In message 1, the Initiator sends an ordered list of
+   supported cipher suites (SUITES_I).  The Responder verifies that the
+   suite selected by the Initiator is the most preferred option in
+   SUITES_I that is mutually supported.  If this condition is not met,
+   the Responder MUST abort the session.
 
 9.6.  Post Quantum Considerations
 
@@ -881,6 +905,11 @@ Table of Contents
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+   [RFC8613]  Selander, G., Mattsson, J., Palombini, F., and L. Seitz,
+              "Object Security for Constrained RESTful Environments
+              (OSCORE)", RFC 8613, DOI 10.17487/RFC8613, July 2019,
+              <https://www.rfc-editor.org/rfc/rfc8613>.
 
    [RFC8742]  Bormann, C., "Concise Binary Object Representation (CBOR)
               Sequences", RFC 8742, DOI 10.17487/RFC8742, February 2020,
