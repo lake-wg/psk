@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-30T01:01:50.269628+00:00",
+  "timestamp": "2025-10-02T01:00:04.931948+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1879,7 +1879,7 @@
       "labels": [],
       "body": "We should list the claimed properties, including Confidentiality (and PFS), Mutual Authentication and explicit key confirmation, Downgrade Protection, Cryptographic Protection, EAD Protection and Identity Protection.\r\nI was following the requirements of RFC9528 and those in https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/",
       "createdAt": "2025-09-26T13:53:03Z",
-      "updatedAt": "2025-09-29T11:35:26Z",
+      "updatedAt": "2025-10-01T12:10:59Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "c72e769cfbc9cfca065fe645e9e13a5f7f818062",
@@ -1897,6 +1897,13 @@
           "body": "This is not security considerations. Text from https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ should not be in the draft. LAKE can refer researchers to https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ if needed. But https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/ was abondoned before the real work started so it might not be so relevant. ",
           "createdAt": "2025-09-29T09:48:52Z",
           "updatedAt": "2025-09-29T09:48:52Z"
+        },
+        {
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think I will leave it as it is right now. I added some text on the EAD and Cryptographic strength. The rest remains unchanged. I am still not sure if this is clear enough for formal analysis though",
+          "createdAt": "2025-10-01T12:10:59Z",
+          "updatedAt": "2025-10-01T12:10:59Z"
         }
       ],
       "reviews": [
