@@ -54,6 +54,7 @@ normative:
   RFC9053:
   RFC9528:
   RFC9668:
+  RFC8613:
   I-D.ietf-emu-eap-edhoc:
   I-D.spm-lake-pqsuites:
   SP-800-56A:
@@ -417,7 +418,7 @@ Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-p
 
 # Security Considerations
 
-The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes.
+The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK.
 
 ## Identity Protection
 
@@ -429,9 +430,19 @@ EDHOC-PSK provides mutual authentication and explicit key confirmation through a
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
 
+EDHOC-PSK does not provide Key Compromise Impersonation (KCI) protection. Compromise of the long-term PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
+
 ## Protection of External Authorization Data (EAD)
 
 As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of External Authorization Data (EAD). The security guarantees for EAD fields remain unchanged from the original EDHOC specification.
+
+## Cryptographic strength
+
+EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and, provided the PSK has sufficient entropy, a minimum of 128-bit security against offline brute force attacks. If the PSK entropy is lower, the effective offline security is limited by the entropy of the PSK. o break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
+
+## Downgrade Protection
+
+Following {{RFC9528}}, EDHOC-PSK must support cryptographic agility, including modularity and negotiation of preferred cryptographic primitives. In message 1, the Initiator sends an ordered list of supported cipher suites (SUITES_I). The Responder verifies that the suite selected by the Initiator is the most preferred option in SUITES_I that is mutually supported. If this condition is not met, the Responder MUST abort the session.
 
 ## Post Quantum Considerations
 
