@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-02T01:00:04.931948+00:00",
+  "timestamp": "2025-10-05T01:06:24.384077+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1879,13 +1879,13 @@
       "labels": [],
       "body": "We should list the claimed properties, including Confidentiality (and PFS), Mutual Authentication and explicit key confirmation, Downgrade Protection, Cryptographic Protection, EAD Protection and Identity Protection.\r\nI was following the requirements of RFC9528 and those in https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/",
       "createdAt": "2025-09-26T13:53:03Z",
-      "updatedAt": "2025-10-01T12:10:59Z",
+      "updatedAt": "2025-10-02T13:07:45Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "c72e769cfbc9cfca065fe645e9e13a5f7f818062",
       "headRepository": "lake-wg/psk",
       "headRefName": "security-properties",
-      "headRefOid": "9e8914988caaba0e1f7c29cac6771a17174c6488",
+      "headRefOid": "d190ff590ef3215412b0c59b402b7fc1f96be5f2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
