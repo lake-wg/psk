@@ -418,11 +418,14 @@ Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-p
 
 # Security Considerations
 
-The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and specifies the security properties of EDHOC authenticated with PSK.
+The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and discusses the security properties of EDHOC authenticated with PSK.
 
 ## Identity Protection
 
-In EDHOC-PSK, ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, unlike the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive attackers, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers.
+In EDHOC-PSK, the ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers. This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones.
+
+However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user.
+Because message_3 is sent before the key material used for the keystream is cryptographically bound to the authenticated identities, the MitM retains full control over the communication channel and can conduct a distinguisher attack. Specifically, the attacker can intercept message_3 and perform a chosen-plaintext attack by manipulating the ciphertext. By observing the protocol's subsequent behavior, such as the Responder's failure to retrieve a valid PSK and aborting the session, the attacker can link the Initiator's identity to the specific (coerced) ID_CRED_PSK value, thereby breaking the strong guarantee of anonymity that would otherwise be expected under an active threat model.
 
 ## Mutual Authentication
 
@@ -438,7 +441,7 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 ## Cryptographic strength
 
-EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and, provided the PSK has sufficient entropy, a minimum of 128-bit security against offline brute force attacks. If the PSK entropy is lower, the effective offline security is limited by the entropy of the PSK. o break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
+EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and, provided the PSK has sufficient entropy, a minimum of 128-bit security against offline brute force attacks. If the PSK entropy is lower, the effective offline security is limited by the entropy of the PSK. To break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
 ## Downgrade Protection
 
@@ -452,9 +455,13 @@ EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK
 
 By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see {{I-D.spm-lake-pqsuites}}.
 
+## Confidentiality
+
+The primary security goal of EDHOC-PSK is to establish a shared secret known only to the authenticated Initiator and Responder. The protocol ensures key indistinguishability by relying on the security of the PSK and the ephemeral key shares, making it computationally infeasible for an adversary to distinguish the true session secret from a random value.
+
 ## Independence of Session Keys
 
-NIST requires that an ephemeral private key be used in only one key-establishment transaction ({{SP-800-56A}}, Section 5.6.3.3). This requirement preserves session key independence and forward secrecy, and EDHOC-PSK complies with it.
+NIST requires that an ephemeral private key be used in only one key-establishment transaction ({{SP-800-56A}}, Section 5.6.3.3). This requirement preserves session key independence and forward secrecy, and EDHOC-PSK complies with it. By deriving the final shared secret from a fresh, session-specific ephemeral secret (G_XY), the protocol ensures that even if the PSK is compromised, an attacker is unable to decrypt the past sessions. Similarly, if a session secret were to be compromised, future session secrets remain protected by fresh ephemeral keys.
 
 In other protocols, reuse of ephemeral keys, especially when combined with missing public key validation, has led to severe vulnerabilities, enabling attackers to recover “ephemeral” private keys and compromise both past and future sessions between two legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental principles of zero-trust security.
 
