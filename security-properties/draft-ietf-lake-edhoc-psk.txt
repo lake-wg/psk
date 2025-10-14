@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 9 April 2026                                  J. Preuß Mattsson
+Expires: 17 April 2026                                 J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                          6 October 2025
+                                                         14 October 2025
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 April 2026.
+   This Internet-Draft will expire on 17 April 2026.
 
 Copyright Notice
 
@@ -723,23 +723,23 @@ Table of Contents
    Responder’s identity against passive ones.
 
    However, EDHOC-PSK does not satisfy the stronger identity protection
-   notion defined by Cottier and Pointcheval, which requires security
-   against an active Man-in-the-Middle (MitM) attacker.  Under this
-   stronger notion, an active attacker must not only be prevented from
-   learning the identity but also from forcing a specific identity to be
-   used in a way that allows them to later distinguish between the
-   legitimate owner of a secret (the PSK) and any other user.  Because
-   message_3 is sent before the key material used for the keystream is
-   cryptographically bound to the authenticated identities, the MitM
-   retains full control over the communication channel and can conduct a
-   distinguisher attack.  Specifically, the attacker can intercept
-   message_3 and perform a chosen-plaintext attack by manipulating the
-   ciphertext.  By observing the protocol's subsequent behavior, such as
-   the Responder's failure to retrieve a valid PSK and aborting the
-   session, the attacker can link the Initiator's identity to the
-   specific (coerced) ID_CRED_PSK value, thereby breaking the strong
-   guarantee of anonymity that would otherwise be expected under an
-   active threat model.
+   notion defined by Cottier and Pointcheval [Cottier-Pointcheval],
+   which requires security against an active Man-in-the-Middle (MitM)
+   attacker.  Under this stronger notion, an active attacker must not
+   only be prevented from learning the identity but also from forcing a
+   specific identity to be used in a way that allows them to later
+   distinguish between the legitimate owner of a secret (the PSK) and
+   any other user.  Because message_3 is sent before the key material
+   used for the keystream is cryptographically bound to the
+   authenticated identities, the MitM retains full control over the
+   communication channel and can conduct a distinguisher attack.
+   Specifically, the attacker can intercept message_3 and perform a
+   chosen-plaintext attack by manipulating the ciphertext.  By observing
+   the protocol's subsequent behavior, such as the Responder's failure
+   to retrieve a valid PSK and aborting the session, the attacker can
+   link the Initiator's identity to the specific (coerced) ID_CRED_PSK
+   value, thereby breaking the strong guarantee of anonymity that would
+   otherwise be expected under an active threat model.
 
 9.2.  Mutual Authentication
 
@@ -904,6 +904,12 @@ Table of Contents
 11.  References
 
 11.1.  Normative References
+
+   [Cottier-Pointcheval]
+              Cottier, B. and D. Pointcheval, "Security Analysis of
+              Improved EDHOC Protocol", FPS International Symposium on
+              Foundations and Practice of Security, December 2022,
+              <https://doi.org/10.1007/978-3-031-30122-3_1>.
 
    [I-D.ietf-emu-eap-edhoc]
               Garcia-Carrillo, D., Marin-Lopez, R., Selander, G.,
