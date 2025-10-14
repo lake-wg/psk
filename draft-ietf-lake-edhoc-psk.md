@@ -74,6 +74,17 @@ normative:
       -
         ins: R. Davis
     date: April 2018
+  Cottier-Pointcheval:
+    target: https://doi.org/10.1007/978-3-031-30122-3_1
+    title: Security Analysis of Improved EDHOC Protocol
+    seriesinfo:
+      FPS: "International Symposium on Foundations and Practice of Security"
+    author:
+      -
+        ins: B. Cottier
+      -
+        ins: D. Pointcheval
+    date: December 2022
 
 informative:
 
@@ -424,7 +435,7 @@ The EDHOC-PSK authentication method introduces deviations from the initial speci
 
 In EDHOC-PSK, the ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers. This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones.
 
-However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user.
+However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval {{Cottier-Pointcheval}}, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user.
 Because message_3 is sent before the key material used for the keystream is cryptographically bound to the authenticated identities, the MitM retains full control over the communication channel and can conduct a distinguisher attack. Specifically, the attacker can intercept message_3 and perform a chosen-plaintext attack by manipulating the ciphertext. By observing the protocol's subsequent behavior, such as the Responder's failure to retrieve a valid PSK and aborting the session, the attacker can link the Initiator's identity to the specific (coerced) ID_CRED_PSK value, thereby breaking the strong guarantee of anonymity that would otherwise be expected under an active threat model.
 
 ## Mutual Authentication
