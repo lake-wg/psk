@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-07T01:01:04.360140+00:00",
+  "timestamp": "2025-10-16T01:02:28.988327+00:00",
   "repo": "lake-wg/psk",
   "labels": [
     {
@@ -1879,13 +1879,13 @@
       "labels": [],
       "body": "We should list the claimed properties, including Confidentiality (and PFS), Mutual Authentication and explicit key confirmation, Downgrade Protection, Cryptographic Protection, EAD Protection and Identity Protection.\r\nI was following the requirements of RFC9528 and those in https://datatracker.ietf.org/doc/draft-ietf-lake-reqs/04/",
       "createdAt": "2025-09-26T13:53:03Z",
-      "updatedAt": "2025-10-06T14:12:42Z",
+      "updatedAt": "2025-10-15T08:24:54Z",
       "baseRepository": "lake-wg/psk",
       "baseRefName": "main",
       "baseRefOid": "c72e769cfbc9cfca065fe645e9e13a5f7f818062",
       "headRepository": "lake-wg/psk",
       "headRefName": "security-properties",
-      "headRefOid": "e8fef9cf2bd16c4380b2ae993da790f46d2652e4",
+      "headRefOid": "34b72cc5c9a1cc3998b6f895a6c6468e5fd3e6a7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2068,6 +2068,146 @@
               "body": "A message 4 is mandatory, but it can either be a fourth EDHOC message or an application message",
               "createdAt": "2025-10-06T09:25:19Z",
               "updatedAt": "2025-10-06T09:25:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7G1tD4",
+          "commit": {
+            "abbreviatedOid": "e8fef9c"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-14T14:20:34Z",
+          "updatedAt": "2025-10-14T14:20:34Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Add a reference to Cottier and Pointcheval.",
+              "createdAt": "2025-10-14T14:20:34Z",
+              "updatedAt": "2025-10-14T14:20:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7G-zR-",
+          "commit": {
+            "abbreviatedOid": "d190ff5"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T04:51:32Z",
+          "updatedAt": "2025-10-15T04:51:32Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "That is confusing. In my opinion either message_4 or an application message means that message_4 is optional when application message is used. ",
+              "createdAt": "2025-10-15T04:51:32Z",
+              "updatedAt": "2025-10-15T04:51:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7G-074",
+          "commit": {
+            "abbreviatedOid": "e8fef9c"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T04:56:02Z",
+          "updatedAt": "2025-10-15T04:56:02Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "I would also add a clarification \"forcing a specific identity\". Does it mean the attacker can select ID_CRED_PSK in message_3 ? That is correct but AEAD would serve as Initiator's authentication. So I was trying to figure out what \"forcing a specific identity\" means.",
+              "createdAt": "2025-10-15T04:56:02Z",
+              "updatedAt": "2025-10-15T04:56:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7HAMaH",
+          "commit": {
+            "abbreviatedOid": "e8fef9c"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T07:04:48Z",
+          "updatedAt": "2025-10-15T07:04:48Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "In this case, the attacker will be performing a chosen-ciphertext or chosen-plaintext attack to leak information about the Responder (following the Cottier and Pointcheval attack). It cannot forge a valid message and impersonante a party because of the AEAD tag. So it would be as follows:\r\n1. The attacker intercepts CIPERTEXT_3 and manipulates to create CIPHERTEXT_3' (CIPHERTEXT_3' = CIPHERTEXT_3 + /delta)\r\n2. The Responder receives CIPHERTEXT_3', decrypts it and gets a manipulated ID_CRED_PSK' (the decryption will yield PLAINTEXT_3 + /delta)\r\n3. The Responder tries to look up for ID_CRED_PSK', and the outcome reveals whether ID_CRED_PSK' is known to the Responder or not.\r\n4. This allows the attacker to determine that the identity that was forced is not that of the Initiator",
+              "createdAt": "2025-10-15T07:04:48Z",
+              "updatedAt": "2025-10-15T07:04:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7HANEv",
+          "commit": {
+            "abbreviatedOid": "d190ff5"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T07:05:39Z",
+          "updatedAt": "2025-10-15T07:05:39Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "Noted, I will correct that",
+              "createdAt": "2025-10-15T07:05:39Z",
+              "updatedAt": "2025-10-15T07:05:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7HBSYm",
+          "commit": {
+            "abbreviatedOid": "e8fef9c"
+          },
+          "author": "rml1977",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T08:17:24Z",
+          "updatedAt": "2025-10-15T08:17:24Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Thanks for the clarification. Then the attack allows the attacker to  determine if a ID_CRED_PSK' is known by the Responder. However I missed to understand step 4.  could you elaborate?",
+              "createdAt": "2025-10-15T08:17:24Z",
+              "updatedAt": "2025-10-15T08:17:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONwrUhc7HBbFx",
+          "commit": {
+            "abbreviatedOid": "e8fef9c"
+          },
+          "author": "ElsaLopez133",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-15T08:24:54Z",
+          "updatedAt": "2025-10-15T08:24:54Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Yes, so the PLAINTEXT_3' = PLAINTEXT_3 + /delta and this is the ID_CRED_PSK' that the attacker has built. When the responder tries to retrieve the PKS associated to that ID_CRED_PSK', if this identity is not that of the initiator, then the Responder will abort the session. This allows the attacker to learn which identities are **not** the initiator's, and this breaks the strong anonymity guarantee described by Cottier and Pointcheval, since the MitM can distinguish the initiator's actual identity from a set of other possible identities",
+              "createdAt": "2025-10-15T08:24:54Z",
+              "updatedAt": "2025-10-15T08:26:09Z"
             }
           ]
         }
