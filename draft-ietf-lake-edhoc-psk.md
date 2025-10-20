@@ -440,7 +440,7 @@ Because message_3 is sent before the key material used for the keystream is cryp
 
 ## Mutual Authentication
 
-EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be the optional message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
+EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
 
