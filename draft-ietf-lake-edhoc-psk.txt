@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 23 April 2026                                 J. Preuß Mattsson
+Expires: 10 August 2026                                J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                         20 October 2025
+                                                         6 February 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -62,11 +62,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 10 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -916,16 +916,16 @@ Table of Contents
               Mattsson, J. P., and F. Lopez-Gomez, "Using the Extensible
               Authentication Protocol (EAP) with Ephemeral Diffie-
               Hellman over COSE (EDHOC)", Work in Progress, Internet-
-              Draft, draft-ietf-emu-eap-edhoc-06, 15 October 2025,
+              Draft, draft-ietf-emu-eap-edhoc-07, 29 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-
-              edhoc-06>.
+              edhoc-07>.
 
    [I-D.spm-lake-pqsuites]
               Selander, G. and J. P. Mattsson, "Quantum-Resistant Cipher
               Suites for EDHOC", Work in Progress, Internet-Draft,
-              draft-spm-lake-pqsuites-00, 6 July 2025,
+              draft-spm-lake-pqsuites-01, 20 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-spm-lake-
-              pqsuites-00>.
+              pqsuites-01>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1044,7 +1044,7 @@ Appendix A.  CDDL Definitions
    )
 
    PLAINTEXT_3B = (
-     ? EAD_3
+     ? EAD_3,
    )
 
    message_4 = (
