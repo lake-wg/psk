@@ -845,7 +845,7 @@ It then computes CIPHERTEXT_3B:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-48 04 88 B7 F2 A6 66 B6 29
+48 7F 34 49 6F 3F 69 C2 88
 ~~~~~~~~~~~~
 
 The Initiator computes KEYSTREAM_3A as defined in Section 4:
@@ -859,21 +859,21 @@ It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:
 
 ~~~~~~~~~~~~
 PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-10 48 04 88 B7 F2 A6 66 B6 29
+10 48 7F 34 49 6F 3F 69 C2 88
 ~~~~~~~~~~~~
 
 It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-13 AD D5 DF AC 4E 35 54 F1 32
+13 AD AE 63 52 D3 AC 5B 85 93
 ~~~~~~~~~~~~
 
 The Initiator computes message_3 as defined in Section 5.3.2.:
 
 ~~~~~~~~~~~~
 message_3 (CBOR Sequence) (11 bytes)
-4A 13 AD D5 DF AC 4E 35 54 F1 32
+4A 13 AD AE 63 52 D3 AC 5B 85 93
 ~~~~~~~~~~~~
 
 The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
