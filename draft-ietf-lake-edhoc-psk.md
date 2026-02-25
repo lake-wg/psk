@@ -433,10 +433,17 @@ The EDHOC-PSK authentication method introduces deviations from the initial speci
 
 ## Identity Protection
 
-In EDHOC-PSK, the ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. As a result, EDHOC-PSK protects both the Initiator and the Responder identities against passive attackers. This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones.
+In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is transported inside an AEAD-protected ciphertext derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones.
 
-However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval {{Cottier-Pointcheval}}, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user.
-Because message_3 is sent before the key material used for the keystream is cryptographically bound to the authenticated identities, the MitM retains full control over the communication channel and can conduct a distinguisher attack. Specifically, the attacker can intercept message_3 and perform a chosen-plaintext attack by manipulating the ciphertext. By observing the protocol's subsequent behavior, such as the Responder's failure to retrieve a valid PSK and aborting the session, the attacker can link the Initiator's identity to the specific (coerced) ID_CRED_PSK value, thereby breaking the strong guarantee of anonymity that would otherwise be expected under an active threat model.
+However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval {{Cottier-Pointcheval}}, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user. Because message_3 is protected using AEAD, any modification by an attacker causes authentication failure and the protocol run aborts. Therefore, the attacker cannot learn the identity by observing successful decryptions of modified ciphertexts. However, if an implementation exposes different externally observable behavior depending on the reason for aborting (e.g., distinguishing between AEAD failure and unknown credential referenced), an active attacker may be able to test candidate credential identifiers by observing which error is returned.
+
+To prevent such leakage, implementations of EDHOC-PSK:
+
+- MUST treat all failures related to message_3 processing (including AEAD verification failure, unknown credential identifiers, or malformed inputs) as indistinguishable from the perspective of an external observer;
+
+- MUST ensure that processing of message_3 is performed in a manner that does not introduce secret-dependent timing differences.
+
+When these requirements are met, an active attacker observing aborted sessions learns no information about the identity associated with a given PSK.
 
 ## Mutual Authentication
 
