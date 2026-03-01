@@ -183,11 +183,9 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 
 - ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to avoid ambiguity. When ID_CRED_PSK contains a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.
 
-- When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). For example:
+- When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). These optimizations MUST NOT be applied in COSE header parameters or in other contexts where the full map structure is required. For example:
   - { 4 : h'0f' } encoded as h'0f' (CBOR byte string)
   - { 4 : 21 } encoded as 0x15 (CBOR integer)
-
-These optimizations MUST NOT be applied in COSE header parameters or in other contexts where the full map structure is required.
 
 - To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
 
@@ -964,6 +962,16 @@ rKID (Raw Value) (1 byte)
 # Change Log
 
 RFC Editor: Please remove this appendix.
+
+* From -06 to -07
+
+  * Fixed test vectors
+  * Updated security considerations after formal analysis
+  * Editorial changes
+
+* From -05 to -06
+
+  * Editorial changes
 
 * From -04 to -05
 
