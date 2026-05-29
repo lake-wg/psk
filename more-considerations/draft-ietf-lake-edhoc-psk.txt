@@ -734,7 +734,9 @@ Table of Contents
    Initiator’s identity against active attackers and the Responder’s
    identity against passive ones.  EDHOC-PSK does not protect the PSK
    identifier against active attackers as an attacker impersonating the
-   Responder can decrypt ID_CRED_PSK.
+   Responder can decrypt ID_CRED_PSK.  The time to lookup or process an
+   authentication credential based on ID_CRED_PSK may leak information
+   about the identity.
 
 9.2.  Mutual Authentication
 
