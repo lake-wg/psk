@@ -240,7 +240,8 @@ Table of Contents
    PSK.  While ID_CRED_PSK use encoding and representation patterns from
    [RFC9528], it differs fundamentally in that it identifies a symmetric
    key rather than a public authentication key.  The same PSK can be
-   identified by different ID_CRED_PSK values in different sessions.
+   identified by different ID_CRED_PSK values in different sessions and
+   different directions.
 
    It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically
    identifies the corresponding PSK.  Uniqueness avoids ambiguity that
