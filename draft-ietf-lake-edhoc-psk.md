@@ -386,7 +386,7 @@ To ensure both peers share the same resumption key, when a resumption session is
 
 When using a resumption PSK derived from a previous EDHOC exchange:
 
-  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived, or with a cipher suite that provides stronger security guarantees.
+  1. The resumption PSK MUST only be used with the same cipher suite from which it was derivedor with a cipher suite that provides stronger security guarantees.
   2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
   3. If a resumption PSK is offered with a cipher suite that provides weaker security, the Responder MUST reject the ongoing EDHOC session.
 
@@ -401,6 +401,9 @@ When using resumption PSKs:
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
+* The external PSK and the resumption PSKs form a key ratchet. If both the external PSK and earlier resumption PSKs are securely destroyed (zeroized), then compromise of a current resumption key does not allow an attacker to reconstruct past PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used.
+
+eakage of a PSK does not enable the attacker to calculate past PSKs. 
 
 # EDHOC-PSK and Extensible Authentication Protocol (EAP)
 
