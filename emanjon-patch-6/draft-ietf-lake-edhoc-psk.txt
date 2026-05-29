@@ -206,10 +206,17 @@ Table of Contents
    Initiator and the Responder.  As in the methods defined in [RFC9528],
    CRED_I and CRED_R are authentication credentials containing
    identifying information for the Initiator and Responder,
-   respectively.  However, unlike those methods, there is a single
-   shared authentication credential identifier, ID_CRED_PSK, which the
+   respectively.  However, unlike those methods, EDHOC-PSK uses a single
+   authentication credential identifier, ID_CRED_PSK, which the
    Responder uses to retrieve the PSK and the associated authentication
    credentials.
+
+   Like the Internet Key Exchange Protocol Version 2 (IKEv2) [RFC7296],
+   EDHOC-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity
+   protection against passive attackers.  In contrast, (D)TLS 1.3
+   [RFC8446] [RFC9147] transmits the PSK identifier in cleartext and
+   therefore does not provide identity protection for PSK-based
+   authentication.
 
 3.1.  Credentials
 
@@ -970,6 +977,20 @@ Table of Contents
               Pre-Shared Key Extensible Authentication Protocol (EAP)
               Method", RFC 4764, DOI 10.17487/RFC4764, January 2007,
               <https://www.rfc-editor.org/rfc/rfc4764>.
+
+   [RFC7296]  Kaufman, C., Hoffman, P., Nir, Y., Eronen, P., and T.
+              Kivinen, "Internet Key Exchange Protocol Version 2
+              (IKEv2)", STD 79, RFC 7296, DOI 10.17487/RFC7296, October
+              2014, <https://www.rfc-editor.org/rfc/rfc7296>.
+
+   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
+              <https://www.rfc-editor.org/rfc/rfc8446>.
+
+   [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
+              Datagram Transport Layer Security (DTLS) Protocol Version
+              1.3", RFC 9147, DOI 10.17487/RFC9147, April 2022,
+              <https://www.rfc-editor.org/rfc/rfc9147>.
 
    [RFC9190]  Preuß Mattsson, J. and M. Sethi, "EAP-TLS 1.3: Using the
               Extensible Authentication Protocol with TLS 1.3",
