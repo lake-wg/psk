@@ -414,7 +414,7 @@ EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, 
 
 # EDHOC-PSK and OSCORE
 
-Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}.
+Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}. Note that with the use of OSCORE as in {{RFC9668}}, message_4 is not sent, which in EDHOC-PSK results in the Responder not being authenticated in EDHOC. Only the party with the correct PSK can decrypt the OSCORE request, but the Responder is not authenticated until the Initiator has verified a matching OSCORE response. 
 
 # Security Considerations
 
