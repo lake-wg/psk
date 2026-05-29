@@ -422,7 +422,7 @@ The EDHOC-PSK authentication method introduces deviations from the initial speci
 
 ## Identity Protection
 
-In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. EDHOC-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK.
+In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. EDHOC-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
 
 ## Mutual Authentication
 
