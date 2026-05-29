@@ -180,6 +180,8 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 
 - To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
 
+- Additional claims that binds a pre-shared key (PSK) to the circumstances under which it is valid, i.e., where it came from and how it is supposed to be used MAY be used. This is called context in {{?RFC9258}}.
+
 ## Message Flow of EDHOC-PSK
 
 The message flow of EDHOC-PSK follows the structure defined in {{RFC9528}}, with authentication based on symmetric keys rather than public keys. For identity protection, credential-related message fields appear first in message_3.
