@@ -132,7 +132,7 @@ It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically identifies the cor
 
 ### CRED_I and CRED_R
 
-CRED_I and CRED_R are authentication credentials associated with the PSK. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through the successful use of the PSK to derive keying material, and to encrypt and subsequently decrypt protected messages.
+CRED_I and CRED_R are authentication credentials associated with the PSK. The notation CRED_x refers to either CRED_I or CRED_R. Authentication is achieved implicitly through successful possession and use of the PSK in the derivation and verification of protected cryptographic material.
 
 When using an external PSK, a common representation of CRED_I and CRED_R is a CBOR Web Token (CWT) or CWT Claims Set (CCS) {{RFC8392}}, where the 'cnf' claim includes the confirmation method COSE_Key. An example of CRED_I and CRED_R is shown below:
 
@@ -345,7 +345,7 @@ If AEAD verification fails, this indicates a processing problem or that the mess
 
 Finally, the Responder computes TH_4 as defined in {{key-der}}.
 
-No MAC_3 or signature is needed, as the AEAD tag guarantees both integrity and authenticity in this symmetric setting.
+No MAC_3 or signature is needed, as the AEAD ciphertext guarantees both integrity and authenticity in this symmetric setting.
 
 ## Message 4 {#message-4}
 
