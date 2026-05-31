@@ -82,13 +82,13 @@ informative:
 
 --- abstract
 
-This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method enhances computational efficiency while providing mutual authentication, ephemeral key exchange, identity protection, and quantum resistance. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
+This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol. The PSK method provides mutual authentication, ephemeral key exchange, identity protection, and quantum resistance with lower computational cost than the authentication methods defined in EDHOC. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
 
 --- middle
 
 # Introduction
 
-This document defines a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol {{RFC9528}}. The PSK method balances the complexity of credential distribution with computational efficiency. While symmetric key distribution is more complex than asymmetric approaches, PSK authentication offers greater computational efficiency compared to the methods outlined in {{RFC9528}}. The PSK method retains mutual authentication, asymmetric ephemeral key exchange, and identity protection established by {{RFC9528}}.
+This document defines a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) key exchange protocol {{RFC9528}}. The PSK method trades the complexity of symmetric-key distribution for improved computational efficiency. Although symmetric-key distribution is more complex and error-prone than public-key credential distribution, PSK authentication requires less computation than the authentication methods defined in [RFC9528]. The PSK method retains mutual authentication, asymmetric ephemeral key exchange, and identity protection properties of {{RFC9528}}.
 
 EDHOC with PSK authentication benefits use cases where two nodes share a Pre-Shared Key (PSK) provided out-of-band (external PSK). Examples include the Authenticated Key Management Architecture (AKMA) in mobile systems or the Peer and Authenticator in Extensible Authentication Protocol (EAP) systems. The PSK method enables the nodes to perform ephemeral key exchange, achieving Perfect Forward Secrecy (PFS). This ensures that even if the PSK is compromised, past communications remain secure against active attackers, while future communications are protected against passive attackers. Additionally, by leveraging the PSK for both authentication and key derivation, the method provides quantum-resistant key exchange and authentication even when used with ECDHE.
 
@@ -106,7 +106,7 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 
 This document specifies a new EDHOC authentication method (see {{Section 3.2 of RFC9528}}) referred to as the Pre-Shared Key method (EDHOC-PSK). This method shares some features with, and differs in other respects from, the authentication methods previously defined in EDHOC.
 
-Authentication is based on a Pre-Shared Key (PSK) shared between the Initiator and the Responder. As in the methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information for the Initiator and Responder, respectively. However, unlike those methods, EDHOC-PSK uses a single authentication credential identifier, ID_CRED_PSK, which the Responder uses to retrieve the PSK and the associated authentication credentials.
+Authentication is based on a PSK shared by the Initiator and the Responder. As in the methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information for the Initiator and Responder, respectively. However, unlike those methods, EDHOC-PSK uses a single authentication credential identifier, ID_CRED_PSK, which the Responder uses to retrieve the PSK and the associated authentication credentials.
 
 Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, EDHOC-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity protection against passive attackers. In contrast, (D)TLS 1.3 {{?RFC8446}} {{?RFC9147}} transmits the PSK identifier in cleartext and therefore does not provide identity protection for PSK-based authentication.
 
@@ -178,7 +178,7 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
   - { 4 : h'0f' } encoded as h'0f' (CBOR byte string)
   - { 4 : 21 } encoded as 0x15 (CBOR integer)
 
-- To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
+- To prevent misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
 
 - Additional claims that binds a pre-shared key (PSK) to the circumstances under which it is valid, i.e., where it came from and how it is supposed to be used MAY be used. This is called context in {{?RFC9258}}.
 
@@ -433,7 +433,7 @@ EDHOC-PSK provides mutual authentication and explicit key confirmation through a
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
 
-EDHOC-PSK does not provide Key Compromise Impersonation (KCI) protection. Compromise of the long-term PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
+EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the long-term PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
 
 ## Protection of External Authorization Data (EAD)
 
