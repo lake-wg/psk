@@ -142,8 +142,8 @@ Table of Contents
    Authenticated Key Exchange (LAKE) protocol [RFC9528].  The PSK method
    trades the complexity of symmetric-key distribution for improved
    computational efficiency.  Although symmetric-key distribution is
-   more complex and error-prone than public-key credential distribution,
-   PSK authentication requires less computation than the authentication
+   more complex than public-key credential distribution, PSK
+   authentication requires less computation than the authentication
    methods defined in [RFC9528].  The PSK method retains mutual
    authentication, asymmetric ephemeral key exchange, and identity
    protection properties of [RFC9528].
