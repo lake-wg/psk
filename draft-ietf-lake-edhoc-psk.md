@@ -442,6 +442,8 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and, provided the PSK has sufficient entropy, a minimum of 128-bit security against offline brute force attacks. If the PSK entropy is lower, the effective offline security is limited by the entropy of the PSK. To break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
+Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is the one negotiated in the EDHOC session in which the resumption PSK was established.
+
 ## Downgrade Protection
 
 Following {{RFC9528}}, EDHOC-PSK must support cryptographic agility, including modularity and negotiation of preferred cryptographic primitives. In message 1, the Initiator sends an ordered list of supported cipher suites (SUITES_I). The Responder verifies that the suite selected by the Initiator is the most preferred option in SUITES_I that is mutually supported. If this condition is not met, the Responder MUST abort the session.
@@ -450,7 +452,7 @@ Following {{RFC9528}}, EDHOC-PSK must support cryptographic agility, including m
 
 Advances in quantum computing suggest that a Cryptographically Relevant Quantum Computer (CRQC) may eventually be realized. Such a machine would render many asymmetric algorithms, including Elliptic Curve Diffie-Hellman (ECDH), insecure.
 
-EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.
+Quantum resistance of EDHOC-PSK partly depends on the selected EDHOC cipher suite. EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.
 
 By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see {{I-D.spm-lake-pqsuites}}.
 
