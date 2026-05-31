@@ -332,10 +332,11 @@ Table of Contents
    *  To prevent misbinding attacks, identity information such as a
       'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
 
-   *  Additional claims that binds a pre-shared key (PSK) to the
-      circumstances under which it is valid, i.e., where it came from
-      and how it is supposed to be used MAY be used.  This is called
-      context in [RFC9258].
+   *  Claims such as 'iss' (issuer), 'aud' (audience), 'scope', 'exp'
+      (expiration time), 'nbf' (not before), and 'cti' (CWT ID) MAY be
+      used to convey context information for a pre-shared key (PSK),
+      including aspects of its provenance, intended use, and validity
+      period.  This aligns with the notion of “context” in [RFC9258].
 
 3.2.  Message Flow of EDHOC-PSK
 
