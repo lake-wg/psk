@@ -1923,18 +1923,7 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-identity-protection">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity Protection</a>
         </h3>
-<p id="section-9.1-1">In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is transported inside an AEAD-protected ciphertext derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">However, EDHOC-PSK does not satisfy the stronger identity protection notion defined by Cottier and Pointcheval <span>[<a href="#Cottier-Pointcheval" class="cite xref">Cottier-Pointcheval</a>]</span>, which requires security against an active Man-in-the-Middle (MitM) attacker. Under this stronger notion, an active attacker must not only be prevented from learning the identity but also from forcing a specific identity to be used in a way that allows them to later distinguish between the legitimate owner of a secret (the PSK) and any other user. Because message_3 is protected using AEAD, any modification by an attacker causes authentication failure and the protocol run aborts. Therefore, the attacker cannot learn the identity by observing successful decryptions of modified ciphertexts. However, if an implementation exposes different externally observable behavior depending on the reason for aborting (e.g., distinguishing between AEAD failure and unknown credential referenced), an active attacker may be able to test candidate credential identifiers by observing which error is returned.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1-3">To prevent such leakage, implementations of EDHOC-PSK:<a href="#section-9.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-9.1-4.1">
-            <p id="section-9.1-4.1.1"><span class="bcp14">MUST</span> treat all failures related to message_3 processing (including AEAD verification failure, unknown credential identifiers, or malformed inputs) as indistinguishable from the perspective of an external observer;<a href="#section-9.1-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-9.1-4.2">
-            <p id="section-9.1-4.2.1"><span class="bcp14">MUST</span> ensure that processing of message_3 is performed in a manner that does not introduce secret-dependent timing differences.<a href="#section-9.1-4.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-9.1-5">When these requirements are met, an active attacker observing aborted sessions learns no information about the identity associated with a given PSK.<a href="#section-9.1-5" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. EDHOC-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mutual-authentication">
@@ -2099,10 +2088,6 @@ RFC Editor: Remove this note.<a href="#section-10.2-3" class="pilcrow">¶</a></p
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="Cottier-Pointcheval">[Cottier-Pointcheval]</dt>
-        <dd>
-<span class="refAuthor">Cottier, B.</span> and <span class="refAuthor">D. Pointcheval</span>, <span class="refTitle">"Security Analysis of Improved EDHOC Protocol"</span>, <span class="seriesInfo">FPS International Symposium on Foundations and Practice of Security</span>, <time datetime="2022-12" class="refDate">December 2022</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-031-30122-3_1">https://doi.org/10.1007/978-3-031-30122-3_1</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.ietf-emu-eap-edhoc">[I-D.ietf-emu-eap-edhoc]</dt>
         <dd>
 <span class="refAuthor">Garcia-Carrillo, D.</span>, <span class="refAuthor">Marin-Lopez, R.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Lopez-Gomez</span>, <span class="refTitle">"Using the Extensible Authentication Protocol (EAP) with Ephemeral Diffie-Hellman over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-emu-eap-edhoc-10</span>, <time datetime="2026-05-27" class="refDate">27 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-10">https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-10</a>&gt;</span>. </dd>
