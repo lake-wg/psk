@@ -721,14 +721,14 @@ PLAINTEXT_2A (CBOR Sequence) (1 byte)
 05
 ~~~~~~~~~~~~
 
-The Responder computes KEYSTREAM_2 as defined in {{Section 4.1.2 of RFC9528}}
+The Responder computes KEYSTREAM_2A as defined in {{Section 4.1.2 of RFC9528}}
 
 ~~~~~~~~~~~~
 KEYSTREAM_2A (Raw Value) (1 byte)
 EC
 ~~~~~~~~~~~~
 
-The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2:
+The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2A:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_2B (CBOR Sequence) (1 byte)
