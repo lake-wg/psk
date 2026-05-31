@@ -678,6 +678,13 @@ Table of Contents
 
    *  Parties SHOULD prevent excessive reuse of the same resumption PSK.
 
+   *  The external PSK and the resumption PSKs form a key ratchet.  If
+      both the external PSK and previous resumption PSKs have been
+      securely destroyed (zeroized), compromise of the current
+      resumption PSK does not enable recovery of earlier PSKs.  This
+      property holds regardless of whether ECDHE or a post-quantum key
+      exchange is used.
+
 7.  EDHOC-PSK and Extensible Authentication Protocol (EAP)
 
    EDHOC with PSK authentication has several important use cases within

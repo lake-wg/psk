@@ -1888,6 +1888,9 @@ rID_CRED_PSK = { 4 : rKID }
           <li class="normal" id="section-6.3-1.3">
             <p id="section-6.3-1.3.1">Parties <span class="bcp14">SHOULD</span> prevent excessive reuse of the same resumption PSK.<a href="#section-6.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="section-6.3-1.4">
+            <p id="section-6.3-1.4.1">The external PSK and the resumption PSKs form a key ratchet. If both the external PSK and previous resumption PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used.<a href="#section-6.3-1.4.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
 </section>
 </div>
