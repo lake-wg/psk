@@ -1,6 +1,6 @@
 # EDHOC PSK authentication
 
-This is the working area for the individual Internet-Draft, "EDHOC PSK authentication".
+This is the working area for the LAKE WG Internet-Draft, "EDHOC PSK authentication".
 
 * [Editor's Copy HTML](https://lake-wg.github.io/psk/#go.draft-ietf-lake-edhoc-psk.html)
 * [Editor's Copy Text](https://lake-wg.github.io/psk/#go.draft-ietf-lake-edhoc-psk.txt)
