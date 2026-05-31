@@ -680,7 +680,9 @@ Table of Contents
       ratchet.  If previous PSKs have been securely destroyed
       (zeroized), compromise of the current resumption PSK does not
       enable recovery of earlier PSKs.  This property holds regardless
-      of whether ECDHE or a post-quantum key exchange is used.
+      of whether ECDHE or a post-quantum key exchange is used.  Handling
+      of external and resumption PSKs can be specified in the
+      application profile.
 
 7.  EDHOC-PSK and Extensible Authentication Protocol (EAP)
 
