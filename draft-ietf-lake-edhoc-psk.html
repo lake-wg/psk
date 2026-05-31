@@ -1403,7 +1403,7 @@ ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 </pre><a href="#section-3.1.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1.1-3">The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-4">It is <span class="bcp14">RECOMMENDED</span> that ID_CRED_PSK uniquely or stochastically identifies the corresponding PSK. Uniqueness avoids ambiguity that could require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. These properties align with the requirements for rKID in session resumption.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-4">It is <span class="bcp14">RECOMMENDED</span> that ID_CRED_PSK uniquely or stochastically identifies the corresponding PSK. Uniqueness avoids ambiguity that could require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. These properties align with the requirements for rKID in session resumption (see <a href="#psk-resumption" class="auto internal xref">Section 6</a>).<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="credi-and-credr">

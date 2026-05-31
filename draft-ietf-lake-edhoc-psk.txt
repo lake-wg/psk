@@ -249,7 +249,7 @@ Table of Contents
    could require the recipient to try multiple keys, while stochasticity
    reduces the risk of identifier collisions and supports stateless
    processing.  These properties align with the requirements for rKID in
-   session resumption.
+   session resumption (see Section 6).
 
 3.1.2.  CRED_I and CRED_R
 
