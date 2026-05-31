@@ -1,6 +1,6 @@
-# EDHOC PSK authentication
+# EDHOC Authenticated with Pre‑Shared Keys (PSK)
 
-This is the working area for the LAKE WG Internet-Draft, "EDHOC PSK authentication".
+This is the working area for the LAKE WG Internet-Draft, "EDHOC Authenticated with Pre‑Shared Keys (PSK)".
 
 * [Editor's Copy HTML](https://lake-wg.github.io/psk/#go.draft-ietf-lake-edhoc-psk.html)
 * [Editor's Copy Text](https://lake-wg.github.io/psk/#go.draft-ietf-lake-edhoc-psk.txt)
