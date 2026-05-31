@@ -416,7 +416,7 @@ EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, 
 
 # EDHOC-PSK and OSCORE
 
-Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}.
+Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}. Note that with the use of OSCORE as in {{RFC9668}}, message_4 is not sent, which in EDHOC-PSK results in the Responder not being authenticated in EDHOC. In this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
 
 # Security Considerations
 
@@ -468,7 +468,7 @@ In other protocols, reuse of ephemeral keys, especially when combined with missi
 
 ## Unified Approach and Recommendations
 
-For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages. Other implementations may replace message_4 with an OSCORE-protected message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed, thereby strengthening privacy by preventing premature storage of potentially compromised keys. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
+For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in {{9528}}. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
 
 # IANA Considerations
 
