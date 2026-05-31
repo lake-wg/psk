@@ -137,7 +137,7 @@ ID_CRED_PSK is a COSE header map containing header parameters that can identify 
 ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key.
+The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.
 
 It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically identifies the corresponding PSK. Uniqueness avoids ambiguity that could require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. These properties align with the requirements for rKID in session resumption.
 
@@ -190,6 +190,8 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
   - { 4 : 21 } encoded as 0x15 (CBOR integer)
 
 - To mitigate misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
+
+- Additional claims that binds a pre-shared key (PSK) to the circumstances under which it is valid, i.e., where it came from and how it is supposed to be used MAY be used. This is called context in {{?RFC9258}}.
 
 ## Message Flow of EDHOC-PSK
 
