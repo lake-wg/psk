@@ -427,13 +427,17 @@ The EDHOC-PSK authentication method introduces deviations from the initial speci
 
 In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. EDHOC-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
 
+## Protection of Pre-Shared Keys
+
+The security of EDHOC-PSK depends on the confidentiality of the PSK. Unlike an asymmetric private key, which can be generated and remain within a Hardware Security Module (HSM), secure element, or other protected cryptographic boundary, a PSK must be provisioned to and stored by multiple parties. This generally increases the attack surface and the risk of key compromise.
+
 ## Mutual Authentication
 
 EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
 
-EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the long-term PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
+EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
 
 ## Protection of External Authorization Data (EAD)
 
