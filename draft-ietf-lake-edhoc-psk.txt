@@ -779,7 +779,9 @@ Table of Contents
 
 9.4.  Cryptographic strength
 
-   The pre-shared key MUST provide a minimum of 128-bit security.  The
+   Each external PSK MUST be derived from at least 128 bits of entropy,
+   and MUST be at least 128 bits long.  Deriving a shared secret from a
+   password or other low-entropy sources is not secure.  The
    cryptographic strength of EDHOC-PSK depends on the cipher suite.  For
    current cipher suites (0-6 and 24-25), EDHOC-PSK provides a minimum
    of 64-bit security against online brute force attacks and a minimum
