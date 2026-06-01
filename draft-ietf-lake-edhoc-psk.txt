@@ -146,7 +146,7 @@ Table of Contents
    more complex than public-key credential distribution, PSK
    authentication requires less computation than the authentication
    methods defined in [RFC9528].  The PSK method retains mutual
-   authentication, asymmetric ephemeral key exchange, and identity
+   authentication, ephemeral asymmetric key exchange, and identity
    protection properties of [RFC9528].
 
    EDHOC with PSK authentication benefits use cases where two nodes
