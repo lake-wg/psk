@@ -1430,7 +1430,7 @@ Appendix C.  Change Log
 
       -  Added clarification after formal analysis.
 
-      -  Added comparisions of identity protection with other protocols
+      -  Added comparisons of identity protection with other protocols
 
       -  Added requirements (single KDF) and considerations (context)
          based on TLS 1.3
