@@ -495,8 +495,8 @@ RFC Editor: Remove this note.
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
 | Label         | Description            | Change Controller | Reference |
-| TBD2          | Resumption PSK         | IETF              | Section 7 |
-| TBD3          | Resumption kid         | IETF              | Section 7 |
+| TBD2          | Resumption PSK         | IETF              | Section 6 |
+| TBD3          | Resumption kid         | IETF              | Section 6 |
 {: #tab-exporter-psk title="Additions to the EDHOC Exporter Label Registry."}
 
 NOTE: Suggested values: TBD2 = 2, TBD3 = 3.
