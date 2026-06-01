@@ -94,7 +94,7 @@ EDHOC with PSK authentication benefits use cases where two nodes share a Pre-Sha
 
 Another important use case of PSK authentication in the EDHOC protocol is session resumption. This allows previously connected parties to quickly reestablish secure communication using pre-shared keys from a prior session, reducing the overhead associated with key exchange and asymmetric authentication. By using PSK authentication, EDHOC allows session keys to be refreshed with significantly lower computational overhead compared to public-key authentication. In this case, the resumption PSK is provisioned after the establishment of a previous EDHOC session by using EDHOC_Exporter. Thus, the external PSK may serve as a long-term credential, while the resumption PSK is a short-lived credential derived from a previous EDHOC session.
 
-Section {{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. Section 4 outlines the changes to key derivation compared to {{RFC9528}}. Section 5 details message formatting and processing, and Section 6 describes the usage of PSK for resumption. Section 7 defines the use of EDHOC-PSK with OSCORE. Security considerations are described in Section 8, and Section 9 outlines the IANA considerations.
+{{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. {{key-der}} outlines the changes to key derivation compared to {{RFC9528}}. {{mes-for-pro}} details message formatting and processing, and {{psk-resumption}} describes the usage of PSK for resumption. {{EAP}} discusses the use of EDHOC-PSK with EAP-EDHOC and {{OSCORE}} defines the use of EDHOC-PSK with OSCORE. Security considerations are described in {{sec-con}}, and {{IANA-con}} outlines the IANA considerations.
 
 # Conventions and Definitions
 
@@ -257,7 +257,7 @@ The definition of the transcript hash TH_4 is modified as follows:
 
 - TH_4 = H( TH_3, ID_CRED_PSK, PLAINTEXT_3B, CRED_I, CRED_R )
 
-# Message Formatting and Processing
+# Message Formatting and Processing {#mes-for-pro}
 
 This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that if any processing step fails, then the Responder MUST send an EDHOC error message back as defined in {{Section 6 of RFC9528}}, and the EDHOC session MUST be aborted.
 
@@ -405,7 +405,7 @@ When using resumption PSKs:
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
 * The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used.
 
-# EDHOC-PSK and Extensible Authentication Protocol (EAP)
+# EDHOC-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
 EDHOC with PSK authentication has several important use cases within the Extensible Authentication Protocol (EAP).
 
@@ -415,11 +415,11 @@ The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMME
 
 EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS {{RFC9190}}.
 
-# EDHOC-PSK and OSCORE
+# EDHOC-PSK and OSCORE {#OSCORE}
 
 Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}. Note that with the use of OSCORE as in {{RFC9668}}, message_4 is not sent, which in EDHOC-PSK results in the Responder not being authenticated in EDHOC. In this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
 
-# Security Considerations
+# Security Considerations {#sec-con}
 
 The EDHOC-PSK authentication method introduces deviations from the initial specification of EDHOC {{RFC9528}}. This section analyzes the security implications of these changes and discusses the security properties of EDHOC authenticated with PSK.
 
@@ -475,7 +475,7 @@ In other protocols, reuse of ephemeral keys, especially when combined with missi
 
 For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in {{RFC9528}}. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
 
-# IANA Considerations
+# IANA Considerations {#IANA-con}
 
 This document requires the following IANA actions.
 
