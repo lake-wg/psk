@@ -782,7 +782,9 @@ Table of Contents
    EDHOC.
 
    To mitigate reflection or Selfie attacks, the identities in CRED_I
-   and CRED_R MUST be distinct.
+   and CRED_R MUST be distinct.  If identical credentials are used by
+   both parties, an endpoint may incorrectly accept messages that
+   originate from itself.
 
    EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI)
    attacks.  Compromise of the PSK enables an attacker to impersonate
