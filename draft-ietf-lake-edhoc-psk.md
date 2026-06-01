@@ -385,14 +385,6 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
 
-## Cipher Suite Requirements for Resumption
-
-When using a resumption PSK derived from a previous EDHOC exchange:
-
-  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived.
-  2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
-  3. If a resumption PSK is combined with a different cipher suite, the Responder MUST reject the ongoing EDHOC session.
-
 ## Privacy Considerations for Resumption
 
 When using resumption PSKs:
@@ -448,7 +440,16 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the cipher suite. For current cipher suites (0-6 and 24-25), EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and a minimum of 128-bit security against offline brute force attacks. To break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
-Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is the one negotiated in the EDHOC session in which the resumption PSK was established.
+Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific cipher suite. A PSK MUST only be used with its associated cipher suite. For externally provisioned PSKs, the associated cipher suite MUST be provisioned together with the PSK. For resumption PSKs, the associated cipher suite is the one negotiated in the EDHOC session in which the resumption PSK was established.
+
+## Cipher Suite Requirements for Resumption
+
+When using a resumption PSK derived from a previous EDHOC exchange:
+
+  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived.
+  2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
+  3. If a resumption PSK is combined with a different cipher suite, the Responder MUST reject the ongoing EDHOC session.
+
 
 ## Downgrade Protection
 
