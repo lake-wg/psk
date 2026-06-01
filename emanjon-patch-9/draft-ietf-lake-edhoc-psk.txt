@@ -112,12 +112,11 @@ Table of Contents
      9.3.  Mutual Authentication
      9.4.  Protection of External Authorization Data (EAD)
      9.5.  Cryptographic strength
-     9.6.  Cipher Suite Requirements for Resumption
-     9.7.  Downgrade Protection
-     9.8.  Post Quantum Considerations
-     9.9.  Confidentiality
-     9.10. Independence of Session Keys
-     9.11. Unified Approach and Recommendations
+     9.6.  Downgrade Protection
+     9.7.  Post Quantum Considerations
+     9.8.  Confidentiality
+     9.9.  Independence of Session Keys
+     9.10. Unified Approach and Recommendations
    10. IANA Considerations
      10.1.  EDHOC Method Type Registry
      10.2.  EDHOC Exporter Label Registry
@@ -808,20 +807,7 @@ Table of Contents
    suite is the one negotiated in the EDHOC session in which the
    resumption PSK was established.
 
-9.6.  Cipher Suite Requirements for Resumption
-
-   When using a resumption PSK derived from a previous EDHOC exchange:
-
-   1.  The resumption PSK MUST only be used with the same cipher suite
-       from which it was derived.
-
-   2.  Implementations MUST maintain a mapping between each resumption
-       PSK and its originating cipher suite to enforce this requirement.
-
-   3.  If a resumption PSK is combined with a different cipher suite,
-       the Responder MUST reject the ongoing EDHOC session.
-
-9.7.  Downgrade Protection
+9.6.  Downgrade Protection
 
    Following [RFC9528], EDHOC-PSK must support cryptographic agility,
    including modularity and negotiation of preferred cryptographic
@@ -831,7 +817,7 @@ Table of Contents
    SUITES_I that is mutually supported.  If this condition is not met,
    the Responder MUST abort the session.
 
-9.8.  Post Quantum Considerations
+9.7.  Post Quantum Considerations
 
    Advances in quantum computing suggest that a Cryptographically
    Relevant Quantum Computer (CRQC) may eventually be realized.  Such a
@@ -854,7 +840,7 @@ Table of Contents
    EDHOC cipher suites incorporating ML-KEM are expected to be
    registered; see [I-D.spm-lake-pqsuites].
 
-9.9.  Confidentiality
+9.8.  Confidentiality
 
    The primary security goal of EDHOC-PSK is to establish a shared
    secret known only to the authenticated Initiator and Responder.  The
@@ -863,7 +849,7 @@ Table of Contents
    infeasible for an adversary to distinguish the true session secret
    from a random value.
 
-9.10.  Independence of Session Keys
+9.9.  Independence of Session Keys
 
    NIST requires that an ephemeral private key be used in only one key-
    establishment transaction ([SP-800-56A], Section 5.6.3.3).  This
@@ -882,7 +868,7 @@ Table of Contents
    legitimate parties.  Assuming breach and minimizing the impact of
    compromise are fundamental principles of zero-trust security.
 
-9.11.  Unified Approach and Recommendations
+9.10.  Unified Approach and Recommendations
 
    For use cases where application data is transmitted, it can be sent
    together with message_3, maintaining efficiency.  In applications
