@@ -108,6 +108,8 @@ This document specifies a new EDHOC authentication method (see {{Section 3.2 of 
 
 Authentication is based on a PSK shared by the Initiator and the Responder. As in the methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information for the Initiator and Responder, respectively. However, unlike those methods, EDHOC-PSK uses a single authentication credential identifier, ID_CRED_PSK, which the Responder uses to retrieve the PSK and the associated authentication credentials.
 
+The PSK method uses a “by reference” approach for credential representation. ID_CRED_PSK can be kept minimal, enabling a very compact on-the-wire encoding. In contrast, ID_CRED_I and ID_CRED_R may convey arbitrary identity and application-specific context. This separation allows EDHOC-PSK to minimize overhead for PSK identification while preserving flexibility in both identity and contextual information, as well as the security properties associated with their use.
+
 Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, EDHOC-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity protection against passive attackers. In contrast, (D)TLS 1.3 {{?RFC8446}} {{?RFC9147}} transmits the PSK identifier in cleartext and therefore does not provide identity protection for PSK-based authentication.
 
 ## Credentials
