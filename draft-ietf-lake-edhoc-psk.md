@@ -1022,4 +1022,4 @@ This work has been partly funded by PID2023-148104OB-C43 funded by MICIU/AEI/10.
 
 This work was supported partially by Vinnova - the Swedish Agency for Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.
 
-This work has been partially supported by the French National Research Agency under the France 2030 label (NF-HiSec ANR-22-PEFT-0009)
+This work has been partially supported by the French National Research Agency under the France 2030 label (NF-HiSec ANR-22-PEFT-0009).
