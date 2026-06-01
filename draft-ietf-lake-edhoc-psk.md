@@ -116,7 +116,6 @@ Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, EDHOC-PS
 
 The Initiator and Responder are assumed to share a PSK (either an external PSK or a resumption PSK) with high entropy that meets the following requirements:
 
-
 - Only the Initiator and the Responder have access to the PSK.
 - The Responder can retrieve the PSK, CRED_I, and CRED_R, using ID_CRED_PSK.
 
@@ -334,7 +333,7 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.
 
-* Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK.
+* Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK, CRED_I, and CRED_R.
 
 * AEAD-decrypt CIPHERTEXT_3B using:
 
