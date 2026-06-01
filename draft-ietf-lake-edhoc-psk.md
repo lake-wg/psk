@@ -48,13 +48,13 @@ normative:
 
   RFC8392:
   RFC8610:
+  RFC8613:
   RFC8742:
   RFC8949:
   RFC9052:
   RFC9053:
   RFC9528:
   RFC9668:
-  RFC8613:
   I-D.ietf-emu-eap-edhoc:
   I-D.spm-lake-pqsuites:
   SP-800-56A:
@@ -94,7 +94,7 @@ EDHOC with PSK authentication benefits use cases where two nodes share a Pre-Sha
 
 Another important use case of PSK authentication in the EDHOC protocol is session resumption. This allows previously connected parties to quickly reestablish secure communication using pre-shared keys from a prior session, reducing the overhead associated with key exchange and asymmetric authentication. By using PSK authentication, EDHOC allows session keys to be refreshed with significantly lower computational overhead compared to public-key authentication. In this case, the resumption PSK is provisioned after the establishment of a previous EDHOC session by using EDHOC_Exporter. Thus, the external PSK may serve as a long-term credential, while the resumption PSK is a short-lived credential derived from a previous EDHOC session.
 
-{{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. {{key-der}} outlines the changes to key derivation compared to {{RFC9528}}. {{mes-for-pro}} details message formatting and processing, and {{psk-resumption}} describes the usage of PSK for resumption. {{EAP}} discusses the use of EDHOC-PSK with EAP-EDHOC and {{OSCORE}} defines the use of EDHOC-PSK with OSCORE. Security considerations are described in {{sec-con}}, and {{IANA-con}} outlines the IANA considerations.
+{{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. {{key-der}} outlines the changes to key derivation compared to {{RFC9528}}. {{mes-for-pro}} details message formatting and processing, and {{psk-resumption}} describes the usage of PSK for resumption. {{EAP}} discusses the use of EDHOC-PSK with EAP-EDHOC and {{OSCORE}} defines the use of EDHOC-PSK with Object Security for Constrained RESTful Environments (OSCORE, {{RFC8613}}). Security considerations are described in {{sec-con}}, and {{IANA-con}} outlines the IANA considerations.
 
 # Conventions and Definitions
 
@@ -419,9 +419,9 @@ EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, 
 
 # EDHOC-PSK and OSCORE {#OSCORE}
 
-{{RFC9668}} describes an optimized use of EDHOC with Object Security for Constrained RESTful Environments (OSCORE, {{RFC8613}}}) by combining EDHOC message_3 with the first OSCORE request. This procedure omits message_4, and key confirmation of the Responder is instead provided by a subsequent OSCORE response.
+{{RFC9668}} describes an optimized use of EDHOC with OSCORE by combining EDHOC message_3 with the first OSCORE request. This procedure omits message_4, but key confirmation of the Responder can instead be provided by a subsequent OSCORE response to the Initiator.
 
-In EDHOC-PSK, however, message_4 provides additionally authentication of the Responder. Nonetheless, the combined delivery, described in {{Section 3 of RFC9668}}, can still be applied to EDHOC-PSK. In this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
+In EDHOC-PSK, authentication of the Responder is provided by message_4. Nonetheless, the combined delivery, described in {{Section 3 of RFC9668}}, can still be applied to EDHOC-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
 
 # Security Considerations {#sec-con}
 
