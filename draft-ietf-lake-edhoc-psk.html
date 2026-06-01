@@ -1284,7 +1284,7 @@ svg {
                 <p id="section-toc.1-1.9.2.9.1"><a href="#section-9.9" class="auto internal xref">9.9</a>.  <a href="#name-independence-of-session-key" class="internal xref">Independence of Session Keys</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.10">
-                <p id="section-toc.1-1.9.2.10.1"><a href="#section-9.10" class="auto internal xref">9.10</a>. <a href="#name-unified-approach-and-recomm" class="internal xref">Unified Approach and Recommendations</a></p>
+                <p id="section-toc.1-1.9.2.10.1"><a href="#section-9.10" class="auto internal xref">9.10</a>. <a href="#name-message-4-and-mutual-authen" class="internal xref">Message 4 and Mutual Authentication Requirements</a></p>
 </li>
             </ul>
 </li>
@@ -2005,10 +2005,10 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-9.9-2">In other protocols, reuse of ephemeral keys, especially when combined with missing public key validation, has led to severe vulnerabilities, enabling attackers to recover “ephemeral” private keys and compromise both past and future sessions between two legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental principles of zero-trust security.<a href="#section-9.9-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="unified-approach-and-recommendations">
+<div id="message-4-and-mutual-authentication-requirements">
 <section id="section-9.10">
-        <h3 id="name-unified-approach-and-recomm">
-<a href="#section-9.10" class="section-number selfRef">9.10. </a><a href="#name-unified-approach-and-recomm" class="section-name selfRef">Unified Approach and Recommendations</a>
+        <h3 id="name-message-4-and-mutual-authen">
+<a href="#section-9.10" class="section-number selfRef">9.10. </a><a href="#name-message-4-and-mutual-authen" class="section-name selfRef">Message 4 and Mutual Authentication Requirements</a>
         </h3>
 <p id="section-9.10-1">For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC <span>[<a href="#I-D.ietf-emu-eap-edhoc" class="cite xref">I-D.ietf-emu-eap-edhoc</a>]</span>, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator <span class="bcp14">SHALL NOT</span> persistently store PRK_out or derived application keys until it has successfully verified message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, it has no significant impact in EDHOC-PSK.<a href="#section-9.10-1" class="pilcrow">¶</a></p>
 </section>

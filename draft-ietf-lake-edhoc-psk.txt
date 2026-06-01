@@ -117,7 +117,7 @@ Table of Contents
      9.7.  Post Quantum Considerations
      9.8.  Confidentiality
      9.9.  Independence of Session Keys
-     9.10. Unified Approach and Recommendations
+     9.10. Message 4 and Mutual Authentication Requirements
    10. IANA Considerations
      10.1.  EDHOC Method Type Registry
      10.2.  EDHOC Exporter Label Registry
@@ -893,7 +893,7 @@ Table of Contents
    legitimate parties.  Assuming breach and minimizing the impact of
    compromise are fundamental principles of zero-trust security.
 
-9.10.  Unified Approach and Recommendations
+9.10.  Message 4 and Mutual Authentication Requirements
 
    For use cases where application data is transmitted, it can be sent
    together with message_3, maintaining efficiency.  In applications
