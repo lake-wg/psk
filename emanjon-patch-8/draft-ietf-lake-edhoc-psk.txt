@@ -102,9 +102,8 @@ Table of Contents
        5.3.3.  Responder Processing of Message 3
      5.4.  Message 4
    6.  PSK usage for Session Resumption
-     6.1.  Cipher Suite Requirements for Resumption
-     6.2.  Privacy Considerations for Resumption
-     6.3.  Security Considerations for Resumption
+     6.1.  Privacy Considerations for Resumption
+     6.2.  Security Considerations for Resumption
    7.  EDHOC-PSK and Extensible Authentication Protocol (EAP)
    8.  EDHOC-PSK and OSCORE
    9.  Security Considerations
@@ -652,21 +651,7 @@ Table of Contents
       point, the Initiator can be certain that the Responder already has
       derived the next resumption key, rPSK_(i+1).
 
-6.1.  Cipher Suite Requirements for Resumption
-
-   When using a resumption PSK derived from a previous EDHOC exchange:
-
-   1.  The resumption PSK MUST only be used with the same EDHOC hash
-       function from which it was derived.
-
-   2.  Implementations MUST maintain a mapping between each resumption
-       PSK and its originating EDHOC hash function to enforce this
-       requirement.
-
-   3.  If a resumption PSK is combined with a different EDHOC hash
-       function, the Responder MUST reject the ongoing EDHOC session.
-
-6.2.  Privacy Considerations for Resumption
+6.1.  Privacy Considerations for Resumption
 
    When using resumption PSKs:
 
@@ -678,7 +663,7 @@ Table of Contents
       goals of EDHOC-PSK, which are to provide identity protection
       against passive attackers, but not against active attackers.
 
-6.3.  Security Considerations for Resumption
+6.2.  Security Considerations for Resumption
 
    *  Resumption PSKs MUST NOT be used for purposes other than EDHOC
       session resumption.
@@ -821,7 +806,9 @@ Table of Contents
    provisioned PSKs, the associated EDHOC hash algorithm MUST be
    provisioned together with the PSK.  For resumption PSKs, the
    associated EDHOC hash algorithm is the one negotiated in the EDHOC
-   session in which the resumption PSK was established.
+   session in which the resumption PSK was established.  If a PSK is
+   combined with a different EDHOC hash function, the Responder MUST
+   reject the ongoing EDHOC session.
 
 9.6.  Downgrade Protection
 
