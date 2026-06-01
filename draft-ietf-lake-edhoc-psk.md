@@ -967,6 +967,9 @@ RFC Editor: Please remove this appendix.
   * Added comparisons of identity protection with other protocols
   * Added requirements (single KDF) and considerations (context) based on TLS 1.3
   * Updated considerations regarding OSCORE and RFC 9668
+  * Added considerations for protection of pre-shared keys
+  * Added considerations for key chains / key ratchets
+  * Added text on explaining the "by reference" benefits of ID_CRED_PSK
   * Editorial changes
 
 * From -06 to -07
