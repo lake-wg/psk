@@ -222,7 +222,7 @@ The pseudorandom keys (PRKs) used in the EDHOC-PSK authentication method are der
 PRK  = EDHOC_Extract( salt, IKM )
 ~~~~~~~~~~~~
 
-where `salt` and input keying material (`IKM`) are defined for each key. The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in the cipher suite, see {{Section 4.1.1 of RFC9528}}.
+where `salt` and input keying material (`IKM`) are defined for each key. The definition of EDHOC_Extract depends on the EDHOC hash algorithm of the selected cipher suite, see {{Section 4.1.1 of RFC9528}}.
 
 To maintain a uniform key schedule across all EDHOC authentication methods, the same pseudorandom key notation (PRK_2e, PRK_3e2m, and PRK_4e3m) is retained. The index notation is preserved for consistency with other EDHOC authentication variants, even though it does not fully reflect the functional role of the keys in this method; for example, no MACs are used in EDHOC-PSK.
 
@@ -405,7 +405,7 @@ When using resumption PSKs:
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
-* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
+* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
 
 # EDHOC-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
@@ -449,7 +449,7 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the cipher suite. For current cipher suites (0-6 and 24-25), EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and a minimum of 128-bit security against offline brute force attacks. To break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
-Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is the one negotiated in the EDHOC session in which the resumption PSK was established.
+Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is that of the selected cipher suite in the EDHOC session in which the resumption PSK was established.
 
 ## Downgrade Protection
 
