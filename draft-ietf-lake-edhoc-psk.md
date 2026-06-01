@@ -442,15 +442,6 @@ Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be
 
 Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific cipher suite. A PSK MUST only be used with its associated cipher suite. For externally provisioned PSKs, the associated cipher suite MUST be provisioned together with the PSK. For resumption PSKs, the associated cipher suite is the one negotiated in the EDHOC session in which the resumption PSK was established.
 
-## Cipher Suite Requirements for Resumption
-
-When using a resumption PSK derived from a previous EDHOC exchange:
-
-  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived.
-  2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
-  3. If a resumption PSK is combined with a different cipher suite, the Responder MUST reject the ongoing EDHOC session.
-
-
 ## Downgrade Protection
 
 Following {{RFC9528}}, EDHOC-PSK must support cryptographic agility, including modularity and negotiation of preferred cryptographic primitives. In message 1, the Initiator sends an ordered list of supported cipher suites (SUITES_I). The Responder verifies that the suite selected by the Initiator is the most preferred option in SUITES_I that is mutually supported. If this condition is not met, the Responder MUST abort the session.
