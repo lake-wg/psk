@@ -1814,7 +1814,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <figure id="figure-3">
         <div class="alignCenter art-text artwork" id="section-6-2.1">
 <pre>
-rPSK         = EDHOC_Exporter( TBD2, h'', key_length )
+rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
 rKID         = EDHOC_Exporter( TBD3, h'', kid_length )
 rID_CRED_PSK = { 4 : rKID }
 </pre>
@@ -1826,7 +1826,7 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-6-3">where:<a href="#section-6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-4.1">
-          <p id="section-6-4.1.1">key_length is the length of the encryption key of the EDHOC AEAD algorithm in the cipher suite associated with the PSK.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
+          <p id="section-6-4.1.1">resumption_psk_length defaults to the key_length, i.e., the length of the encryption key of the EDHOC AEAD algorithm in the selected cipher suite of the session where the EDHOC_Exporter is invoked.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.2">
           <p id="section-6-4.2.1">kid_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
@@ -1853,13 +1853,13 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-6.1-1">When using a resumption PSK derived from a previous EDHOC exchange:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6.1-2">
 <li id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1">The resumption PSK <span class="bcp14">MUST</span> only be used with the same cipher suite from which it was derived.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.1.1">The resumption PSK <span class="bcp14">MUST</span> only be used with the same cipher suite from which it was derived, or with a cipher suite that provides stronger security guarantees.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.1-2.2">
             <p id="section-6.1-2.2.1">Implementations <span class="bcp14">MUST</span> maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.1-2.3">
-            <p id="section-6.1-2.3.1">If a resumption PSK is combined with a different cipher suite, the Responder <span class="bcp14">MUST</span> reject the ongoing EDHOC session.<a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.3.1">If a resumption PSK is offered with a cipher suite that provides weaker security, the Responder <span class="bcp14">MUST</span> reject the ongoing EDHOC session.<a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
