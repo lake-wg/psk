@@ -962,7 +962,7 @@ RFC Editor: Please remove this appendix.
 * From -07 to -08
 
   * Added clarification after formal analysis.
-  * Added comparisions of identity protection with other protocols
+  * Added comparisons of identity protection with other protocols
   * Added requirements (single KDF) and considerations (context) based on TLS 1.3
   * Updated considerations regarding OSCORE and RFC 9668
   * Editorial changes
