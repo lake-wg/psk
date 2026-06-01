@@ -568,7 +568,7 @@ Table of Contents
       recover PLAINTEXT_3A.
 
    *  Use ID_CRED_PSK to identify the authentication credentials and
-      retrieve PSK.
+      retrieve PSK, CRED_I, and CRED_R.
 
    *  AEAD-decrypt CIPHERTEXT_3B using:
 
