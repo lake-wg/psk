@@ -731,7 +731,7 @@ PLAINTEXT_2A (CBOR Sequence) (1 byte)
 05
 ~~~~~~~~~~~~
 
-The Responder computes KEYSTREAM_2A as defined in {{Section 4.1.2 of RFC9528}}
+The Responder computes KEYSTREAM_2A as defined in {{key-der}}
 
 ~~~~~~~~~~~~
 KEYSTREAM_2A (Raw Value) (1 byte)
