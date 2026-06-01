@@ -320,7 +320,7 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}.
 
 The Initiator computes TH_4 as defined in {{key-der}}.
 
-There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provides implicit authentication of the Initiator.
+There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provide implicit authentication of the Initiator.
 
 ### Responder Processing of Message 3
 
