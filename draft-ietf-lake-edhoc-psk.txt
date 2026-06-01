@@ -1291,7 +1291,7 @@ B.3.  message_3
    EAD_3 (CBOR Sequence) (0 bytes)
 
    The Initiator constructs firstly PLAINTEXT_3B as defined in
-   Section 5.3.1.:
+   Section 5.3.1:
 
    PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 
@@ -1333,7 +1333,7 @@ B.3.  message_3
    KEYSTREAM_3A (Raw Value) (10 bytes)
    03 E5 D1 57 1B BC 93 32 47 1B
 
-   It then calculates PLAINTEXT_3A as stated in Section 5.3.2.:
+   It then calculates PLAINTEXT_3A as stated in Section 5.3.2:
 
    PLAINTEXT_3A (CBOR Sequence) (10 bytes)
    10 48 7F 34 49 6F 3F 69 C2 88
@@ -1343,7 +1343,7 @@ B.3.  message_3
    CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
    13 AD AE 63 52 D3 AC 5B 85 93
 
-   The Initiator computes message_3 as defined in Section 5.3.2.:
+   The Initiator computes message_3 as defined in Section 5.3.2:
 
    message_3 (CBOR Sequence) (11 bytes)
    4A 13 AD AE 63 52 D3 AC 5B 85 93
