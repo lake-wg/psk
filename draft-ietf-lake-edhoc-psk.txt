@@ -1506,7 +1506,7 @@ Acknowledgments
 
    This work has been partially supported by the French National
    Research Agency under the France 2030 label (NF-HiSec ANR-22-PEFT-
-   0009)
+   0009).
 
 Authors' Addresses
 
