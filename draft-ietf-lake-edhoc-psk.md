@@ -363,7 +363,7 @@ This section specifies how EDHOC-PSK is used for session resumption in EDHOC. Th
 
 ~~~~~~~~~~~~
 rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
-rKID         = EDHOC_Exporter( TBD3, h'', id_cred_psk_length )
+rKID         = EDHOC_Exporter( TBD3, h'', kid_length )
 rID_CRED_PSK = { 4 : rKID }
 ~~~~~~~~~~~~
 {: #fig-resumption title="Resumption Parameters." artwork-align="center"}
@@ -372,7 +372,7 @@ where:
 
   * resumption_psk_length defaults to the key_length, i.e., the length of the encryption key of the EDHOC AEAD algorithm in the selected cipher suite of the session where the EDHOC_Exporter is invoked.
 
-  * id_cred_psk_length defaults to 2 bytes.
+  * kid_length defaults to 2 bytes.
 
 A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MUST generate a resumption key for the next resumption within the current "session series", provided that PSK resumption is supported.
 
