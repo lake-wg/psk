@@ -1008,7 +1008,7 @@ RFC Editor: Please remove this appendix.
 The authors want to thank
 {{{Christian Amsüss}}},
 {{{Scott Fluhrer}}},
-{{{Jonathan Hoyland}},
+{{{Jonathan Hoyland}}},
 {{{Charlie Jacomme}}},
 and
 {{{Marco Tiloca}}}
