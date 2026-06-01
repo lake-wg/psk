@@ -405,7 +405,7 @@ When using resumption PSKs:
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
-* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used.
+* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
 
 # EDHOC-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
