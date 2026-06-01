@@ -175,13 +175,14 @@ Table of Contents
    resumption PSK is a short-lived credential derived from a previous
    EDHOC session.
 
-   Section Section 3 provides an overview of the PSK method, including
-   its message flow and associated credentials.  Section 4 outlines the
+   Section 3 provides an overview of the PSK method, including its
+   message flow and associated credentials.  Section 4 outlines the
    changes to key derivation compared to [RFC9528].  Section 5 details
    message formatting and processing, and Section 6 describes the usage
-   of PSK for resumption.  Section 7 defines the use of EDHOC-PSK with
-   OSCORE.  Security considerations are described in Section 8, and
-   Section 9 outlines the IANA considerations.
+   of PSK for resumption.  Section 7 discusses the use of EDHOC-PSK with
+   EAP-EDHOC and Section 8 defines the use of EDHOC-PSK with OSCORE.
+   Security considerations are described in Section 9, and Section 10
+   outlines the IANA considerations.
 
 2.  Conventions and Definitions
 

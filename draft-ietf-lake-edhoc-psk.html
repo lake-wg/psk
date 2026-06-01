@@ -1357,7 +1357,7 @@ svg {
 <p id="section-1-1">This document defines a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) Lightweight Authenticated Key Exchange (LAKE) protocol <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. The PSK method trades the complexity of symmetric-key distribution for improved computational efficiency. Although symmetric-key distribution is more complex than public-key credential distribution, PSK authentication requires less computation than the authentication methods defined in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. The PSK method retains mutual authentication, asymmetric ephemeral key exchange, and identity protection properties of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">EDHOC with PSK authentication benefits use cases where two nodes share a Pre-Shared Key (PSK) provided out-of-band (external PSK). Examples include the Authenticated Key Management Architecture (AKMA) in mobile systems or the Peer and Authenticator in Extensible Authentication Protocol (EAP) systems. The PSK method enables the nodes to perform ephemeral key exchange, achieving Perfect Forward Secrecy (PFS). This ensures that even if the PSK is compromised, past communications remain secure against active attackers, while future communications are protected against passive attackers. Additionally, by leveraging the PSK for both authentication and key derivation, the method provides quantum-resistant key exchange and authentication even when used with ECDHE.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Another important use case of PSK authentication in the EDHOC protocol is session resumption. This allows previously connected parties to quickly reestablish secure communication using pre-shared keys from a prior session, reducing the overhead associated with key exchange and asymmetric authentication. By using PSK authentication, EDHOC allows session keys to be refreshed with significantly lower computational overhead compared to public-key authentication. In this case, the resumption PSK is provisioned after the establishment of a previous EDHOC session by using EDHOC_Exporter. Thus, the external PSK may serve as a long-term credential, while the resumption PSK is a short-lived credential derived from a previous EDHOC session.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Section <a href="#protocol" class="auto internal xref">Section 3</a> provides an overview of the PSK method, including its message flow and associated credentials. Section 4 outlines the changes to key derivation compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. Section 5 details message formatting and processing, and Section 6 describes the usage of PSK for resumption. Section 7 defines the use of EDHOC-PSK with OSCORE. Security considerations are described in Section 8, and Section 9 outlines the IANA considerations.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4"><a href="#protocol" class="auto internal xref">Section 3</a> provides an overview of the PSK method, including its message flow and associated credentials. <a href="#key-der" class="auto internal xref">Section 4</a> outlines the changes to key derivation compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. <a href="#mes-for-pro" class="auto internal xref">Section 5</a> details message formatting and processing, and <a href="#psk-resumption" class="auto internal xref">Section 6</a> describes the usage of PSK for resumption. <a href="#EAP" class="auto internal xref">Section 7</a> discusses the use of EDHOC-PSK with EAP-EDHOC and <a href="#OSCORE" class="auto internal xref">Section 8</a> defines the use of EDHOC-PSK with OSCORE. Security considerations are described in <a href="#sec-con" class="auto internal xref">Section 9</a>, and <a href="#IANA-con" class="auto internal xref">Section 10</a> outlines the IANA considerations.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1617,7 +1617,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
       </ul>
 </section>
 </div>
-<div id="message-formatting-and-processing">
+<div id="mes-for-pro">
 <section id="section-5">
       <h2 id="name-message-formatting-and-proc">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-message-formatting-and-proc" class="section-name selfRef">Message Formatting and Processing</a>
@@ -1899,7 +1899,7 @@ rID_CRED_PSK = { 4 : rKID }
 </div>
 </section>
 </div>
-<div id="edhoc-psk-and-extensible-authentication-protocol-eap">
+<div id="EAP">
 <section id="section-7">
       <h2 id="name-edhoc-psk-and-extensible-au">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-edhoc-psk-and-extensible-au" class="section-name selfRef">EDHOC-PSK and Extensible Authentication Protocol (EAP)</a>
@@ -1910,7 +1910,7 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-7-4">EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK <span>[<a href="#RFC4764" class="cite xref">RFC4764</a>]</span>, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS <span>[<a href="#RFC9190" class="cite xref">RFC9190</a>]</span>.<a href="#section-7-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="edhoc-psk-and-oscore">
+<div id="OSCORE">
 <section id="section-8">
       <h2 id="name-edhoc-psk-and-oscore">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-edhoc-psk-and-oscore" class="section-name selfRef">EDHOC-PSK and OSCORE</a>
@@ -1918,7 +1918,7 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-8-1">Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload <span class="bcp14">MAY</span> convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span>. Note that with the use of OSCORE as in <span>[<a href="#RFC9668" class="cite xref">RFC9668</a>]</span>, message_4 is not sent, which in EDHOC-PSK results in the Responder not being authenticated in EDHOC. In this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="security-considerations">
+<div id="sec-con">
 <section id="section-9">
       <h2 id="name-security-considerations">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
@@ -2012,7 +2012,7 @@ rID_CRED_PSK = { 4 : rKID }
 </div>
 </section>
 </div>
-<div id="iana-considerations">
+<div id="IANA-con">
 <section id="section-10">
       <h2 id="name-iana-considerations">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
