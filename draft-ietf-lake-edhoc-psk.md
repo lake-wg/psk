@@ -437,7 +437,7 @@ The security of EDHOC-PSK depends on the confidentiality of the PSK. Unlike an a
 
 EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
 
-To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
+To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct. If identical credentials are used by both parties, an endpoint may incorrectly accept messages that originate from itself.
 
 EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
 
