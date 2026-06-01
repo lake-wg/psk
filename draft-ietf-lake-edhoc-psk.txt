@@ -403,7 +403,7 @@ Table of Contents
 
    where salt and input keying material (IKM) are defined for each key.
    The definition of EDHOC_Extract depends on the EDHOC hash algorithm
-   selected in the cipher suite, see Section 4.1.1 of [RFC9528].
+   of the selected cipher suite, see Section 4.1.1 of [RFC9528].
 
    To maintain a uniform key schedule across all EDHOC authentication
    methods, the same pseudorandom key notation (PRK_2e, PRK_3e2m, and
@@ -691,12 +691,11 @@ Table of Contents
    *  Parties SHOULD prevent excessive reuse of the same resumption PSK.
 
    *  The optional external PSK and the resumption PSKs form a key
-      ratchet.  If previous PSKs have been securely destroyed
-      (zeroized), compromise of the current resumption PSK does not
-      enable recovery of earlier PSKs.  This property holds regardless
-      of whether ECDHE or a post-quantum key exchange is used.  Handling
-      of external and resumption PSKs can be specified in the
-      application profile.
+      ratchet.  If previous PSKs have been securely erased, compromise
+      of the current resumption PSK does not enable recovery of earlier
+      PSKs.  This property holds regardless of whether ECDHE or a post-
+      quantum key exchange is used.  Handling of external and resumption
+      PSKs can be specified in the application profile.
 
 7.  EDHOC-PSK and Extensible Authentication Protocol (EAP)
 
@@ -822,8 +821,8 @@ Table of Contents
    suites that employ the same EDHOC hash algorithm.  For externally
    provisioned PSKs, the associated EDHOC hash algorithm MUST be
    provisioned together with the PSK.  For resumption PSKs, the
-   associated EDHOC hash algorithm is the one negotiated in the EDHOC
-   session in which the resumption PSK was established.
+   associated EDHOC hash algorithm is that of the selected cipher suite
+   in the EDHOC session in which the resumption PSK was established.
 
 9.6.  Downgrade Protection
 
