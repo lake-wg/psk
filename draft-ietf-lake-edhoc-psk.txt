@@ -548,7 +548,7 @@ Table of Contents
    The Initiator computes TH_4 as defined in Section 4.
 
    There is no need for MAC_3 or signature, since AEAD's built-in
-   integrity and the use of PSK-based key derivation provides implicit
+   integrity and the use of PSK-based key derivation provide implicit
    authentication of the Initiator.
 
 5.3.3.  Responder Processing of Message 3
