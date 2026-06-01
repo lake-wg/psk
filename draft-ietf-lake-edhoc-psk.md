@@ -944,6 +944,9 @@ E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 
 Both peers generate a resumption key for use in the next resumption attempt, as explained in {{psk-resumption}}:
 
+NOTE: Assuming TBD2 = 2 and TBD3 = 3, to be confirmed by IANA.
+RFC Editor: Remove this note.
+
 ~~~~~~~~~~~~
 rPSK (Raw Value) (16 bytes)
 5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
