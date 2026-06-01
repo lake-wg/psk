@@ -606,7 +606,7 @@ Table of Contents
    [RFC9528], is used to derive the resumption parameters rPSK and rKID:
 
      rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
-     rKID         = EDHOC_Exporter( TBD3, h'', id_cred_psk_length )
+     rKID         = EDHOC_Exporter( TBD3, h'', kid_length )
      rID_CRED_PSK = { 4 : rKID }
 
                       Figure 3: Resumption Parameters.
@@ -617,7 +617,7 @@ Table of Contents
       of the encryption key of the EDHOC AEAD algorithm in the selected
       cipher suite of the session where the EDHOC_Exporter is invoked.
 
-   *  id_cred_psk_length defaults to 2 bytes.
+   *  kid_length defaults to 2 bytes.
 
    A peer that has successfully completed an EDHOC session, regardless
    of the authentication method used or whether the session was a PSK

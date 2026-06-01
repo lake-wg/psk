@@ -1814,7 +1814,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
         <div class="alignCenter art-text artwork" id="section-6-2.1">
 <pre>
 rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
-rKID         = EDHOC_Exporter( TBD3, h'', id_cred_psk_length )
+rKID         = EDHOC_Exporter( TBD3, h'', kid_length )
 rID_CRED_PSK = { 4 : rKID }
 </pre>
 </div>
@@ -1828,7 +1828,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.1.1">resumption_psk_length defaults to the key_length, i.e., the length of the encryption key of the EDHOC AEAD algorithm in the selected cipher suite of the session where the EDHOC_Exporter is invoked.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.2">
-          <p id="section-6-4.2.1">id_cred_psk_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-4.2.1">kid_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">MUST</span> generate a resumption key for the next resumption within the current "session series", provided that PSK resumption is supported.<a href="#section-6-5" class="pilcrow">¶</a></p>
