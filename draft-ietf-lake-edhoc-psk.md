@@ -82,7 +82,7 @@ informative:
 
 --- abstract
 
-This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) Lightweight Authenticated Key Exchange (LAKE) protocol. The PSK method provides mutual authentication, ephemeral key exchange, identity protection, and quantum resistance while incurring lower computational costs than the public-key authentication methods specified for EDHOC. It is particularly suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
+This document specifies a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) Lightweight Authenticated Key Exchange (LAKE) protocol. The PSK method provides mutual authentication, ephemeral key exchange, identity protection, and quantum resistance while incurring lower computational costs than the public-key authentication methods specified for EDHOC. It is suited for systems where nodes share a PSK provided out-of-band (external PSK) and enables efficient session resumption with less computational overhead when the PSK is provided from a previous EDHOC session (resumption PSK). This document details the PSK method flow, key derivation changes, message formatting, processing, and security considerations.
 
 --- middle
 
