@@ -180,7 +180,8 @@ Table of Contents
    changes to key derivation compared to [RFC9528].  Section 5 details
    message formatting and processing, and Section 6 describes the usage
    of PSK for resumption.  Section 7 discusses the use of EDHOC-PSK with
-   EAP-EDHOC and Section 8 defines the use of EDHOC-PSK with OSCORE.
+   EAP-EDHOC and Section 8 defines the use of EDHOC-PSK with Object
+   Security for Constrained RESTful Environments (OSCORE, [RFC8613]).
    Security considerations are described in Section 9, and Section 10
    outlines the IANA considerations.
 
@@ -732,18 +733,17 @@ Table of Contents
 
 8.  EDHOC-PSK and OSCORE
 
-   [RFC9668] describes an optimized use of EDHOC with Object Security
-   for Constrained RESTful Environments (OSCORE, [RFC8613]}) by
+   [RFC9668] describes an optimized use of EDHOC with OSCORE by
    combining EDHOC message_3 with the first OSCORE request.  This
-   procedure omits message_4, and key confirmation of the Responder is
-   instead provided by a subsequent OSCORE response.
+   procedure omits message_4, but key confirmation of the Responder can
+   instead be provided by a subsequent OSCORE response to the Initiator.
 
-   In EDHOC-PSK, however, message_4 provides additionally authentication
-   of the Responder.  Nonetheless, the combined delivery, described in
-   Section 3 of [RFC9668], can still be applied to EDHOC-PSK.  In this
-   case, the Responder is not authenticated until the Initiator has
-   verified a matching OSCORE response.  However, only the party with
-   the correct PSK can decrypt the OSCORE request.
+   In EDHOC-PSK, authentication of the Responder is provided by
+   message_4.  Nonetheless, the combined delivery, described in
+   Section 3 of [RFC9668], can still be applied to EDHOC-PSK.  Note
+   that, in this case, the Responder is not authenticated until the
+   Initiator has verified a matching OSCORE response.  However, only the
+   party with the correct PSK can decrypt the OSCORE request.
 
 9.  Security Considerations
 
