@@ -270,7 +270,7 @@ Message 1 is formatted and processed as specified in {{Section 5.2 of RFC9528}}.
 
 ### Formatting of Message 2
 
-Message 2 is formatted as specified in {{Section 5.3.1 of RFC9528}}.
+Message 2 is formatted as specified in Section 5.3.1 of [RFC9528], except that CIPHERTEXT_2 is replaced by CIPHERTEXT_2A.
 
 ### Responder Composition of Message 2
 
