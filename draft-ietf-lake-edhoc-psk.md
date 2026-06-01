@@ -738,10 +738,10 @@ KEYSTREAM_2A (Raw Value) (1 byte)
 EC
 ~~~~~~~~~~~~
 
-The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2A:
+The Responder calculates CIPHERTEXT_2A as XOR between PLAINTEXT_2A and KEYSTREAM_2A:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_2B (CBOR Sequence) (1 byte)
+CIPHERTEXT_2A (CBOR Sequence) (1 byte)
 E9
 ~~~~~~~~~~~~
 
