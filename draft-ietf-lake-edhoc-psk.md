@@ -168,7 +168,7 @@ Implementations MUST ensure that CRED_I and CRED_R are distinct, for example by 
 
 ### Encoding and processing guidelines
 
-The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x applies both to CRED_I and to CRED_R.
+The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x apply both to CRED_I and to CRED_R.
 
 - If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. Deterministic encoding ensures consistent identification and avoids interoperability issues caused by non-deterministic CBOR variants.
 
