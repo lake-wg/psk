@@ -866,7 +866,7 @@ It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3A (CBOR Sequence) (12 bytes)
-13 DC 9A 03 21 EB DA B9 62 BF F0 35
+13 FC 9A 03 21 EB DA B9 62 BF F0 35
 ~~~~~~~~~~~~
 
 The Initiator computes message_3 as defined in {{icom-mes3}}:
