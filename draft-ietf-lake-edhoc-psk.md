@@ -1016,6 +1016,7 @@ RFC Editor: Please remove this appendix.
 
 The authors want to thank
 {{{Christian Amsüss}}},
+{{{Erik Anderlind}}},
 {{{Scott Fluhrer}}},
 {{{Jonathan Hoyland}}},
 {{{Charlie Jacomme}}},
