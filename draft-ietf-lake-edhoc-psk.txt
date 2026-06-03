@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 4 December 2026                               J. Preuß Mattsson
+Expires: 5 December 2026                               J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                             2 June 2026
+                                                             3 June 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 December 2026.
+   This Internet-Draft will expire on 5 December 2026.
 
 Copyright Notice
 
@@ -720,10 +720,10 @@ Table of Contents
    if the rPSK remains valid.  The server may, however, require a new
    initial handshake by refusing resumption.  It is further RECOMMENDED
    to use Network Access Identifiers (NAIs) with the same realm in the
-   identity response during both the full handshake and resumption.  For
-   example, the NAI @realm can safely be reused since it does not expose
-   information that links a user’s resumption attempt with the original
-   full handshake.
+   EAP identity response during both the full handshake and resumption.
+   For example, the NAI @realm can safely be reused since it does not
+   expose information that links a user’s resumption attempt with the
+   original full handshake.
 
    EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK
    [RFC4764], which lacks support for identity protection, cryptographic
