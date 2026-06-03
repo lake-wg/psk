@@ -1020,6 +1020,7 @@ The authors want to thank
 {{{Scott Fluhrer}}},
 {{{Jonathan Hoyland}}},
 {{{Charlie Jacomme}}},
+{{{Brian Sipos}}},
 and
 {{{Marco Tiloca}}}
 for reviewing and commenting on intermediate versions of the draft.
