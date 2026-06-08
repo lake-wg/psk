@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 5 December 2026                               J. Preuß Mattsson
+Expires: 10 December 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                             3 June 2026
+                                                             8 June 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2026.
+   This Internet-Draft will expire on 10 December 2026.
 
 Copyright Notice
 
@@ -249,6 +249,16 @@ Table of Contents
    can identify a pre-shared key.  For example:
 
    ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
+
+   Following the compact encoding rules defined in Section 3.5.3.2 of
+   [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter
+   can be encoded directly as the value of that parameter.  For example,
+   the identifier
+
+   ID_CRED_PSK = {4 : h'0010'}
+
+   is encoded as the CBOR byte string h'0010' rather than as the full
+   CBOR map A1 04 42 00 10, reducing message size.
 
    The purpose of ID_CRED_PSK is to facilitate retrieval of the correct
    PSK.  While ID_CRED_PSK use encoding and representation patterns from
