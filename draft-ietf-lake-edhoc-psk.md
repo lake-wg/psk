@@ -57,6 +57,7 @@ normative:
   RFC9668:
   I-D.ietf-emu-eap-edhoc:
   I-D.spm-lake-pqsuites:
+  I-D.ietf-lake-app-profiles:
   SP-800-56A:
     target: https://doi.org/10.6028/NIST.SP.800-56Ar3
     title: Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography
@@ -383,7 +384,7 @@ where:
 
   * kid_length defaults to 2 bytes.
 
-A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MUST generate a resumption key for the next resumption within the current "session series", provided that PSK resumption is supported.
+A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, SHOULD generate a resumption key for the next resumption within the current "session series", provided that both peers have indicated support for PSK resumption. How peers signal resumption support is out of scope for this document; see {{I-D.ietf-lake-app-profiles}} for mechanisms to signal resumption support via EAD items and application profiles.
 
 To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
@@ -392,6 +393,12 @@ To ensure both peers share the same resumption key, when a resumption session is
   * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
+
+
+When resumption PSKs are in use, implementations MAY retain the external PSK alongside the current resumption PSK to allow fallback
+if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. A Responder that has not received explicit indication
+that the Initiator has transitioned to resumption-only MUST be prepared to accept the external PSK as well. Implementations SHOULD
+define a maximum retention period or explicit revocation mechanism for the external PSK rather than retaining it indefinitely.
 
 ## Cipher Suite Requirements for Resumption
 
