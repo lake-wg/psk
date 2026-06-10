@@ -490,10 +490,11 @@ For use cases where application data is transmitted, it can be sent together wit
 
 ## Post-Compromise Security
 
-When EDHOC-PSK is used for session resumption, the protocol provides Post-Compromise Security (PCS) for the resumption key chain.  PCS means that even if a resumption PSK rPSK_i is temporarily compromised, security is restored in subsequent sessions. Specifically,
-the next resumption key rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral Diffie-Hellman    material (G_XY) from the session in which rPSK_i was used.  An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without    also compromising the ephemeral keys of the subsequent session.
+When EDHOC-PSK is used for session resumption, the protocol provides Post-Compromise Security (PCS) for the resumption key chain. PCS means that even if a resumption PSK rPSK_i is compromised, security is restored in subsequent sessions provided the attacker cannot compromise the ephemeral keys of every such session.
 
-This property applies only when resumption is used.  It does not apply when a long-lived external PSK is used directly for all sessions without resumption key rotation.  In that case, as noted in Section 9.2, compromise of the PSK enables impersonation in all future sessions.
+Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker who therefore loses any advantage once the next session completes with uncompromised ephemerals.
+
+This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in Section 9.2, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
 # IANA Considerations {#IANA-con}
 
