@@ -48,13 +48,13 @@ normative:
 
   RFC8392:
   RFC8610:
+  RFC8613:
   RFC8742:
   RFC8949:
   RFC9052:
   RFC9053:
   RFC9528:
   RFC9668:
-  RFC8613:
   I-D.ietf-emu-eap-edhoc:
   I-D.spm-lake-pqsuites:
   SP-800-56A:
@@ -88,13 +88,13 @@ This document specifies a Pre-Shared Key (PSK) authentication method for the Eph
 
 # Introduction
 
-This document defines a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) Lightweight Authenticated Key Exchange (LAKE) protocol {{RFC9528}}. The PSK method trades the complexity of symmetric-key distribution for improved computational efficiency. Although symmetric-key distribution is more complex than public-key credential distribution, PSK authentication requires less computation than the authentication methods defined in [RFC9528]. The PSK method retains mutual authentication, asymmetric ephemeral key exchange, and identity protection properties of {{RFC9528}}.
+This document defines a Pre-Shared Key (PSK) authentication method for the Ephemeral Diffie-Hellman Over COSE (EDHOC) Lightweight Authenticated Key Exchange (LAKE) protocol {{RFC9528}}. The PSK method trades the complexity of symmetric-key distribution for improved computational efficiency. Although symmetric-key distribution is more complex than public-key credential distribution, PSK authentication requires less computation than the authentication methods defined in [RFC9528]. The PSK method retains mutual authentication, ephemeral asymmetric key exchange, and identity protection properties of {{RFC9528}}.
 
 EDHOC with PSK authentication benefits use cases where two nodes share a Pre-Shared Key (PSK) provided out-of-band (external PSK). Examples include the Authenticated Key Management Architecture (AKMA) in mobile systems or the Peer and Authenticator in Extensible Authentication Protocol (EAP) systems. The PSK method enables the nodes to perform ephemeral key exchange, achieving Perfect Forward Secrecy (PFS). This ensures that even if the PSK is compromised, past communications remain secure against active attackers, while future communications are protected against passive attackers. Additionally, by leveraging the PSK for both authentication and key derivation, the method provides quantum-resistant key exchange and authentication even when used with ECDHE.
 
 Another important use case of PSK authentication in the EDHOC protocol is session resumption. This allows previously connected parties to quickly reestablish secure communication using pre-shared keys from a prior session, reducing the overhead associated with key exchange and asymmetric authentication. By using PSK authentication, EDHOC allows session keys to be refreshed with significantly lower computational overhead compared to public-key authentication. In this case, the resumption PSK is provisioned after the establishment of a previous EDHOC session by using EDHOC_Exporter. Thus, the external PSK may serve as a long-term credential, while the resumption PSK is a short-lived credential derived from a previous EDHOC session.
 
-{{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. {{key-der}} outlines the changes to key derivation compared to {{RFC9528}}. {{mes-for-pro}} details message formatting and processing, and {{psk-resumption}} describes the usage of PSK for resumption. {{EAP}} discusses the use of EDHOC-PSK with EAP-EDHOC and {{OSCORE}} defines the use of EDHOC-PSK with OSCORE. Security considerations are described in {{sec-con}}, and {{IANA-con}} outlines the IANA considerations.
+{{protocol}} provides an overview of the PSK method, including its message flow and associated credentials. {{key-der}} outlines the changes to key derivation compared to {{RFC9528}}. {{mes-for-pro}} details message formatting and processing, and {{psk-resumption}} describes the usage of PSK for resumption. {{EAP}} discusses the use of EDHOC-PSK with EAP-EDHOC and {{OSCORE}} defines the use of EDHOC-PSK with Object Security for Constrained RESTful Environments (OSCORE, {{RFC8613}}). Security considerations are described in {{sec-con}}, and {{IANA-con}} outlines the IANA considerations.
 
 # Conventions and Definitions
 
@@ -116,7 +116,6 @@ Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, EDHOC-PS
 
 The Initiator and Responder are assumed to share a PSK (either an external PSK or a resumption PSK) with high entropy that meets the following requirements:
 
-
 - Only the Initiator and the Responder have access to the PSK.
 - The Responder can retrieve the PSK, CRED_I, and CRED_R, using ID_CRED_PSK.
 
@@ -127,6 +126,14 @@ ID_CRED_PSK is a COSE header map containing header parameters that can identify 
 ~~~~~~~~~~~~
 ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
 ~~~~~~~~~~~~
+
+Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
+
+~~~~~~~~~~~~
+ID_CRED_PSK = {4 : h'0010'}
+~~~~~~~~~~~~
+
+is encoded as the CBOR byte string h'0010' rather than as the full CBOR map A1 04 42 00 10, reducing message size.
 
 The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.
 
@@ -168,7 +175,7 @@ Implementations MUST ensure that CRED_I and CRED_R are distinct, for example by 
 
 ### Encoding and processing guidelines
 
-The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x applies both to CRED_I and to CRED_R.
+The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x apply both to CRED_I and to CRED_R.
 
 - If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. Deterministic encoding ensures consistent identification and avoids interoperability issues caused by non-deterministic CBOR variants.
 
@@ -222,7 +229,7 @@ The pseudorandom keys (PRKs) used in the EDHOC-PSK authentication method are der
 PRK  = EDHOC_Extract( salt, IKM )
 ~~~~~~~~~~~~
 
-where `salt` and input keying material (`IKM`) are defined for each key. The definition of EDHOC_Extract depends on the EDHOC hash algorithm selected in the cipher suite, see {{Section 4.1.1 of RFC9528}}.
+where `salt` and input keying material (`IKM`) are defined for each key. The definition of EDHOC_Extract depends on the EDHOC hash algorithm of the selected cipher suite, see {{Section 4.1.1 of RFC9528}}.
 
 To maintain a uniform key schedule across all EDHOC authentication methods, the same pseudorandom key notation (PRK_2e, PRK_3e2m, and PRK_4e3m) is retained. The index notation is preserved for consistency with other EDHOC authentication variants, even though it does not fully reflect the functional role of the keys in this method; for example, no MACs are used in EDHOC-PSK.
 
@@ -271,7 +278,7 @@ Message 1 is formatted and processed as specified in {{Section 5.2 of RFC9528}}.
 
 ### Formatting of Message 2
 
-Message 2 is formatted as specified in {{Section 5.3.1 of RFC9528}}.
+Message 2 is formatted as specified in Section 5.3.1 of [RFC9528], except that CIPHERTEXT_2 is replaced by CIPHERTEXT_2A.
 
 ### Responder Composition of Message 2
 
@@ -320,7 +327,7 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}.
 
 The Initiator computes TH_4 as defined in {{key-der}}.
 
-There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provides implicit authentication of the Initiator.
+There is no need for MAC_3 or signature, since AEAD's built-in integrity and the use of PSK-based key derivation provide implicit authentication of the Initiator.
 
 ### Responder Processing of Message 3
 
@@ -334,7 +341,7 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.
 
-* Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK.
+* Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK, CRED_I, and CRED_R.
 
 * AEAD-decrypt CIPHERTEXT_3B using:
 
@@ -396,7 +403,7 @@ When using resumption PSKs:
 * Resumption PSKs MUST NOT be used for purposes other than EDHOC session resumption.
 * Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
 * Parties SHOULD prevent excessive reuse of the same resumption PSK.
-* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely destroyed (zeroized), compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
+* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
 
 # EDHOC-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
@@ -404,13 +411,15 @@ EDHOC with PSK authentication has several important use cases within the Extensi
 
 One use case is the resumption of a session established with the EAP method EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, regardless of the EDHOC-based authentication method originally used in that session. This is similar to the resumption mechanism in EAP-TLS 1.3 {{RFC9190}}. Resumption reduces the number of round trips and allows the EAP-EDHOC server to avoid database lookups that might be required during an initial handshake. If the server accepts resumption, the resumed session is considered authenticated and securely bound to the prior authentication or resumption.
 
-The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server may, however, require a new initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
+The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server may, however, require a new initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
 
 EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS {{RFC9190}}.
 
 # EDHOC-PSK and OSCORE {#OSCORE}
 
-Before sending message_3 the Initiator can derive PRK_out and create an OSCORE-protected request. The request payload MAY convey both an EDHOC message_3 and OSCORE-protected data combined together, as described in {{Section 3 of RFC9668}}. Note that with the use of OSCORE as in {{RFC9668}}, message_4 is not sent, which in EDHOC-PSK results in the Responder not being authenticated in EDHOC. In this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
+{{RFC9668}} describes an optimized use of EDHOC with OSCORE by combining EDHOC message_3 with the first OSCORE request. This procedure omits message_4, but key confirmation of the Responder can instead be provided by a subsequent OSCORE response to the Initiator.
+
+In EDHOC-PSK, authentication of the Responder is provided by message_4. Nonetheless, the combined delivery, described in {{Section 3 of RFC9668}}, can still be applied to EDHOC-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
 
 # Security Considerations {#sec-con}
 
@@ -428,7 +437,7 @@ The security of EDHOC-PSK depends on the confidentiality of the PSK. Unlike an a
 
 EDHOC-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from EDHOC.
 
-To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct.
+To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct. If identical credentials are used by both parties, an endpoint may incorrectly accept messages that originate from itself.
 
 EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
 
@@ -438,7 +447,9 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 ## Cryptographic strength
 
-Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the cipher suite. For current cipher suites (0-6 and 24-25), EDHOC-PSK provides a minimum of 64-bit security against online brute force attacks and a minimum of 128-bit security against offline brute force attacks. To break 64-bit security against online brute force, an attacker would on average have to send 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio technologies. A successful forgery of the AEAD authentication tag in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
+Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the cipher suite.
+
+For the currently defined cipher suites (0–6 and 24–25), EDHOC-PSK provides at least 128-bit security against offline brute-force attacks and at least 64-bit security against online forgery attacks. In practical terms, mounting a successful online forgery attack at this security level would require an adversary, on average, to transmit 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio environments. A successful forgery in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
 Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is the one negotiated in the EDHOC session in which the resumption PSK was established. If a PSK is combined with a different EDHOC hash function, the Responder MUST reject the ongoing EDHOC session.
 
@@ -464,9 +475,17 @@ NIST requires that an ephemeral private key be used in only one key-establishmen
 
 In other protocols, reuse of ephemeral keys, especially when combined with missing public key validation, has led to severe vulnerabilities, enabling attackers to recover “ephemeral” private keys and compromise both past and future sessions between two legitimate parties. Assuming breach and minimizing the impact of compromise are fundamental principles of zero-trust security.
 
-## Unified Approach and Recommendations
+## Message 4 and Mutual Authentication Requirements
 
-For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in {{RFC9528}}. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until successfully verifying message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
+For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in {{RFC9528}}. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until it has successfully verified message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
+
+## Post-Compromise Security
+
+When EDHOC-PSK is used for session resumption, the protocol provides Post-Compromise Security (PCS) for the resumption key chain. PCS means that even if a resumption PSK rPSK_i is compromised, security is restored in subsequent sessions provided the attacker cannot compromise the ephemeral keys of every such session.
+
+Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker who therefore loses any advantage once the next session completes with uncompromised ephemerals.
+
+This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in Section 9.2, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
 # IANA Considerations {#IANA-con}
 
@@ -718,17 +737,17 @@ PLAINTEXT_2A (CBOR Sequence) (1 byte)
 05
 ~~~~~~~~~~~~
 
-The Responder computes KEYSTREAM_2A as defined in {{Section 4.1.2 of RFC9528}}
+The Responder computes KEYSTREAM_2A as defined in {{key-der}}
 
 ~~~~~~~~~~~~
 KEYSTREAM_2A (Raw Value) (1 byte)
 EC
 ~~~~~~~~~~~~
 
-The Responder calculates CIPHERTEXT_2B as XOR between PLAINTEXT_2A and KEYSTREAM_2A:
+The Responder calculates CIPHERTEXT_2A as XOR between PLAINTEXT_2A and KEYSTREAM_2A:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_2B (CBOR Sequence) (1 byte)
+CIPHERTEXT_2A (CBOR Sequence) (1 byte)
 E9
 ~~~~~~~~~~~~
 
@@ -793,22 +812,22 @@ PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 It then computes CIPHERTEXT_3B as defined in {{icom-mes3}}. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:
 
 ~~~~~~~~~~~~
-ID_CRED_PSK (CBOR Data Item) (1 byte)
-10
+ID_CRED_PSK (CBOR Data Item) (2 bytes)
+00 10
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 CRED_I (Raw Value) (38 bytes)
 A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
-01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
-CF 54 63 25 DE A2 14
+01 04 02 42 00 10 20 50 50 93 0F F4 62 A7 7A 35
+40 CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 CRED_R (Raw Value) (38 bytes)
 A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
-01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
-CF 54 63 25 DE A2 14
+01 04 02 42 00 10 20 50 50 93 0F F4 62 A7 7A 35
+40 CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
@@ -833,35 +852,35 @@ It then computes CIPHERTEXT_3B:
 
 ~~~~~~~~~~~~
 CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-48 7F 34 49 6F 3F 69 C2 88
+48 B1 74 ED BA A0 64 73 82
 ~~~~~~~~~~~~
 
 The Initiator computes KEYSTREAM_3A as defined in {{key-der}}:
 
 ~~~~~~~~~~~~
-KEYSTREAM_3A (Raw Value) (10 bytes)
-03 E5 D1 57 1B BC 93 32 47 1B
+KEYSTREAM_3A (Raw Value) (12 bytes)
+51 FC 8A 4B 90 9F 37 03 C2 DB 83 B7
 ~~~~~~~~~~~~
 
 It then calculates PLAINTEXT_3A as stated in {{icom-mes3}}:
 
 ~~~~~~~~~~~~
-PLAINTEXT_3A (CBOR Sequence) (10 bytes)
-10 48 7F 34 49 6F 3F 69 C2 88
+PLAINTEXT_3A (CBOR Sequence) (12 bytes)
+42 00 10 48 B1 74 ED BA A0 64 73 82
 ~~~~~~~~~~~~
 
 It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
-13 AD AE 63 52 D3 AC 5B 85 93
+CIPHERTEXT_3A (CBOR Sequence) (12 bytes)
+13 FC 9A 03 21 EB DA B9 62 BF F0 35
 ~~~~~~~~~~~~
 
 The Initiator computes message_3 as defined in {{icom-mes3}}:
 
 ~~~~~~~~~~~~
-message_3 (CBOR Sequence) (11 bytes)
-4A 13 AD AE 63 52 D3 AC 5B 85 93
+message_3 (CBOR Sequence) (13 bytes)
+4C 13 FC 9A 03 21 EB DA B9 62 BF F0 35
 ~~~~~~~~~~~~
 
 The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
@@ -869,14 +888,14 @@ TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
 ~~~~~~~~~~~~
 TH_4 (Raw Value) (32 bytes)
-11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
-0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+BF 44 29 C1 9B C6 09 7C 40 6B 35 70 5A 28 5A 16
+D0 33 C0 FC B3 ED A6 55 2A 26 76 BB 52 13 C9 65
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 TH_4 (CBOR Data Item) (34 bytes)
-58 20 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD
-0E 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
+58 20 BF 44 29 C1 9B C6 09 7C 40 6B 35 70 5A 28 5A
+16 D0 33 C0 FC B3 ED A6 55 2A 26 76 BB 52 13 C9 65
 ~~~~~~~~~~~~
 
 ## message_4
@@ -897,19 +916,19 @@ The Responder computes K_4 and IV_4:
 
 ~~~~~~~~~~~~
 K_4 (Raw Value) (16 bytes)
-BC AB 1D F0 13 8D C0 5C 88 5F D3 71 E9 50 C6 7F
+21 8F 21 28 79 11 FB 2D 18 7F B1 AB DD BE 85 15
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 IV_4 (Raw Value) (13 bytes)
-41 11 34 D0 E0 C5 08 D9 5D A7 C3 AC DC
+EA E7 BE 0A 14 72 29 1A 5A E3 40 6F 74
 ~~~~~~~~~~~~
 
 The Responder computes message_4:
 
 ~~~~~~~~~~~~
 message_4 (CBOR Sequence) (9 bytes)
-48 8A DD 93 DB 40 48 59 F9
+48 80 F1 4E B9 A9 0F 74 FF
 ~~~~~~~~~~~~
 
 ## PRK_out and PRK_exporter
@@ -918,28 +937,31 @@ After the exchange, the following PRK_out and PRK_exporter are derived by both e
 
 ~~~~~~~~~~~~
 PRK_out (Raw Value) (32 bytes)
-BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
-49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
+60 8F 6B C1 88 AF EF 95 EB 63 4C 8B 32 3A C2 3A
+36 1C BD A8 17 D1 C1 A6 89 C7 23 CD A3 B5 92 B9
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 PRK_exporter (Raw Value) (32 bytes)
-2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
-E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
+4E FF 8F 02 C2 4F 1E 42 BC 15 FF 1D C6 DC 4F 27
+A8 8E 7D 17 9E 51 6B D8 13 F8 EC 4F C6 91 47 1D
 ~~~~~~~~~~~~
 
 ## rPSK and rKID
 
 Both peers generate a resumption key for use in the next resumption attempt, as explained in {{psk-resumption}}:
 
+NOTE: Assuming TBD2 = 2 and TBD3 = 3, to be confirmed by IANA.
+RFC Editor: Remove this note.
+
 ~~~~~~~~~~~~
 rPSK (Raw Value) (16 bytes)
-5B 0B C7 63 F6 EA D1 7E 0E EA ED FD D3 36 A5 EE
+42 7C 23 92 EA C9 55 F5 D8 56 2A 1B 34 18 E5 75
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
-rKID (Raw Value) (1 byte)
-55
+rKID (Raw Value) (2 bytes)
+88 D8
 ~~~~~~~~~~~~
 
 # Change Log
@@ -949,9 +971,12 @@ RFC Editor: Please remove this appendix.
 * From -07 to -08
 
   * Added clarification after formal analysis.
-  * Added comparisions of identity protection with other protocols
+  * Added comparisons of identity protection with other protocols
   * Added requirements (single KDF) and considerations (context) based on TLS 1.3
   * Updated considerations regarding OSCORE and RFC 9668
+  * Added considerations for protection of pre-shared keys
+  * Added considerations for key chains / key ratchets
+  * Added text on explaining the "by reference" benefits of ID_CRED_PSK
   * Editorial changes
 
 * From -06 to -07
@@ -998,9 +1023,11 @@ RFC Editor: Please remove this appendix.
 
 The authors want to thank
 {{{Christian Amsüss}}},
+{{{Erik Anderlind}}},
 {{{Scott Fluhrer}}},
-{{{Jonathan Hoyland}},
+{{{Jonathan Hoyland}}},
 {{{Charlie Jacomme}}},
+{{{Brian Sipos}}},
 and
 {{{Marco Tiloca}}}
 for reviewing and commenting on intermediate versions of the draft.
@@ -1009,4 +1036,4 @@ This work has been partly funded by PID2023-148104OB-C43 funded by MICIU/AEI/10.
 
 This work was supported partially by Vinnova - the Swedish Agency for Innovation Systems - through the EUREKA CELTIC-NEXT project CYPRESS.
 
-This work has been partially supported by the French National Research Agency under the France 2030 label (NF-HiSec ANR-22-PEFT-0009)
+This work has been partially supported by the French National Research Agency under the France 2030 label (NF-HiSec ANR-22-PEFT-0009).
