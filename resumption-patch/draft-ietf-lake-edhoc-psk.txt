@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 10 December 2026                              J. Preuß Mattsson
+Expires: 12 December 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                             8 June 2026
+                                                            10 June 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2026.
+   This Internet-Draft will expire on 12 December 2026.
 
 Copyright Notice
 
@@ -102,9 +102,8 @@ Table of Contents
        5.3.3.  Responder Processing of Message 3
      5.4.  Message 4
    6.  PSK usage for Session Resumption
-     6.1.  Cipher Suite Requirements for Resumption
-     6.2.  Privacy Considerations for Resumption
-     6.3.  Security Considerations for Resumption
+     6.1.  Privacy Considerations for Resumption
+     6.2.  Security Considerations for Resumption
    7.  EDHOC-PSK and Extensible Authentication Protocol (EAP)
    8.  EDHOC-PSK and OSCORE
    9.  Security Considerations
@@ -677,22 +676,7 @@ Table of Contents
    define a maximum retention period or explicit revocation mechanism
    for the external PSK rather than retaining it indefinitely.
 
-6.1.  Cipher Suite Requirements for Resumption
-
-   When using a resumption PSK derived from a previous EDHOC exchange:
-
-   1.  The resumption PSK MUST only be used with the same cipher suite
-       from which it was derived, or with a cipher suite that provides
-       stronger security guarantees.
-
-   2.  Implementations MUST maintain a mapping between each resumption
-       PSK and its originating cipher suite to enforce this requirement.
-
-   3.  If a resumption PSK is offered with a cipher suite that provides
-       weaker security, the Responder MUST reject the ongoing EDHOC
-       session.
-
-6.2.  Privacy Considerations for Resumption
+6.1.  Privacy Considerations for Resumption
 
    When using resumption PSKs:
 
@@ -704,7 +688,7 @@ Table of Contents
       goals of EDHOC-PSK, which are to provide identity protection
       against passive attackers, but not against active attackers.
 
-6.3.  Security Considerations for Resumption
+6.2.  Security Considerations for Resumption
 
    *  Resumption PSKs MUST NOT be used for purposes other than EDHOC
       session resumption.
