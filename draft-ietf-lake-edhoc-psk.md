@@ -396,10 +396,7 @@ To ensure both peers share the same resumption key, when a resumption session is
 
 
 When resumption PSKs are in use, implementations MAY retain the external PSK alongside the current resumption PSK to allow fallback
-if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. A Responder that has not received explicit indication
-that the Initiator has transitioned to resumption-only MUST be prepared to accept the external PSK as well. Implementations SHOULD
-define a maximum retention period or explicit revocation mechanism for the external PSK rather than retaining it indefinitely.
-
+if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). See {{I-D.ietf-lake-app-profiles}} for how application profiles can specify key lifetime and retention policy.
 
 ## Privacy Considerations for Resumption
 
