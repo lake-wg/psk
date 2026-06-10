@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 10 December 2026                              J. Preuß Mattsson
+Expires: 12 December 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                             8 June 2026
+                                                            10 June 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2026.
+   This Internet-Draft will expire on 12 December 2026.
 
 Copyright Notice
 
@@ -118,6 +118,7 @@ Table of Contents
      9.8.  Confidentiality
      9.9.  Independence of Session Keys
      9.10. Message 4 and Mutual Authentication Requirements
+     9.11. Post-Compromise Security
    10. IANA Considerations
      10.1.  EDHOC Method Type Registry
      10.2.  EDHOC Exporter Label Registry
@@ -922,6 +923,28 @@ Table of Contents
    in EDHOC-PSK.  While this ordering affects privacy properties in the
    asymmetric methods of [RFC9528], it has no significant impact in
    EDHOC-PSK.
+
+9.11.  Post-Compromise Security
+
+   When EDHOC-PSK is used for session resumption, the protocol provides
+   Post-Compromise Security (PCS) for the resumption key chain.  PCS
+   means that even if a resumption PSK rPSK_i is compromised, security
+   is restored in subsequent sessions provided the attacker cannot
+   compromise the ephemeral keys of every such session.
+
+   Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out,
+   which incorporates fresh ephemeral keying material (G_XY).  An
+   attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without
+   also compromising the ephemeral keys.  A passive attacker who
+   therefore loses any advantage once the next session completes with
+   uncompromised ephemerals.
+
+   This property applies only when resumption is used and new resumption
+   keys are derived for each session.  It does not apply when a long-
+   lived external PSK is reused directly across sessions without key
+   rotation.  In that case, as noted in Section 9.2, compromise of the
+   PSK enables an attacker to compromise the confidentiality and
+   authentication of future sessions until the PSK is replaced.
 
 10.  IANA Considerations
 
