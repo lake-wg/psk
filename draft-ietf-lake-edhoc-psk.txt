@@ -818,15 +818,16 @@ Table of Contents
    the security of the forged packet.
 
    Similar to TLS 1.3 [RFC8446], EDHOC-PSK takes a conservative approach
-   to PSK usage by binding each PSK to a specific KDF through the
-   associated EDHOC hash algorithm.  A PSK MUST only be used with cipher
-   suites that employ the same EDHOC hash algorithm.  For externally
-   provisioned PSKs, the associated EDHOC hash algorithm MUST be
-   provisioned together with the PSK.  For resumption PSKs, the
-   associated EDHOC hash algorithm is the one negotiated in the EDHOC
-   session in which the resumption PSK was established.  If a PSK is
-   combined with a different EDHOC hash function, the Responder MUST
-   reject the ongoing EDHOC session.
+   to PSK usage by binding each PSK to a specific KDF through an
+   associated hash algorithm, which coincides with the EDHOC hash
+   algorithn of the selected cipher suite, see Section 3.6 of [RFC9528].
+   A PSK MUST only be used with cipher suites that employ the same EDHOC
+   hash algorithm.  For externally provisioned PSKs, the EDHOC hash
+   algorithm MUST be provisioned together with the PSK.  For resumption
+   PSKs, the EDHOC hash algorithm is that of the cipher suite selected
+   in the EDHOC session in which the resumption PSK was established.  If
+   a PSK is combined with a different EDHOC hash algorithm, the
+   Responder MUST reject the ongoing EDHOC session.
 
 9.6.  Downgrade Protection
 
