@@ -1836,7 +1836,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.2.1">kid_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">SHOULD</span> generate a resumption key for the next resumption within the current "session series", provided that both peers have indicated support for PSK resumption. How peers signal resumption support is out of scope for this document; see <span>[<a href="#I-D.ietf-lake-app-profiles" class="cite xref">I-D.ietf-lake-app-profiles</a>]</span> for mechanisms to signal resumption support via EAD items and application profiles.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">MAY</span> generate a resumption key for the next resumption within the current "session series", provided that both peers have indicated support for PSK resumption. Whether resumption keys are generated is determined by the application profile. See <span>[<a href="#I-D.ietf-lake-app-profiles" class="cite xref">I-D.ietf-lake-app-profiles</a>]</span> for how application profiles can specify resumption behavior.<a href="#section-6-5" class="pilcrow">¶</a></p>
 <p id="section-6-6">To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:<a href="#section-6-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-7.1">
