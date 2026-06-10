@@ -400,13 +400,6 @@ if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK.
 that the Initiator has transitioned to resumption-only MUST be prepared to accept the external PSK as well. Implementations SHOULD
 define a maximum retention period or explicit revocation mechanism for the external PSK rather than retaining it indefinitely.
 
-## Cipher Suite Requirements for Resumption
-
-When using a resumption PSK derived from a previous EDHOC exchange:
-
-  1. The resumption PSK MUST only be used with the same cipher suite from which it was derived, or with a cipher suite that provides stronger security guarantees.
-  2. Implementations MUST maintain a mapping between each resumption PSK and its originating cipher suite to enforce this requirement.
-  3. If a resumption PSK is offered with a cipher suite that provides weaker security, the Responder MUST reject the ongoing EDHOC session.
 
 ## Privacy Considerations for Resumption
 
