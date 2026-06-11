@@ -384,7 +384,7 @@ where:
 
   * kid_length defaults to 2 bytes.
 
-A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MAY generate a resumption key for the next resumption within the current "session series", provided that both peers have indicated support for PSK resumption. Whether resumption keys are generated is determined by the application profile. See {{I-D.ietf-lake-app-profiles}} for how application profiles can specify resumption behavior.
+A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MAY generate a resumption key. Whether resumption keys are generated is determined by the application profile, see {{Section 3.9 of RFC9528}}. Support for resumption MAY be indicated using means defined in {{I-D.ietf-lake-app-profiles}.
 
 To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
