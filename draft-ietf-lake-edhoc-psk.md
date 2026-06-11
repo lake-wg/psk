@@ -122,19 +122,13 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 
 ### ID_CRED_PSK
 
-ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. For example:
+ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
-ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
+ID_CRED_PSK = { 4 : h'0010' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
-
-~~~~~~~~~~~~
-ID_CRED_PSK = {4 : h'0010'}
-~~~~~~~~~~~~
-
-is encoded as the CBOR byte string h'0010' rather than as the full CBOR map A1 04 42 00 10, reducing message size.
+is encoded as the CBOR byte string h'0010' rather than as the full CBOR map, reducing message size.
 
 The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.
 
@@ -372,7 +366,7 @@ Compared to {{RFC9528}}, the fourth message not only provides key confirmation b
 This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in {{Section 4.2 of RFC9528}}, is used to derive the resumption parameters rPSK and rKID:
 
 ~~~~~~~~~~~~
-rPSK         = EDHOC_Exporter( TBD2, h'', resumption_psk_length )
+rPSK         = EDHOC_Exporter( TBD2, h'', hash_length )
 rKID         = EDHOC_Exporter( TBD3, h'', kid_length )
 rID_CRED_PSK = { 4 : rKID }
 ~~~~~~~~~~~~
@@ -380,8 +374,7 @@ rID_CRED_PSK = { 4 : rKID }
 
 where:
 
-  * resumption_psk_length defaults to the key_length, i.e., the length of the encryption key of the EDHOC AEAD algorithm in the selected cipher suite of the session where the EDHOC_Exporter is invoked.
-
+  * hash_length is the output size of the EDHOC hash algorithm associated with the PSK.
   * kid_length defaults to 2 bytes.
 
 A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, MAY generate a resumption key. Whether resumption keys are generated is determined by the application profile, see {{Section 3.9 of RFC9528}}. Support for resumption MAY be indicated using means defined in {{I-D.ietf-lake-app-profiles}.
@@ -456,7 +449,8 @@ Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be
 
 For the currently defined cipher suites (0–6 and 24–25), EDHOC-PSK provides at least 128-bit security against offline brute-force attacks and at least 64-bit security against online forgery attacks. In practical terms, mounting a successful online forgery attack at this security level would require an adversary, on average, to transmit 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio environments. A successful forgery in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
-Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through the associated EDHOC hash algorithm. A PSK MUST only be used with cipher suites that employ the same EDHOC hash algorithm. For externally provisioned PSKs, the associated EDHOC hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the associated EDHOC hash algorithm is that of the selected cipher suite in the EDHOC session in which the resumption PSK was established.
+Similar to TLS 1.3 {{?RFC8446}}, EDHOC-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through an associated hash algorithm. A PSK MUST only be used with cipher suites that employ the same hash algorithm. For externally provisioned PSKs, the hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the hash algorithm is the EDHOC hash algorithm of the cipher suite selected in the EDHOC session in which the resumption PSK was established, see {{Section 3.6 of RFC9528}}. If a PSK is combined with a different hash algorithm, the Responder MUST reject the ongoing EDHOC session.
+
 
 ## Downgrade Protection
 
@@ -483,6 +477,14 @@ In other protocols, reuse of ephemeral keys, especially when combined with missi
 ## Message 4 and Mutual Authentication Requirements
 
 For use cases where application data is transmitted, it can be sent together with message_3, maintaining efficiency. In applications such as EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, where no application data is exchanged between Initiator and Responder, message_4 is mandatory. In such cases, EDHOC-PSK does not increase the total number of messages compared to the methods defined in {{RFC9528}}. Other implementations may replace message_4 with a protected application message. In this case, the following requirement applies: The Initiator SHALL NOT persistently store PRK_out or derived application keys until it has successfully verified message_4 or a message protected with an exported application key (e.g., an OSCORE message). This ensures that key material is stored only after its authenticity is confirmed. Finally, the order of authentication (i.e., whether the Initiator or the Responder authenticates first) is not relevant in EDHOC-PSK. While this ordering affects privacy properties in the asymmetric methods of {{RFC9528}}, it has no significant impact in EDHOC-PSK.
+
+## Post-Compromise Security
+
+When EDHOC-PSK is used for session resumption, the protocol provides Post-Compromise Security (PCS) for the resumption key chain. PCS means that even if a resumption PSK rPSK_i is compromised, security is restored in subsequent sessions provided the attacker cannot compromise the ephemeral keys of every such session.
+
+Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker who therefore loses any advantage once the next session completes with uncompromised ephemerals.
+
+This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in Section 9.2, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
 # IANA Considerations {#IANA-con}
 
