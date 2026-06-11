@@ -121,19 +121,13 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 
 ### ID_CRED_PSK
 
-ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. For example:
+ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
-ID_CRED_PSK = {4 : h'0f' }; 4 = 'kid'
+ID_CRED_PSK = { 4 : h'0010' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
-
-~~~~~~~~~~~~
-ID_CRED_PSK = {4 : h'0010'}
-~~~~~~~~~~~~
-
-is encoded as the CBOR byte string h'0010' rather than as the full CBOR map A1 04 42 00 10, reducing message size.
+is encoded as the CBOR byte string h'0010' rather than as the full CBOR map, reducing message size.
 
 The purpose of ID_CRED_PSK is to facilitate retrieval of the correct PSK. While ID_CRED_PSK use encoding and representation patterns from {{RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.
 
