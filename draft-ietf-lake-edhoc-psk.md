@@ -394,9 +394,8 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
 
-
 When resumption PSKs are in use, implementations MAY retain the external PSK alongside the current resumption PSK to allow fallback
-if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). See {{I-D.ietf-lake-app-profiles}} for how application profiles can specify key lifetime and retention policy.
+if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.
 
 ## Privacy Considerations for Resumption
 
