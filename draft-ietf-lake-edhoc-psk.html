@@ -1833,7 +1833,7 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-4.2.1">kid_length defaults to 2 bytes.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">MUST</span> generate a resumption key for the next resumption within the current "session series", provided that PSK resumption is supported.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-5">A peer that has successfully completed an EDHOC session, regardless of the authentication method used or whether the session was a PSK resumption, <span class="bcp14">MAY</span> generate a resumption key. Whether resumption keys are generated is determined by the application profile, see <span><a href="https://rfc-editor.org/rfc/rfc9528#section-3.9" class="relref">Section 3.9</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. Support for resumption <span class="bcp14">MAY</span> be indicated using means defined in <span>[<a href="#I-D.ietf-lake-app-profiles" class="cite xref">I-D.ietf-lake-app-profiles</a>]</span>.<a href="#section-6-5" class="pilcrow">¶</a></p>
 <p id="section-6-6">To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:<a href="#section-6-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-7.1">
@@ -1846,6 +1846,8 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-7.3.1">The Responder <span class="bcp14">MAY</span> delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).<a href="#section-6-7.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
+<p id="section-6-8">When resumption PSKs are in use, implementations <span class="bcp14">MAY</span> retain the external PSK alongside the current resumption PSK to allow fallback
+if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.<a href="#section-6-8" class="pilcrow">¶</a></p>
 <div id="privacy-considerations-for-resumption">
 <section id="section-6.1">
         <h3 id="name-privacy-considerations-for-">
@@ -2101,6 +2103,10 @@ RFC Editor: Remove this note.<a href="#section-10.2-3" class="pilcrow">¶</a></p
 <dt id="I-D.ietf-emu-eap-edhoc">[I-D.ietf-emu-eap-edhoc]</dt>
         <dd>
 <span class="refAuthor">Garcia-Carrillo, D.</span>, <span class="refAuthor">Marin-Lopez, R.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Lopez-Gomez</span>, <span class="refTitle">"Using the Extensible Authentication Protocol (EAP) with Ephemeral Diffie-Hellman over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-emu-eap-edhoc-10</span>, <time datetime="2026-05-27" class="refDate">27 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-10">https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-edhoc-10</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-lake-app-profiles">[I-D.ietf-lake-app-profiles]</dt>
+        <dd>
+<span class="refAuthor">Tiloca, M.</span> and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"Coordinating the Use of Application Profiles for Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-app-profiles-04</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-app-profiles-04">https://datatracker.ietf.org/doc/html/draft-ietf-lake-app-profiles-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.spm-lake-pqsuites">[I-D.spm-lake-pqsuites]</dt>
         <dd>
