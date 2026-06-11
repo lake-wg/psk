@@ -1850,7 +1850,7 @@ rID_CRED_PSK = { 4 : rKID }
 </li>
       </ul>
 <p id="section-6-8">When resumption PSKs are in use, implementations <span class="bcp14">MAY</span> retain the external PSK alongside the current resumption PSK to allow fallback
-if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). See <span>[<a href="#I-D.ietf-lake-app-profiles" class="cite xref">I-D.ietf-lake-app-profiles</a>]</span> for how application profiles can specify key lifetime and retention policy.<a href="#section-6-8" class="pilcrow">¶</a></p>
+if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.<a href="#section-6-8" class="pilcrow">¶</a></p>
 <div id="privacy-considerations-for-resumption">
 <section id="section-6.1">
         <h3 id="name-privacy-considerations-for-">
