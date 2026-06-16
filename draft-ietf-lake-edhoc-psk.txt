@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 13 December 2026                              J. Preuß Mattsson
+Expires: 18 December 2026                              J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                            11 June 2026
+                                                            16 June 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 December 2026.
+   This Internet-Draft will expire on 18 December 2026.
 
 Copyright Notice
 
@@ -218,12 +218,12 @@ Table of Contents
 
    The PSK method uses a “by reference” approach for credential
    representation.  ID_CRED_PSK can be kept minimal, enabling a very
-   compact on-the-wire encoding.  In contrast, ID_CRED_I and ID_CRED_R
-   may convey arbitrary identity and application-specific context.  This
-   separation allows EDHOC-PSK to minimize overhead for PSK
-   identification while preserving flexibility in both identity and
-   contextual information, as well as the security properties associated
-   with their use.
+   compact on-the-wire encoding.  In contrast, [RFC9528] defines that
+   ID_CRED_I and ID_CRED_R may convey arbitrary identity and
+   application-specific context.  This separation allows EDHOC-PSK to
+   minimize overhead for PSK identification while preserving flexibility
+   in both identity and contextual information, as well as the security
+   properties associated with their use.
 
    Like the Internet Key Exchange Protocol Version 2 (IKEv2) [RFC7296],
    EDHOC-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity
@@ -662,10 +662,13 @@ Table of Contents
       derived the next resumption key, rPSK_(i+1).
 
    When resumption PSKs are in use, implementations MAY retain the
-   external PSK alongside the current resumption PSK to allow fallback
-   if resumption fails.  The Initiator selects which PSK to present via
-   ID_CRED_PSK.  How long the external PSK is retained is determined by
-   the application profile or by the expiration time of the credential
+   credentials used for the original non-resumption authentication
+   (e.g., the external PSK, static DH keys, or certificates) alongside
+   the current resumption PSK to allow fallback if resumption fails.  If
+   fallback authentication uses an external PSK, the Initiator selects
+   which PSK to present via ID_CRED_PSK.  How long the original
+   authentication credentials are retained is determined by the
+   application profile or by the expiration time of the credential
    (e.g., the exp claim in a CWT).  Key lifetime and retention policy
    are determined by the application profile.
 
@@ -808,7 +811,8 @@ Table of Contents
    Each external PSK MUST be derived from at least 128 bits of entropy,
    and MUST be at least 128 bits long.  Deriving a shared secret from a
    password or other low-entropy sources is not secure.  The
-   cryptographic strength of EDHOC-PSK depends on the cipher suite.
+   cryptographic strength of EDHOC-PSK depends on the selected cipher
+   suite.
 
    For the currently defined cipher suites (0–6 and 24–25), EDHOC-PSK
    provides at least 128-bit security against offline brute-force
@@ -925,8 +929,8 @@ Table of Contents
    Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out,
    which incorporates fresh ephemeral keying material (G_XY).  An
    attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without
-   also compromising the ephemeral keys.  A passive attacker who
-   therefore loses any advantage once the next session completes with
+   also compromising the ephemeral keys.  A passive attacker therefore
+   loses any advantage once the next session completes with
    uncompromised ephemerals.
 
    This property applies only when resumption is used and new resumption
@@ -985,9 +989,9 @@ Table of Contents
               Mattsson, J. P., and F. Lopez-Gomez, "Using the Extensible
               Authentication Protocol (EAP) with Ephemeral Diffie-
               Hellman over COSE (EDHOC)", Work in Progress, Internet-
-              Draft, draft-ietf-emu-eap-edhoc-10, 27 May 2026,
+              Draft, draft-ietf-emu-eap-edhoc-11, 11 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-
-              edhoc-10>.
+              edhoc-11>.
 
    [I-D.ietf-lake-app-profiles]
               Tiloca, M. and R. Höglund, "Coordinating the Use of
