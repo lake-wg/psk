@@ -109,7 +109,7 @@ This document specifies a new EDHOC authentication method (see {{Section 3.2 of 
 
 Authentication is based on a PSK shared by the Initiator and the Responder. As in the methods defined in {{RFC9528}}, CRED_I and CRED_R are authentication credentials containing identifying information for the Initiator and Responder, respectively. However, unlike those methods, EDHOC-PSK uses a single authentication credential identifier, ID_CRED_PSK, which the Responder uses to retrieve the PSK and the associated authentication credentials.
 
-The PSK method uses a “by reference” approach for credential representation. ID_CRED_PSK can be kept minimal, enabling a very compact on-the-wire encoding. In contrast, ID_CRED_I and ID_CRED_R may convey arbitrary identity and application-specific context. This separation allows EDHOC-PSK to minimize overhead for PSK identification while preserving flexibility in both identity and contextual information, as well as the security properties associated with their use.
+The PSK method uses a “by reference” approach for credential representation. ID_CRED_PSK can be kept minimal, enabling a very compact on-the-wire encoding. In contrast, {{RFC9528}} defines that ID_CRED_I and ID_CRED_R may convey arbitrary identity and application-specific context. This separation allows EDHOC-PSK to minimize overhead for PSK identification while preserving flexibility in both identity and contextual information, as well as the security properties associated with their use.
 
 Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, EDHOC-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity protection against passive attackers. In contrast, (D)TLS 1.3 {{?RFC8446}} {{?RFC9147}} transmits the PSK identifier in cleartext and therefore does not provide identity protection for PSK-based authentication.
 
@@ -387,8 +387,7 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1).
 
-When resumption PSKs are in use, implementations MAY retain the external PSK alongside the current resumption PSK to allow fallback
-if resumption fails. The Initiator selects which PSK to present via ID_CRED_PSK. How long the external PSK is retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.
+When resumption PSKs are in use, implementations MAY retain the credentials used for the original non-resumption authentication (e.g., the external PSK, static DH keys, or certificates) alongside the current resumption PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to present via ID_CRED_PSK. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.
 
 ## Privacy Considerations for Resumption
 
@@ -445,7 +444,7 @@ As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of Extern
 
 ## Cryptographic strength
 
-Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the cipher suite.
+Each external PSK MUST be derived from at least 128 bits of entropy, and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the selected cipher suite.
 
 For the currently defined cipher suites (0–6 and 24–25), EDHOC-PSK provides at least 128-bit security against offline brute-force attacks and at least 64-bit security against online forgery attacks. In practical terms, mounting a successful online forgery attack at this security level would require an adversary, on average, to transmit 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio environments. A successful forgery in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
@@ -482,7 +481,7 @@ For use cases where application data is transmitted, it can be sent together wit
 
 When EDHOC-PSK is used for session resumption, the protocol provides Post-Compromise Security (PCS) for the resumption key chain. PCS means that even if a resumption PSK rPSK_i is compromised, security is restored in subsequent sessions provided the attacker cannot compromise the ephemeral keys of every such session.
 
-Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker who therefore loses any advantage once the next session completes with uncompromised ephemerals.
+Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker therefore loses any advantage once the next session completes with uncompromised ephemerals.
 
 This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in Section 9.2, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
