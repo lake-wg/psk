@@ -55,6 +55,7 @@ normative:
   RFC9053:
   RFC9528:
   RFC9668:
+  RFC8152:
   I-D.ietf-emu-eap-edhoc:
   SP-800-56A:
     target: https://doi.org/10.6028/NIST.SP.800-56Ar3
@@ -122,7 +123,7 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 
 ### ID_CRED_PSK
 
-ID_CRED_PSK is a COSE header map containing header parameters that can identify a pre-shared key. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
+ID_CRED_PSK is a key identifier {{Section 3.1 of RFC8152}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for EDHOC processing. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
 ID_CRED_PSK = { 4 : h'0010' }; 4 = 'kid'
@@ -130,9 +131,9 @@ ID_CRED_PSK = { 4 : h'0010' }; 4 = 'kid'
 
 is encoded as the CBOR byte string h'0010' rather than as the full CBOR map, reducing message size.
 
-The purpose of ID_CRED_PSK is to facilitate the retrieval of the correct PSK. While ID_CRED_PSK uses encoding and representation patterns from {{Section 3.5.3.2 of RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. The same PSK can be identified by different ID_CRED_PSK values in different sessions, in particular when initiated by the other party.
+The purpose of ID_CRED_PSK is to facilitate retrieval of the PSK and associated information required for EDHOC processing. While ID_CRED_PSK uses encoding and representation patterns from {{Section 3.5.3.2 of RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. A given ID_CRED_PSK value MAY correspond to more than one candidate PSK and associated information. In that case, all candidates associated with the value may need to be checked.
 
-It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically identifies the corresponding PSK. Uniqueness avoids ambiguity that could require the recipient to try multiple keys, while stochasticity reduces the risk of identifier collisions and supports stateless processing. These properties align with the requirements for rKID in session resumption (see {{psk-resumption}}).
+It is RECOMMENDED that ID_CRED_PSK uniquely or stochastically identifies the corresponding PSK context. Uniqueness avoids ambiguity that could require the recipient to try multiple candidate PSK and associated information, while stochasticity reduces the risk of identifier collisions and supports stateless processing. These properties align with the requirements for rKID in session resumption (see {{psk-resumption}}).
 
 ### CRED_I and CRED_R
 
@@ -175,8 +176,6 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 - If CRED_x is CBOR-encoded, it SHOULD use deterministic encoding as specified in {{Sections 4.2.1 and 4.2.2. of RFC8949}}. Deterministic encoding ensures consistent identification and avoids interoperability issues caused by non-deterministic CBOR variants.
 
 - If CRED_x is provisioned out-of-band and transported by value, it SHOULD be used as received without re-encoding. Re-encoding can cause mismatches when comparing identifiers such as hash values or 'kid' references.
-
-- ID_CRED_PSK SHOULD uniquely identify the corresponding PSK to avoid ambiguity. When ID_CRED_PSK contains a key identifier, care must be taken to ensure that 'kid' is unique for the PSK.
 
 - When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). These optimizations MUST NOT be applied in COSE header parameters or in other contexts where the full map structure is required. For example:
   - { 4 : h'0f' } is encoded as 0xa104410f, instead of 0x410f (CBOR encoding of the CBOR byte string h'0f')
@@ -336,6 +335,8 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK, CRED_I, and CRED_R.
 
+* Select first candidate.
+
 * Derive K_3 and IV_3 as defined in {{key-der}}.
 
 * AEAD-decrypt CIPHERTEXT_3B using:
@@ -345,7 +346,7 @@ Upon receiving message_3, the Responder proceeds as follows:
   - protected = h''
   - EDHOC AEAD algorithm of the selected cipher suite
 
-If AEAD verification fails, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.
+If AEAD verification fails, retry with a new candidate. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.
 
 Finally, the Responder computes TH_4 as defined in {{key-der}}.
 
@@ -387,7 +388,7 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Responder can be certain that the Initiator is able to derive the next resumption key, rPSK_(i+1), if the Inititator wants to.
 
-When resumption PSKs are in use, implementations MAY retain the credentials used for the original non-resumption authentication (e.g., the external PSK, static DH keys, or certificates) alongside the current resumption PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to present via ID_CRED_PSK. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT). Key lifetime and retention policy are determined by the application profile.
+When resumption PSKs are in use, implementations MUST retain the ID_CRED_I, ID_CRED_R and EDHOC hash algorithm used for the original non-resumption authentication (e.g., the static DH public keys, or certificates) and associate them with the current resumption PSK. Implementations MAY retain the external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to present via ID_CRED_PSK.  If a credential associated with a resumption key expires, implementations SHOULD retry either with external PSK or a different METHOD. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.
 
 ## Privacy Considerations for Resumption
 
@@ -410,7 +411,7 @@ One use case is the resumption of a session established with the EAP method EAP-
 
 The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server may, however, require a new initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
 
-EAP-EDHOC-PSK also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS {{RFC9190}}.
+EAP-EDHOC using PSK authentication also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS {{RFC9190}}.
 
 # EDHOC-PSK and OSCORE {#OSCORE}
 
