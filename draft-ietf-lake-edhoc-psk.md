@@ -126,7 +126,7 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 ID_CRED_PSK is a key identifier {{Section 3.1 of RFC8152}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for EDHOC processing. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
-ID_CRED_PSK = { 4 : h'0010' }; 4 = 'kid'
+ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
 is encoded as the CBOR byte string h'0010' rather than as the full CBOR map, reducing message size.
@@ -147,7 +147,7 @@ When using an external PSK, a common representation of CRED_I and CRED_R is a CW
   8 : {                                         /cnf/
     1 : {                                       /COSE_Key/
        1 : 4,                                   /kty/
-       2 : h'0010',                             /kid/
+       2 : h'10',                               /kid/
     }
   }
 }
@@ -159,7 +159,7 @@ When using an external PSK, a common representation of CRED_I and CRED_R is a CW
   8 : {                                         /cnf/
     1 : {                                       /COSE_Key/
        1 : 4,                                   /kty/
-       2 : h'0010',                             /kid/
+       2 : h'10',                               /kid/
     }
   }
 }
@@ -810,22 +810,22 @@ PLAINTEXT_3B (CBOR Sequence) (0 bytes)
 It then computes CIPHERTEXT_3B as defined in {{icom-mes3}}. It uses ID_CRED_PSK, CRED_I, CRED_R and TH_3 as external_aad:
 
 ~~~~~~~~~~~~
-ID_CRED_PSK (CBOR Data Item) (2 bytes)
-00 10
+ID_CRED_PSK (CBOR Data Item) (1 byte)
+10
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 CRED_I (Raw Value) (38 bytes)
 A2 02 69 69 6E 69 74 69 61 74 6F 72 08 A1 01 A3
-01 04 02 42 00 10 20 50 50 93 0F F4 62 A7 7A 35
-40 CF 54 63 25 DE A2 14
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 CRED_R (Raw Value) (38 bytes)
 A2 02 69 72 65 73 70 6F 6E 64 65 72 08 A1 01 A3
-01 04 02 42 00 10 20 50 50 93 0F F4 62 A7 7A 35
-40 CF 54 63 25 DE A2 14
+01 04 02 41 10 20 50 50 93 0F F4 62 A7 7A 35 40
+CF 54 63 25 DE A2 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
@@ -849,8 +849,8 @@ IV_3 (Raw Value) (13 bytes)
 It then computes CIPHERTEXT_3B:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
-48 B1 74 ED BA A0 64 73 82
+CIPHERTEXT_3B (CBOR Sequence) (8 bytes)
+48 7F 34 49 6F 3F 69 C2 88
 ~~~~~~~~~~~~
 
 The Initiator computes KEYSTREAM_3A as defined in {{key-der}}:
@@ -863,22 +863,22 @@ KEYSTREAM_3A (Raw Value) (12 bytes)
 It then calculates PLAINTEXT_3A as stated in {{icom-mes3}}:
 
 ~~~~~~~~~~~~
-PLAINTEXT_3A (CBOR Sequence) (12 bytes)
-42 00 10 48 B1 74 ED BA A0 64 73 82
+PLAINTEXT_3A (CBOR Sequence) (10 bytes)
+10 48 7F 34 49 6F 3F 69 C2 88
 ~~~~~~~~~~~~
 
 It then uses KEYSTREAM_3A to derive CIPHERTEXT_3A:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_3A (CBOR Sequence) (12 bytes)
-13 FC 9A 03 21 EB DA B9 62 BF F0 35
+CIPHERTEXT_3A (CBOR Sequence) (10 bytes)
+13 AD AE 63 52 D3 AC 5B 85 93
 ~~~~~~~~~~~~
 
 The Initiator computes message_3 as defined in {{icom-mes3}}:
 
 ~~~~~~~~~~~~
-message_3 (CBOR Sequence) (13 bytes)
-4C 13 FC 9A 03 21 EB DA B9 62 BF F0 35
+message_3 (CBOR Sequence) (11 bytes)
+4A 13 AD AE 63 52 D3 AC 5B 85 93
 ~~~~~~~~~~~~
 
 The transcript hash TH_4 is calculated using the EDHOC hash algorithm:
@@ -886,14 +886,14 @@ TH_4 = H( TH_3, ID_CRED_PSK, ? EAD_3, CRED_I, CRED_R )
 
 ~~~~~~~~~~~~
 TH_4 (Raw Value) (32 bytes)
-BF 44 29 C1 9B C6 09 7C 40 6B 35 70 5A 28 5A 16
-D0 33 C0 FC B3 ED A6 55 2A 26 76 BB 52 13 C9 65
+11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD 0E
+0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 TH_4 (CBOR Data Item) (34 bytes)
-58 20 BF 44 29 C1 9B C6 09 7C 40 6B 35 70 5A 28 5A
-16 D0 33 C0 FC B3 ED A6 55 2A 26 76 BB 52 13 C9 65
+58 20 11 48 1B 9A FE F9 5C 67 9A 52 03 82 17 EE DD
+0E 0C E0 8F AA 86 5B DC 82 55 11 CA 6D C3 91 94 13
 ~~~~~~~~~~~~
 
 ## message_4
@@ -914,19 +914,19 @@ The Responder computes K_4 and IV_4:
 
 ~~~~~~~~~~~~
 K_4 (Raw Value) (16 bytes)
-21 8F 21 28 79 11 FB 2D 18 7F B1 AB DD BE 85 15
+BC AB 1D F0 13 8D C0 5C 88 5F D3 71 E9 50 C6 7F
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 IV_4 (Raw Value) (13 bytes)
-EA E7 BE 0A 14 72 29 1A 5A E3 40 6F 74
+41 11 34 D0 E0 C5 08 D9 5D A7 C3 AC DC
 ~~~~~~~~~~~~
 
 The Responder computes message_4:
 
 ~~~~~~~~~~~~
 message_4 (CBOR Sequence) (9 bytes)
-48 80 F1 4E B9 A9 0F 74 FF
+48 8A DD 93 DB 40 48 59 F9
 ~~~~~~~~~~~~
 
 ## PRK_out and PRK_exporter
@@ -935,14 +935,14 @@ After the exchange, the following PRK_out and PRK_exporter are derived by both e
 
 ~~~~~~~~~~~~
 PRK_out (Raw Value) (32 bytes)
-60 8F 6B C1 88 AF EF 95 EB 63 4C 8B 32 3A C2 3A
-36 1C BD A8 17 D1 C1 A6 89 C7 23 CD A3 B5 92 B9
+BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
+49 16 F0 42 29 6C 7C 72 9C D1 A6 7B 43 6F B4 14
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 PRK_exporter (Raw Value) (32 bytes)
-4E FF 8F 02 C2 4F 1E 42 BC 15 FF 1D C6 DC 4F 27
-A8 8E 7D 17 9E 51 6B D8 13 F8 EC 4F C6 91 47 1D
+2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20 
+E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 ~~~~~~~~~~~~
 
 ## rPSK and rKID
@@ -953,13 +953,14 @@ NOTE: Assuming TBD2 = 2 and TBD3 = 3, to be confirmed by IANA.
 RFC Editor: Remove this note.
 
 ~~~~~~~~~~~~
-rPSK (Raw Value) (16 bytes)
-42 7C 23 92 EA C9 55 F5 D8 56 2A 1B 34 18 E5 75
+rPSK (Raw Value) (32 bytes)
+E8 7F 51 F5 3E 3D D5 71 95 FE 5C E5 F3 ED 03 8A
+BC C5 CA 6B F0 0F 3A 1C 4A 9B FC 61 4A E8 7A 0A
 ~~~~~~~~~~~~
 
 ~~~~~~~~~~~~
 rKID (Raw Value) (2 bytes)
-88 D8
+F3 8C
 ~~~~~~~~~~~~
 
 # Change Log
