@@ -344,7 +344,7 @@ Upon receiving message_3, the Responder proceeds as follows:
   - K_3, IV_3
   - external_aad = << ID_CRED_PSK, TH_3, CRED_I, CRED_R >>
   - protected = h''
-  - EDHOC AEAD algorithm of the selected cipher suite
+  - EDHOC AEAD algorithm of the selected cipher suite.
 
 If AEAD verification fails, retry with a new candidate. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.
 
@@ -427,7 +427,7 @@ The EDHOC-PSK authentication method introduces deviations from the initial speci
 
 In EDHOC-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. EDHOC-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
 
-## Protection of Pre-Shared Keys
+## Protection of Pre-Shared Keys {#subsec-protpsk}
 
 The security of EDHOC-PSK depends on the confidentiality of the PSK. Unlike an asymmetric private key, which can be generated and remain within a Hardware Security Module (HSM), secure element, or other protected cryptographic boundary, a PSK must be provisioned to and stored by multiple parties. This generally increases the attack surface and the risk of key compromise.
 
@@ -483,7 +483,7 @@ When EDHOC-PSK is used for session resumption, the protocol provides Post-Compro
 
 Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incorporates fresh ephemeral keying material (G_XY). An attacker who has obtained rPSK_i cannot derive rPSK_(i+1) without also compromising the ephemeral keys. A passive attacker therefore loses any advantage once the next session completes with uncompromised ephemerals.
 
-This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in {{Section 9.2}}, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
+This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in {{subsec-protpsk}}, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
 # IANA Considerations {#IANA-con}
 
@@ -849,7 +849,7 @@ IV_3 (Raw Value) (13 bytes)
 It then computes CIPHERTEXT_3B:
 
 ~~~~~~~~~~~~
-CIPHERTEXT_3B (CBOR Sequence) (8 bytes)
+CIPHERTEXT_3B (CBOR Sequence) (9 bytes)
 48 7F 34 49 6F 3F 69 C2 88
 ~~~~~~~~~~~~
 
@@ -941,7 +941,7 @@ BB A6 DE D3 B0 38 D2 32 37 74 D8 92 14 A5 13 A2
 
 ~~~~~~~~~~~~
 PRK_exporter (Raw Value) (32 bytes)
-2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20 
+2F CD 08 C0 C0 10 77 C6 D6 48 6B 9F 9B 67 70 20
 E8 D6 8F 04 BC DC CE 71 5D D2 77 ED 25 93 1B EF
 ~~~~~~~~~~~~
 
