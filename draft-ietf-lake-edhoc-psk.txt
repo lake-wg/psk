@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 12 March 2027                                 J. Preuß Mattsson
+Expires: 14 March 2027                                 J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                        8 September 2026
+                                                       10 September 2026
 
 
              EDHOC Authenticated with Pre-Shared Keys (PSK)
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 March 2027.
+   This Internet-Draft will expire on 14 March 2027.
 
 Copyright Notice
 
@@ -246,7 +246,7 @@ Table of Contents
 
 3.1.1.  ID_CRED_PSK
 
-   ID_CRED_PSK is a key identifier Section 3.1 of [RFC8152] formatted as
+   ID_CRED_PSK is a key identifier Section 3.1 of [RFC9052] formatted as
    a COSE header map containing header parameters that can be used to
    retrieve one or more pre-shared keys and associated information
    required for EDHOC processing.  Following the compact encoding rules
@@ -372,7 +372,7 @@ Table of Contents
    exchange is used, G_X and G_Y are the ephemeral public keys, and the
    shared secret G_XY is the DH shared secret, as in [RFC9528].  If the
    Diffie-Hellman procedure is replaced by a KEM (e.g.
-   [I-D.spm-lake-pqsuites]), then G_X and G_Y are encapsulation key and
+   [I-D.ietf-lake-pqsuites]), then G_X and G_Y are encapsulation key and
    ciphertext, respectively, and the shared secret G_XY is derived by
    the KEM.
 
@@ -888,7 +888,7 @@ Table of Contents
    Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity
    protection and PFS even against quantum-capable attackers.  Future
    EDHOC cipher suites incorporating ML-KEM are expected to be
-   registered; see [I-D.spm-lake-pqsuites].
+   registered; see [I-D.ietf-lake-pqsuites].
 
 9.8.  Confidentiality
 
@@ -1018,10 +1018,6 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC8152]  Schaad, J., "CBOR Object Signing and Encryption (COSE)",
-              RFC 8152, DOI 10.17487/RFC8152, July 2017,
-              <https://www.rfc-editor.org/rfc/rfc8152>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -1088,12 +1084,12 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-lake-
               app-profiles-05>.
 
-   [I-D.spm-lake-pqsuites]
+   [I-D.ietf-lake-pqsuites]
               Selander, G. and J. P. Mattsson, "Quantum-Resistant Cipher
-              Suites for EDHOC", Work in Progress, Internet-Draft,
-              draft-spm-lake-pqsuites-02, 19 April 2026,
-              <https://datatracker.ietf.org/doc/html/draft-spm-lake-
-              pqsuites-02>.
+              Suites for LAKE", Work in Progress, Internet-Draft, draft-
+              ietf-lake-pqsuites-00, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-lake-
+              pqsuites-00>.
 
    [RFC4764]  Bersani, F. and H. Tschofenig, "The EAP-PSK Protocol: A
               Pre-Shared Key Extensible Authentication Protocol (EAP)
