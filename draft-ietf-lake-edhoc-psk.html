@@ -1180,7 +1180,7 @@ svg {
                     <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-cred_i-and-cred_r" class="internal xref">CRED_I and CRED_R</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
-                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-encoding-and-processing-gui" class="internal xref">Encoding and processing guidelines</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-encoding-and-processing-gui" class="internal xref">Encoding and Processing Guidelines</a></p>
 </li>
                 </ul>
 </li>
@@ -1232,7 +1232,7 @@ svg {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-psk-usage-for-session-resum" class="internal xref">PSK usage for Session Resumption</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-psk-usage-for-session-resum" class="internal xref">PSK Usage for Session Resumption</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-privacy-considerations-for-" class="internal xref">Privacy Considerations for Resumption</a></p>
@@ -1264,7 +1264,7 @@ svg {
                 <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-protection-of-external-auth" class="internal xref">Protection of External Authorization Data (EAD)</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.5">
-                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-cryptographic-strength" class="internal xref">Cryptographic strength</a></p>
+                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-cryptographic-strength" class="internal xref">Cryptographic Strength</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
                 <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-downgrade-protection" class="internal xref">Downgrade Protection</a></p>
@@ -1449,7 +1449,7 @@ ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
 <div id="encoding-and-processing-guidelines">
 <section id="section-3.1.3">
           <h4 id="name-encoding-and-processing-gui">
-<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-encoding-and-processing-gui" class="section-name selfRef">Encoding and processing guidelines</a>
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-encoding-and-processing-gui" class="section-name selfRef">Encoding and Processing Guidelines</a>
           </h4>
 <p id="section-3.1.3-1">The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x apply both to CRED_I and to CRED_R.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1806,7 +1806,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
 <div id="psk-resumption">
 <section id="section-6">
       <h2 id="name-psk-usage-for-session-resum">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK usage for Session Resumption</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-psk-usage-for-session-resum" class="section-name selfRef">PSK Usage for Session Resumption</a>
       </h2>
 <p id="section-6-1">This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, is used to derive the resumption parameters rPSK and rKID:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <span id="name-resumption-parameters"></span><div id="fig-resumption">
@@ -1944,7 +1944,7 @@ rID_CRED_PSK = { 4 : rKID }
 <div id="cryptographic-strength">
 <section id="section-9.5">
         <h3 id="name-cryptographic-strength">
-<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic strength</a>
+<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic Strength</a>
         </h3>
 <p id="section-9.5-1">Each external PSK <span class="bcp14">MUST</span> be derived from at least 128 bits of entropy and <span class="bcp14">MUST</span> be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the selected cipher suite.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 <p id="section-9.5-2">For the currently defined cipher suites (0–6 and 24–25), EDHOC-PSK provides at least 128-bit security against offline brute-force attacks and at least 64-bit security against online forgery attacks. In practical terms, mounting a successful online forgery attack at this security level would require an adversary, on average, to transmit 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio environments. A successful forgery in EDHOC-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE <span>[<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>) typically only breaks the security of the forged packet.<a href="#section-9.5-2" class="pilcrow">¶</a></p>
