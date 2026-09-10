@@ -55,7 +55,6 @@ normative:
   RFC9053:
   RFC9528:
   RFC9668:
-  RFC8152:
   I-D.ietf-emu-eap-edhoc:
   SP-800-56A:
     target: https://doi.org/10.6028/NIST.SP.800-56Ar3
@@ -79,8 +78,8 @@ informative:
 
   RFC4764:
   RFC9190:
-  I-D.spm-lake-pqsuites:
   I-D.ietf-lake-app-profiles:
+  I-D.ietf-lake-pqsuites:
 
 --- abstract
 
@@ -123,7 +122,7 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 
 ### ID_CRED_PSK
 
-ID_CRED_PSK is a key identifier {{Section 3.1 of RFC8152}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for EDHOC processing. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
+ID_CRED_PSK is a key identifier {{Section 3.1 of RFC9052}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for EDHOC processing. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
 ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
@@ -189,7 +188,7 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 
 The message flow of EDHOC-PSK follows the structure defined in {{RFC9528}}, with authentication based on symmetric keys rather than public keys. For identity protection, credential-related message fields appear first in message_3.
 
-ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. If Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys, and the shared secret G_XY is the DH shared secret, as in {{RFC9528}}. If the Diffie-Hellman procedure is replaced by a KEM (e.g. {{I-D.spm-lake-pqsuites}}), then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is derived by the KEM.
+ID_CRED_PSK is encrypted using a key derived from a shared secret obtained through the first two messages. If Diffie-Hellman key exchange is used, G_X and G_Y are the ephemeral public keys, and the shared secret G_XY is the DH shared secret, as in {{RFC9528}}. If the Diffie-Hellman procedure is replaced by a KEM (e.g. {{I-D.ietf-lake-pqsuites}}), then G_X and G_Y are encapsulation key and ciphertext, respectively, and the shared secret G_XY is derived by the KEM.
 
 The Responder authenticates the Initiator first. {{fig-variant2}} illustrates the message flow of the EDHOC-PSK authentication method.
 
@@ -461,7 +460,7 @@ Advances in quantum computing suggest that a Cryptographically Relevant Quantum 
 
 Quantum resistance of EDHOC-PSK partly depends on the selected EDHOC cipher suite. EDHOC-PSK derives authentication and session keys primarily from a symmetric PSK, which provides quantum resistance even when combined with ECDHE. However, if a CRQC is realized, the ECDHE contribution degenerates to providing only randomness. In that case, EDHOC-PSK with ECDHE offers neither identity protection nor Perfect Forward Secrecy (PFS) against quantum adversaries. Moreover, if the PSK is compromised, a passive quantum attacker could decrypt both past and future sessions.
 
-By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see {{I-D.spm-lake-pqsuites}}.
+By contrast, combining EDHOC-PSK with a quantum-resistant Key Encapsulation Mechanism (KEM), such as ML-KEM, ensures both identity protection and PFS even against quantum-capable attackers. Future EDHOC cipher suites incorporating ML-KEM are expected to be registered; see {{I-D.ietf-lake-pqsuites}}.
 
 ## Confidentiality
 
