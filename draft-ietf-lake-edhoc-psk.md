@@ -168,7 +168,7 @@ Alternative formats for CRED_I and CRED_R MAY be used. When a resumption PSK is 
 
 Implementations MUST ensure that CRED_I and CRED_R are distinct, for example by including different identities in their sub-claims (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10"). Ensuring distinct credentials simplifies correct party identification and prevents reflection and misbinding attacks, as described in {{Appendix D.2 of RFC9528}}.
 
-### Encoding and processing guidelines
+### Encoding and Processing Guidelines
 
 The following guidelines apply to the encoding and handling of CRED_x and ID_CRED_PSK. Requirements on CRED_x apply both to CRED_I and to CRED_R.
 
@@ -361,7 +361,7 @@ The Initiator MUST NOT persistently store PRK_out or application keys until it h
 
 Compared to {{RFC9528}}, the fourth message not only provides key confirmation but also authenticates the Responder. For mutual authentication a fourth message is therefore mandatory.
 
-# PSK usage for Session Resumption {#psk-resumption}
+# PSK Usage for Session Resumption {#psk-resumption}
 
 This section specifies how EDHOC-PSK is used for session resumption in EDHOC. The EDHOC_Exporter, as defined in {{Section 4.2 of RFC9528}}, is used to derive the resumption parameters rPSK and rKID:
 
@@ -442,7 +442,7 @@ EDHOC-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compro
 
 As in {{RFC9528}}, EDHOC-PSK ensures the confidentiality and integrity of External Authorization Data (EAD). The security guarantees for EAD fields remain unchanged from the original EDHOC specification.
 
-## Cryptographic strength
+## Cryptographic Strength
 
 Each external PSK MUST be derived from at least 128 bits of entropy and MUST be at least 128 bits long. Deriving a shared secret from a password or other low-entropy sources is not secure. The cryptographic strength of EDHOC-PSK depends on the selected cipher suite.
 
