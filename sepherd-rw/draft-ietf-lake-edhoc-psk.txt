@@ -137,8 +137,8 @@ Table of Contents
 
 1.  Introduction
 
-   This document defines a Pre-Shared Key (PSK) authentication method
-   for the Lightweight Authenticated Key Exchange (LAKE) protocol
+   This document defines LAKE-PSK, a Pre-Shared Key (PSK) authentication
+   method for the Lightweight Authenticated Key Exchange (LAKE) protocol
    [RFC9528].  The PSK method trades the complexity of symmetric-key
    distribution for improved computational efficiency.  Although
    symmetric-key distribution is more complex than public-key credential
@@ -158,7 +158,8 @@ Table of Contents
    future communications are protected against passive attackers.
    Additionally, by leveraging the PSK for both authentication and key
    derivation, the method provides quantum-resistant key exchange and
-   authentication even when used with ECDHE.
+   authentication even when used with Elliptic Curve Diffie–Hellman
+   Ephemeral (ECDHE).
 
    Another important use case of PSK authentication in the LAKE protocol
    is session resumption.  This allows previously connected parties to
@@ -168,9 +169,10 @@ Table of Contents
    session keys to be refreshed with significantly lower computational
    overhead compared to public-key authentication.  In this case, the
    resumption PSK is provisioned after the establishment of a previous
-   LAKE session by using EDHOC_Exporter.  Thus, the external PSK may
-   serve as a long-term credential, while the resumption PSK is a short-
-   lived credential derived from a previous LAKE session.
+   LAKE session by using EDHOC_Exporter (see Section 4.2.1 of
+   [RFC9528]).  Thus, the external PSK may serve as a long-term
+   credential, while the resumption PSK is a short-lived credential
+   derived from a previous LAKE session.
 
    Section 3 provides an overview of the PSK method, including its
    message flow and associated credentials.  Section 4 outlines the
@@ -239,9 +241,9 @@ Table of Contents
 
 3.1.  Credentials
 
-   The Initiator and Responder are assumed to share a PSK (either an
-   external PSK or a resumption PSK) with high entropy that meets the
-   following requirements:
+   The Initiator and Responder are assumed to share a PSK (an external
+   PSK or a resumption PSK) with high entropy that meets the following
+   requirements:
 
    *  Only the Initiator and the Responder have access to the PSK.
 
@@ -255,13 +257,18 @@ Table of Contents
    retrieve one or more pre-shared keys and associated information
    required for LAKE processing.  Following the compact encoding rules
    defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing
-   only a single 'kid' parameter can be encoded directly as the value of
+   only a single 'kid' parameter is encoded directly as the value of
    that parameter.  For example, the identifier
+
+   ID_CRED_PSK = { 4 : h'ff' }; 4 = 'kid'
+
+   is not encoded as the CBOR map 0xa10441ff but the CBOR byte string
+   h'ff', i.e., 0x41ff.  Another example, the identifier
 
    ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
 
-   is encoded as the CBOR byte string h'0010' rather than as the full
-   CBOR map, reducing message size.
+   is neither the CBOR map 0xA1044110 nor the CBOR byte string h'10',
+   i.e., 0x4110, but the CBOR integer 0x10, reducing message size.
 
    The purpose of ID_CRED_PSK is to facilitate retrieval of the PSK and
    associated information required for LAKE processing.  While
@@ -316,13 +323,13 @@ Table of Contents
    Alternative formats for CRED_I and CRED_R MAY be used.  When a
    resumption PSK is employed, CRED_I and CRED_R MUST be the same
    credentials used in the initial LAKE exchange, for example, public-
-   key credentials such as X.509 certificates.
+   key credentials such as X.509 certificates [RFC5280].
 
    Implementations MUST ensure that CRED_I and CRED_R are distinct, for
-   example by including different identities in their sub-claims (e.g.,
-   "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10").  Ensuring
-   distinct credentials simplifies correct party identification and
-   prevents reflection and misbinding attacks, as described in
+   example by including different identities in their 'sub' claims
+   (e.g., "42-50-31-FF-EF-37-32-39" and "23-11-58-AA-B3-7F-10").
+   Ensuring distinct credentials simplifies correct party identification
+   and prevents reflection and misbinding attacks, as described in
    Appendix D.2 of [RFC9528].
 
 3.1.3.  Encoding and Processing Guidelines
@@ -347,12 +354,13 @@ Table of Contents
       Section 3.5.3.2 of [RFC9528] MUST be applied in plaintext fields
       (such as PLAINTEXT_3A).  These optimizations MUST NOT be applied
       in COSE header parameters or in other contexts where the full map
-      structure is required.  For example:
+      structure is required.  For example, in such cases where these
+      optimizations are not applied:
 
-      -  { 4 : h'0f' } is encoded as 0xa104410f, instead of 0x410f (CBOR
-         encoding of the CBOR byte string h'0f')
+      -  { 4 : h'ff' } is encoded as 0xa10441ff, instead of 0x41ff (CBOR
+         encoding of the CBOR byte string h'ff')
 
-      -  { 4 : 21 } is encoded as 0xa1044115, instead of 0x15 (CBOR
+      -  { 4 : h'15' } is encoded as 0xa1044115, instead of 0x15 (CBOR
          encoding of the CBOR integer 21)
 
    *  To prevent misbinding attacks, identity information such as a
@@ -405,10 +413,10 @@ Table of Contents
    This approach provides identity protection against passive attackers
    for both Initiator and Responder.  LAKE message_4 remains OPTIONAL,
    but is needed to authenticate the Responder and achieve mutual
-   authentication in LAKE when external applications (e.g., OSCORE) are
-   not relied upon.  In either case, the inclusion of a fourth message
-   provides mutual authentication and explicit key confirmation (see
-   Section 5.4).
+   authentication in LAKE when external applications using secure
+   communication (e.g., with OSCORE) are not relied upon.  In either
+   case, the inclusion of a fourth message provides mutual
+   authentication and explicit key confirmation (see Section 5.4).
 
 4.  Key Derivation
 
@@ -441,8 +449,8 @@ Table of Contents
    [RFC9528].
 
    The other PRKs and transcript hashes are modified as specified below.
-   Figure 2 lists the key derivations that differ from Section 4.1.2 of
-   [RFC9528].
+   Figure 2 lists the key derivations that differ from Sections 4.1.1
+   and 4.1.2 of [RFC9528].
 
     PRK_3e2m     = PRK_2e
     KEYSTREAM_2A = EDHOC_KDF( PRK_2e,   0, TH_2,  plaintext_length_2a )
@@ -474,8 +482,8 @@ Table of Contents
 
    This section specifies the differences in message formatting and
    processing compared to Section 5 of [RFC9528].  Note that, if any
-   processing step fails, then the Responder MUST send an LAKE error
-   message back as defined in Section 6 of [RFC9528], and the LAKE
+   processing step fails, then the message recipient MUST send an LAKE
+   error message back as defined in Section 6 of [RFC9528], and the LAKE
    session MUST be aborted.
 
 5.1.  Message 1
@@ -1098,6 +1106,12 @@ Table of Contents
               Pre-Shared Key Extensible Authentication Protocol (EAP)
               Method", RFC 4764, DOI 10.17487/RFC4764, January 2007,
               <https://www.rfc-editor.org/rfc/rfc4764>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
 
    [RFC7296]  Kaufman, C., Hoffman, P., Nir, Y., Eronen, P., and T.
               Kivinen, "Internet Key Exchange Protocol Version 2
