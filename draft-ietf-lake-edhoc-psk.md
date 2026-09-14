@@ -113,7 +113,7 @@ Authentication is based on a PSK shared by the Initiator and the Responder. As i
 
 The PSK method uses a “by reference” approach for credential representation. ID_CRED_PSK can be kept minimal, enabling a very compact on-the-wire encoding. In contrast, {{RFC9528}} defines that ID_CRED_I and ID_CRED_R may convey arbitrary identity and application-specific context. This separation allows LAKE-PSK to minimize overhead for PSK identification while preserving flexibility in both identity and contextual information, as well as the security properties associated with their use.
 
-Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, LAKE-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity protection against passive attackers. In contrast, (D)TLS 1.3 {{?RFC8446}} {{?RFC9147}} transmits the PSK identifier in cleartext and therefore does not provide identity protection for PSK-based authentication.
+Like the Internet Key Exchange Protocol Version 2 (IKEv2) {{?RFC7296}}, LAKE-PSK encrypts the PSK identifier ID_CRED_PSK, providing identity protection against passive attackers. In contrast, (D)TLS 1.3 {{?RFC9846}} {{?RFC9147}} transmits the PSK identifier in cleartext and therefore does not provide identity protection for PSK-based authentication.
 
 ## Credentials
 
@@ -124,7 +124,7 @@ The Initiator and Responder are assumed to share a PSK (either an external PSK o
 
 ### ID_CRED_PSK
 
-ID_CRED_PSK is a key identifier {{Section 3.1 of RFC9052}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for LAKE processing. Following the compact encoding rules defined in Section 3.5.3.2 of [RFC9528], an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
+ID_CRED_PSK is a key identifier {{Section 3.1 of RFC9052}} formatted as a COSE header map containing header parameters that can be used to retrieve one or more pre-shared keys and associated information required for LAKE processing. Following the compact encoding rules defined in {{Section 3.5.3.2 of RFC9528}}, an ID_CRED_PSK containing only a single 'kid' parameter can be encoded directly as the value of that parameter. For example, the identifier
 
 ~~~~~~~~~~~~
 ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
@@ -450,7 +450,7 @@ Each external PSK MUST be derived from at least 128 bits of entropy and MUST be 
 
 For the currently defined cipher suites (0–6 and 24–25), LAKE-PSK provides at least 128-bit security against offline brute-force attacks and at least 64-bit security against online forgery attacks. In practical terms, mounting a successful online forgery attack at this security level would require an adversary, on average, to transmit 4.3 billion messages per second for 68 years, which is infeasible in constrained IoT radio environments. A successful forgery in LAKE-PSK breaks the security of all future application data derived from the session, while a forgery in the subsequent application protocol (e.g., OSCORE {{RFC8613}}) typically only breaks the security of the forged packet.
 
-Similar to TLS 1.3 {{?RFC8446}}, LAKE-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through an associated hash algorithm. A PSK MUST only be used with cipher suites that employ the same hash algorithm. For externally provisioned PSKs, the hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the hash algorithm is the LAKE hash algorithm of the cipher suite selected in the LAKE session in which the resumption PSK was established, see {{Section 3.6 of RFC9528}}. The Responder MUST abort the ongoing LAKE session, if the PSK retrieved through ID_CRED_PSK is combined with a hash algorithm different from the one in the selected cipher suite used in the session.
+Similar to TLS 1.3 {{?RFC9846}}, LAKE-PSK takes a conservative approach to PSK usage by binding each PSK to a specific KDF through an associated hash algorithm. A PSK MUST only be used with cipher suites that employ the same hash algorithm. For externally provisioned PSKs, the hash algorithm MUST be provisioned together with the PSK. For resumption PSKs, the hash algorithm is the LAKE hash algorithm of the cipher suite selected in the LAKE session in which the resumption PSK was established, see {{Section 3.6 of RFC9528}}. The Responder MUST abort the ongoing LAKE session, if the PSK retrieved through ID_CRED_PSK is combined with a hash algorithm different from the one in the selected cipher suite used in the session.
 
 ## Downgrade Protection
 
