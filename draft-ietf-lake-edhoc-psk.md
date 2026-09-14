@@ -270,11 +270,11 @@ The definition of the transcript hash TH_4 is modified as follows:
 
 # Message Formatting and Processing {#mes-for-pro}
 
-This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that, if any processing step fails, then the message recipient MUST send an LAKE error message back as defined in {{Section 6 of RFC9528}}, and the LAKE session MUST be aborted.
+This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that, if any processing step fails, then the message recipient MUST send an LAKE error message back as defined in {{Section 6 of RFC9528}}, and the LAKE session MUST be aborted. 
 
 ## Message 1
 
-Message 1 is formatted and processed as specified in {{Section 5.2 of RFC9528}}.
+Message 1 is formatted and processed as specified in {{Section 5.2 of RFC9528}}, with the METHOD field set to the LAKE-PSK method (i.e., the value registered in {{iana-method}}).
 
 ## Message 2
 
@@ -314,13 +314,13 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}, except that
 
       * If ID_CRED_PSK contains a single 'kid' parameter, i.e., ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is applied, see {{Section 3.5.3.2 of RFC9528}}.
 
-      * For the case of plaintext_length exceeding the EDHOC_KDF output size, see {{Appendix G of RFC9528}}.
+      * For the case of plaintext_length_2a or plaintext_length_3a exceeding the EDHOC_KDF output size, see {{Appendix G of RFC9528}}.
 
    * Compute KEYSTREAM_3A as in {{key-der}}.
 
    * CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A
 
-* CIPHERTEXT_3B is the 'ciphertext' of the COSE_Encrypt0 object as defined in {{Sections 5.2 and 5.3 of RFC9528}}, computed with the LAKE AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in {{Section 5.2 of RFC9528}}, plaintext PLAINTEXT_3B and the following parameters as input:
+* CIPHERTEXT_3B is the 'ciphertext' of the COSE_Encrypt0 object as defined in {{Sections 5.2 and 5.3 of RFC9052}}, computed with the LAKE AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in {{Section 5.2 of RFC9052}}, plaintext PLAINTEXT_3B and the following parameters as input:
 
   - protected = h''
   - external_aad = << ID_CRED_PSK, TH_3, CRED_I, CRED_R >>
@@ -339,11 +339,11 @@ Upon receiving message_3, the Responder proceeds as follows:
 
 * Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.
 
-* Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.
+* Parse the structure of PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ), where CIPHERTEXT_3B is the inner AEAD-encrypted object.
 
 * Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK, CRED_I, and CRED_R.
 
-* Select first candidate.
+* Select a candidate tuple (PSK, CRED_I, CRED_R).
 
 * Derive K_3 and IV_3 as defined in {{key-der}}.
 
@@ -354,7 +354,7 @@ Upon receiving message_3, the Responder proceeds as follows:
   - protected = h''
   - LAKE AEAD algorithm of the selected cipher suite.
 
-If AEAD verification fails, retry with a new candidate. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.
+If AEAD verification fails, retry with a new candidate tuple. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.
 
 Finally, the Responder computes TH_4 as defined in {{key-der}}.
 
@@ -392,24 +392,11 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete the previous resumption key rPSK_(i-1), if present, after successfully verifying message_3. At that point the Responder can be certain that the Initiator has access to the current resumption key rPSK_i.
 
-  * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1), if the Responder wants to.
+  * The Initiator MAY delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder is able to derive the next resumption key, rPSK_(i+1), if the Responder wants to.
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Responder can be certain that the Initiator is able to derive the next resumption key, rPSK_(i+1), if the Inititator wants to.
 
-When resumption PSKs are in use, implementations MUST retain the ID_CRED_I, ID_CRED_R and LAKE hash algorithm used for the original non-resumption authentication (e.g., the static DH public keys, or certificates) and associate them with the current resumption PSK. Implementations MAY retain the external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to present via ID_CRED_PSK.  If a credential associated with a resumption key expires, implementations SHOULD retry either with external PSK or a different METHOD. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.
-
-## Privacy Considerations for Resumption
-
-When using resumption PSKs:
-
-  * ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK, which are to provide identity protection against passive attackers, but not against active attackers.
-
-## Security Considerations for Resumption
-
-* Resumption PSKs MUST NOT be used for purposes other than LAKE session resumption.
-* Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
-* Parties SHOULD prevent excessive reuse of the same resumption PSK.
-* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
+When resumption PSKs are used, implementations MUST retain the ID_CRED_I, ID_CRED_R and LAKE hash algorithm used for the original non-resumption authentication and associate them with the current resumption PSK. Implementations MAY retain an external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to use and indicates it via ID_CRED_PSK. If a credential associated with a resumption key expires, implementations SHOULD retry either with external PSK or a different authentication method. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.
 
 # LAKE-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
@@ -417,15 +404,15 @@ LAKE with PSK authentication has several important use cases within the Extensib
 
 One use case is the resumption of a session established with the EAP method EAP-EDHOC {{I-D.ietf-emu-eap-edhoc}}, regardless of the LAKE-based authentication method originally used in that session. This is similar to the resumption mechanism in EAP-TLS 1.3 {{RFC9190}}. Resumption reduces the number of round trips and allows the EAP-EDHOC server to avoid database lookups that might be required during an initial handshake. If the server accepts resumption, the resumed session is considered authenticated and securely bound to the prior authentication or resumption.
 
-The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server may, however, require a new initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
+The use of resumption with EAP-EDHOC is optional for the peer, but it is RECOMMENDED whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is RECOMMENDED if the rPSK remains valid. The server MAY, however, require a new initial handshake by refusing resumption. It is further RECOMMENDED to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.
 
 EAP-EDHOC using PSK authentication also provides a significant improvement over EAP-PSK {{RFC4764}}, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS {{RFC9190}}.
 
 # LAKE-PSK and OSCORE {#OSCORE}
 
-{{RFC9668}} describes an optimized use of LAKE with OSCORE by combining LAKE message_3 with the first OSCORE request. This procedure omits message_4, but key confirmation of the Responder is provided by a subsequent OSCORE response to the Initiator.
+{{RFC9668}} describes an optimized use of LAKE with OSCORE by combining LAKE message_3 with the first OSCORE-protected request. This procedure omits message_4, but key confirmation of the Responder is provided by a subsequent OSCORE-protected response to the Initiator.
 
-In LAKE-PSK, authentication of the Responder is provided by message_4 or another fourth message. Hence, the combined delivery described in {{Section 3 of RFC9668}} can be applied to LAKE-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.
+In LAKE-PSK, authentication of the Responder is provided by message_4 or another fourth message. Hence, the combined delivery described in {{Section 3 of RFC9668}} can be applied to LAKE-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE-protected response. However, only the party with the correct PSK can decrypt the OSCORE-protected request.
 
 # Security Considerations {#sec-con}
 
@@ -433,7 +420,7 @@ The LAKE-PSK authentication method introduces deviations from the initial specif
 
 ## Identity Protection
 
-In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
+In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers. This contrasts with the asymmetric authentication methods discussed in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
 
 ## Protection of Pre-Shared Keys {#subsec-protpsk}
 
@@ -441,11 +428,11 @@ The security of LAKE-PSK depends on the confidentiality of the PSK. Unlike an as
 
 ## Mutual Authentication
 
-LAKE-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from LAKE.
+LAKE-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE-protected message) protected with a key derived from LAKE.
 
 To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R MUST be distinct. If identical credentials are used by both parties, an endpoint may incorrectly accept messages that originate from itself.
 
-LAKE-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
+LAKE-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral shared secret G_XY only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.
 
 ## Protection of External Authorization Data (EAD)
 
@@ -493,11 +480,24 @@ Specifically, rPSK_(i+1) is derived via EDHOC_Exporter from PRK_out, which incor
 
 This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in {{subsec-protpsk}}, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.
 
+## Privacy Considerations for Resumption
+
+When using resumption PSKs:
+
+  * ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK, which are to provide identity protection against passive attackers, but not against active attackers.
+
+## Security Considerations for Resumption
+
+* Resumption PSKs MUST NOT be used for purposes other than LAKE session resumption.
+* Resumption PSKs MUST be securely stored with the same level of protection as the session keys.
+* Parties SHOULD avoid excessive reuse of the same resumption PSK.
+* The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.
+
 # IANA Considerations {#IANA-con}
 
 This document requires the following IANA actions.
 
-## EDHOC Method Type Registry
+## EDHOC Method Type Registry {#iana-method}
 
 IANA is requested to register the following entry in the "EDHOC Method Type" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
