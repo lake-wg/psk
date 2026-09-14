@@ -1233,14 +1233,6 @@ svg {
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-psk-usage-for-session-resum" class="internal xref">PSK Usage for Session Resumption</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-privacy-considerations-for-" class="internal xref">Privacy Considerations for Resumption</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-security-considerations-for" class="internal xref">Security Considerations for Resumption</a></p>
-</li>
-            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-lake-psk-and-extensible-aut" class="internal xref">LAKE-PSK and Extensible Authentication Protocol (EAP)</a></p>
@@ -1283,6 +1275,12 @@ svg {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.11">
                 <p id="section-toc.1-1.9.2.11.1"><a href="#section-9.11" class="auto internal xref">9.11</a>. <a href="#name-post-compromise-security" class="internal xref">Post-Compromise Security</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.12">
+                <p id="section-toc.1-1.9.2.12.1"><a href="#section-9.12" class="auto internal xref">9.12</a>. <a href="#name-privacy-considerations-for-" class="internal xref">Privacy Considerations for Resumption</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.13">
+                <p id="section-toc.1-1.9.2.13.1"><a href="#section-9.13" class="auto internal xref">9.13</a>. <a href="#name-security-considerations-for" class="internal xref">Security Considerations for Resumption</a></p>
 </li>
             </ul>
 </li>
@@ -1632,7 +1630,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
         <h3 id="name-message-1">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-message-1" class="section-name selfRef">Message 1</a>
         </h3>
-<p id="section-5.1-1">Message 1 is formatted and processed as specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">Message 1 is formatted and processed as specified in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, with the METHOD field set to the LAKE-PSK method (i.e., the value registered in <a href="#iana-method" class="auto internal xref">Section 10.1</a>).<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-2">
@@ -1713,7 +1711,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
                       <p id="section-5.3.2-1.1.2.1.2.1.1">If ID_CRED_PSK contains a single 'kid' parameter, i.e., ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is applied, see <span><a href="https://rfc-editor.org/rfc/rfc9528#section-3.5.3.2" class="relref">Section 3.5.3.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
                     <li class="normal" id="section-5.3.2-1.1.2.1.2.2">
-                      <p id="section-5.3.2-1.1.2.1.2.2.1">For the case of plaintext_length exceeding the EDHOC_KDF output size, see <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.1.2.2.1" class="pilcrow">¶</a></p>
+                      <p id="section-5.3.2-1.1.2.1.2.2.1">For the case of plaintext_length_2a or plaintext_length_3a exceeding the EDHOC_KDF output size, see <span><a href="https://rfc-editor.org/rfc/rfc9528#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-5.3.2-1.1.2.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
                   </ul>
 </li>
@@ -1726,7 +1724,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               </ul>
 </li>
             <li class="normal" id="section-5.3.2-1.2">
-              <p id="section-5.3.2-1.2.1">CIPHERTEXT_3B is the 'ciphertext' of the COSE_Encrypt0 object as defined in Sections <a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">5.2</a> and <a href="https://rfc-editor.org/rfc/rfc9528#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, computed with the LAKE AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.3.2-1.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.2-1.2.1">CIPHERTEXT_3B is the 'ciphertext' of the COSE_Encrypt0 object as defined in Sections <a href="https://rfc-editor.org/rfc/rfc9052#section-5.2" class="relref">5.2</a> and <a href="https://rfc-editor.org/rfc/rfc9052#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>, computed with the LAKE AEAD algorithm of the selected cipher suite, using the encryption key K_3, the initialization vector IV_3 (if used by the AEAD algorithm), the parameters described in <span><a href="https://rfc-editor.org/rfc/rfc9052#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>, plaintext PLAINTEXT_3B and the following parameters as input:<a href="#section-5.3.2-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3.2-1.2.2.1">
                   <p id="section-5.3.2-1.2.2.1.1">protected = h''<a href="#section-5.3.2-1.2.2.1.1" class="pilcrow">¶</a></p>
@@ -1761,13 +1759,13 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               <p id="section-5.3.3-2.2.1">Decrypt CIPHERTEXT_3A using binary XOR with KEYSTREAM_3A to recover PLAINTEXT_3A.<a href="#section-5.3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.3">
-              <p id="section-5.3.3-2.3.1">Parse the structure of message_3, which consists of a stream-cipher encrypted structure, CIPHERTEXT_3A = PLAINTEXT_3A XOR KEYSTREAM_3A, where PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ) and CIPHERTEXT_3B is the inner AEAD-encrypted object.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.3.1">Parse the structure of PLAINTEXT_3A = ( ID_CRED_PSK, CIPHERTEXT_3B ), where CIPHERTEXT_3B is the inner AEAD-encrypted object.<a href="#section-5.3.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.4">
               <p id="section-5.3.3-2.4.1">Use ID_CRED_PSK to identify the authentication credentials and retrieve PSK, CRED_I, and CRED_R.<a href="#section-5.3.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.5">
-              <p id="section-5.3.3-2.5.1">Select first candidate.<a href="#section-5.3.3-2.5.1" class="pilcrow">¶</a></p>
+              <p id="section-5.3.3-2.5.1">Select a candidate tuple (PSK, CRED_I, CRED_R).<a href="#section-5.3.3-2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.3.3-2.6">
               <p id="section-5.3.3-2.6.1">Derive K_3 and IV_3 as defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.3-2.6.1" class="pilcrow">¶</a></p>
@@ -1790,7 +1788,7 @@ IV_3         = EDHOC_KDF( PRK_4e3m, 4, TH_3, iv_length )
               </ul>
 </li>
           </ul>
-<p id="section-5.3.3-3">If AEAD verification fails, retry with a new candidate. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.<a href="#section-5.3.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.3.3-3">If AEAD verification fails, retry with a new candidate tuple. If all candidate authentication credential sets fail, this indicates a processing problem or that the message was tampered with. If it succeeds, the Responder concludes that the Initiator possesses the PSK, correctly derived TH_3, and is actively participating in the protocol.<a href="#section-5.3.3-3" class="pilcrow">¶</a></p>
 <p id="section-5.3.3-4">Finally, the Responder computes TH_4 as defined in <a href="#key-der" class="auto internal xref">Section 4</a>.<a href="#section-5.3.3-4" class="pilcrow">¶</a></p>
 <p id="section-5.3.3-5">No MAC_3 or signature is needed, as the AEAD ciphertext guarantees both integrity and authenticity in this symmetric setting.<a href="#section-5.3.3-5" class="pilcrow">¶</a></p>
 </section>
@@ -1845,47 +1843,13 @@ rID_CRED_PSK = { 4 : rKID }
           <p id="section-6-7.1.1">The Responder <span class="bcp14">MAY</span> delete the previous resumption key rPSK_(i-1), if present, after successfully verifying message_3. At that point the Responder can be certain that the Initiator has access to the current resumption key rPSK_i.<a href="#section-6-7.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-7.2">
-          <p id="section-6-7.2.1">The Initiator <span class="bcp14">MAY</span> delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder already has derived the next resumption key, rPSK_(i+1), if the Responder wants to.<a href="#section-6-7.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-7.2.1">The Initiator <span class="bcp14">MAY</span> delete rPSK_i after successfully verifying the fourth message. At that point, the Initiator can be certain that the Responder is able to derive the next resumption key, rPSK_(i+1), if the Responder wants to.<a href="#section-6-7.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-7.3">
           <p id="section-6-7.3.1">The Responder <span class="bcp14">MAY</span> delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE message, if present. At that point, the Responder can be certain that the Initiator is able to derive the next resumption key, rPSK_(i+1), if the Inititator wants to.<a href="#section-6-7.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-6-8">When resumption PSKs are in use, implementations <span class="bcp14">MUST</span> retain the ID_CRED_I, ID_CRED_R and LAKE hash algorithm used for the original non-resumption authentication (e.g., the static DH public keys, or certificates) and associate them with the current resumption PSK. Implementations <span class="bcp14">MAY</span> retain the external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to present via ID_CRED_PSK.  If a credential associated with a resumption key expires, implementations <span class="bcp14">SHOULD</span> retry either with external PSK or a different METHOD. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.<a href="#section-6-8" class="pilcrow">¶</a></p>
-<div id="privacy-considerations-for-resumption">
-<section id="section-6.1">
-        <h3 id="name-privacy-considerations-for-">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-privacy-considerations-for-" class="section-name selfRef">Privacy Considerations for Resumption</a>
-        </h3>
-<p id="section-6.1-1">When using resumption PSKs:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1">ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK, which are to provide identity protection against passive attackers, but not against active attackers.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
-<div id="security-considerations-for-resumption">
-<section id="section-6.2">
-        <h3 id="name-security-considerations-for">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-security-considerations-for" class="section-name selfRef">Security Considerations for Resumption</a>
-        </h3>
-<ul class="normal">
-<li class="normal" id="section-6.2-1.1">
-            <p id="section-6.2-1.1.1">Resumption PSKs <span class="bcp14">MUST NOT</span> be used for purposes other than LAKE session resumption.<a href="#section-6.2-1.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.2-1.2">
-            <p id="section-6.2-1.2.1">Resumption PSKs <span class="bcp14">MUST</span> be securely stored with the same level of protection as the session keys.<a href="#section-6.2-1.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.2-1.3">
-            <p id="section-6.2-1.3.1">Parties <span class="bcp14">SHOULD</span> prevent excessive reuse of the same resumption PSK.<a href="#section-6.2-1.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.2-1.4">
-            <p id="section-6.2-1.4.1">The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.<a href="#section-6.2-1.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
+<p id="section-6-8">When resumption PSKs are used, implementations <span class="bcp14">MUST</span> retain the ID_CRED_I, ID_CRED_R and LAKE hash algorithm used for the original non-resumption authentication and associate them with the current resumption PSK. Implementations <span class="bcp14">MAY</span> retain an external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to use and indicates it via ID_CRED_PSK. If a credential associated with a resumption key expires, implementations <span class="bcp14">SHOULD</span> retry either with external PSK or a different authentication method. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the exp claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.<a href="#section-6-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="EAP">
@@ -1895,7 +1859,7 @@ rID_CRED_PSK = { 4 : rKID }
       </h2>
 <p id="section-7-1">LAKE with PSK authentication has several important use cases within the Extensible Authentication Protocol (EAP).<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">One use case is the resumption of a session established with the EAP method EAP-EDHOC <span>[<a href="#I-D.ietf-emu-eap-edhoc" class="cite xref">I-D.ietf-emu-eap-edhoc</a>]</span>, regardless of the LAKE-based authentication method originally used in that session. This is similar to the resumption mechanism in EAP-TLS 1.3 <span>[<a href="#RFC9190" class="cite xref">RFC9190</a>]</span>. Resumption reduces the number of round trips and allows the EAP-EDHOC server to avoid database lookups that might be required during an initial handshake. If the server accepts resumption, the resumed session is considered authenticated and securely bound to the prior authentication or resumption.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">The use of resumption with EAP-EDHOC is optional for the peer, but it is <span class="bcp14">RECOMMENDED</span> whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is <span class="bcp14">RECOMMENDED</span> if the rPSK remains valid. The server may, however, require a new initial handshake by refusing resumption. It is further <span class="bcp14">RECOMMENDED</span> to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-3">The use of resumption with EAP-EDHOC is optional for the peer, but it is <span class="bcp14">RECOMMENDED</span> whenever a valid rPSK is available. On the server side, resumption acceptance is also optional, but it is <span class="bcp14">RECOMMENDED</span> if the rPSK remains valid. The server <span class="bcp14">MAY</span>, however, require a new initial handshake by refusing resumption. It is further <span class="bcp14">RECOMMENDED</span> to use Network Access Identifiers (NAIs) with the same realm in the EAP identity response during both the full handshake and resumption. For example, the NAI @realm can safely be reused since it does not expose information that links a user’s resumption attempt with the original full handshake.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <p id="section-7-4">EAP-EDHOC using PSK authentication also provides a significant improvement over EAP-PSK <span>[<a href="#RFC4764" class="cite xref">RFC4764</a>]</span>, which lacks support for identity protection, cryptographic agility, and ephemeral key exchange, now considered essential for meeting current security requirements. Without perfect forward secrecy, compromise of the PSK enables a passive attacker to decrypt both past and future sessions. Note that PSK authentication is not allowed in EAP-TLS <span>[<a href="#RFC9190" class="cite xref">RFC9190</a>]</span>.<a href="#section-7-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1904,8 +1868,8 @@ rID_CRED_PSK = { 4 : rKID }
       <h2 id="name-lake-psk-and-oscore">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-lake-psk-and-oscore" class="section-name selfRef">LAKE-PSK and OSCORE</a>
       </h2>
-<p id="section-8-1"><span>[<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> describes an optimized use of LAKE with OSCORE by combining LAKE message_3 with the first OSCORE request. This procedure omits message_4, but key confirmation of the Responder is provided by a subsequent OSCORE response to the Initiator.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">In LAKE-PSK, authentication of the Responder is provided by message_4 or another fourth message. Hence, the combined delivery described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> can be applied to LAKE-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE response. However, only the party with the correct PSK can decrypt the OSCORE request.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-1"><span>[<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> describes an optimized use of LAKE with OSCORE by combining LAKE message_3 with the first OSCORE-protected request. This procedure omits message_4, but key confirmation of the Responder is provided by a subsequent OSCORE-protected response to the Initiator.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">In LAKE-PSK, authentication of the Responder is provided by message_4 or another fourth message. Hence, the combined delivery described in <span><a href="https://rfc-editor.org/rfc/rfc9668#section-3" class="relref">Section 3</a> of [<a href="#RFC9668" class="cite xref">RFC9668</a>]</span> can be applied to LAKE-PSK. Note that, in this case, the Responder is not authenticated until the Initiator has verified a matching OSCORE-protected response. However, only the party with the correct PSK can decrypt the OSCORE-protected request.<a href="#section-8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-con">
@@ -1919,7 +1883,7 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-identity-protection">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-identity-protection" class="section-name selfRef">Identity Protection</a>
         </h3>
-<p id="section-9.1-1">In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers.  This contrasts with the asymmetric authentication methods in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers. This contrasts with the asymmetric authentication methods discussed in <span><a href="https://rfc-editor.org/rfc/rfc9528#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subsec-protpsk">
@@ -1935,9 +1899,9 @@ rID_CRED_PSK = { 4 : rKID }
         <h3 id="name-mutual-authentication">
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-mutual-authentication" class="section-name selfRef">Mutual Authentication</a>
         </h3>
-<p id="section-9.3-1">LAKE-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE message) protected with a key derived from LAKE.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">LAKE-PSK provides mutual authentication and explicit key confirmation through an additional message that demonstrates possession of the PSK. This may be message_4 or an application message (e.g., an OSCORE-protected message) protected with a key derived from LAKE.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 <p id="section-9.3-2">To mitigate reflection or Selfie attacks, the identities in CRED_I and CRED_R <span class="bcp14">MUST</span> be distinct. If identical credentials are used by both parties, an endpoint may incorrectly accept messages that originate from itself.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.3-3">LAKE-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral Diffie-Hellman secret only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">LAKE-PSK is not resistant to Key Compromise Impersonation (KCI) attacks. Compromise of the PSK enables an attacker to impersonate either the Initiator or the Responder to the other party. While compromise of the ephemeral shared secret G_XY only affects the specific session in which it is used, compromise of the PSK allows full active impersonation in all future sessions that rely on the compromised key.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protection-of-external-authorization-data-ead">
@@ -2011,6 +1975,40 @@ rID_CRED_PSK = { 4 : rKID }
 <p id="section-9.11-3">This property applies only when resumption is used and new resumption keys are derived for each session. It does not apply when a long-lived external PSK is reused directly across sessions without key rotation. In that case, as noted in <a href="#subsec-protpsk" class="auto internal xref">Section 9.2</a>, compromise of the PSK enables an attacker to compromise the confidentiality and authentication of future sessions until the PSK is replaced.<a href="#section-9.11-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="privacy-considerations-for-resumption">
+<section id="section-9.12">
+        <h3 id="name-privacy-considerations-for-">
+<a href="#section-9.12" class="section-number selfRef">9.12. </a><a href="#name-privacy-considerations-for-" class="section-name selfRef">Privacy Considerations for Resumption</a>
+        </h3>
+<p id="section-9.12-1">When using resumption PSKs:<a href="#section-9.12-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-9.12-2.1">
+            <p id="section-9.12-2.1.1">ID_CRED_PSK is not exposed to passive attackers, and under normal operation it is not reused. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK, which are to provide identity protection against passive attackers, but not against active attackers.<a href="#section-9.12-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="security-considerations-for-resumption">
+<section id="section-9.13">
+        <h3 id="name-security-considerations-for">
+<a href="#section-9.13" class="section-number selfRef">9.13. </a><a href="#name-security-considerations-for" class="section-name selfRef">Security Considerations for Resumption</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="section-9.13-1.1">
+            <p id="section-9.13-1.1.1">Resumption PSKs <span class="bcp14">MUST NOT</span> be used for purposes other than LAKE session resumption.<a href="#section-9.13-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-9.13-1.2">
+            <p id="section-9.13-1.2.1">Resumption PSKs <span class="bcp14">MUST</span> be securely stored with the same level of protection as the session keys.<a href="#section-9.13-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-9.13-1.3">
+            <p id="section-9.13-1.3.1">Parties <span class="bcp14">SHOULD</span> avoid excessive reuse of the same resumption PSK.<a href="#section-9.13-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-9.13-1.4">
+            <p id="section-9.13-1.4.1">The optional external PSK and the resumption PSKs form a key ratchet. If previous PSKs have been securely erased, compromise of the current resumption PSK does not enable recovery of earlier PSKs. This property holds regardless of whether ECDHE or a post-quantum key exchange is used. Handling of external and resumption PSKs can be specified in the application profile.<a href="#section-9.13-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
 </section>
 </div>
 <div id="IANA-con">
@@ -2019,7 +2017,7 @@ rID_CRED_PSK = { 4 : rKID }
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-10-1">This document requires the following IANA actions.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<div id="edhoc-method-type-registry">
+<div id="iana-method">
 <section id="section-10.1">
         <h3 id="name-edhoc-method-type-registry">
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-edhoc-method-type-registry" class="section-name selfRef">EDHOC Method Type Registry</a>
