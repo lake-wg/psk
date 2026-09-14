@@ -507,8 +507,8 @@ This document requires the following IANA actions.
 
 IANA is requested to register the following entry in the "EDHOC Method Types" registry within the registry group "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
-| Value         | Initiator Authentication Key | Responder Authentication Key | Reference       |
-| TBD4          | PSK                          | PSK                          | \[this document\] | 
+| Value         | Initiator Authentication Key | Responder Authentication Key | Reference     |
+| TBD4          | PSK                          | PSK                          | this document |
 {: #tab-method-psk title="Addition to the EDHOC Method Types Registry."}
 
 NOTE: Suggested value: TBD4 = 4.
@@ -518,9 +518,9 @@ RFC Editor: Remove this note.
 
 IANA is requested to register the following entry in the "EDHOC Exporter Labels" registry within the registry group "Ephemeral Diffie-Hellman Over COSE (EDHOC)".
 
-| Label         | Description            | Change Controller | Reference       |
-| TBD2          | Resumption PSK         | IETF              | \[this document\] |
-| TBD3          | Resumption kid         | IETF              | \[this document\] |
+| Label         | Description            | Change Controller | Reference     |
+| TBD2          | Resumption PSK         | IETF              | this document |
+| TBD3          | Resumption kid         | IETF              | this document |
 {: #tab-exporter-psk title="Additions to the EDHOC Exporter Labels Registry."}
 
 NOTE: Suggested values: TBD2 = 2, TBD3 = 3.
