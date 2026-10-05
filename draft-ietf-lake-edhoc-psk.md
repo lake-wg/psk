@@ -981,6 +981,22 @@ F3 8C
 
 RFC Editor: Please remove this appendix.
 
+* From -09 to -10
+
+  * Addressed shepherd review comments
+  * Renamed EDHOC-PSK to LAKE-PSK and added terminology note on the use of LAKE vs. EDHOC
+  * Clarified METHOD value in message_1 and the processing of message_3 (candidate tuples)
+  * Clarified ID_CRED_PSK compact encoding with examples
+  * Moved privacy and security considerations for resumption to the Security Considerations section
+  * Updated IANA considerations to match registry names
+  * Updated references (RFC 8152 -> RFC 9052, RFC 8446 -> RFC 9846, I-D.ietf-lake-pqsuites, added FIPS 203 and RFC 5280)
+  * Editorial changes
+
+* From -08 to -09
+
+  * Addressed WGLC comments
+  * Editorial changes
+
 * From -07 to -08
 
   * Added clarification after formal analysis.
