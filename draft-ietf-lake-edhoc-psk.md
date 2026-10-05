@@ -987,7 +987,6 @@ RFC Editor: Please remove this appendix.
   * Renamed EDHOC-PSK to LAKE-PSK and added terminology note on the use of LAKE vs. EDHOC
   * Clarified METHOD value in message_1 and the processing of message_3 (candidate tuples)
   * Clarified ID_CRED_PSK compact encoding with examples
-  * Moved privacy and security considerations for resumption to the Security Considerations section
   * Updated IANA considerations to match registry names
   * Updated references (RFC 8152 -> RFC 9052, RFC 8446 -> RFC 9846, I-D.ietf-lake-pqsuites, added FIPS 203 and RFC 5280)
   * Editorial changes
@@ -995,6 +994,12 @@ RFC Editor: Please remove this appendix.
 * From -08 to -09
 
   * Addressed WGLC comments
+  * Clarified that ID_CRED_PSK may identify more than one candidate PSK and updated message_3 processing accordingly
+  * Fixed compact encoding examples of ID_CRED_PSK
+  * Resumption: original credentials and hash algorithm MUST be retained; clarified hash_length
+  * Fixed conditions for deleting rPSK_i
+  * Clarified combined delivery with OSCORE (RFC 9668)
+  * Fixed test vectors
   * Editorial changes
 
 * From -07 to -08
