@@ -993,7 +993,6 @@ RFC Editor: Please remove this appendix.
 
 * From -08 to -09
 
-  * Addressed WGLC comments
   * Clarified that ID_CRED_PSK may identify more than one candidate PSK and updated message_3 processing accordingly
   * Fixed compact encoding examples of ID_CRED_PSK
   * Resumption: original credentials and hash algorithm MUST be retained; clarified hash_length
