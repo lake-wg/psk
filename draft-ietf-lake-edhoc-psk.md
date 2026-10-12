@@ -137,13 +137,13 @@ ID_CRED_PSK is a key identifier {{Section 3.1 of RFC9052}} formatted as a COSE h
 ID_CRED_PSK = { 4 : h'ff' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-is not encoded as the CBOR map 0xa10441ff but the CBOR byte string h'ff', i.e., 0x41ff. Another example, the identifier
+is not encoded as the CBOR map 0xa10441ff but rather as the CBOR byte string 0x41ff (i.e., h'ff'). As another example, the identifier
 
 ~~~~~~~~~~~~
 ID_CRED_PSK = { 4 : h'10' }; 4 = 'kid'
 ~~~~~~~~~~~~
 
-is neither the CBOR map 0xA1044110 nor the CBOR byte string h'10', i.e., 0x4110, but the CBOR integer 0x10, reducing message size.
+is encoded neither as the CBOR map 0xa1044110 nor as the CBOR byte string 0x4110, (i.e., h'10'), but rather as the CBOR integer 0x10, thus reducing the message size.
 
 The purpose of ID_CRED_PSK is to facilitate retrieval of the PSK and associated information required for LAKE processing. While ID_CRED_PSK uses encoding and representation patterns from {{Section 3.5.3.2 of RFC9528}}, it differs fundamentally in that it identifies a symmetric key rather than a public authentication key. A given ID_CRED_PSK value MAY correspond to more than one candidate PSK and associated information. In that case, all candidates associated with the value may need to be checked.
 
@@ -192,8 +192,8 @@ The following guidelines apply to the encoding and handling of CRED_x and ID_CRE
 - If CRED_x is provisioned out-of-band and transported by value, it SHOULD be used as received without re-encoding. Re-encoding can cause mismatches when comparing identifiers such as hash values or 'kid' references.
 
 - When ID_CRED_PSK consists solely of a 'kid' parameter (i.e., { 4 : kid }), the compact encoding optimization defined in {{Section 3.5.3.2 of RFC9528}} MUST be applied in plaintext fields (such as PLAINTEXT_3A). These optimizations MUST NOT be applied in COSE header parameters or in other contexts where the full map structure is required. For example, in such cases where these optimizations are not applied:
-  - { 4 : h'ff' } is encoded as 0xa10441ff, instead of 0x41ff (CBOR encoding of the CBOR byte string h'ff')
-  - { 4 : h'15' } is encoded as 0xa1044115, instead of 0x15 (CBOR encoding of the CBOR integer 21)
+  - { 4 : h'ff' } is encoded as 0xa10441ff, instead of 0x41ff (CBOR byte string h'ff')
+  - { 4 : h'15' } is encoded as 0xa1044115, instead of 0x15 (CBOR encoding of the integer 21)
 
 - To prevent misbinding attacks, identity information such as a 'sub' (subject) claim MUST be included in both CRED_I and CRED_R.
 
@@ -276,7 +276,7 @@ The definition of the transcript hash TH_4 is modified as follows:
 
 # Message Formatting and Processing {#mes-for-pro}
 
-This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that, if any processing step fails, then the message recipient MUST send an LAKE error message back as defined in {{Section 6 of RFC9528}} and the LAKE session MUST be aborted.
+This section specifies the differences in message formatting and processing compared to {{Section 5 of RFC9528}}. Note that, if any processing step fails, then the message recipient MUST send a LAKE error message back as defined in {{Section 6 of RFC9528}} and the LAKE session MUST be aborted.
 
 ## Message 1
 
@@ -293,6 +293,9 @@ Message 2 is formatted as specified in {{Section 5.3.1 of RFC9528}}, except that
 CIPHERTEXT_2A is calculated with a binary additive stream cipher, using a keystream generated with EDHOC_Expand and the following plaintext:
 
 * PLAINTEXT_2A = ( C_R, ? EAD_2 )
+
+* For the case of plaintext_length_2a exceeding the EDHOC_KDF output size, see {{Appendix G of RFC9528}}.
+
 * CIPHERTEXT_2A = PLAINTEXT_2A XOR KEYSTREAM_2A
 
 C_R and EAD_2 are defined in {{Section 5.3.2 of RFC9528}}. In contrast to {{RFC9528}}, ID_CRED_R, MAC_2, and Signature_or_MAC_2 are not included in message_2. This omission is the primary difference from the signature and MAC-based authentication methods defined in {{RFC9528}}, as authentication in LAKE-PSK relies solely on the shared PSK and the successful decryption of protected messages. KEYSTREAM_2A is defined in {{key-der}}.
@@ -320,7 +323,7 @@ Message 3 is formatted as specified in {{Section 5.4.1 of RFC9528}}, except that
 
       * If ID_CRED_PSK contains a single 'kid' parameter, i.e., ID_CRED_PSK = { 4 : kid_PSK }, then the compact encoding is applied, see {{Section 3.5.3.2 of RFC9528}}.
 
-      * For the case of plaintext_length_2a or plaintext_length_3a exceeding the EDHOC_KDF output size, see {{Appendix G of RFC9528}}.
+      * For the case of plaintext_length_3a exceeding the EDHOC_KDF output size, see {{Appendix G of RFC9528}}.
 
    * Compute KEYSTREAM_3A as in {{key-der}}.
 
@@ -392,7 +395,7 @@ where:
   * hash_length is the output size of the LAKE hash algorithm associated with the PSK, i.e., the LAKE hash algorithm of the selected cipher suite used in the LAKE session in which the resumption PSK is established.
   * kid_length defaults to 2 bytes.
 
-A peer that has successfully completed an LAKE session, regardless of the authentication method used or whether the session was a PSK resumption, MAY generate a resumption key. Whether resumption keys are generated is determined by the application profile, see {{Section 3.9 of RFC9528}}. Support for resumption can be indicated, for example, by using means defined in {{I-D.ietf-lake-app-profiles}}.
+A peer that has successfully completed a LAKE session, regardless of the authentication method used or whether the session was a PSK resumption, MAY generate a resumption key. Whether resumption keys are generated is determined by the application profile, see {{Section 3.9 of RFC9528}}. Support for resumption can be indicated, for example, by using means defined in {{I-D.ietf-lake-app-profiles}}.
 
 To ensure both peers share the same resumption key, when a resumption session is run using rPSK_i as the resumption key:
 
@@ -402,7 +405,7 @@ To ensure both peers share the same resumption key, when a resumption session is
 
   * The Responder MAY delete rPSK_i after successfully verifying a fifth message from the Initiator protected with an exported application key such as an OSCORE-protected message, if present. At that point, the Responder can be certain that the Initiator is able to derive the next resumption key, rPSK_(i+1), if the Initiator wants to.
 
-When resumption PSKs are used and public keys were used in the original session for non-resumption authentication, implementations MUST retain ID_CRED_I, ID_CRED_R, and LAKE hash algorithm used in that original session and associate them with the current resumption PSK. Implementations MAY retain an external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to use and indicates it via ID_CRED_PSK. If a credential associated with a resumption key expires, implementations SHOULD retry either with an external PSK or a different authentication method. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the 'exp' claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.
+When resumption PSKs are used and public keys were used in the original session for non-resumption authentication, implementations MUST retain ID_CRED_I, ID_CRED_R, and the LAKE hash algorithm used in that original session and associate them with the current resumption PSK. Implementations MAY retain an external ID_CRED_PSK and associated PSK to allow fallback if resumption fails. If fallback authentication uses an external PSK, the Initiator selects which PSK to use and indicates it via ID_CRED_PSK. If a credential associated with a resumption key expires, implementations SHOULD retry either with an external PSK or a different authentication method. How long the original authentication credentials are retained is determined by the application profile or by the expiration time of the credential (e.g., the 'exp' claim in a CWT).  Key lifetime, retention, and retry policy are determined by the application profile.
 
 # LAKE-PSK and Extensible Authentication Protocol (EAP) {#EAP}
 
