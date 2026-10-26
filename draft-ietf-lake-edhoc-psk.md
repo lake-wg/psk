@@ -106,7 +106,7 @@ Another important use case of PSK authentication in the LAKE protocol is session
 
 # Conventions and Definitions
 
-{::boilerplate bcp14-tagged}
+{::boilerplate bcp14-tagged-bcp14}
 
 Readers are expected to be familiar with the terms and concepts related to LAKE {{RFC9528}}, Concise Binary Object Representation (CBOR) {{RFC8949}}, CBOR Sequences {{RFC8742}}, CBOR Object Signing and Encryption (COSE) Structures and Processing {{RFC9052}}, COSE Algorithms {{RFC9053}}, CBOR Web Token (CWT) and CWT Claims Set (CCS) {{RFC8392}}, and the Concise Data Definition Language (CDDL) {{RFC8610}}, which is used to express CBOR data structures.
 
