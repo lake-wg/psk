@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 15 April 2027                                 J. Preuß Mattsson
+Expires: 29 April 2027                                 J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                         12 October 2026
+                                                         26 October 2026
 
 
              LAKE Authenticated with Pre-Shared Keys (PSKs)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 April 2027.
+   This Internet-Draft will expire on 29 April 2027.
 
 Copyright Notice
 
@@ -189,7 +189,7 @@ Table of Contents
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   [BCP14] (RFC2119) (RFC8174) when, and only when, they appear in all
    capitals, as shown here.
 
    Readers are expected to be familiar with the terms and concepts
@@ -1020,6 +1020,19 @@ Table of Contents
 
 11.1.  Normative References
 
+   [BCP14]    Best Current Practice 14,
+              <https://www.rfc-editor.org/info/bcp14>.
+              At the time of writing, this BCP comprises the following:
+
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+              Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
    [I-D.ietf-emu-eap-edhoc]
               Garcia-Carrillo, D., Marin-Lopez, R., Selander, G.,
               Mattsson, J. P., and F. Lopez-Gomez, "Using the Extensible
@@ -1028,15 +1041,6 @@ Table of Contents
               Draft, draft-ietf-emu-eap-edhoc-12, 29 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-emu-eap-
               edhoc-12>.
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
               "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
@@ -1099,11 +1103,11 @@ Table of Contents
 
    [I-D.ietf-lake-app-profiles]
               Tiloca, M. and R. Höglund, "Coordinating the Use of
-              Application Profiles for Ephemeral Diffie-Hellman Over
-              COSE (EDHOC)", Work in Progress, Internet-Draft, draft-
-              ietf-lake-app-profiles-05, 6 July 2026,
+              Application Profiles for the Lightweight Authenticated Key
+              Exchange (LAKE) Protocol", Work in Progress, Internet-
+              Draft, draft-ietf-lake-app-profiles-06, 22 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lake-
-              app-profiles-05>.
+              app-profiles-06>.
 
    [I-D.ietf-lake-pqsuites]
               Selander, G., Mattsson, J. P., and C. Papon, "Quantum-
