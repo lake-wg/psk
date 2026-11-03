@@ -5,12 +5,12 @@
 LAKE Working Group                                        E. Lopez-Perez
 Internet-Draft                                                     Inria
 Intended status: Standards Track                             G. Selander
-Expires: 29 April 2027                                 J. Preuß Mattsson
+Expires: 7 May 2027                                    J. Preuß Mattsson
                                                                 Ericsson
                                                           R. Marin-Lopez
                                                           F. Lopez-Gomez
                                                     University of Murcia
-                                                         26 October 2026
+                                                         3 November 2026
 
 
              LAKE Authenticated with Pre-Shared Keys (PSKs)
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 April 2027.
+   This Internet-Draft will expire on 7 May 2027.
 
 Copyright Notice
 
@@ -249,6 +249,12 @@ Table of Contents
 
    *  The Responder can retrieve the PSK, CRED_I, and CRED_R, using
       ID_CRED_PSK.
+
+   Note that the Initiator independently determines which PSK and
+   ID_CRED_PSK to use.  EAD_2 may provide information to support the
+   Initiator’s selection, but the security and privacy considerations
+   associated with doing so are outside the scope of the analysis in
+   this document.
 
 3.1.1.  ID_CRED_PSK
 
@@ -1101,16 +1107,16 @@ Table of Contents
               Tiloca, M. and R. Höglund, "Coordinating the Use of
               Application Profiles for the Lightweight Authenticated Key
               Exchange (LAKE) Protocol", Work in Progress, Internet-
-              Draft, draft-ietf-lake-app-profiles-06, 22 October 2026,
+              Draft, draft-ietf-lake-app-profiles-07, 26 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lake-
-              app-profiles-06>.
+              app-profiles-07>.
 
    [I-D.ietf-lake-pqsuites]
               Selander, G., Mattsson, J. P., and C. Papon, "Quantum-
               Resistant Cipher Suites for LAKE", Work in Progress,
-              Internet-Draft, draft-ietf-lake-pqsuites-01, 19 September
+              Internet-Draft, draft-ietf-lake-pqsuites-02, 2 November
               2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              lake-pqsuites-01>.
+              lake-pqsuites-02>.
 
    [RFC4764]  Bersani, F. and H. Tschofenig, "The EAP-PSK Protocol: A
               Pre-Shared Key Extensible Authentication Protocol (EAP)
