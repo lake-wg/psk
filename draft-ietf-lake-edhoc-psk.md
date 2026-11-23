@@ -81,6 +81,28 @@ informative:
   RFC9190:
   I-D.ietf-lake-app-profiles:
   I-D.ietf-lake-pqsuites:
+  LopezPerez26:
+    target: https://doi.org/10.1145/3779208.3805979
+    title: "Formal Verification of EDHOC-PSK: A Symbolic Approach with SAPIC+"
+    author:
+      -
+        ins: E. López Pérez
+      -
+        ins: T. Watteyne
+      -
+        ins: C. Onete
+      -
+        ins: D. Mahmoud
+      -
+        ins: P. Lafourcade
+      -
+        ins: V. Sundararajan
+      -
+        ins: M. Vučinić
+    refcontent: "Proceedings of the ACM Asia Conference on Computer and Communications Security (ASIA CCS '26), pp. 1584-1597"
+    seriesinfo:
+      DOI: 10.1145/3779208.3805979
+    date: June 2026
   FIPS-203:
     target: https://doi.org/10.6028/NIST.FIPS.203
     title: Module-Lattice-Based Key-Encapsulation Mechanism Standard
@@ -427,11 +449,25 @@ In LAKE-PSK, authentication of the Responder is provided by message_4 or another
 
 # Security Considerations {#sec-con}
 
-The LAKE-PSK authentication method introduces deviations from the initial specification of LAKE {{RFC9528}}. This section analyzes the security implications of these changes and discusses the security properties of LAKE authenticated with a PSK.
+The LAKE-PSK authentication method introduces deviations from the initial specification of LAKE {{RFC9528}}. This section analyzes the security implications of these changes and discusses the security properties of LAKE authenticated with a PSK. Proven security properties are detailed in the security analysis publication referenced in {{formal-analysis}}.
+
+## Formal Analysis {#formal-analysis}
+
+The LAKE Working Group issued a call for formal analysis of version -06 of this document. In response, LAKE-PSK was analyzed in the symbolic (Dolev-Yao) model using SAPIC+ with the Tamarin and ProVerif back-ends {{LopezPerez26}}. The attacker controls the network and may additionally compromise the PSK, the ephemeral private keys, and the session key (PRK_out). In the analysis, identity protection is split into two properties: anonymity, where an attacker cannot tell whether a session was run by one identity or another, and unlinkability, a stronger notion where an attacker cannot tell whether two sessions were run by the same identity. The analysis shows that:
+
+* Mutual authentication and explicit key confirmation hold, including injective agreement on the exchanged data and on PRK_out, unless the PSK is compromised.
+
+* PRK_out remains confidential unless the PSK or PRK_out itself is compromised. Perfect forward secrecy holds, i.e., later compromise of the PSK does not reveal PRK_out of earlier sessions, unless the ephemeral private key of the Initiator or the Responder is also compromised.
+
+* Anonymity of both the Initiator and the Responder holds against passive and active attackers, unless the PSK is compromised.
+
+* Unlinkability of the Initiator holds against passive attackers, unless an ephemeral private key is compromised. Unlinkability of the Responder does not hold, and unlinkability of either party does not hold against active attackers.
+
+The analysis did not cover session resumption ({{psk-resumption}}) or cipher suite negotiation.
 
 ## Identity Protection
 
-In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides identity protection of both the Initiator and Responder against passive attackers. This contrasts with the asymmetric authentication methods discussed in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not protect the PSK identifier against active attackers as an attacker impersonating the Responder can decrypt ID_CRED_PSK. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
+In LAKE-PSK, the identifier ID_CRED_PSK in message_3 is encrypted with a keystream derived from the ephemeral shared secret G_XY. This provides anonymity of both the Initiator and the Responder against passive and active attackers, and unlinkability of the Initiator against passive attackers (see {{formal-analysis}}). This contrasts with the asymmetric authentication methods discussed in {{Section 9.1 of RFC9528}}, which protect the Initiator’s identity against active attackers and the Responder’s identity against passive ones. LAKE-PSK does not provide unlinkability of the Responder, nor unlinkability of either party against active attackers. In particular, an attacker impersonating the Responder can decrypt ID_CRED_PSK and thus recognize sessions using the same PSK identifier. The time to lookup or process an authentication credential based on ID_CRED_PSK may leak information about the identity.
 
 ## Protection of Pre-Shared Keys {#subsec-protpsk}
 
@@ -495,7 +531,7 @@ This property applies only when resumption is used and new resumption keys are d
 
 When using resumption PSKs:
 
-  * ID_CRED_PSK is not exposed to passive attackers, and it is not reused under normal operation. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK, which are to provide identity protection against passive attackers, but not against active attackers.
+  * ID_CRED_PSK is not exposed to passive attackers, and it is not reused under normal operation. Reuse of the same ID_CRED_PSK can occur due to transmission errors or when a peer loses its stored resumption key. An active attacker can obtain the value of ID_CRED_PSK and force its reuse. This aligns with the security goals of LAKE-PSK.
 
 ## Security Considerations for Resumption
 
@@ -986,6 +1022,10 @@ F3 8C
 
 RFC Editor: Please remove this appendix.
 
+* From -11 to -12
+
+  * Added Formal Analysis section, reference to the formal analysis, and acknowledgments
+
 * From -10 to -11
 
   * Added a note on identity hints in Section 3.1
@@ -1074,6 +1114,16 @@ The authors want to thank
 and
 {{{Marco Tiloca}}}
 for reviewing and commenting on intermediate versions of the draft.
+
+The authors also want to thank
+{{{Pascal Lafourcade}}},
+{{{Dhekra Mahmoud}}},
+{{{Cristina Onete}}},
+{{{Vaishnavi Sundararajan}}},
+{{{Mališa Vučinić}}},
+and
+{{{Thomas Watteyne}}}
+for the formal analysis of LAKE-PSK {{LopezPerez26}}, which led to improvements of this specification.
 
 This work has been partly funded by PID2023-148104OB-C43 funded by MICIU/AEI/10.13039/501100011033 (ONOFRE4), FEDER/UE EU HE CASTOR under Grant Agreement No 101167904 and EU CERTIFY under Grant Agreement No 101069471.
 
